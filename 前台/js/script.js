@@ -35,9 +35,13 @@
 		$('.main-header .navigation li.dropdown').append('<div class="dropdown-btn"><span class="fa fa-angle-down"></span></div>');
 		
 		//Dropdown Button
-		$('.main-header .navigation li.dropdown .dropdown-btn').on('click', function() {
-			$(this).prev('ul').slideToggle(500);
-		});
+		// $('.main-header .navigation li.dropdown .dropdown-btn').on('click', function() {
+		// 	$(this).prev('li').slideToggle(500);
+		// });
+		$("li.dropdown").click(function(){
+			//console.log($(this).children('ul:first-child'))
+			$(this).children('ul').slideToggle(500);
+		})
 	}
 
 	//Search Popup
