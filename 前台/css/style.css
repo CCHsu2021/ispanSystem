@@ -1953,6 +1953,22 @@ img{
 	background-image: url(../images/icons/icon-idea.png);
 }
 
+/* 取代上面3張圖片 */
+
+.icon-math-5{
+	height: 101px;
+	width: 84px;
+	background-image: url(../images/icons/icon-math-5.png);
+}
+
+.icon-math-1{
+	height: 101px;
+	width: 84px;
+	background-image: url(../images/icons/icon-math-1.png);
+}
+
+/**/
+
 .icon-pencil{
 	height: 119px;
 	width: 261px;
