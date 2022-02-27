@@ -58,7 +58,7 @@
 	}
 	
 	.header-style-two .main-menu .navigation > li{
-		margin-left:20px;
+		margin-left:10px;
 	}
 }
 
@@ -255,7 +255,6 @@
 		position: relative;
 		font-size: 34px;
 		line-height: 1.2em;
-		color: #ff4880;
 		top: 3px;
 	}
 
@@ -390,6 +389,7 @@
 	.main-menu .navbar-collapse > .navigation > li.current > a{
 		background:none !important;
 		color:#303030 !important;
+		z-index: 2;
 	}
 
 	.main-menu .navbar-collapse > .navigation > li.current > a{
@@ -397,8 +397,10 @@
 		color:#ff4880 !important;
 	}
 	
+	
 	.main-menu .navbar-collapse > .navigation li.dropdown .dropdown-btn{
 		display:block;
+		z-index: 1;
 	}
 
 	.main-menu .navigation > li > ul > li > ul > li,

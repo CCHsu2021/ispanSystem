@@ -108,10 +108,10 @@ body {
 a{
 	text-decoration:none;
 	cursor:pointer;
-	/* color:#ffffff; */
+	color:#1e3c84;
 }
 .logo{
-	width: 150px;
+	width: 120px;
 }
 
 a:hover,
@@ -198,9 +198,17 @@ figure{
 	text-align:center !important;
 }
 
+.color-blue{
+	color: #1e3c84;
+}
+
+.color-orange{
+	color: #ed731a;
+}
+
 /* btn style one */
 
-[class^="btnStyle"] {
+[class^="btn-style-"] {
 	text-align: center;
 	text-decoration: none;
 	position: relative;
@@ -217,16 +225,15 @@ figure{
 	font-size: 1rem;
   }
   
-  .btnStyleOne {
+  .btn-style-one {
 	text-align: center;
 	color: #1e3c84;
-	transition-delay: 1s;
-	transition: 0.3s ease-in-out;
+	transition: color 1.3s linear ;
   }
   
-  .btnStyleOne:before, .btnStyleOne:after,
-  .btnStyleOne span:before,
-  .btnStyleOne span:after {
+  .btn-style-one:before, .btn-style-one:after,
+  .btn-style-one span:before,
+  .btn-style-one span:after {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -240,38 +247,38 @@ figure{
 	z-index: -1;
   }
   
-  .btnStyleOne:after,
-  .btnStyleOne span:before {
+  .btn-style-one:after,
+  .btn-style-one span:before {
 	left: auto;
 	right: 0;
 	box-sizing: border-box;
 	transition: 0.3s ease-in-out;
   }
   
-  .btnStyleOne span:before,
-  .btnStyleOne span:after {
-	-webkit-transition-delay: 0.5s;
-			transition-delay: 0.5s;
+  .btn-style-one span:before,
+  .btn-style-one span:after {
+	-webkit-transition-delay: 0.3s;
+			transition-delay: 0.3s;
   }
   
-  .btnStyleOne:hover {
+  .btn-style-one:hover {
 	color: #eeeeee;
 	transition: 0.3s ease-in-out;
   }
   
-  .btnStyleOne:hover:before, .btnStyleOne:hover:after,
-  .btnStyleOne:hover span:before,
-  .btnStyleOne:hover span:after {
+  .btn-style-one:hover:before, .btn-style-one:hover:after,
+  .btn-style-one:hover span:before,
+  .btn-style-one:hover span:after {
 	width: 250px;
   }
   
-  .btnStyleOne:active {
+  .btn-style-one:active {
 	background-color: #1e3c84;
   }
   
   /* btn style two */
   
-  .btnStyleTwo {
+  .btn-style-two {
 	text-align: center;
 	color: #ffffff;
 	background-color: #1e3c84;
@@ -279,7 +286,7 @@ figure{
 	transition: all .3s linear;
   }
   
-  .btnStyleTwo:hover {
+  .btn-style-two:hover {
 	color: #1e3c84;
 	z-index: 4;
 	background-color: #ffffff;
@@ -727,7 +734,7 @@ img{
 	display: block;
 	width: 100%;
 	text-align: center;
-	padding: 20px 0 0;
+	padding: 15px 0;
 }
 
 .main-header .header-lower .logo-outer .logo{
@@ -788,10 +795,11 @@ img{
 	position: absolute;
 	left: 50%;
 	bottom: 30px;
-	height: 6px;
-	width: 0%;
-	background-image: url(../images/icons/line-1.png);
-	background-position: center;
+	height: 2px;
+	width: 0;
+	background-color: #ed731a;
+	/* background-image: url(../images/icons/line-1.png); */
+	/* background-position: center; */
 	content: "";
 	-webkit-transition:all 300ms ease;
 	-moz-transition:all 300ms ease;
@@ -802,7 +810,7 @@ img{
 
 .main-menu .navigation > li:hover:before,
 .main-menu .navigation > li.current:before{
-	width: 100%;
+	width: 50px;
 	left: 0;
 }
 
@@ -810,11 +818,12 @@ img{
 	position:relative;
 	display:block;
 	text-align:center;
-	font-size:16px;
+	font-size:17px;
+	font-weight: 500;
 	line-height:30px;
 	font-weight:500;
 	opacity:1;
-	color:#858687;
+	color:#555555;
 	padding: 0px;
 	text-transform:none;
 	-webkit-transition:all 300ms ease;
@@ -837,7 +846,7 @@ img{
 	-webkit-transform:translateY(30px);
 	-ms-transform:translateY(30px);
 	transform:translateY(30px);
-	background:#ffffff;
+	background:#f9f9f9;
 	z-index:100;
 	display:none;
 	padding:0px 0px;
@@ -1013,7 +1022,7 @@ img{
 .main-menu .navigation > li.dropdown:hover > ul{
 	visibility:visible;
 	opacity:1;
-	top:80%;
+	/* top:80%; */
 	-webkit-transform:translateY(0px);
 	-ms-transform:translateY(0px);
 	transform:translateY(0px);	
@@ -1232,7 +1241,7 @@ img{
 	line-height: 30px;
 	color: #b5b8de;
 	font-weight: 400;
-	content: ".";
+	content: "|";
 }
 
 .header-style-two .top-right .link-box a{
@@ -1279,13 +1288,14 @@ img{
 
 .header-style-two .header-lower{
 	position: relative;
+	background-color: #f9f9f9;
 }
 
 .header-style-two .header-lower .logo-outer{
 	position: relative;
 	float: left;
 	width: auto;
-	padding: 45px 0;
+	/* padding: 45px 0; */
 }
 
 .header-style-two .header-lower .logo-outer .logo{
@@ -1305,7 +1315,7 @@ img{
 }
 
 .header-style-two .main-menu .navigation > li{
-	padding: 55px 0px;
+	padding: 30px 0px;
 	margin-left: 40px;
 	margin-right: 0;
 }
@@ -1327,7 +1337,7 @@ img{
 }
 
 .header-style-two .main-menu .navigation > li:before{
-	bottom: 48px;
+	bottom: 25px;
 }
 
 .header-style-two .header-lower .social-icon-colored li a{
