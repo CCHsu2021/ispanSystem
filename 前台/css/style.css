@@ -127,7 +127,7 @@ h1,h2,h3,h4,h5,h6 {
 	margin:0px;
 	background:none;
 	line-height:1.2em;
-	font-family: 'Fredoka One', cursive;
+	/* font-family: 'Fredoka One', cursive; */
 }
 
 textarea{
@@ -819,9 +819,8 @@ img{
 	display:block;
 	text-align:center;
 	font-size:17px;
-	font-weight: 500;
+	font-weight: 600;
 	line-height:30px;
-	font-weight:500;
 	opacity:1;
 	color:#555555;
 	padding: 0px;
@@ -1734,14 +1733,14 @@ img{
 	line-height: 1.2em;
 	color: #ed731a;
 	font-weight: 400;
-	font-family: "Schoolbell", cursive;
+	/* font-family: "Schoolbell", cursive; */
 	margin-bottom: 10px;
 }
 
 .sec-title h2{
 	position: relative;
 	display: block;
-	font-size:60px;
+	font-size:46px;
 	line-height: 1.2em;
 	color: #1e3c84;
 	font-weight: 400;
@@ -1755,7 +1754,7 @@ img{
 	bottom: 0;
 	height: 6px;
 	width: 58px;
-	background-image: url(../images/icons/line-2.png);
+	/* background-image: url(../images/icons/line-2.png); */
 	background-position: center;
 	animation: slide 10s linear infinite;
 	-webkit-animation: slide 10s linear infinite;
@@ -2005,6 +2004,7 @@ img{
 	bottom: 0;
 	top: auto;
 	text-align: center;
+	display: none;
 }
 
 .main-slider.style-two .scroll-to-top .icon{
@@ -2245,10 +2245,10 @@ img{
 	right: 0;
 	bottom: 0;
 }
-
+/* 
 .about-section-two .image-box img{
 	border-radius: 20px;
-}
+} */
 
 .about-section-two .icon-rainbow-3{
 	top: 180px !important;
@@ -2841,6 +2841,9 @@ img{
 	border-radius: 15px;
 	overflow: hidden;
 }
+.program-block .inner-box:hover{
+	cursor: pointer;
+}
 
 .program-block .image-box{
 	position: relative;
@@ -2849,7 +2852,7 @@ img{
 .program-block .image{
 	position: relative;
 	margin-bottom: 0;
-	background-color: #ed731a;
+	/* background-color: #ed731a; */
 }
 
 .program-block .image img{
@@ -2874,14 +2877,14 @@ img{
 
 .program-block .lower-content{
 	position: relative;
-	padding: 37px 60px 0;
+	padding: 20px 10px 0;
 	background-color: #ffffff;
 }
 
 .program-block h4{
 	position: relative;
 	display: block;
-	font-size: 24px;
+	font-size: 18px;
 	line-height: 1.2em;
 	color: #1e3c84;
 	font-weight: 400;
@@ -3028,6 +3031,10 @@ img{
 	display: block;
 	width: 100%;
 	height: auto;
+}
+
+.tab-text{
+	font-size: 14px;
 }
 
 /***
@@ -3361,9 +3368,9 @@ img{
 	background-color: #1e3c84;
 }
 
-.coming-soon-section .sec-title h2:before{
+/* .coming-soon-section .sec-title h2:before{
 	background-image: url(../images/icons/line-4.png);
-}
+} */
 
 .coming-soon-section .content{
 	position: relative;
@@ -3838,9 +3845,9 @@ img{
 	opacity: .30;
 }
 
-.fluid-section-two .contact-column .sec-title h2:before{
+/* .fluid-section-two .contact-column .sec-title h2:before{
 	background-image: url(../images/icons/line-2.png);
-}
+} */
 
 .fluid-section-two .contact-column .inner-column{
 	position:relative;
