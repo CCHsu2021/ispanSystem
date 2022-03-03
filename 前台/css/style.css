@@ -293,6 +293,58 @@ figure{
 	border: #1e3c84 solid 1px;
   }
 
+/* btn style three */
+
+  .btn-style-one {
+	text-align: center;
+	color: #1e3c84;
+	transition: color 1.3s linear ;
+  }
+  
+  .btn-style-one:before, .btn-style-one:after,
+  .btn-style-one span:before,
+  .btn-style-one span:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 80px;
+	background-color: #1e3d847a;
+	-webkit-transition: 0.3s;
+	box-sizing: border-box;
+	transition: 0.3s ease-in-out;
+	z-index: -1;
+  }
+  
+  .btn-style-one:after,
+  .btn-style-one span:before {
+	left: auto;
+	right: 0;
+	box-sizing: border-box;
+	transition: 0.3s ease-in-out;
+  }
+  
+  .btn-style-one span:before,
+  .btn-style-one span:after {
+	-webkit-transition-delay: 0.3s;
+			transition-delay: 0.3s;
+  }
+  
+  .btn-style-one:hover {
+	color: #eeeeee;
+	transition: 0.3s ease-in-out;
+  }
+  
+  .btn-style-one:hover:before, .btn-style-one:hover:after,
+  .btn-style-one:hover span:before,
+  .btn-style-one:hover span:after {
+	width: 250px;
+  }
+  
+  .btn-style-one:active {
+	background-color: #1e3c84;
+  }
 
 /* @keyframes rainbow{
 	0% { background-color: #ffae00; }
@@ -2495,6 +2547,8 @@ img{
 	position: absolute;
 	left: 0;
 	top: 0;
+	width: 215px;
+	height: 100%;
 }
 
 .event-block .image{
@@ -2502,11 +2556,14 @@ img{
 	margin-bottom: 0;
 	overflow: hidden;
 	background-color: #ed731a;
+	height: 100%;
+
 }
 
 .event-block .image img{
 	max-width: 100%;
-	height: auto;
+	height: 100%;
+	object-fit: cover;
 	-webkit-transition: all 500ms ease;
 	-moz-transition: all 500ms ease;
 	-ms-transition: all 500ms ease;
@@ -2525,7 +2582,7 @@ img{
 
 .event-block .content-box{
 	position: relative;
-	padding: 50px 45px 35px;
+	padding: 70px 25px 35px;
 }
 
 .event-block .date{
