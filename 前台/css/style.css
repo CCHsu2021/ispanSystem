@@ -206,6 +206,14 @@ figure{
 	color: #ed731a;
 }
 
+.bg-blue{
+	background-color: #1e3c84;
+}
+
+.bg-orange{
+	background-color: #ed731a;
+}
+
 /* btn style one */
 
 [class^="btn-style-"] {
