@@ -1288,8 +1288,8 @@ img{
 	position: relative;
 	float: left;
 	padding: 15px 0;
-	padding-right: 15px;
-	margin-right: 15px;
+	/* padding-right: 15px; */
+	/* margin-right: 15px; */
 }
 
 .header-style-two .top-right .link-box:before{
@@ -1300,7 +1300,7 @@ img{
 	line-height: 30px;
 	color: #b5b8de;
 	font-weight: 400;
-	content: "|";
+	content: "";
 }
 
 .header-style-two .top-right .link-box a{
@@ -2414,6 +2414,14 @@ img{
 	position: relative;
 	margin-bottom: 50px;
 }
+.ad-back-image{
+            background: url(../../ispan圖片檔/圖檔/政府補助圖檔/advertisement_bcc.jpg) no-repeat center;
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+            padding: 2em;
+            background-position: center;
+        }
 
 /*Skills Section*/
 
@@ -2549,6 +2557,9 @@ img{
 	padding-left: 220px;
 	border-radius: 20px;
 	overflow: hidden;
+}
+.event-block .inner-box:hover{
+	cursor: pointer;
 }
 
 .event-block .image-box{
@@ -4156,7 +4167,7 @@ img{
 .testimonial-block .content{
 	position: relative;
 	padding: 70px 80px;
-	background-color: #fa496e;
+	background-color: #ed731a;
 	text-align: left;
 	border-radius: 20px;
 	margin-bottom: 30px;
@@ -4189,7 +4200,7 @@ img{
 	margin-left: -200px;
 	height: 50px;
 	width: 70px;
-	background-image: url(../images/icons/curve-shape-1.png);
+	background-image: url(../../ispan圖片檔/圖檔/curve-shape-1.png);
 	background-position: center top;
 	content: '';
 	background-repeat: no-repeat;
@@ -4222,11 +4233,13 @@ img{
 	background-color: #222222;
 	border-radius: 50%;
 	overflow: hidden;
+	
 }
 
 .testimonial-block .info-box .thumb img{
 	display: block;
 	width: 100%;
+	
 }
 
 .testimonial-block .info-box .name{
@@ -4247,11 +4260,11 @@ img{
 }
 
 .testimonial-block.style-two .content{
-	background-color: #5798fe;
+	background-color: #1e3c84;
 }
 
 .testimonial-block.style-two .content:after{
-	background-image: url(../images/icons/curve-shape-2.png);
+	background-image: url(../../ispan圖片檔/圖檔/curve-shape-2.png);
 }
 
 .testimonial-section .owl-nav{
