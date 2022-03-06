@@ -5239,7 +5239,8 @@ img{
 .main-footer{
 	position:relative;
 	z-index: 10;
-	background-color: #1e3c84;
+	background: url(../../ispan圖片檔/圖檔/footerBackground.jpg);
+	/* background-color: #1e3c84; */
 }
 
 .main-footer:before{
@@ -5248,7 +5249,7 @@ img{
 	top: 0;
 	height: 100%;
 	width: 100%;
-	background-image: url(../images/icons/pattern.png);
+	/* background-image: url(../images/icons/pattern.png); */
 	background-position: center;
 	content: "";
 	opacity: .20;
