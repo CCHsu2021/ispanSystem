@@ -40,6 +40,14 @@ body {
   }
 }
 
+/* .... */
+
+@media (min-width:1024px) {
+  .events-section .page-content .col-lg-4{
+    max-width: 30%;
+  }
+}
+
 .card {
   /* position: relative; */
   display: flex;
@@ -88,21 +96,26 @@ body {
 }
 
 .card:nth-child(1):before {
-  background-image: url(../images/resource/S-1\ Taoyuan.jpg);
+  background-image: url(../images/resource/S-1_Taoyuan.jpg);
   /* background: #ed731a; */
 }
 
 .card:nth-child(2):before {
-  background-image: url(../images/resource/S-2\ Taizhong.jpg);
+  background-image: url(../images/resource/S-2_Taizhong.jpg);
 }
 
 .card:nth-child(3):before {
-  background-image: url(../images/resource/S-3\ Gaoxiong.jpg);
+  background-image: url(../images/resource/S-3_Gaoxiong.jpg);
 }
 
 /* .card:nth-child(4):before {
   background-image: url(https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ);
 } */
+
+.event-section .page-content .event-block{
+    /* display: contents; */
+    width: auto;
+}
 
 .Scontent {
   position: relative;
