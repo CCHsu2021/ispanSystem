@@ -736,6 +736,7 @@ img{
 	display: inline-block;
 	height: 30px;
 	width: 20px;
+	padding: 1rem;
 	background-image: url(../images/icons/icon-arrow.png);
 	background-repeat: no-repeat;
 	background-position: center;
@@ -5244,6 +5245,26 @@ img{
 
 ***/
 
+.go-top{
+	width: 35px;
+    height: 35px;
+    text-align: center;
+    border-radius: 50%;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 20px;
+    right: 20px;
+    position: fixed;
+	background-color: #eee;
+	z-index: 999;
+	/* border: #1e3c84 solid 2px; */
+}
+/* .go-top:hover{
+	cursor: pointer;
+	background-color: white;
+} */
 .main-footer{
 	position:relative;
 	z-index: 10;
