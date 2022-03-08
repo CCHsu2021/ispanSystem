@@ -4280,7 +4280,7 @@ img{
 
 .testimonial-block .content{
 	position: relative;
-	padding: 70px 80px;
+	padding: 40px;
 	background-color: #ed731a;
 	text-align: left;
 	border-radius: 20px;
@@ -4327,6 +4327,11 @@ img{
 	line-height: 40px;
 	color: #ffffff;
 	font-weight: 400;
+	height: 400px;
+	overflow: auto;
+	text-align: justify;
+	padding: 2rem;
+	padding-top: 0;
 }
 
 .testimonial-block .info-box{
@@ -4344,7 +4349,7 @@ img{
 	top: 0;
 	height: 80px;
 	width: 80px;
-	background-color: #222222;
+	background-color: transparent;
 	border-radius: 50%;
 	overflow: hidden;
 	
@@ -6024,3 +6029,25 @@ img{
 	height:180px;
 	resize: none;
 }
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #f9f9f9 transparent;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #f9f9f971;
+    border-radius: 10px;
+    border: 0px dashed #819636;
+  }
