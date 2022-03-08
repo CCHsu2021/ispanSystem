@@ -5259,7 +5259,8 @@ img{
 	position:relative;
 	background-position: center;
 	background-repeat: no-repeat;
-	padding:160px 0px 30px;
+	/* padding:160px 0px 30px; */
+	padding:80px 0px 15px;
 }
 
 .main-footer .footer-upper .footer-column{
@@ -5428,7 +5429,7 @@ img{
 
 .main-footer .footer-bottom{
 	position:relative;
-	padding:50px 0px 45px;
+	/* padding:50px 0px 45px; */
 	text-align:center;
 }
 
