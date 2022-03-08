@@ -133,7 +133,7 @@ body {
 }
 
 .title {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: bold;
   line-height: 1.2;
 }
@@ -149,23 +149,20 @@ body {
   cursor: pointer;
   margin-top: 1.5rem;
   padding: 0.75rem 1.5rem;
-  font-size: 0.65rem;
+  font-size: 1rem;
   font-weight: bold;
   letter-spacing: 0.025rem;
-  text-transform: uppercase;
+  background-color: transparent;
+  border: white solid 1px;
   color: white;
-  background-color: black;
-  border: none;
+  transition: 1s ease-in;
 }
 
 .Sbtn:hover {
-  background-color: #0d0d0d;
+  background-color: #ed731a;
 }
 
-.Sbtn:focus {
-  outline: 1px dashed yellow;
-  outline-offset: 3px;
-}
+
 
 @media (hover: hover) and (min-width: 600px) {
   .card:after {
@@ -179,31 +176,26 @@ body {
     transform: translateY(1rem);
     transition: transform var(--d) var(--e), opacity var(--d) var(--e);
   }
-  .card:hover,
-.card:focus-within {
+  .card:hover {
     align-items: center;
   }
-  .card:hover:before,
-.card:focus-within:before {
+  .card:hover:before {
     transform: translateY(-4%);
   }
-  .card:hover:after,
-.card:focus-within:after {
+  .card:hover:after {
     transform: translateY(-50%);
   }
-  .card:hover .Scontent,
-.card:focus-within .Scontent {
+  .card:hover .Scontent {
     transform: translateY(0);
   }
-  .card:hover .Scontent > *:not(.title),
-.card:focus-within .Scontent > *:not(.title) {
+  .card:hover .Scontent > *:not(.title) {
     opacity: 1;
     transform: translateY(0);
     transition-delay: calc(var(--d) / 8);
   }
-  .card:focus-within:before, .card:focus-within:after,
+  /* .card:focus-within:before, .card:focus-within:after,
 .card:focus-within .Scontent,
 .card:focus-within .Scontent > *:not(.title) {
     transition-duration: 0s;
-  }
+  } */
 }

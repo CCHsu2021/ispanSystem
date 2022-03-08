@@ -2319,7 +2319,7 @@
 		} else if (video.type === 'vzaar') {
 			html = '<iframe frameborder="0"' + 'height="' + height + '"' + 'width="' + width +
 				'" allowfullscreen mozallowfullscreen webkitAllowFullScreen ' +
-				'src="//view.vzaar.com/' + video.id + '/player?autoplay=true"></iframe>';
+				'src="//view.vzaar.com/' + video.id + '/player?autoplay=false"></iframe>';
 		}
 
 		$('<div class="owl-video-frame">' + html + '</div>').insertAfter(item.find('.owl-video'));
@@ -2586,10 +2586,10 @@
 	 * @public
 	 */
 	Autoplay.Defaults = {
-		autoplay: false,
-		autoplayTimeout: 5000,
-		autoplayHoverPause: false,
-		autoplaySpeed: false
+		autoplay: true,
+		autoplayTimeout: 1000,
+		autoplayHoverPause: true,
+		autoplaySpeed: false,
 	};
 
 	/**
@@ -2810,8 +2810,10 @@
 	 * @todo Rename `slideBy` to `navBy`
 	 */
 	Navigation.Defaults = {
-		nav: false,
-		navText: [ 'prev', 'next' ],
+		nav: true,
+		margin:10,
+		navText: [ "<i class='fa fa-caret-left'></i>",
+		"<i class='fa fa-caret-right'></i>" ],
 		navSpeed: false,
 		navElement: 'div',
 		navContainer: false,
