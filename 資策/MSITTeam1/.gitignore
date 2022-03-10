@@ -15,4 +15,5 @@ TestResult.xml
 Version.cs
 Version.h
 Version.cpp
-MSITTeam1.csproj.FileListAbsolute.txt
+!obj/
+obj/*
