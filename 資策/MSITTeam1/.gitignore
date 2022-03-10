@@ -17,3 +17,4 @@ Version.h
 Version.cpp
 !obj/
 obj/*
+applicationhost.config
