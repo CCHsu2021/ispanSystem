@@ -6232,24 +6232,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LEE\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\anson\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\LEE\\Desktop\\資策\\MSITTeam1\\MSITTeam1.csproj",
+      "projectUniqueName": "C:\\Users\\anson\\Desktop\\芷\\期末專題\\資策\\MSITTeam1\\MSITTeam1.csproj",
       "projectName": "MSITTeam1",
-      "projectPath": "C:\\Users\\LEE\\Desktop\\資策\\MSITTeam1\\MSITTeam1.csproj",
-      "packagesPath": "C:\\Users\\LEE\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\LEE\\Desktop\\資策\\MSITTeam1\\obj\\",
+      "projectPath": "C:\\Users\\anson\\Desktop\\芷\\期末專題\\資策\\MSITTeam1\\MSITTeam1.csproj",
+      "packagesPath": "C:\\Users\\anson\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\anson\\Desktop\\芷\\期末專題\\資策\\MSITTeam1\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\LEE\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\anson\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6298,7 +6293,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
