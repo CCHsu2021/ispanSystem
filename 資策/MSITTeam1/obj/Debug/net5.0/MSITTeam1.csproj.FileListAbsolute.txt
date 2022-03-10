@@ -114,3 +114,4 @@ C:\Users\anson\Desktop\芷\期末專題\資策\MSITTeam1\obj\Debug\net5.0\MSITTe
 C:\Users\anson\Desktop\芷\期末專題\資策\MSITTeam1\obj\Debug\net5.0\ref\MSITTeam1.dll
 C:\Users\anson\Desktop\芷\期末專題\資策\MSITTeam1\obj\Debug\net5.0\MSITTeam1.pdb
 C:\Users\anson\Desktop\芷\期末專題\資策\MSITTeam1\obj\Debug\net5.0\MSITTeam1.genruntimeconfig.cache
+C:\Users\anson\Desktop\芷\期末專題\資策\MSITTeam1\obj\Debug\net5.0\MSITTeam1.csprojAssemblyReference.cache
