@@ -12,5 +12,9 @@ namespace MSITTeam1.Controllers
         {
             return View();
         }
+        public IActionResult A()
+        {
+            return View();
+        }
     }
 }
