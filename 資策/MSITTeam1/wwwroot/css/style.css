@@ -2530,7 +2530,7 @@ img{
 	margin-bottom: 50px;
 }
 .ad-back-image{
-            /* background: url(../../ispan圖片檔/photo/政府補助photo/advertisement_bcc.jpg) no-repeat center; */
+            /* background: url(../../images/photo/政府補助photo/advertisement_bcc.jpg) no-repeat center; */
             background-size: cover;
             width: 100%;
             height: 100%;
@@ -3013,10 +3013,11 @@ img{
 
 ***/
 
-.program-section{
+.program-section {
 	/* position: relative; */
 	/* padding: 120px 0 120px; */
-	background: url(../../ispan圖片檔/photo/政府補助photo/advertisement_bcc.jpg) center center / cover no-repeat;
+	background: url(../../images/photo/政府補助圖檔/advertisement_bcc.jpg) center center no-repeat;
+	background-size: cover ;
 	background-attachment: fixed;
 	/* background-color: #f9f5f0; */
 }
@@ -4317,7 +4318,7 @@ img{
 	margin-left: -200px;
 	height: 50px;
 	width: 70px;
-	/* background-image: url(../../ispan圖片檔/photo/curve-shape-1.png); */
+	/* background-image: url(../../images/photo/curve-shape-1.png); */
 	background-position: center top;
 	content: '';
 	background-repeat: no-repeat;
@@ -4387,7 +4388,7 @@ img{
 }
 
 .testimonial-block.style-two .content:after{
-	/* background-image: url(../../ispan圖片檔/photo/curve-shape-2.png); */
+	/* background-image: url(../../images/photo/curve-shape-2.png); */
 }
 
 .testimonial-section .owl-nav{
