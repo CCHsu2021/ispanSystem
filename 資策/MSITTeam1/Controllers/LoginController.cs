@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSITTeam1.Controllers
 {
-    public class AController : Controller
+    public class LoginController : Controller
     {
         public IActionResult Index()
         {
