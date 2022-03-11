@@ -47,7 +47,7 @@
                             <!-- link Box -->
 
                             <div class="link-box"><a asp-controller="login"asp-action="Index">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊</a></div>
-
+                           
                         </div>
                     </div>
                 </div>
@@ -387,6 +387,12 @@
     <script src="~/js/appear.js"></script>
     <script src="~/js/parallax.min.js"></script>
     <script src="~/js/script.js"></script>
+    @*<script>
+        if (@ViewBag.Name!= "")
+        {
+            $("#go").attr("asp-controller","會員中心")
+        }
+    </script>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
