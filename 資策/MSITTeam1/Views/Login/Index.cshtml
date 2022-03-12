@@ -1,5 +1,4 @@
-﻿@using MSITTeam1.ViewModels
-@model CTMemberViewModel
+﻿
 @{
     ViewData["Title"] = "Index";
 }
@@ -33,28 +32,29 @@
                             </div>
                         </div>
                     </form>
-                    <form asp-action="register">
+
                         <div class="sign-up-htm">
                             <div class="group">
                                 <label for="user" class="label">帳號</label>
-                                <input id="user" type="text" class="input" name="txtAccount" required>
+                                <input id="txtAccount" type="text" class="input" name="txtAccount" required>
                             </div>
                             <div class="group">
                                 <label for="pass" class="label">密碼(請輸入包含8-16碼英數字)</label>
-                                <input id="txtPassword" name="txtPassword" type="password" class="input" data-type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$" title="8-16包含一大一小寫英數字">
+                                <input id="txtPassword" name="txtPassword" type="password" class="input" data-type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$" title="8-16包含一大一小寫英數字" required>
                             </div>
-                            <div class="group" >
+                            <div class="group">
                                 <label for="pass" class="label">再次輸入密碼</label>
-                                <input id="txtPassword2" type="password" class="input" data-type="password">
+                                <input id="txtPassword2" type="password" class="input" data-type="password" required>
                             </div>
                             <div class="container">
                                 <span class="text-warning mt-0 mb-0" id="WarningMsg"></span>
                             </div>
                             <div class="group mt-1">
-                                <input id="registerbtn" type="submit" class="button" value="註冊">
+                                <button id="registerbtn" class="button">註冊</button>
+                                @*<input id="registerbtn" type="submit" class="button" value="註冊">*@
                             </div>
                         </div>
-                    </form>
+
                 </div>
             </div>
         </div>
@@ -62,32 +62,47 @@
 </div>
 @section Scripts
 {
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
- 
-        $("#txtPassword2").change(function ()
-        {
+
+        $("#txtPassword2").change(function () {
             let Pass1 = $("#txtPassword").val();
             let Pass2 = $("#txtPassword2").val();
             if (Pass1 != Pass2) {
                 document.getElementById("WarningMsg").innerText = "密碼不一致請重新確認"
             }
-            else
-            {
+            else {
                 document.getElementById("WarningMsg").innerText = ""
             }
         })
-
-        $("#registerbtn").click(function ()
-        {
-            var message = "<%=register()%>";
-            if (message == "此帳號已被註冊過")
-            {
-                swal("Uh Oh!", message, "warning");
-            }
-            if (message == "帳號註冊成功") {
-                swal("太棒了!", message, "success");
-            }
+        $("#registerbtn").click(function () {
+            $.ajax({
+                type: "Post",
+                url: "Login/register",
+                data: { account: $("#txtAccount").val(), password: $("#txtPassword").val() },
+                dataType: "text",
+                success: function (message) {
+                    if (message == "此帳號已被註冊過") {
+                        Swal.fire("Uh Oh!", message, "warning");
+                    } else if (message == "帳號註冊成功") {
+                        Swal.fire("太棒了!", message, "success");
+                    }
+                }
+            })
+        })
+        $("#loginbtn").click(function () {
+            $.ajax({
+                type: "Post",
+                url: "Login/login",
+                data: { account: $("#txtAccount").val(), password: $("#txtPassword").val() },
+                dataType: "text",
+                success: function (message) {
+                    if (message == "此帳號已被註冊過") {
+                        Swal.fire("Uh Oh!", message, "warning");
+                    } else if (message == "帳號註冊成功") {
+                        Swal.fire("太棒了!", message, "success");
+                    }
+                }
+            })
         })
 
     </script>

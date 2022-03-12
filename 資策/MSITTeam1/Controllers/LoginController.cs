@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+
 namespace MSITTeam1.Controllers
 {
     public class LoginController : Controller
@@ -50,18 +51,15 @@ namespace MSITTeam1.Controllers
                     string type = mem.FMemberType.ToString();
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, type);
-                    return RedirectPermanent("https://localhost:44387/");
+                    return RedirectPermanent("../Index");
                 }
             }
             ViewBag.ERROR = "帳號密碼錯誤請重新輸入";
             return RedirectToAction("Index");
         }
-        public string register()
+
+        public string register(String account,String password)
         {
-            ViewBag.Account = Request.Form["txtAccount"];
-            ViewBag.Password = Request.Form["txtPassword"];
-            string account = ViewBag.Account;
-            string password = ViewBag.Password;
             helloContext db = new helloContext();
             TMember mem = db.TMembers.FirstOrDefault(p => p.FAccount == account);
             if(mem != null)
@@ -87,17 +85,6 @@ namespace MSITTeam1.Controllers
             db.TMembers.Add(viewModel);
             db.SaveChanges();
             return "帳號註冊成功";
-        }
-
-
-
-        private bool IsTheSame()
-        {
-            ViewBag.P1 = Request.Form["txtPassword"];
-            ViewBag.P2 = Request.Form["txtPassword2"];
-            if(ViewBag.P1 == ViewBag.P2)
-                return false;
-            return true;
         }
         public string getUserName()
         {
