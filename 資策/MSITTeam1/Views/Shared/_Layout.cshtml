@@ -46,7 +46,7 @@
                         <div class="top-right">
                             <!-- link Box -->
 
-                            <div class="link-box" id="username"><a asp-controller="login"asp-action="Index">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊</a></div>
+                            <div class="link-box" id="username"><a asp-controller='login'asp-action="Index">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊</a></div>
                            
                         </div>
                     </div>
@@ -388,19 +388,20 @@
     <script src="~/js/parallax.min.js"></script>
     <script src="~/js/script.js"></script>
     <script>
-        $(function () {
-            $.ajax({
-                type: "get",
-                url: "Login!getLoginName.action",
-                dataType: "text",
-                success: function (result) {
-                    document.getElementById("username").innerHTML = "<a asp-controller='會員中心' asp-action='Index'></a><a asp-controller='login' asp-action='Index'>";
-                },
-                error: function () {
-                    alert("請求失敗");
-                }
-            });
-        });
+        //$(function () {
+        //    $.ajax({
+        //        type: "get",
+        //        url: "Login!getLoginName.action",
+        //        dataType: "text",
+        //        success: function (result) {
+        //            document.getElementById("username").innerHTML = "<a asp-controller='會員中心' asp-action='Index'></a><a asp-controller='login' asp-action='Index'>登出</a>";
+        //        },
+        //        error: function () {
+        //            alert("請求失敗");
+        //        }
+                
+        //    });
+        //});
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

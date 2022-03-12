@@ -56,9 +56,8 @@ namespace MSITTeam1.Controllers
             ViewBag.ERROR = "帳號密碼錯誤請重新輸入";
             return RedirectToAction("Index");
         }
-        public IActionResult register()
+        public string register()
         {
-            ViewBag.ERROR = "";
             ViewBag.Account = Request.Form["txtAccount"];
             ViewBag.Password = Request.Form["txtPassword"];
             string account = ViewBag.Account;
@@ -67,18 +66,7 @@ namespace MSITTeam1.Controllers
             TMember mem = db.TMembers.FirstOrDefault(p => p.FAccount == account);
             if(mem != null)
             {
-                ViewBag.ERROR = "此帳號已註冊過";
-                return RedirectToAction("Index");
-            }
-            if (IsTheSame())
-            {
-                ViewBag.ERROR = "輸入密碼不同請重新輸入";
-                return RedirectToAction("Index");
-            }
-            if (IsValid())
-            {
-                ViewBag.ERROR = "密碼格式輸入錯誤";
-                return RedirectToAction("Index");
+                return "此帳號已被註冊過";
             }
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
@@ -89,16 +77,16 @@ namespace MSITTeam1.Controllers
             SHA384Managed sha = new SHA384Managed();
             byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
             byte[] passwordhashed = sha.ComputeHash(merged);
-            CTMemberViewModel viewModel = new CTMemberViewModel()
+            TMember viewModel = new TMember()
             {
                 FAccount = account,
                 FPassword = passwordhashed,
                 FSalt = saltbyte,
                 FMemberType = 1,
             };
-            db.TMembers.Add(viewModel.member);
+            db.TMembers.Add(viewModel);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return "帳號註冊成功";
         }
 
 
@@ -108,14 +96,6 @@ namespace MSITTeam1.Controllers
             ViewBag.P1 = Request.Form["txtPassword"];
             ViewBag.P2 = Request.Form["txtPassword2"];
             if(ViewBag.P1 == ViewBag.P2)
-                return false;
-            return true;
-        }
-        private bool IsValid()
-        {
-            ViewBag.P1 = Request.Form["txtPassword"];
-            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$";
-            if (Regex.IsMatch(ViewBag.P1, pattern))
                 return false;
             return true;
         }
