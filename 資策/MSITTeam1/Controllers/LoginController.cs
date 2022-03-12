@@ -119,5 +119,28 @@ namespace MSITTeam1.Controllers
                 return false;
             return true;
         }
+        public string getUserName()
+        {
+            string account = "";
+            string type = "";
+            string Username = "";
+            if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGINED_USER_ACCOUNT))
+            {
+                account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+                type = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE);
+                helloContext hello = new helloContext();
+                if (type == "1")
+                {
+                    StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
+                    Username = stu.Name;
+                }
+                else if (type == "2")
+                {
+                    TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
+                    Username = com.FName;
+                }
+            }
+            return Username;
+        }
     }
 }
