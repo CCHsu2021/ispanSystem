@@ -13,8 +13,6 @@ namespace MSITTeam1.Controllers
         public IActionResult Index()
         {
             ViewBag.Name = "";
-        
-
             return View();
         }
     }

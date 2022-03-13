@@ -388,19 +388,19 @@
     <script src="~/js/parallax.min.js"></script>
     <script src="~/js/script.js"></script>
     <script src="~/js/sweetalert2.all.min.js"></script>
-    <script>
-            $(function () {
-                $.ajax({
-                    type: "post",
-                    url: "Login/getLoginName",
-                    dataType: "text",
-                    success: function (result) {
-                        if (result != "")
-                            document.getElementById("username").innerHTML = "<a asp-controller='會員中心' asp-action='Index'></a>&nbsp;&nbsp;<a asp-controller='login' asp-action='Index'>登出</a>";
-                    }
-                });
+    @*<script>
+        $(function () {
+            $.ajax({
+                type: "post",
+                url: "Login/getLoginName",
+                dataType: "text",
+                success: function (result) {
+                    if (result != "")
+                        document.getElementById("username").innerHTML = "<a asp-controller='會員中心' asp-action='Index'></a>&nbsp;&nbsp;<a asp-controller='login' asp-action='Index'>登出</a>";
+                }
             });
-    </script>
+        });
+    </script>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

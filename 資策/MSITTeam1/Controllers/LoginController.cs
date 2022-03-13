@@ -11,7 +11,6 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-
 namespace MSITTeam1.Controllers
 {
     public class LoginController : Controller
@@ -20,13 +19,8 @@ namespace MSITTeam1.Controllers
         {
             return View();
         }
-        public IActionResult login()
+        public string login(String account, String password)
         {
-            ViewBag.ERROR = "";
-            ViewBag.Account = Request.Form["txtAccount"];
-            ViewBag.Password = Request.Form["txtPassword"];
-            string account = ViewBag.Account;
-            string password = ViewBag.Password;
             helloContext db = new helloContext();
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
@@ -50,12 +44,12 @@ namespace MSITTeam1.Controllers
                     string act = mem.FAccount;
                     string type = mem.FMemberType.ToString();
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
-                    HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, type);
-                    return RedirectPermanent("../Index");
+                    HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE, type);
+                    string name = getUserName();
+                    return $"{name}";
                 }
             }
-            ViewBag.ERROR = "帳號密碼錯誤請重新輸入";
-            return RedirectToAction("Index");
+            return "帳號密碼錯誤請重新輸入";
         }
 
         public string register(String account,String password)
@@ -99,15 +93,34 @@ namespace MSITTeam1.Controllers
                 if (type == "1")
                 {
                     StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
-                    Username = stu.Name;
+                    if (stu == null)
+                    {
+                        Username = "親愛的用戶";
+                    }
+                    else
+                    {
+                        Username = stu.Name;
+                    }
                 }
                 else if (type == "2")
                 {
                     TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
-                    Username = com.FName;
+                    if (com == null)
+                    {
+                        Username = "親愛的用戶";
+                    }
+                    else
+                    {
+                        Username = com.FName;
+                    }
                 }
             }
             return Username;
+        }
+
+        public IActionResult ForgetPWD()
+        {
+            return View();
         }
     }
 }
