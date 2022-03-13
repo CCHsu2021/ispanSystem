@@ -348,6 +348,19 @@
 		});
 	}
 
+	//Go top div Visable
+	$(document).ready(function () {
+		$(".go-top").fadeOut();
+		$(window).scroll(function () {
+			if ($(window).scrollTop() > 800) {
+				$(".go-top").fadeIn();
+			} else {
+				$(".go-top").fadeOut();
+            }
+        })
+    })
+
+
 	// Elements Animation
 	if ($('.wow').length) {
 		var wow = new WOW(
