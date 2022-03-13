@@ -26,7 +26,7 @@
     <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
     <!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
 </head>
-<body class="pt-10">
+<body class="pt-10" onload="username">
 
     <div class="page-wrapper">
         <!-- Preloader -->
@@ -50,7 +50,7 @@
                         <div class="top-right">
                             <!-- link Box -->
 
-                            <div class="link-box" id="username"><a asp-controller='login' asp-action="Index">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊</a></div>
+                            <div class="link-box" id="usernamebox" ><a href="Login/Index">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊 id="username"</a></div>
 
                         </div>
                     </div>
@@ -392,19 +392,22 @@
     <script src="~/js/parallax.min.js"></script>
     <script src="~/js/script.js"></script>
     <script src="~/js/sweetalert2.all.min.js"></script>
-    @*<script>
-        $(function () {
-            $.ajax({
-                type: "post",
-                url: "Login/getLoginName",
-                dataType: "text",
-                success: function (result) {
-                    if (result != "")
-                        document.getElementById("username").innerHTML = "<a asp-controller='會員中心' asp-action='Index'></a>&nbsp;&nbsp;<a asp-controller='login' asp-action='Index'>登出</a>";
-                }
-            });
+    <script>
+        $(function()
+        {
+            if (@CDictionary.username == "親愛的用戶")
+            {
+                Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
+                setTimeout("javascript:location.href='..'", 2000);
+            }
+            if (@CDictionary.username != null)
+            {
+                $("#username").attr("href", "會員中心")
+                $("#username").text =@CDictionary.username
+                $("#usernamebox").append("<a href='Login/logout'>登出</a>")
+            }
         });
-    </script>*@
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

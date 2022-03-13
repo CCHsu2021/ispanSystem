@@ -10,5 +10,6 @@ namespace MSITTeam1.Models
         public static readonly string SK_PRODUCTS_PURCHASED_LIST = "SK_PRODUCTS_PURCHASED_LIST";
         public static readonly string SK_LOGINED_USER_ACCOUNT = "SK_LOGINED_USER_ACCOUNT";
         public static readonly string SK_LOGINED_USER_MEMBERTYPE = "SK_LOGINED_USER_MEMBERTYPE";
+        public static string username { get; set; }
     }
 }

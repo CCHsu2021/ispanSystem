@@ -95,11 +95,11 @@ namespace MSITTeam1.Controllers
                     StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
                     if (stu == null)
                     {
-                        Username = "親愛的用戶";
+                        CDictionary.username = "親愛的用戶";
                     }
                     else
                     {
-                        Username = stu.Name;
+                        CDictionary.username = stu.Name;
                     }
                 }
                 else if (type == "2")
@@ -107,11 +107,11 @@ namespace MSITTeam1.Controllers
                     TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
                     if (com == null)
                     {
-                        Username = "親愛的用戶";
+                        CDictionary.username = "親愛的用戶";
                     }
                     else
                     {
-                        Username = com.FName;
+                        CDictionary.username = com.FName;
                     }
                 }
             }
