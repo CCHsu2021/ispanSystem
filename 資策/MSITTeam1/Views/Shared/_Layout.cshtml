@@ -28,7 +28,7 @@
         <!-- Preloader -->
         <div class="preloader"></div>
 
-        <header class="main-header header-style-two fixed-top mb-5" >
+        <header class="main-header header-style-two fixed-top mb-5">
             <!-- Header Top -->
             <div class="header-top">
                 <div class="auto-container">
@@ -46,8 +46,8 @@
                         <div class="top-right">
                             <!-- link Box -->
 
-                            <div class="link-box"><a asp-controller="login"asp-action="Index">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊</a></div>
-                           
+                            <div class="link-box" id="username"><a asp-controller='login' asp-action="Index">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊</a></div>
+
                         </div>
                     </div>
                 </div>
@@ -200,8 +200,8 @@
                 </div>
             </div> -->
         </header>
-                @RenderBody()
-    
+        @RenderBody()
+
 
 
         <!--Main Footer-->
@@ -387,12 +387,20 @@
     <script src="~/js/appear.js"></script>
     <script src="~/js/parallax.min.js"></script>
     <script src="~/js/script.js"></script>
-    @*<script>
-        if (@ViewBag.Name!= "")
-        {
-            $("#go").attr("asp-controller","會員中心")
-        }
-    </script>*@
+    <script src="~/js/sweetalert2.all.min.js"></script>
+    <script>
+            $(function () {
+                $.ajax({
+                    type: "post",
+                    url: "Login/getLoginName",
+                    dataType: "text",
+                    success: function (result) {
+                        if (result != "")
+                            document.getElementById("username").innerHTML = "<a asp-controller='會員中心' asp-action='Index'></a>&nbsp;&nbsp;<a asp-controller='login' asp-action='Index'>登出</a>";
+                    }
+                });
+            });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

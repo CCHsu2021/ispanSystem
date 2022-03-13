@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+
 namespace MSITTeam1.Controllers
 {
     public class LoginController : Controller
@@ -50,35 +51,20 @@ namespace MSITTeam1.Controllers
                     string type = mem.FMemberType.ToString();
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, type);
-                    return RedirectPermanent("https://localhost:44387/");
+                    return RedirectPermanent("../Index");
                 }
             }
             ViewBag.ERROR = "帳號密碼錯誤請重新輸入";
             return RedirectToAction("Index");
         }
-        public IActionResult register()
+
+        public string register(String account,String password)
         {
-            ViewBag.ERROR = "";
-            ViewBag.Account = Request.Form["txtAccount"];
-            ViewBag.Password = Request.Form["txtPassword"];
-            string account = ViewBag.Account;
-            string password = ViewBag.Password;
             helloContext db = new helloContext();
             TMember mem = db.TMembers.FirstOrDefault(p => p.FAccount == account);
             if(mem != null)
             {
-                ViewBag.ERROR = "此帳號已註冊過";
-                return RedirectToAction("Index");
-            }
-            if (IsTheSame())
-            {
-                ViewBag.ERROR = "輸入密碼不同請重新輸入";
-                return RedirectToAction("Index");
-            }
-            if (IsValid())
-            {
-                ViewBag.ERROR = "密碼格式輸入錯誤";
-                return RedirectToAction("Index");
+                return "此帳號已被註冊過";
             }
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
@@ -89,35 +75,39 @@ namespace MSITTeam1.Controllers
             SHA384Managed sha = new SHA384Managed();
             byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
             byte[] passwordhashed = sha.ComputeHash(merged);
-            CTMemberViewModel viewModel = new CTMemberViewModel()
+            TMember viewModel = new TMember()
             {
                 FAccount = account,
                 FPassword = passwordhashed,
                 FSalt = saltbyte,
                 FMemberType = 1,
             };
-            db.TMembers.Add(viewModel.member);
+            db.TMembers.Add(viewModel);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return "帳號註冊成功";
         }
-
-
-
-        private bool IsTheSame()
+        public string getUserName()
         {
-            ViewBag.P1 = Request.Form["txtPassword"];
-            ViewBag.P2 = Request.Form["txtPassword2"];
-            if(ViewBag.P1 == ViewBag.P2)
-                return false;
-            return true;
-        }
-        private bool IsValid()
-        {
-            ViewBag.P1 = Request.Form["txtPassword"];
-            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$";
-            if (Regex.IsMatch(ViewBag.P1, pattern))
-                return false;
-            return true;
+            string account = "";
+            string type = "";
+            string Username = "";
+            if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGINED_USER_ACCOUNT))
+            {
+                account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+                type = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE);
+                helloContext hello = new helloContext();
+                if (type == "1")
+                {
+                    StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
+                    Username = stu.Name;
+                }
+                else if (type == "2")
+                {
+                    TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
+                    Username = com.FName;
+                }
+            }
+            return Username;
         }
     }
 }
