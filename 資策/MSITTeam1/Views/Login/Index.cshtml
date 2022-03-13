@@ -46,8 +46,8 @@
                             <span class="text-warning mt-0 mb-0" id="WarningMsg"></span>
                         </div>
                         <div class="group mt-1">
-                            @*<button id="registerbtn" class="button">註冊</button>*@
-                            <input id="registerbtn" type="submit" class="button" value="註冊">
+                            <button id="registerbtn" class="button">註冊</button>
+                            @*<input id="registerbtn" type="submit" class="button" value="註冊">*@
                         </div>
                     </div>
                 </div>
@@ -75,9 +75,10 @@
         const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
         $("#registerbtn").click(function ()
         {
+            if($())
             if (!regex.test($("#RPassword").val()))
             {
-                Swal.fire("格式不符請再次確認", "請輸入8-16碼包含一大一小寫英數字", "warning")
+                Swal.fire("密碼格式不符請再次確認", "請輸入8-16碼包含一大一小寫英數字", "warning")
                 return;
             }
             if ($("#RPassword").val() == "" || $("#RPassword2").val() == "")
@@ -113,7 +114,8 @@
                 success: function (message) {
                     if (message == "帳號密碼錯誤請重新輸入") {
                         Swal.fire("登入失敗", message, "warning");
-                    } else
+                    }
+                    else
                     {
                         Swal.fire( message, "歡迎登入", "success",);
                         setTimeout("javascript:location.href='../Index'", 2000);
