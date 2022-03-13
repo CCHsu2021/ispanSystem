@@ -1,24 +1,5 @@
-﻿.navbar {
-    background-color: #55aaee;
-}
-
-.navbar-nav {
-    padding-left: 10%;
-}
-
-    .navbar-nav li a {
-        font-size: 20px;
-        font-weight: 700;
-        color: #fff;
-        margin: auto 20px;
-    }
-
-.nav-social a {
-    padding-right: 30px;
-}
-
-.nav-social i {
-    color: white;
+﻿#cont-about {
+    background-color: #f2f5ff;
 }
 
 .navbar.scrolled {
@@ -32,43 +13,15 @@
     transition: all 1s ease;
 }
 
-.cont-small {
-    background-color: #ddeeff;
-}
-
-.fa-bars {
-    color: white;
-}
-
-#demo {
-    background-color: #efefef;
-}
-
-.jumbotron {
-    background-color: #55aaee;
-    padding: 0;
-    margin: 0;
-}
-
-.cont-about {
-    background-color: #fff;
-}
-
-    .cont-about .tab-content {
-        background-color: #fff;
-    }
-
-
 .nav-pills > .nav-item a,
 .nav-pills > .nav-item a:focus {
-    color: #fff;
+    color: #333;
     text-align: center;
     padding: 15px;
-    text-transform: uppercase;
-    font-size: 18px;
-    font-weight: 700;
-    background-color: #55aacc;
-    display:block;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #fff;
+    display: block;
 }
 .first-vertical-tabs {
     border-top-left-radius: 1.25rem;
@@ -81,21 +34,29 @@
 }
 .nav-pills > .nav-item > a.active {
     background-color: #2288bb;
+    color:white;
 }
 
 
 .nav-pills > li > a:hover,
 .nav-pills > li > a:focus:hover {
     background-color: #2288bb;
+    color: white;
 }
 
 .nav-pills > li > a.active,
 .nav-pills > li > a.active:focus {
     background-color: #2288bb;
+    color: white;
 }
 
 .menu-box-2 {
     height: 485px;
     overflow: auto;
     padding: 20px;
+}
+.tab-content{
+    background-color:white;
+    padding:1.5rem;
+    border-radius:1.25rem;
 }
