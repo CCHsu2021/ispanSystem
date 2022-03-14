@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 
 namespace MSITTeam1
@@ -25,6 +27,7 @@ namespace MSITTeam1
         {
             services.AddControllersWithViews();
             services.AddSession();
+            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

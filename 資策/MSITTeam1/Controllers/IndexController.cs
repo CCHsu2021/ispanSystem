@@ -12,9 +12,7 @@ namespace MSITTeam1.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.Name = "";
-        
-
+            ViewBag.Name = CDictionary.username;
             return View();
         }
     }
