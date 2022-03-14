@@ -2587,8 +2587,8 @@
 	 */
 	Autoplay.Defaults = {
 		autoplay: true,
-		autoplayTimeout: 1000,
-		autoplayHoverPause: true,
+		autoplayTimeout: 5000,
+		autoplayHoverPause: false,
 		autoplaySpeed: false,
 	};
 
