@@ -14,27 +14,27 @@
                     <div class="sign-in-htm">
                         <div class="group">
                             <label for="user" class="label">帳號</label>
-                            <input id="LAccount" type="text" class="input" name="txtAccount" required>
+                            <input id="FAccount" type="text" class="input" name="account" required>
                         </div>
                         <div class="group">
                             <label for="pass" class="label">Email</label>
-                            <input id="LPassword" type="password" class="input" data-type="password" name="txtPassword" required>
+                            <input id="FEmail" type="text" class="input"  name="email" required>
                         </div>
                         <div class="group my-4">
-                            <button id="loginbtn" class="button">發送驗證信</button>
+                            <button id="ForgetPasswordBtn" class="button">確定</button>
                         </div>
                     </div>
                     <div class="sign-up-htm">
                         <div class="group">
                             <label for="user" class="label">姓名</label>
-                            <input id="RAccount" type="text" class="input" name="txtAccount" required>
+                            <input id="FName" type="text" class="input" name="txtAccount" required>
                         </div>
                         <div class="group">
                             <label for="pass" class="label">身分證字號</label>
-                            <input id="RPassword" name="txtPassword" type="password" class="input" data-type="password" required>
+                            <input id="FId" name="txtPassword" type="password" class="input" data-type="password" required>
                         </div>
                         <div class="group mt-1">
-                            <button id="registerbtn" class="button">發送驗證信</button>
+                            <button id="registerbtn" class="button">確定</button>
                         </div>
                     </div>
                 </div>
@@ -45,48 +45,18 @@
 @section Scripts
 { 
     <script>
-        var VuePage = new Vue(
-         {
-                el: '#VuePage',
-                data: function (){var data = {form: {}};
-                return data;
-         },methods:
-         {
-                // 前端驗證權杖
-                    GetToken: function ()
-                    {
-                    var token = '@Html.AntiForgeryToken()';
-                    token = $(token).val();
-                    return token;
-                    }
-                // 寄送驗證碼
-                , SendMailToken: function () {
-                    var self = this;
+        const account = document.querySelector("#FAccount");
+        const email = document.querySelector("#FEmail");
+        $("#ForgetPasswordBtn").click(() => {
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener("load", () => {
+                const data = xhr.responseText;
+            })
+            xhr.open("POST","@Url.Content("~/PasswordIdentify")");
+            xhr.send(account.value,email.value);
 
-                    // 組合表單資料
-                    var postData = {};
-                    postData['UserID'] = self.form.UserID;
-
-                    // 使用 jQuery Ajax 傳送至後端
-                    $.ajax({
-                        url:'@Url.Action("SendMailToken", "Member")',
-                        method:'POST',
-                        dataType:'json',
-                        data: { inModel: postData, __RequestVerificationToken: self.GetToken() },
-                        success: function (datas) {
-                            if (datas.ErrMsg) {
-                                alert(datas.ErrMsg);
-                                return;
-                            }
-                            alert(datas.ResultMsg);
-                        },
-                        error: function (err) {
-                            $('#ErrorMsg').html(err.responseText);
-                            $('#ErrorAlert').modal('toggle');
-                        }
-                    });
-                }
-            }
         })
+
+
     </script>
 }
