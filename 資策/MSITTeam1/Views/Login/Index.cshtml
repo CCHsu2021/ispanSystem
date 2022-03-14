@@ -75,7 +75,6 @@
         const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
         $("#registerbtn").click(function ()
         {
-            if($())
             if (!regex.test($("#RPassword").val()))
             {
                 Swal.fire("密碼格式不符請再次確認", "請輸入8-16碼包含一大一小寫英數字", "warning")
@@ -93,7 +92,7 @@
             }
             $.ajax({
                 type: "Post",
-                url: "Login/register",
+                url: "register",
                 data: { account: $("#RAccount").val(), password: $("#RPassword2").val() },
                 dataType: "text",
                 success: function (message) {
@@ -101,6 +100,7 @@
                         Swal.fire("Uh Oh!", message, "warning");
                     } else if (message == "帳號註冊成功") {
                         Swal.fire("太棒了!", message, "success");
+                        setTimeout("javascript:location.href='../Login'", 2000)
                     }
                 }
             })
