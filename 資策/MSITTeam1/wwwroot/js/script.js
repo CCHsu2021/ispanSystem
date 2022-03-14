@@ -352,7 +352,7 @@
 	$(document).ready(function () {
 		$(".go-top").fadeOut();
 		$(window).scroll(function () {
-			if ($(window).scrollTop() > 800) {
+			if ($(window).scrollTop() > 600) {
 				$(".go-top").fadeIn();
 			} else {
 				$(".go-top").fadeOut();

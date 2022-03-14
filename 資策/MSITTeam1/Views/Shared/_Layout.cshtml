@@ -26,13 +26,13 @@
     <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
     <!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
 </head>
-<body class="pt-10" onload="username">
+<body onload="username">
 
     <div class="page-wrapper">
         <!-- Preloader -->
         <div class="preloader"></div>
 
-        <header class="main-header header-style-two fixed-top mb-5">
+        <header class="main-header header-style-two fixed-top">
             <!-- Header Top -->
             <div class="header-top">
                 <div class="auto-container">
@@ -50,7 +50,7 @@
                         <div class="top-right">
                             <!-- link Box -->
 
-                            <div class="link-box" id="usernamebox" ><a href="Login/Index" id="username">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊 </a></div>
+                            <div class="link-box" id="usernamebox"><a href="Login/Index" id="username">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊 </a></div>
 
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                 <div class="auto-container auto-container-header clearfix">
                     <!--Info-->
                     <div class="logo-outer">
-                        <div class="logo"><a asp-controller="Index" asp-action="Index"><img src="images/logo.png" alt="" title=""></a></div>
+                        <div class="logo"><a asp-controller="Index" asp-action="Index"><img src="~/images/logo.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -132,12 +132,12 @@
                             </div>
                         </nav>
                         <!-- Main Menu End-->
-                      
+
                     </div>
                 </div>
             </div>
             <!--End Header Upper-->
-           
+
         </header>
         @RenderBody()
 
@@ -145,7 +145,7 @@
 
         <!--Main Footer-->
         <footer class="main-footer">
-          
+
             <!--Scroll to top-->
             <div class="go-top scroll-to-target" data-target="html">
                 <span class="icon icon-arrow-up"></span>
@@ -265,7 +265,18 @@
     <script src="~/js/parallax.min.js"></script>
     <script src="~/js/script.js"></script>
     <script src="~/js/sweetalert2.all.min.js"></script>
-    <script>
+    @await RenderSectionAsync("Scripts", required: false)
+<script>
+        //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
+        var onResize = function () {
+            $("body").css("padding-top", $(".main-header").height());
+        };
+        $(window).resize(onResize);
+        $(function () {
+            onResize();
+        });
+
+
             $(function () {
                 $.ajax({
                     type: "post",
@@ -278,33 +289,9 @@
                 });
             });
 
-        //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
-        var onResize = function () {
-            $("body").css("padding-top", $(".main-header").height());
-        };
-        $(window).resize(onResize);
-        $(function () {
-            onResize();
-        });
-
-        //go top
-        $(".go-top").hide();
-        $(function () {
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 400) {
-                    $(".go-top").fadeIn();
-                } else {
-                    $(".go-top").fadeOut();
-                }
-            });
-            $(".go-top").click(function () {
-                $('body, html').animate({
-                    scrollTop: 0
-                }, 500);
-            });
         $(function()
         {
-            console.log("@ViewBag.name")
+            console.log("@ViewBag.name");
             if ("@ViewBag.name" == "親愛的用戶")
             {
                 Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
@@ -317,7 +304,6 @@
                 $("#usernamebox").append("<a href='Login/logout'>登出</a>")
             }
         });
-    </script>
-    @await RenderSectionAsync("Scripts", required: false)
+</script>
 </body>
 </html>

@@ -58,7 +58,13 @@
 	}
 	
 	.header-style-two .main-menu .navigation > li{
-		margin-left:10px;
+		/*margin-left:10px;*/
+		padding:30px 10px; 
+	}
+	.main-menu .navigation > li:hover:before,
+	.main-menu .navigation > li.current:before {
+		width: 50px;
+		left: 10px;
 	}
 }
 .pt-10 {
@@ -131,7 +137,14 @@
 	}
 
 	.header-style-two .main-menu .navigation > li{
-		margin-left: 15px;
+		/*margin-left: 15px;*/
+		padding:30px 7px;
+	}
+
+	.main-menu .navigation > li:hover:before,
+	.main-menu .navigation > li.current:before {
+		width: 50px;
+		left: 7px;
 	}
 
 	.about-section-two .image-column .inner-column{

@@ -6,18 +6,6 @@
   --font-serif: 'Cardo', serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-/* html, body {
-  height: 100%;
-} */
-
-body {
-  display: grid;
-  place-items: center;
-}
 
 .page-content {
   display: block;
