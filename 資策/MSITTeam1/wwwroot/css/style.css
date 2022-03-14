@@ -702,7 +702,7 @@ img{
 
 ***/
 
-/*.scroll-to-top{
+.scroll-to-top{
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -721,37 +721,15 @@ img{
 	-ms-transition:all 300ms ease;
 	-o-transition:all 300ms ease;
 	transition:all 300ms ease;		
-}*/
-
-.go-top {
-	width: 35px;
-	height: 35px;
-	text-align: center;
-	border-radius: 50%;
-	padding: 1.5rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	bottom: 20px;
-	right: 20px;
-	position: fixed;
-	background-color: #eee;
-	z-index: 999;
-	/* border: #1e3c84 solid 2px; */
 }
-	/* .go-top:hover{
-	cursor: pointer;
-	background-color: white;
-} */
 
-.go-top:hover {
-	-webkit-transition: all 500ms ease;
-	-ms-transition: all 500ms ease;
-	transition: all 500ms ease;
-	background-color: gainsboro;
-	-webkit-transform: rotate(360deg);
-	-ms-transform: rotate(360deg);
-	transform: rotate(360deg);
+.scroll-to-top:hover .icon{
+	-webkit-transition:all 300ms linear;
+	-ms-transition:all 300ms linear;
+	transition:all 300ms linear;
+	-webkit-transform: rotate(-180deg);
+	-ms-transform: rotate(-180deg);
+	transform: rotate(-180deg);
 }
 
 .icon-arrow-up{
@@ -980,7 +958,7 @@ img{
 	position:relative;
 	display: inline-block;
 	padding:35px 0px;
-	margin: 0 15px;
+	/*margin: 0 15px;*/
 	-webkit-transition:all 300ms ease;
 	-moz-transition:all 300ms ease;
 	-ms-transition:all 300ms ease;
@@ -1008,7 +986,7 @@ img{
 .main-menu .navigation > li:hover:before,
 .main-menu .navigation > li.current:before{
 	width: 50px;
-	left: 0;
+	left: 20px;
 }
 
 .main-menu .navigation > li > a{
@@ -1511,9 +1489,9 @@ img{
 }
 
 .header-style-two .main-menu .navigation > li{
-	padding: 30px 0px;
-	margin-left: 40px;
-	margin-right: 0;
+	padding: 30px 20px;
+/*	margin-left: 40px;
+	margin-right: 0;*/
 }
 
 .header-style-two .header-lower .social-icon-colored{
@@ -5268,6 +5246,26 @@ img{
 
 ***/
 
+.go-top{
+	width: 35px;
+    height: 35px;
+    text-align: center;
+    border-radius: 50%;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 20px;
+    right: 20px;
+    position: fixed;
+	background-color: #eee;
+	z-index: 999;
+	/* border: #1e3c84 solid 2px; */
+}
+/* .go-top:hover{
+	cursor: pointer;
+	background-color: white;
+} */
 .main-footer{
 	position:relative;
 	z-index: 10;
@@ -6081,3 +6079,6 @@ img{
     border-radius: 10px;
     border: 0px dashed #819636;
   }
+.go-top{
+	cursor:pointer;
+}

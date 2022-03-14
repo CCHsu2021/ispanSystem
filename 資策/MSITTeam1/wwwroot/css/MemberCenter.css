@@ -1,5 +1,5 @@
 ﻿#cont-about {
-    background-color: #f2f5ff;
+    background-color: #EFEFEF;
 }
 
 .navbar.scrolled {
@@ -17,7 +17,8 @@
 .nav-pills > .nav-item a:focus {
     color: #333;
     text-align: center;
-    padding: 15px;
+    /*background-color: lightblue;*/
+    padding: 10px;
     font-size: 16px;
     font-weight: 600;
     background-color: #fff;
@@ -33,20 +34,20 @@
     border-bottom-right-radius: 1.25rem;
 }
 .nav-pills > .nav-item > a.active {
-    background-color: #2288bb;
-    color:white;
+    background-color: #1e3c84;
+    color: white;
 }
 
 
 .nav-pills > li > a:hover,
 .nav-pills > li > a:focus:hover {
-    background-color: #2288bb;
+    background-color: #1e3c84;
     color: white;
 }
 
 .nav-pills > li > a.active,
 .nav-pills > li > a.active:focus {
-    background-color: #2288bb;
+    background-color: #1e3c84;
     color: white;
 }
 
