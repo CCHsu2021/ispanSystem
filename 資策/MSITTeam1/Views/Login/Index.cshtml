@@ -22,7 +22,7 @@
                             <input id="LPassword" type="password" class="input" data-type="password" name="txtPassword" required>
                         </div>
                         <div class="group my-4">
-                            <button id="loginbtn" class="button">登入</button>
+                            <button id="loginbtn" class="button" type="button">登入</button>
                             @*<input type="submit" class="button" value="登入">*@
                         </div>
                         <div class="group text-center">
@@ -46,7 +46,7 @@
                             <span class="text-warning mt-0 mb-0" id="WarningMsg"></span>
                         </div>
                         <div class="group mt-1">
-                            <button id="registerbtn" class="button">註冊</button>
+                            <button id="registerbtn" class="button" type="button">註冊</button>
                             @*<input id="registerbtn" type="submit" class="button" value="註冊">*@
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                         Swal.fire("Uh Oh!", message, "warning");
                     } else if (message == "帳號註冊成功") {
                         Swal.fire("太棒了!", message, "success");
-                        setTimeout("javascript:location.href='../Login'", 2000)
+                        setTimeout("javascript:location.href='~/Login'", 2000)
                     }
                 }
             })
@@ -118,7 +118,7 @@
                     else
                     {
                         Swal.fire( message, "歡迎登入", "success",);
-                        setTimeout("javascript:location.href='../Index'", 2000);
+                        setTimeout("javascript:location.href='~/Index'", 2000);
                     }
                 }
             })
