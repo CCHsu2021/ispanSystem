@@ -15,30 +15,37 @@ namespace MSITTeam1.Controllers
 {
     public class LoginController : Controller
     {
+        //private readonly helloContext hello;
+        //private readonly SHA384Managed sha;
+
+        //public LoginController(helloContext _hello, SHA384Managed _sha)
+        //{
+        //    hello = _hello;
+        //    sha = _sha;
+        //}
         public IActionResult Index()
         {
             return View();
         }
         public string login(String account, String password)
         {
-            helloContext db = new helloContext();
+            SHA384Managed sha = new SHA384Managed();
+            helloContext hello = new helloContext();
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
             {
                 rng.GetBytes(saltbyte);
             }
-            SHA384Managed sha = new SHA384Managed();
             byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
             byte[] passwordhashed = sha.ComputeHash(merged);
-            TMember mem = db.TMembers.FirstOrDefault(p => p.FAccount == account);
+            TMember mem = hello.TMembers.FirstOrDefault(p => p.FAccount == account);
             if (mem != null)
             {
                 byte[] passwordhash = mem.FPassword.ToArray();
                 byte[] salt = mem.FSalt.ToArray();
                 byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-                SHA384Managed shaM = new SHA384Managed();
-                byte[] hashBytes = shaM.ComputeHash(passwordBytes.Concat(salt).ToArray());
+                byte[] hashBytes = sha.ComputeHash(passwordBytes.Concat(salt).ToArray());
                 if (passwordhash.SequenceEqual(hashBytes))
                 {
                     string act = mem.FAccount;
@@ -54,8 +61,9 @@ namespace MSITTeam1.Controllers
 
         public string register(String account,String password)
         {
-            helloContext db = new helloContext();
-            TMember mem = db.TMembers.FirstOrDefault(p => p.FAccount == account);
+            SHA384Managed sha = new SHA384Managed();
+            helloContext hello = new helloContext();
+            TMember mem = hello.TMembers.FirstOrDefault(p => p.FAccount == account);
             if(mem != null)
             {
                 return "此帳號已被註冊過";
@@ -66,7 +74,6 @@ namespace MSITTeam1.Controllers
             {
                 rng.GetBytes(saltbyte);
             }
-            SHA384Managed sha = new SHA384Managed();
             byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
             byte[] passwordhashed = sha.ComputeHash(merged);
             TMember viewModel = new TMember()
@@ -76,12 +83,13 @@ namespace MSITTeam1.Controllers
                 FSalt = saltbyte,
                 FMemberType = 1,
             };
-            db.TMembers.Add(viewModel);
-            db.SaveChanges();
+            hello.TMembers.Add(viewModel);
+            hello.SaveChanges();
             return "帳號註冊成功";
         }
         public string getUserName()
         {
+            helloContext hello = new helloContext();
             string account = "";
             string type = "";
             string Username = "";
@@ -89,7 +97,6 @@ namespace MSITTeam1.Controllers
             {
                 account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
                 type = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE);
-                helloContext hello = new helloContext();
                 if (type == "1")
                 {
                     StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
@@ -121,6 +128,29 @@ namespace MSITTeam1.Controllers
         public IActionResult ForgetPWD()
         {
             return View();
+        }
+
+        public string PasswordIdentify(CForgetPasswordAccountViewModel fpav)
+        {
+            helloContext hello = new helloContext();
+            TMember member = hello.TMembers.FirstOrDefault(p => p.FAccount == fpav.account);
+            if(member != null)
+            {
+
+                if(member.FMemberType == 1)
+                {
+                    StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.Email == fpav.email);
+                }
+                else if (member.FMemberType == 2)
+                {
+                    TCompanyBasic cmp = hello.TCompanyBasics.FirstOrDefault(p => p.FEmail == fpav.email);
+                }
+            }
+            return "查無此帳號或是Email輸入錯誤";
+        }
+        public string AccountIdentify()
+        {
+            return "1";
         }
     }
 }
