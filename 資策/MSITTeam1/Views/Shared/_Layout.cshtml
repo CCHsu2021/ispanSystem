@@ -50,7 +50,7 @@
                         <div class="top-right">
                             <!-- link Box -->
 
-                            <div class="link-box" id="usernamebox"><a href="~/Login" id="username">登入&nbsp;&nbsp;|&nbsp;&nbsp;註冊 </a></div>
+                            <div class="link-box" id="usernamebox"><a href="~/Student_Login" id="username">🎓學員登入</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="~/Company_Login" id="username1">💼企業登入</a></div>
 
                         </div>
                     </div>
@@ -295,13 +295,14 @@
             if ("@ViewBag.name" == "親愛的用戶")
             {
                 Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
-                setTimeout("javascript:location.href='..'", 2000);
+                setTimeout("javascript:location.href='../MemberCenter/Index'", 2000);
             }
             if ("@ViewBag.name" != "")
             {
-                $("#username").attr("href", "會員中心")
-                $("#username").text("你好" + "    @ViewBag.name" )
-                $("#usernamebox").append("<a href='Login/logout'>登出</a>")
+                $("#username").attr("href", "../MemberCenter/Index")
+                $("#username").text("會員中心")
+                $("#username1").attr("href", "../Logout")
+                $("#username1").text("登出")
             }
         });
 </script>

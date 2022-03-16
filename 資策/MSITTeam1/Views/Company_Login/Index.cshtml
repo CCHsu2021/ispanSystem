@@ -92,7 +92,7 @@
             }
             $.ajax({
                 type: "Post",
-                url: "register",
+                url: "../Company_Login/register",
                 data: { account: $("#RAccount").val(), password: $("#RPassword2").val() },
                 dataType: "text",
                 success: function (message) {
@@ -100,7 +100,7 @@
                         Swal.fire("Uh Oh!", message, "warning");
                     } else if (message == "帳號註冊成功") {
                         Swal.fire("太棒了!", message, "success");
-                        setTimeout("javascript:location.href='~/Login'", 2000)
+                        setTimeout("javascript:location.href='../Company_Login'", 2000)
                     }
                 }
             })
@@ -108,7 +108,7 @@
         $("#loginbtn").click(function () {
             $.ajax({
                 type: "Post",
-                url: "Login/login",
+                url: "../Company_Login/login",
                 data: { account: $("#LAccount").val(), password: $("#LPassword").val() },
                 dataType: "text",
                 success: function (message) {
@@ -118,7 +118,7 @@
                     else
                     {
                         Swal.fire( message, "歡迎登入", "success",);
-                        setTimeout("javascript:location.href='~/Index'", 2000);
+                        setTimeout("javascript:location.href='../Index'", 2000);
                     }
                 }
             })

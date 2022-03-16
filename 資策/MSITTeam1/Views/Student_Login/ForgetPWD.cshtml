@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "ForgetPWD";
+}
+<link href="~/css/login.css" rel="stylesheet">
+
+<div class="background">
+    <div class="container-fulid px-3 px-md-0">
+        <div class="login-wrap my-5">
+            <div class="login-html">
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">忘記密碼</label>
+                <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">忘記帳號</label>
+                <div class="login-form">
+                    <div class="sign-in-htm">
+                        <div class="group">
+                            <label for="user" class="label">帳號</label>
+                            <input id="FAccount" type="text" class="input" name="account" required>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Email</label>
+                            <input id="FEmail" type="text" class="input"  name="email" required>
+                        </div>
+                        <div class="group my-4">
+                            <button id="ForgetPasswordBtn" class="button">確定</button>
+                        </div>
+                    </div>
+                    <div class="sign-up-htm">
+                        <div class="group">
+                            <label for="user" class="label">姓名</label>
+                            <input id="FName" type="text" class="input" name="txtAccount" required>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">身分證字號</label>
+                            <input id="FId" name="txtPassword" type="password" class="input" data-type="password" required>
+                        </div>
+                        <div class="group mt-1">
+                            <button id="registerbtn" class="button">確定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{ 
+    <script>
+        const account = document.querySelector("#FAccount");
+        const email = document.querySelector("#FEmail");
+        $("#ForgetPasswordBtn").click(() => {
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener("load", () => {
+                const data = xhr.responseText;
+            })
+            xhr.open("POST","@Url.Content("~/PasswordIdentify")");
+            xhr.send(account.value,email.value);
+
+        })
+
+
+    </script>
+}

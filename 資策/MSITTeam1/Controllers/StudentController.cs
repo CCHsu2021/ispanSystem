@@ -1,0 +1,41 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MSITTeam1.Models;
+using MSITTeam1.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MSITTeam1.Controllers
+{
+    public class StudentController : Controller
+    {
+        public IActionResult Information()
+        {
+            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            IEnumerable<StudentBasic> stu = null;
+            helloContext hello = new helloContext();
+            stu = hello.StudentBasics.Where(t => t.FAccount == "111");
+            List<CStudentBasic> list = new List<CStudentBasic>();
+            foreach(StudentBasic t in stu)
+            {
+                list.Add(new CStudentBasic() { stu = t });
+            }
+            return View("Information",list);
+        }
+
+        public IActionResult StudentInformationEdit(string account = "111")
+        {
+            if (!string.IsNullOrEmpty(account))
+            {
+                helloContext hello = new helloContext();
+                var student = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
+                if (student != null)
+                    return View(new CStudentBasic() { stu = student });
+            }
+            return RedirectToAction("Information");
+           
+        }
+    }
+}
