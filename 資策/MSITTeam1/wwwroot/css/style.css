@@ -1421,7 +1421,7 @@ img{
 
 .header-style-two .top-right .link-box a{
 	position: relative;
-	display: block;
+	display: inline-block;
 	font-size: 14px;
 	line-height: 30px;
 	color: #b5b8de;

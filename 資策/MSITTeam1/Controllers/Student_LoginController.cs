@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MSITTeam1.Controllers
 {
-    public class LoginController : Controller
+    public class Student_LoginController : Controller
     {
         //private readonly helloContext hello;
         //private readonly SHA384Managed sha;

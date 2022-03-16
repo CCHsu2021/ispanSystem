@@ -92,7 +92,7 @@
             }
             $.ajax({
                 type: "Post",
-                url: "register",
+                url: "../Student_Login/register",
                 data: { account: $("#RAccount").val(), password: $("#RPassword2").val() },
                 dataType: "text",
                 success: function (message) {
@@ -108,7 +108,7 @@
         $("#loginbtn").click(function () {
             $.ajax({
                 type: "Post",
-                url: "Login/login",
+                url: "../Student_Login/login",
                 data: { account: $("#LAccount").val(), password: $("#LPassword").val() },
                 dataType: "text",
                 success: function (message) {
