@@ -12,5 +12,9 @@ namespace MSITTeam1.Controllers
         {
             return View();
         }
+        public IActionResult _StudentBasic()
+        {
+            return PartialView("_StudentBasic",null);
+        }
     }
 }
