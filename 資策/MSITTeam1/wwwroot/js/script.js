@@ -138,6 +138,7 @@
 			nav: true,
 			smartSpeed: 500,
 			autoplay: true,
+			autoplayHoverPause: true,
 			navText: ['<span class="flaticon-next-1"></span>', '<span class="flaticon-next-1"></span>'],
 			responsive: {
 				0: {
