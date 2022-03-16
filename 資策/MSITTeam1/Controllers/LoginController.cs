@@ -15,14 +15,14 @@ namespace MSITTeam1.Controllers
 {
     public class LoginController : Controller
     {
-        //private readonly helloContext hello;
+        private readonly helloContext _hello;
         //private readonly SHA384Managed sha;
 
-        //public LoginController(helloContext _hello, SHA384Managed _sha)
-        //{
-        //    hello = _hello;
+        public LoginController(helloContext hello)
+        {
+           _hello = hello;
         //    sha = _sha;
-        //}
+        }
         public IActionResult Index()
         {
             return View();
@@ -30,7 +30,6 @@ namespace MSITTeam1.Controllers
         public string login(String account, String password)
         {
             SHA384Managed sha = new SHA384Managed();
-            helloContext hello = new helloContext();
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
@@ -39,7 +38,7 @@ namespace MSITTeam1.Controllers
             }
             byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
             byte[] passwordhashed = sha.ComputeHash(merged);
-            TMember mem = hello.TMembers.FirstOrDefault(p => p.FAccount == account);
+            TMember mem = _hello.TMembers.FirstOrDefault(p => p.FAccount == account);
             if (mem != null)
             {
                 byte[] passwordhash = mem.FPassword.ToArray();
@@ -62,8 +61,7 @@ namespace MSITTeam1.Controllers
         public string register(String account,String password)
         {
             SHA384Managed sha = new SHA384Managed();
-            helloContext hello = new helloContext();
-            TMember mem = hello.TMembers.FirstOrDefault(p => p.FAccount == account);
+            TMember mem = _hello.TMembers.FirstOrDefault(p => p.FAccount == account);
             if(mem != null)
             {
                 return "此帳號已被註冊過";
@@ -83,13 +81,12 @@ namespace MSITTeam1.Controllers
                 FSalt = saltbyte,
                 FMemberType = 1,
             };
-            hello.TMembers.Add(viewModel);
-            hello.SaveChanges();
+            _hello.TMembers.Add(viewModel);
+            _hello.SaveChanges();
             return "帳號註冊成功";
         }
         public string getUserName()
         {
-            helloContext hello = new helloContext();
             string account = "";
             string type = "";
             string Username = "";
@@ -99,7 +96,7 @@ namespace MSITTeam1.Controllers
                 type = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE);
                 if (type == "1")
                 {
-                    StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
+                    StudentBasic stu = _hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
                     if (stu == null)
                     {
                         CDictionary.username = "親愛的用戶";
@@ -111,7 +108,7 @@ namespace MSITTeam1.Controllers
                 }
                 else if (type == "2")
                 {
-                    TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
+                    TCompanyBasic com = _hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
                     if (com == null)
                     {
                         CDictionary.username = "親愛的用戶";
@@ -132,18 +129,17 @@ namespace MSITTeam1.Controllers
 
         public string PasswordIdentify(CForgetPasswordAccountViewModel fpav)
         {
-            helloContext hello = new helloContext();
-            TMember member = hello.TMembers.FirstOrDefault(p => p.FAccount == fpav.account);
+            TMember member = _hello.TMembers.FirstOrDefault(p => p.FAccount == fpav.account);
             if(member != null)
             {
 
                 if(member.FMemberType == 1)
                 {
-                    StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.Email == fpav.email);
+                    StudentBasic stu = _hello.StudentBasics.FirstOrDefault(p => p.Email == fpav.email);
                 }
                 else if (member.FMemberType == 2)
                 {
-                    TCompanyBasic cmp = hello.TCompanyBasics.FirstOrDefault(p => p.FEmail == fpav.email);
+                    TCompanyBasic cmp = _hello.TCompanyBasics.FirstOrDefault(p => p.FEmail == fpav.email);
                 }
             }
             return "查無此帳號或是Email輸入錯誤";
