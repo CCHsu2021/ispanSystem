@@ -15,14 +15,14 @@ namespace MSITTeam1.Controllers
 {
     public class Student_LoginController : Controller
     {
-        //private readonly helloContext hello;
+        private readonly helloContext hello;
         //private readonly SHA384Managed sha;
 
-        //public LoginController(helloContext _hello, SHA384Managed _sha)
-        //{
-        //    hello = _hello;
+        public Student_LoginController(helloContext _hello)
+        {
+            hello = _hello;
         //    sha = _sha;
-        //}
+        }
         public IActionResult Index()
         {
             return View();
@@ -30,7 +30,6 @@ namespace MSITTeam1.Controllers
         public string login(String account, String password)
         {
             SHA384Managed sha = new SHA384Managed();
-            helloContext hello = new helloContext();
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
@@ -62,7 +61,6 @@ namespace MSITTeam1.Controllers
         public string register(String account,String password)
         {
             SHA384Managed sha = new SHA384Managed();
-            helloContext hello = new helloContext();
             TMember mem = hello.TMembers.FirstOrDefault(p => p.FAccount == account);
             if(mem != null)
             {
@@ -89,7 +87,6 @@ namespace MSITTeam1.Controllers
         }
         public string getUserName()
         {
-            helloContext hello = new helloContext();
             string account = "";
             string type = "";
             string Username = "";
@@ -132,7 +129,6 @@ namespace MSITTeam1.Controllers
 
         public string PasswordIdentify(CForgetPasswordAccountViewModel fpav)
         {
-            helloContext hello = new helloContext();
             TMember member = hello.TMembers.FirstOrDefault(p => p.FAccount == fpav.account);
             if(member != null)
             {
