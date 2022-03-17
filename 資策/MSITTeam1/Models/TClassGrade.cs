@@ -12,5 +12,6 @@ namespace MSITTeam1.Models
         public int? FBeforeClassGrade { get; set; }
         public int? FAfterClassGrade { get; set; }
         public int? FTestPaperId { get; set; }
+        public int? FIscompany { get; set; }
     }
 }
