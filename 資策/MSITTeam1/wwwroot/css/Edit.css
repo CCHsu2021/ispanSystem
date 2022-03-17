@@ -10,16 +10,15 @@
 }
 
 h1 {
-    color: #8e44ad;
-    font-size: 1.5rem;
+    color: #555;
     letter-spacing: -1px;
+    font-weight:600;
     margin: 1.25rem 0;
-    font-family:"微軟正黑體";
 }
 
 input:valid ~ label, textarea:valid ~ label, input:focus ~ label, textarea:focus ~ label {
-    font-size: 0.75em;
-    color: #8e44ad;
+    color: #555;
+    font-size: 1em;
     top: -2.25rem;
     transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
 }
@@ -28,7 +27,11 @@ input:valid ~ label, textarea:valid ~ label, input:focus ~ label, textarea:focus
     width: 33.3333%;
     margin: 2rem 0 1rem;
     position: relative;
+
 }
+    .styled-input input {
+        border-radius: 1.25rem;
+    }
 
     .styled-input label {
         color: #999;
