@@ -14,5 +14,3 @@ namespace MSITTeam1.Controllers
 		}
 	}
 }
-
-Scaffold - DbContext "Data Source=msit40.database.windows.net;Initial Catalog=hello;User ID=MSIT40;Password=Ispan40team1" Microsoft.EntityFrameworkCore.SqlServer - OutputDir Models -Force
