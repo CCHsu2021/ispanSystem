@@ -19,16 +19,17 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Information()
         {
+
             string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            ViewBag.Account = account;
             IEnumerable<StudentBasic> stu = null;
-            //helloContext hello = new helloContext();
             stu = hello.StudentBasics.Where(t => t.FAccount == "111");
             List<CStudentBasic> list = new List<CStudentBasic>();
             foreach (StudentBasic t in stu)
             {
                 list.Add(new CStudentBasic() { stu = t });
             }
-            return View("Information", list);
+            return PartialView("Information", list);
         }
 
         public IActionResult StudentInformationEdit(string account = "111")

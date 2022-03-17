@@ -277,27 +277,27 @@
         });
 
 
-            $(function () {
-                $.ajax({
-                    type: "post",
-                    url: "Login/getLoginName",
-                    dataType: "text",
-                    success: function (result) {
-                        if (result != "")
-                            document.getElementById("username").innerHTML = "<a asp-controller='會員中心' asp-action='Index'></a>&nbsp;&nbsp;<a asp-controller='login' asp-action='Index'>登出</a>";
-                    }
-                });
-            });
+            //$(function () {
+            //    $.ajax({
+            //        type: "post",
+            //        url: "Login/getLoginName",
+            //        dataType: "text",
+            //        success: function (result) {
+            //            if (result != "")
+            //                document.getElementById("username").innerHTML = "<a asp-controller='會員中心' asp-action='Index'></a>&nbsp;&nbsp;<a asp-controller='login' asp-action='Index'>登出</a>";
+            //        }
+            //    });
+            //});
 
         $(function()
         {
-            console.log("@ViewBag.name");
-            if ("@ViewBag.name" == "親愛的用戶")
+            console.log("@ViewBag.Name");
+            if ("@ViewBag.Name" == "親愛的用戶")
             {
                 Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
                 setTimeout("javascript:location.href='../MemberCenter/Index'", 2000);
             }
-            if ("@ViewBag.name" != "")
+            if ("@ViewBag.Name" != "")
             {
                 $("#username").attr("href", "../MemberCenter/Index")
                 $("#username").text("會員中心")
