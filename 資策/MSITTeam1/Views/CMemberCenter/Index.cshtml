@@ -5,7 +5,7 @@
 <link href="~/css/MemberCenter.css" rel="stylesheet">
 <div id="cont-about" class="container-fluid py-4">
     <div class="container">
-        <h4 class="my-3 pl-2">歡迎回來! 邱思誠</h4>
+        <h4 class="my-3 pl-2">歡迎回來! 資展國際資訊股份有限公司</h4>
         <div class="row about-content">
             <!-- Nav pills -->
             <div class="col-sm-3">
@@ -14,26 +14,29 @@
                         <a class="vertical-tabs-member first-vertical-tabs active mb-1" data-toggle="pill" href="#home">會員資料</a>
                     </li>
                     <li class=" nav-item">
-                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu1">測試平台</a>
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu1">我的點數</a>
                     </li>
                     <li class="nav-item">
                         <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu2">檢視平台</a>
                     </li>
                     <li class="nav-item">
-                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu3">我的點數</a>
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu3">試卷管理</a>
                     </li>
                     <li class="nav-item">
-                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu4">購買紀錄</a>
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu4">其他測驗</a>
                     </li>
                     <li class="nav-item">
-                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu5">個人履歷</a>
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu5">檢視平台</a>
                     </li>
                     <li class="nav-item">
-                        <a class="vertical-tabs-member last-vertical-tabs" data-toggle="pill" href="#menu6">職缺搜尋</a>
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu6">職缺管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="vertical-tabs-member last-vertical-tabs" data-toggle="pill" href="#menu7">訊息通知</a>
                     </li>
                     @*<li class="nav-item">
-                        <a class="vertical-tabs-member" data-toggle="pill" href="#menu7">登出</a>
-                    </li>*@
+            <a class="vertical-tabs-member" data-toggle="pill" href="#menu7">登出</a>
+        </li>*@
                 </ul>
             </div>
 
@@ -42,8 +45,19 @@
                 <div class="tab-content shadow-sm">
                     <div id="home" class="container tab-pane active">
                         <div class="row about-box">
-                            @Html.Partial("../Student/Information",CDictionary.SK_LOGINED_USER_ACCOUNT);
-                            @*<partial name="../Student/Information.cshtml" />*@
+                            <h3 class="text-center">會員資料</h3>
+                            <p>
+                                AntenaGames is small indie game studio based in Croatia. Founded in 2020,
+                                on a mission to make beautiful, fun and popular mobile games. The first game released
+                                was BallBoy, which belongs to franchise also called BallBoy, with game titles such as
+                                "BallBoy", "BallBoy Plus" and "BallBoy (...)". Building strong and loyal community with
+                                happy players that will come back to play our games is something that we really enjoy
+                                doing.
+                            </p>
+                            <p>
+                                Founder & CEO<br />
+                                A.K.
+                            </p>
                         </div>
                     </div>
                     <div id="menu1" class="container tab-pane fade">
@@ -148,12 +162,29 @@
                             </p>
                         </div>
                     </div>
+                    <div id="menu7" class="container tab-pane fade">
+                        <div class="row about-box">
+                            <h3 class="text-center">職缺搜尋</h3>
+                            <p>
+                                AntenaGames is small indie game studio based in Croatia. Founded in 2020,
+                                on a mission to make beautiful, fun and popular mobile games. The first game released
+                                was BallBoy, which belongs to franchise also called BallBoy, with game titles such as
+                                "BallBoy", "BallBoy Plus" and "BallBoy (...)". Building strong and loyal community with
+                                happy players that will come back to play our games is something that we really enjoy
+                                doing.
+                            </p>
+                            <p>
+                                Founder & CEO<br />
+                                A.K.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@section Script
+@section Scripts
 {
 
 }
