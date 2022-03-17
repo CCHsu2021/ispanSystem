@@ -30,6 +30,7 @@ namespace MSITTeam1.Models
         public virtual DbSet<TChoiceQuestion> TChoiceQuestions { get; set; }
         public virtual DbSet<TCityContrast> TCityContrasts { get; set; }
         public virtual DbSet<TClassGrade> TClassGrades { get; set; }
+        public virtual DbSet<TClassInfo> TClassInfos { get; set; }
         public virtual DbSet<TClassTestPaper> TClassTestPapers { get; set; }
         public virtual DbSet<TCompanyAppendix> TCompanyAppendices { get; set; }
         public virtual DbSet<TCompanyBasic> TCompanyBasics { get; set; }
@@ -48,21 +49,23 @@ namespace MSITTeam1.Models
         public virtual DbSet<TPhoto> TPhotos { get; set; }
         public virtual DbSet<TProductInformation> TProductInformations { get; set; }
         public virtual DbSet<TQuestionBank> TQuestionBanks { get; set; }
+        public virtual DbSet<TQuestionDetail> TQuestionDetails { get; set; }
         public virtual DbSet<TQuestionType> TQuestionTypes { get; set; }
         public virtual DbSet<TSkill> TSkills { get; set; }
         public virtual DbSet<TSkillGrade> TSkillGrades { get; set; }
         public virtual DbSet<TSkillTestPaper> TSkillTestPapers { get; set; }
-        public virtual DbSet<TStudioInformation> TStudioInformations { get; set; }
+        public virtual DbSet<TSubmittedAnswer> TSubmittedAnswers { get; set; }
         public virtual DbSet<TTestPaper> TTestPapers { get; set; }
         public virtual DbSet<TTestPaperBank> TTestPaperBanks { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=hello;Integrated Security=True");
-        //    }
-        //}
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseSqlServer("Data Source=msit40.database.windows.net;Initial Catalog=hello;User ID=MSIT40;Password=Ispan40team1");
+//            }
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -395,12 +398,41 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.FBeforeClassGrade).HasColumnName("fBeforeClassGrade");
 
+                entity.Property(e => e.FIscompany).HasColumnName("fIscompany");
+
                 entity.Property(e => e.FMemberName)
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("fMemberName");
 
                 entity.Property(e => e.FTestPaperId).HasColumnName("fTestPaperId");
+            });
+
+            modelBuilder.Entity<TClassInfo>(entity =>
+            {
+                entity.HasKey(e => e.FAccount);
+
+                entity.ToTable("tClassInfo");
+
+                entity.Property(e => e.FAccount)
+                    .HasMaxLength(50)
+                    .HasColumnName("fAccount");
+
+                entity.Property(e => e.FClassname)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassname");
+
+                entity.Property(e => e.FIdentify)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fIdentify");
+
+                entity.Property(e => e.FName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("fName");
             });
 
             modelBuilder.Entity<TClassTestPaper>(entity =>
@@ -940,6 +972,35 @@ namespace MSITTeam1.Models
                     .HasColumnName("fUpdateTime");
             });
 
+            modelBuilder.Entity<TQuestionDetail>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("tQuestionDetail");
+
+                entity.Property(e => e.FCorrectAnswer).HasColumnName("fCorrectAnswer");
+
+                entity.Property(e => e.FDetail)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("fDetail")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.FImage).HasColumnName("fImage");
+
+                entity.Property(e => e.FQuestionId)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("fQuestionID")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.FSubjectId)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("fSubjectID")
+                    .IsFixedLength(true);
+            });
+
             modelBuilder.Entity<TQuestionType>(entity =>
             {
                 entity.HasKey(e => e.QuestionTypeId);
@@ -1013,29 +1074,36 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.TopicAnswer).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<TStudioInformation>(entity =>
+            modelBuilder.Entity<TSubmittedAnswer>(entity =>
             {
-                entity.HasKey(e => new { e.FClassName, e.FClassSkill });
+                entity.HasNoKey();
 
-                entity.ToTable("tStudioInformation");
+                entity.ToTable("tSubmittedAnswer");
 
-                entity.Property(e => e.FClassName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fClassName");
-
-                entity.Property(e => e.FClassSkill)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fClassSkill");
-
-                entity.Property(e => e.FClassCategory)
+                entity.Property(e => e.FMemberAccount)
                     .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fClassCategory");
+                    .HasMaxLength(20)
+                    .HasColumnName("fMemberAccount");
 
-                entity.Property(e => e.FClassLevel).HasColumnName("fClassLevel");
+                entity.Property(e => e.FQuestionId)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("fQuestionID")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.FSubjectId)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("fSubjectID")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.FSubmitAnswer)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("fSubmitAnswer")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.FSubmitId).HasColumnName("fSubmitID");
             });
 
             modelBuilder.Entity<TTestPaper>(entity =>
