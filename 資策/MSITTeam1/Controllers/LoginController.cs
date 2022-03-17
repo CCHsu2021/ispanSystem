@@ -13,16 +13,16 @@ using System.Threading.Tasks;
 
 namespace MSITTeam1.Controllers
 {
-    public class Student_LoginController : Controller
+    public class LoginController : Controller
     {
-        private readonly helloContext hello;
+        //private readonly helloContext hello;
         //private readonly SHA384Managed sha;
 
-        public Student_LoginController(helloContext _hello)
-        {
-            hello = _hello;
+        //public LoginController(helloContext _hello, SHA384Managed _sha)
+        //{
+        //    hello = _hello;
         //    sha = _sha;
-        }
+        //}
         public IActionResult Index()
         {
             return View();
@@ -30,6 +30,7 @@ namespace MSITTeam1.Controllers
         public string login(String account, String password)
         {
             SHA384Managed sha = new SHA384Managed();
+            helloContext hello = new helloContext();
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
@@ -61,6 +62,7 @@ namespace MSITTeam1.Controllers
         public string register(String account,String password)
         {
             SHA384Managed sha = new SHA384Managed();
+            helloContext hello = new helloContext();
             TMember mem = hello.TMembers.FirstOrDefault(p => p.FAccount == account);
             if(mem != null)
             {
@@ -87,6 +89,7 @@ namespace MSITTeam1.Controllers
         }
         public string getUserName()
         {
+            helloContext hello = new helloContext();
             string account = "";
             string type = "";
             string Username = "";
@@ -121,69 +124,7 @@ namespace MSITTeam1.Controllers
             }
             return Username;
         }
-        public string ValidAccount(string account)
-        {
-            string tpyein = account;
-            bool flag = Regex.IsMatch(tpyein, @"^[A-Za-z]{1}[1-2]{1}[0-9]{8}$");
-            int[] ID = new int[11];
-            int count = 0;
-            string result = "false";
-            tpyein = tpyein.ToUpper();
-            if (flag == true)
-            {
-                switch (tpyein.Substring(0, 1))
-                {
-                    case "A": (ID[0], ID[1]) = (1, 0); break;
-                    case "B": (ID[0], ID[1]) = (1, 1); break;
-                    case "C": (ID[0], ID[1]) = (1, 2); break;
-                    case "D": (ID[0], ID[1]) = (1, 3); break;
-                    case "E": (ID[0], ID[1]) = (1, 4); break;
-                    case "F": (ID[0], ID[1]) = (1, 5); break;
-                    case "G": (ID[0], ID[1]) = (1, 6); break;
-                    case "H": (ID[0], ID[1]) = (1, 7); break;
-                    case "I": (ID[0], ID[1]) = (3, 4); break;
-                    case "J": (ID[0], ID[1]) = (1, 8); break;
-                    case "K": (ID[0], ID[1]) = (1, 9); break;
-                    case "L": (ID[0], ID[1]) = (2, 0); break;
-                    case "M": (ID[0], ID[1]) = (2, 1); break;
-                    case "N": (ID[0], ID[1]) = (2, 2); break;
-                    case "O": (ID[0], ID[1]) = (3, 5); break;
-                    case "P": (ID[0], ID[1]) = (2, 3); break;
-                    case "Q": (ID[0], ID[1]) = (2, 4); break;
-                    case "R": (ID[0], ID[1]) = (2, 5); break;
-                    case "S": (ID[0], ID[1]) = (2, 6); break;
-                    case "T": (ID[0], ID[1]) = (2, 7); break;
-                    case "U": (ID[0], ID[1]) = (2, 8); break;
-                    case "V": (ID[0], ID[1]) = (2, 9); break;
-                    case "W": (ID[0], ID[1]) = (3, 2); break;
-                    case "X": (ID[0], ID[1]) = (3, 0); break;
-                    case "Y": (ID[0], ID[1]) = (3, 1); break;
-                    case "Z": (ID[0], ID[1]) = (3, 3); break;
-                }
-                for (int i = 2; i < ID.Length; i++)
-                {
-                    ID[i] = Convert.ToInt32(tpyein.Substring(i - 1, 1));
-                }
-                for (int j = 1; j < ID.Length - 1; j++)
-                {
-                    count += ID[j] * (10 - j);
-                }
-                count += ID[0] + ID[10];
-                if (count % 10 == 0)
-                {
-                    result = "true";
-                }
-                else
-                {
-                    result = "false";
-                }
-            }
-            else
-            {
-                result = "false";
-            }     
-            return result;
-        }
+
         public IActionResult ForgetPWD()
         {
             return View();
@@ -191,6 +132,7 @@ namespace MSITTeam1.Controllers
 
         public string PasswordIdentify(CForgetPasswordAccountViewModel fpav)
         {
+            helloContext hello = new helloContext();
             TMember member = hello.TMembers.FirstOrDefault(p => p.FAccount == fpav.account);
             if(member != null)
             {

@@ -19,7 +19,6 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Information()
         {
-
             string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
             ViewBag.Account = account;
             IEnumerable<StudentBasic> stu = null;
@@ -42,7 +41,6 @@ namespace MSITTeam1.Controllers
                     return View(new CStudentBasic() { stu = student });
             }
             return RedirectToAction("Information");
-
         }
     }
 }
