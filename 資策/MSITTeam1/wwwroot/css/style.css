@@ -336,10 +336,12 @@ figure{
 	position: relative;
 	display: block;
 	overflow: hidden;
-	width: 100%;
+	/*width: 100%;*/
+	padding-left:1rem;
+	padding-right:1rem;
 	height: 50px;
 	line-height: 50px;
-	max-width: 200px;
+	/*max-width: 200px;*/
 	margin: 1rem auto;
 	text-transform: uppercase;
 	border: 1px solid currentColor;
