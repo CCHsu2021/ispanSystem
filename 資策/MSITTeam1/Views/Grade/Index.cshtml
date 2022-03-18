@@ -40,14 +40,14 @@
         foreach (var item in Model)
         {
 
-            <h3>@Html.DisplayFor(modelItem => item.TopicId). @Html.DisplayFor(modelItem => item.Topic)</h3>
+            <h5>@Html.DisplayFor(modelItem => item.TopicId). @Html.DisplayFor(modelItem => item.Topic)</h5>
             <input type="text" class="form-control" width="400" />
             <br />
         }
     }
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-4">
         <div class="col-md-2">
-            <a class="btn-style-one mt-3" href="#"><span>送出</span></a>
+            <a class="btn-style-two mt-3" href="#"><span>送出</span></a>
         </div>
     </div>
 </div>
