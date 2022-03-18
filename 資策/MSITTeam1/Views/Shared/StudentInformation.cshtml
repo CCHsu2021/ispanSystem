@@ -1,12 +1,9 @@
-﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentBasic>
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentBasicViewModel>
 
 
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FAccount)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -31,14 +28,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.ContactAddress)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FAccount)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -64,15 +59,9 @@
                 @Html.DisplayFor(modelItem => item.ContactAddress)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-action="StudentInformationEdit" asp-route-id="@item.FAccount">編輯</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-@section Scripts
-{
-
-}

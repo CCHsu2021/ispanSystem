@@ -96,6 +96,7 @@ namespace MSITTeam1.Controllers
                 type = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE);
                 if (type == "1")
                 {
+                    CDictionary.memtype = "1";
                     StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
                     if (stu == null)
                     {
@@ -108,6 +109,7 @@ namespace MSITTeam1.Controllers
                 }
                 else if (type == "2")
                 {
+                    CDictionary.memtype = "2";
                     TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
                     if (com == null)
                     {

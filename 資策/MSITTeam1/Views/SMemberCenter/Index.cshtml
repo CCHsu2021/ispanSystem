@@ -5,7 +5,7 @@
 <link href="~/css/MemberCenter.css" rel="stylesheet">
 <div id="cont-about" class="container-fluid py-4">
     <div class="container">
-        <h4 class="my-3 pl-2">歡迎回來! 邱思誠</h4>
+        <h4 class="my-3 pl-2">歡迎回來! @ViewBag.Name</h4>
         <div class="row about-content">
             <!-- Nav pills -->
             <div class="col-sm-3">
@@ -34,6 +34,10 @@
                     <li class="nav-item">
                         <a class="vertical-tabs-member last-vertical-tabs" data-toggle="pill" href="#menu7">訊息通知</a>
                     </li>
+                    @*<li class="nav-item">
+                            <a class="vertical-tabs-member" data-toggle="pill" href="#menu7">登出</a>
+                        </li>*@
+
                 </ul>
             </div>
 
@@ -42,8 +46,8 @@
                 <div class="tab-content shadow-sm">
                     <div id="home" class="container tab-pane active">
                         <div class="row about-box">
-                            @Html.Partial("../Student/Information",CDictionary.SK_LOGINED_USER_ACCOUNT);
-                            @*<partial name="../Student/Information.cshtml" />*@
+                            @*@Html.Partial("Information");*@
+                            <partial name="../Student/Information.cshtml" />
                         </div>
                     </div>
                     <div id="menu1" class="container tab-pane fade">
@@ -170,8 +174,4 @@
         </div>
     </div>
 </div>
-@section Scripts
-{
-
-}
 
