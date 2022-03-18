@@ -7,16 +7,12 @@ using System.Threading.Tasks;
 
 namespace MSITTeam1.Controllers
 {
-    public class MemberCenterController : Controller
+    public class CMemberCenterController : Controller
     {
         public IActionResult Index()
         {
             ViewBag.Name = CDictionary.username;
             return View();
-        }
-        public IActionResult _StudentBasic()
-        {
-            return PartialView("_StudentBasic",null);
         }
     }
 }

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<MSITTeam1.Models.TClassTestPaper>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="auto-container">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">帳號</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <span class="input-group-text" id="inputGroup-sizing-default">識別碼</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <button type="button" class="btn btn-outline-primary">確定</button>
+    </div>
+    @{
+        foreach (var item in Model)
+        {
+            <h3>@Html.DisplayFor(modelItem => item.TopicId). @Html.DisplayFor(modelItem => item.Topic)</h3>
+            <input type="text" class="form-control" width="400" />
+            <br />
+        }
+    }
+</div>
+<br />
+<div class="sec-title text-center">
+    <button class="btn btn-primary" type="submit">送出</button>
+</div>
+<br />
+
