@@ -1,0 +1,39 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CCompanyBasicViewModel>
+
+<link href="~/css/Edit.css" rel="stylesheet">
+
+
+<div class="background">
+    @foreach (var item in Model)
+    {
+
+        <div>
+            <label>@Html.DisplayNameFor(model => model.FBan)</label>
+            <span>@Html.DisplayFor(modelItem => item.FBan)</span>
+        </div>
+        <div>
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FContactPerson)</label>
+            <span>@Html.DisplayFor(modelItem => item.FContactPerson)</span>
+        </div>
+        <div>
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FPhone)</label>
+            <span>(0@(@Html.DisplayFor(modelItem => item.FPhoneCode)))-@Html.DisplayFor(modelItem => item.FPhone)</span>
+        </div>
+        <div>
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FFax)</label>
+            <span>(0@(@Html.DisplayFor(modelItem => item.FFaxCode)))-@Html.DisplayFor(modelItem => item.FFax)</span>
+        </div>
+        <div>
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FAddress)</label>
+            <span>@Html.DisplayFor(modelItem => item.FCity)@Html.DisplayFor(modelItem => item.FDistrict)@Html.DisplayFor(modelItem => item.FAddress)</span>
+        </div>
+        <div>
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FEmail)</label>
+            <span>@Html.DisplayFor(modelItem => item.FEmail)</span>
+
+        </div>
+
+        <a asp-action="Edit" asp-route-id="@item.FAccount" class="btn-style-two">修改資料</a>
+
+    }
+</div>
