@@ -10,6 +10,7 @@ namespace MSITTeam1.Models
         public int TestPaperId { get; set; }
         public int TopicId { get; set; }
         public string Topic { get; set; }
+        public string ChoseAnswer { get; set; }
         public string TopicAnswer { get; set; }
         public string ClassMember { get; set; }
     }

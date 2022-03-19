@@ -20,12 +20,13 @@ namespace MSITTeam1.Controllers
         public IActionResult Information()
         {
             string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            ViewBag.Account = account;
             IEnumerable<StudentBasic> stu = null;
             stu = hello.StudentBasics.Where(t => t.FAccount == "111");
-            List<CStudentBasicViewModel> list = new List<CStudentBasicViewModel>();
+            List<CStudentBasic> list = new List<CStudentBasic>();
             foreach (StudentBasic t in stu)
             {
-                list.Add(new CStudentBasicViewModel() { stu = t });
+                list.Add(new CStudentBasic() { stu = t });
             }
             return PartialView("Information", list);
         }
@@ -37,7 +38,7 @@ namespace MSITTeam1.Controllers
                 //helloContext hello = new helloContext();
                 var student = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
                 if (student != null)
-                    return View(new CStudentBasicViewModel() { stu = student });
+                    return View(new CStudentBasic() { stu = student });
             }
             return RedirectToAction("Information");
         }

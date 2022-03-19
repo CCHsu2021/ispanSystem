@@ -14,9 +14,9 @@ namespace MSITTeam1.Controllers
             ViewBag.Name = CDictionary.username;
             return View();
         }
-        //public IActionResult Information()
-        //{
-        //    return PartialView("Information", null);
-        //}
+        public IActionResult Information()
+        {
+            return PartialView("Information", null);
+        }
     }
 }
