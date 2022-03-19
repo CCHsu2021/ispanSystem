@@ -1,0 +1,71 @@
+﻿@model IEnumerable<MSITTeam1.Models.TChoiceQuestion>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>QuestionList</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FQuestion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FChoiceA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FChoiceB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FChoiceC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FChoiceD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FAnswer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FLevel)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FQuestion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FChoiceA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FChoiceB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FChoiceC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FChoiceD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FAnswer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FLevel)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -328,7 +328,7 @@
     <script src="~/js/script.js"></script>
     <script src="~/js/sweetalert2.all.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script>
+<script>
         //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
         var onResize = function () {
             $("body").css("padding-top", $(".main-header").height());
@@ -351,22 +351,29 @@
             //    });
             //});
 
-        $(function()
+            $(function()
         {
             console.log("@ViewBag.Name");
             if ("@ViewBag.Name" == "親愛的用戶")
             {
-                Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
+                Swal.fire("Hello", "請先填寫基本資料", "info",);
                 setTimeout("javascript:location.href='../MemberCenter/Index'", 2000);
             }
             if ("@ViewBag.Name" != "")
             {
-                $("#username").attr("href", "../MemberCenter/Index")
+                @*if (@ViewBag.Type== "1") {*@
+                    //$("#username").attr("href", "../SMemberCenter/Index")
+                /*}*/
+                @*else if (@ViewBag.Type == "2")
+                {*@
+                    $("#username").attr("href", "../CMemberCenter/Index")
+             /*   }*/
+
                 $("#username").text("會員中心")
                 $("#username1").attr("href", "../Logout")
                 $("#username1").text("登出")
             }
         });
-    </script>
+</script>
 </body>
 </html>
