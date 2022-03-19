@@ -21,5 +21,9 @@ namespace MSITTeam1.Controllers
 
             return View(list);
         }
+        public IActionResult Grade()
+        {
+            return View();
+        }
     }
 }
