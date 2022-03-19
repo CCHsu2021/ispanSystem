@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MSITTeam1.ViewModels
 {
-    public class CStudentBasic
+    public class CStudentBasicViewModel
     {
         private StudentBasic _stu = null;
-        public CStudentBasic()
+        public CStudentBasicViewModel()
         {
             _stu = new StudentBasic();
         }
