@@ -96,13 +96,17 @@
                 data: { account: $("#RAccount").val(), password: $("#RPassword2").val() },
                 dataType: "text",
                 success: function (message) {
-                    if (message == "此帳號已被註冊過") {
+                    if (message == "此帳號已被註冊過")
+                    {
                         Swal.fire("Uh Oh!", message, "warning");
-                    } else if (message == "帳號註冊成功") {
-                        Swal.fire("太棒了!", message, "success").then((result) => {
-                            if (result.isConfirmed) {
-                                window.location = "../Company_Login";
-                            }
+                    } else if (message == "帳號註冊成功")
+                    {
+                        Swal.fire("太棒了!", message, "success").then((result) =>
+                        {
+                                if (result.isConfirmed) {
+                                    window.location = "../Company_Login";
+                                }
+                            })}
                 }
             })
         })
@@ -116,13 +120,12 @@
                     if (message == "帳號密碼錯誤請重新輸入") {
                         Swal.fire("登入失敗", message, "warning");
                     }
-                    else
-                    {
+                    else {
                         Swal.fire(message, "歡迎登入", "success",).then((result) => {
                             if (result.isConfirmed) {
                                 window.location = "../Index";
                             }
-                    }
+                        })}
                 }
             })
         })

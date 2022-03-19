@@ -14,5 +14,10 @@ namespace MSITTeam1.Controllers
             ViewBag.Name = CDictionary.username;
             return View();
         }
+
+        public IActionResult CompanyInformation()
+        {
+            return View();
+        }
     }
 }

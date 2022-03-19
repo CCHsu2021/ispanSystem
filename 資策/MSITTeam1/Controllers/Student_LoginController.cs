@@ -94,6 +94,7 @@ namespace MSITTeam1.Controllers
             {
                 account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
                 type = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE);
+                CDictionary.memtype = type;
                 if (type == "1")
                 {
                     StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);

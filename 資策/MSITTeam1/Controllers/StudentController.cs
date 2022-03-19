@@ -23,10 +23,10 @@ namespace MSITTeam1.Controllers
             ViewBag.Account = account;
             IEnumerable<StudentBasic> stu = null;
             stu = hello.StudentBasics.Where(t => t.FAccount == "111");
-            List<CStudentBasic> list = new List<CStudentBasic>();
+            List<CStudentBasicViewModel> list = new List<CStudentBasicViewModel>();
             foreach (StudentBasic t in stu)
             {
-                list.Add(new CStudentBasic() { stu = t });
+                list.Add(new CStudentBasicViewModel() { stu = t });
             }
             return PartialView("Information", list);
         }
@@ -38,7 +38,7 @@ namespace MSITTeam1.Controllers
                 //helloContext hello = new helloContext();
                 var student = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
                 if (student != null)
-                    return View(new CStudentBasic() { stu = student });
+                    return View(new CStudentBasicViewModel() { stu = student });
             }
             return RedirectToAction("Information");
         }

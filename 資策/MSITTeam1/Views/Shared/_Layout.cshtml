@@ -361,9 +361,14 @@
             }
             if ("@ViewBag.Name" != "")
             {
-                $("#username").attr("href", "../MemberCenter/Index")
+                if ("@ViewBag.Type" == "1") {
+                    $("#username").attr("href", "../SMemberCenter/Index")
+                } else if ("@ViewBag.Type" == "2") {
+                    $("#username").attr("href", "../CMemberCenter/Index")
+                }
+                
                 $("#username").text("會員中心")
-                $("#username1").attr("href", "../Logout")
+                $("#username1").attr("href", "../Logout/Index")
                 $("#username1").text("登出")
             }
         });
