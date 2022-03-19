@@ -2,11 +2,16 @@
 
 <link href="~/css/Edit.css" rel="stylesheet">
 
+<script>
+    $("#Edit").click(function () {
 
+    })
+
+</script>
 
 @foreach (var item in Model)
 {
-
+    
     <div>
         <label>@Html.DisplayNameFor(model => model.FBan)：</label>
         <span>@Html.DisplayFor(modelItem => item.FBan)</span>
@@ -30,16 +35,9 @@
     <div>
         <label for="FBan"> @Html.DisplayNameFor(model => model.FEmail)：</label>
         <span>@Html.DisplayFor(modelItem => item.FEmail)</span>
-
     </div>
 
-    <a id="Edit" asp-action="CompanyInformationEdit" asp-route-id="@item.FAccount" class="btn-style-two" >修改資料</a>
-
+    <a id="Edit" asp-action="CompanyInformationEdit" asp-route-id="@item.FAccount" class="btn-style-two">修改資料</a>
 }
-<script>
-    $("#Edit").click(function () {
 
-
-    })
-
-</script>
+<script></script>

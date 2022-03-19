@@ -19,40 +19,16 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index()
         {
-            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
-            IEnumerable<TCompanyBasic> com = null;
-            com = hello.TCompanyBasics.Where(t => t.FAccount == "company1");
-            List<CCompanyBasicViewModel> list = new List<CCompanyBasicViewModel>();
-            foreach (TCompanyBasic t in com)
-            {
-                list.Add(new CCompanyBasicViewModel() { com = t });
-            }
-            ViewBag.Name = CDictionary.username;
-            return View(list);
+            return View();
         }
 
-        public IActionResult CompanyInformation()
-        {
-            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
-            IEnumerable<TCompanyBasic> com = null;
-            com = hello.TCompanyBasics.Where(t => t.FAccount == account);
-            List<CCompanyBasicViewModel> list = new List<CCompanyBasicViewModel>();
-            foreach (TCompanyBasic t in com)
-            {
-                list.Add(new CCompanyBasicViewModel() { com = t });
-            }
-            ViewBag.Name = CDictionary.username;
-            return View(list);
-        }
-
-        public IActionResult StudentInformationEdit(string id)
+        public IActionResult CompanyInformationEdit(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {
-                //helloContext hello = new helloContext();
-                var student = hello.StudentBasics.FirstOrDefault(p => p.FAccount == id);
-                if (student != null)
-                    return PartialView(new CStudentBasicViewModel() { stu = student });
+                var company = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == id);
+                if (company != null)
+                    return PartialView(new CCompanyBasicViewModel() { com = company });
             }
             return RedirectToAction("Index");
         }

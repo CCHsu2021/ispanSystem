@@ -38,7 +38,7 @@ namespace MSITTeam1.ViewModels
         public string FDistrictCode { get { return this._com.FDistrictCode; } set { this._com.FDistrictCode = value; } }
         [DisplayName("福利")]
         public string FBenefits { get { return this._com.FBenefits; } set { this._com.FBenefits = value; } }
-        [DisplayName("電子信箱")]
+        [DisplayName("信箱")]
         public string FEmail { get { return this._com.FEmail; } set { this._com.FEmail = value; } }
         [DisplayName("Logo")]
         public byte[] FLogo { get { return this._com.FLogo; } set { this._com.FLogo = value; } }
