@@ -7,19 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MSITTeam1.Controllers
 {
-    
-    public class Company_LoginController : Controller
+    public class LoginController : Controller
     {
-        private readonly helloContext hello;
+        //private readonly helloContext hello;
+        //private readonly SHA384Managed sha;
 
-        public Company_LoginController(helloContext _hello)
-        {
-            hello = _hello;
-        }
+        //public LoginController(helloContext _hello, SHA384Managed _sha)
+        //{
+        //    hello = _hello;
+        //    sha = _sha;
+        //}
         public IActionResult Index()
         {
             return View();
@@ -27,7 +30,7 @@ namespace MSITTeam1.Controllers
         public string login(String account, String password)
         {
             SHA384Managed sha = new SHA384Managed();
-            //helloContext hello = new helloContext();
+            helloContext hello = new helloContext();
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
@@ -56,12 +59,12 @@ namespace MSITTeam1.Controllers
             return "帳號密碼錯誤請重新輸入";
         }
 
-        public string register(String account, String password)
+        public string register(String account,String password)
         {
             SHA384Managed sha = new SHA384Managed();
-            //helloContext hello = new helloContext();
+            helloContext hello = new helloContext();
             TMember mem = hello.TMembers.FirstOrDefault(p => p.FAccount == account);
-            if (mem != null)
+            if(mem != null)
             {
                 return "此帳號已被註冊過";
             }
@@ -78,7 +81,7 @@ namespace MSITTeam1.Controllers
                 FAccount = account,
                 FPassword = passwordhashed,
                 FSalt = saltbyte,
-                FMemberType = 2,
+                FMemberType = 1,
             };
             hello.TMembers.Add(viewModel);
             hello.SaveChanges();
@@ -86,7 +89,7 @@ namespace MSITTeam1.Controllers
         }
         public string getUserName()
         {
-            //helloContext hello = new helloContext();
+            helloContext hello = new helloContext();
             string account = "";
             string type = "";
             string Username = "";
@@ -129,12 +132,12 @@ namespace MSITTeam1.Controllers
 
         public string PasswordIdentify(CForgetPasswordAccountViewModel fpav)
         {
-            //helloContext hello = new helloContext();
+            helloContext hello = new helloContext();
             TMember member = hello.TMembers.FirstOrDefault(p => p.FAccount == fpav.account);
-            if (member != null)
+            if(member != null)
             {
 
-                if (member.FMemberType == 1)
+                if(member.FMemberType == 1)
                 {
                     StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.Email == fpav.email);
                 }
