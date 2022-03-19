@@ -437,13 +437,16 @@ namespace MSITTeam1.Models
 
             modelBuilder.Entity<TClassTestPaper>(entity =>
             {
-                entity.HasKey(e => new { e.TestPaperId, e.TopicId });
+                entity.HasKey(e => new { e.TestPaperId, e.TopicId, e.ChoseAnswer })
+                    .HasName("PK_tClassTestPaper_1");
 
                 entity.ToTable("tClassTestPaper");
 
                 entity.Property(e => e.TestPaperId).HasColumnName("TestPaperID");
 
                 entity.Property(e => e.TopicId).HasColumnName("TopicID");
+
+                entity.Property(e => e.ChoseAnswer).HasMaxLength(50);
 
                 entity.Property(e => e.ClassMember).HasMaxLength(50);
 
