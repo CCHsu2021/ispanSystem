@@ -21,9 +21,9 @@ namespace MSITTeam1.Controllers
 
             return View(list);
         }
-        public IActionResult Grade()
+        public IActionResult Grade(TTestPaper z)
         {
-            return View();
+            return Content(z.ToString());
         }
     }
 }

@@ -36,19 +36,65 @@
         </div>
 
     </div>
-    @{
-        foreach (var item in Model)
-        {
-
-            <h5>@Html.DisplayFor(modelItem => item.TopicId). @Html.DisplayFor(modelItem => item.Topic)</h5>
-            <input type="text" class="form-control" width="400" />
-            <br />
+    <form method="post" name="grade">
+        @{
+            int count = 1;
+            int topicId = 0;
+            foreach (var item in Model)
+            {
+                if (topicId != item.TopicId)
+                {
+                    <h3>@Html.DisplayFor(modelItem => item.TopicId). @Html.DisplayFor(modelItem => item.Topic)</h3>
+                    topicId = item.TopicId;
+                }
+                <input type="radio" id="@count" name="@item.TopicId" value="@item.ChoseAnswer"><label for="@count" style="font-size:18px;"> @item.ChoseAnswer</label>
+                <br />
+                count++;
+            }
         }
-    }
-    <div class="row justify-content-center mb-4">
-        <div class="col-md-2">
-            <a class="btn-style-two mt-3" href="#"><span>送出</span></a>
+        <br />
+        <br />
+        <div class="sec-title text-center">
+            <button class="btn btn-primary" type="submit" id="button1">送出</button>
+            <div id="div1" class="alert alert-info"></div>
         </div>
-    </div>
+    </form>
 </div>
+
+<script>
+    const btn = document.querySelector("#button1");
+    const divAlert = document.querySelector("#div1");
+             btn.addEventListener('click', (evt) => {
+                 evt.preventDefault();
+                 var anscount = 0
+                 var count = 0
+         @{
+             int id = 0;
+             foreach (var item in Model )
+             {
+                 if (id != item.TopicId)
+                 {
+                 @:var a = $('input[name=@item.TopicId]:checked').val();
+                 @:if (@item.TopicAnswer == a) anscount++
+                 @:count++
+                 id = item.TopicId;
+                 }
+             }
+          }
+                 divAlert.innerHTML = Math.round((anscount / count) *100)
+             //btn.style.display='none';
+    })
+
+    @*btn.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        const formData = new FormData(document.grade);
+        fetch('@Url.Action("Grade", "Grade")', {
+            method: 'POST',
+            body: FormData
+        }).then(Response => Response.text())
+                .then(data => divAlert.innerHTML = data)
+
+          //btn.style.display='none';
+      })*@
+</script>
 
