@@ -19,6 +19,7 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.Name = CDictionary.username;
             return View();
         }
 
@@ -29,6 +30,25 @@ namespace MSITTeam1.Controllers
                 var company = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == id);
                 if (company != null)
                     return PartialView(new CCompanyBasicViewModel() { com = company });
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult CompanyInformationEdit(CCompanyBasicViewModel company)
+        {
+            TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == company.FAccount);
+            if(c != null)
+            {
+                c.FAddress = company.FAddress;
+                c.FCity = company.FCity;
+                c.FDistrict = company.FDistrict;
+                c.FEmail = company.FEmail;
+                c.FFaxCode = company.FFaxCode;
+                c.FFax = company.FFax;
+                c.FPhoneCode = company.FPhoneCode;
+                c.FPhone = company.FPhone;
+                hello.SaveChanges();
             }
             return RedirectToAction("Index");
         }
