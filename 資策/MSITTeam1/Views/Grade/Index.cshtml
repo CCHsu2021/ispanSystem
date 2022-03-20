@@ -36,28 +36,28 @@
         </div>
 
     </div>
-    <form method="post" name="grade">
-        @{
-            int count = 1;
-            int topicId = 0;
-            foreach (var item in Model)
+    @{
+        int count = 1;
+        int topicId = 0;
+        foreach (var item in Model)
+        {
+            if (topicId != item.TopicId)
             {
-                if (topicId != item.TopicId)
-                {
-                    <h3>@Html.DisplayFor(modelItem => item.TopicId). @Html.DisplayFor(modelItem => item.Topic)</h3>
-                    topicId = item.TopicId;
-                }
-                <input type="radio" id="@count" name="@item.TopicId" value="@item.ChoseAnswer"><label for="@count" style="font-size:18px;"> @item.ChoseAnswer</label>
-                <br />
-                count++;
+                <h3>@Html.DisplayFor(modelItem => item.TopicId). @Html.DisplayFor(modelItem => item.Topic)</h3>
+                topicId = item.TopicId;
             }
+            <input type="radio" id="@count" name="@item.TopicId" value="@item.ChoseAnswer"><label for="@count" style="font-size:18px;"> @item.ChoseAnswer</label>
+            <br />
+            count++;
         }
-        <br />
-        <br />
-        <div class="sec-title text-center">
-            <button class="btn btn-primary" type="submit" id="button1">送出</button>
-            <div id="div1" class="alert alert-info"></div>
-        </div>
+    }
+    <br />
+    <br />
+    <div class="sec-title text-center">
+        <button class="btn btn-primary" type="submit" id="button1">送出</button>
+    </div>
+    <form method="post" name="grade">
+        <div id="div1" class="alert alert-info"></div>
     </form>
 </div>
 
