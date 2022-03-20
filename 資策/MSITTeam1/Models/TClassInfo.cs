@@ -11,5 +11,6 @@ namespace MSITTeam1.Models
         public string FName { get; set; }
         public string FClassname { get; set; }
         public string FIdentify { get; set; }
+        public string FTestpaper { get; set; }
     }
 }

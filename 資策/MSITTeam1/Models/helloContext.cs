@@ -50,6 +50,7 @@ namespace MSITTeam1.Models
         public virtual DbSet<TProductInformation> TProductInformations { get; set; }
         public virtual DbSet<TQuestionBank> TQuestionBanks { get; set; }
         public virtual DbSet<TQuestionDetail> TQuestionDetails { get; set; }
+        public virtual DbSet<TQuestionList> TQuestionLists { get; set; }
         public virtual DbSet<TQuestionType> TQuestionTypes { get; set; }
         public virtual DbSet<TSkill> TSkills { get; set; }
         public virtual DbSet<TSkillGrade> TSkillGrades { get; set; }
@@ -63,13 +64,13 @@ namespace MSITTeam1.Models
 //            if (!optionsBuilder.IsConfigured)
 //            {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Server=tcp:msit40.database.windows.net,1433;Initial Catalog=hello;Persist Security Info=False;User ID=MSIT40;Password=Ispan40team1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+//                optionsBuilder.UseSqlServer("Data Source=msit40team1.database.windows.net;Initial Catalog=hello;User ID=MSIT40;Password=Ispan40team1");
 //            }
 //        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Chinese_Taiwan_Stroke_CI_AS");
 
             modelBuilder.Entity<StudentBasic>(entity =>
             {
@@ -433,8 +434,12 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.FName)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .IsUnicode(false)
                     .HasColumnName("fName");
+
+                entity.Property(e => e.FTestpaper)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fTestpaper");
             });
 
             modelBuilder.Entity<TClassTestPaper>(entity =>
@@ -979,31 +984,53 @@ namespace MSITTeam1.Models
 
             modelBuilder.Entity<TQuestionDetail>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.FSubjectId, e.FQuestionId, e.FChoice })
+                    .HasName("PK_tQuestionDetail_1");
 
                 entity.ToTable("tQuestionDetail");
 
-                entity.Property(e => e.FCorrectAnswer).HasColumnName("fCorrectAnswer");
-
-                entity.Property(e => e.FDetail)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .HasColumnName("fDetail")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.FImage).HasColumnName("fImage");
-
-                entity.Property(e => e.FQuestionId)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .HasColumnName("fQuestionID")
-                    .IsFixedLength(true);
-
                 entity.Property(e => e.FSubjectId)
-                    .IsRequired()
-                    .HasMaxLength(10)
+                    .HasMaxLength(30)
                     .HasColumnName("fSubjectID")
                     .IsFixedLength(true);
+
+                entity.Property(e => e.FQuestionId).HasColumnName("fQuestionID");
+
+                entity.Property(e => e.FChoice)
+                    .HasMaxLength(200)
+                    .HasColumnName("fChoice");
+
+                entity.Property(e => e.FCorrectAnswer).HasColumnName("fCorrectAnswer");
+
+                entity.Property(e => e.FImage).HasColumnName("fImage");
+            });
+
+            modelBuilder.Entity<TQuestionList>(entity =>
+            {
+                entity.HasKey(e => new { e.FSubjectId, e.FQuestionId });
+
+                entity.ToTable("tQuestionList");
+
+                entity.Property(e => e.FSubjectId)
+                    .HasMaxLength(30)
+                    .HasColumnName("fSubjectID")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.FQuestionId).HasColumnName("fQuestionID");
+
+                entity.Property(e => e.FLevel).HasColumnName("fLevel");
+
+                entity.Property(e => e.FQuestion)
+                    .IsRequired()
+                    .HasColumnName("fQuestion");
+
+                entity.Property(e => e.FQuestionImage).HasColumnName("fQuestionImage");
+
+                entity.Property(e => e.FQuestionTypeId).HasColumnName("fQuestionTypeID");
+
+                entity.Property(e => e.FUpdateTime)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("fUpdateTime");
             });
 
             modelBuilder.Entity<TQuestionType>(entity =>
@@ -1085,6 +1112,11 @@ namespace MSITTeam1.Models
 
                 entity.ToTable("tSubmittedAnswer");
 
+                entity.Property(e => e.FCorrectAnswer)
+                    .HasMaxLength(20)
+                    .HasColumnName("fCorrectAnswer")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.FMemberAccount)
                     .IsRequired()
                     .HasMaxLength(20)
@@ -1095,6 +1127,8 @@ namespace MSITTeam1.Models
                     .HasMaxLength(10)
                     .HasColumnName("fQuestionID")
                     .IsFixedLength(true);
+
+                entity.Property(e => e.FSn).HasColumnName("fSN");
 
                 entity.Property(e => e.FSubjectId)
                     .IsRequired()
@@ -1107,8 +1141,6 @@ namespace MSITTeam1.Models
                     .HasMaxLength(10)
                     .HasColumnName("fSubmitAnswer")
                     .IsFixedLength(true);
-
-                entity.Property(e => e.FSubmitId).HasColumnName("fSubmitID");
             });
 
             modelBuilder.Entity<TTestPaper>(entity =>
