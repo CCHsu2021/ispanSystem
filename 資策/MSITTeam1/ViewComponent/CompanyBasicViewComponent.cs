@@ -21,6 +21,7 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke()
         {
             string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            ViewBag.Account = account;
             IEnumerable<TCompanyBasic> com = null;
             com = hello.TCompanyBasics.Where(t => t.FAccount == account);
             List<CCompanyBasicViewModel> list = new List<CCompanyBasicViewModel>();
