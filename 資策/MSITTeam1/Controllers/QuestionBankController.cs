@@ -9,6 +9,11 @@ namespace MSITTeam1.Controllers
 {
 	public class QuestionBankController : Controller
 	{
+		private readonly helloContext _context;
+		public QuestionBankController(helloContext context)
+		{
+			_context = context;
+		}
 		public IActionResult Index()
 		{
 			return View();
@@ -16,10 +21,10 @@ namespace MSITTeam1.Controllers
 
 		public IActionResult List()
 		{
-			IEnumerable<TChoiceQuestion> ques = from q in (new helloContext()).TChoiceQuestions
-																			 select q;			
+			//IEnumerable<TChoiceQuestion> ques = from q in (new helloContext()).TChoiceQuestions
+			//																 select q;			
 
-			return View(ques);
+			return View(_context.TChoiceQuestions.ToList());
 		}
 	}
 }
