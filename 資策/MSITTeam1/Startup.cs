@@ -33,7 +33,8 @@ namespace MSITTeam1
             });
             services.AddControllersWithViews();
             services.AddSession();
-            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+			services.AddMvc();
+			services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
