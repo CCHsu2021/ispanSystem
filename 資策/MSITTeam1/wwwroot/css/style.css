@@ -405,6 +405,7 @@ figure{
   .btn-style-two {
 	text-align: center;
 	color: #ffffff;
+	max-width:200px;
 	background-color: #1e3c84;
 	position: relative;
 	transition: all .3s linear;
