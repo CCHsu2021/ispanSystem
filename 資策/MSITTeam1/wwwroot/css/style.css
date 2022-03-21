@@ -266,7 +266,7 @@ p,.text{
 ::-ms-input-placeholder{color: inherit;}
 
 .page-wrapper{
-	position:relative;
+	/*position:relative;*/
 	margin:0 auto;
 	width:100%;
 	min-width:300px;
@@ -757,10 +757,10 @@ img{
 ***/
 
 .main-header{
-	/* position: relative; */
+	 /*position: absolute;*/ 
 	display: block;
 	width: 100%;
-	z-index: 99999;
+	z-index: 1000;
 }
 
 /*=== Header Upper ===*/
