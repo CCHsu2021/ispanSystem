@@ -1,0 +1,63 @@
+﻿@model MSITTeam1.Models.TQuestionList
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>新增</h1>
+
+<h4>新增題目</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FSubjectId" class="control-label"></label>
+                <input asp-for="FSubjectId" class="form-control" />
+                <span asp-validation-for="FSubjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FQuestionId" class="control-label"></label>
+                <input asp-for="FQuestionId" class="form-control" />
+                <span asp-validation-for="FQuestionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FQuestion" class="control-label"></label>
+                <input asp-for="FQuestion" class="form-control" />
+                <span asp-validation-for="FQuestion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FQuestionImage" class="control-label"></label>
+                <input asp-for="FQuestionImage" class="form-control" />
+                <span asp-validation-for="FQuestionImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FQuestionTypeId" class="control-label"></label>
+                <input asp-for="FQuestionTypeId" class="form-control" />
+                <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FUpdateTime" class="control-label"></label>
+                <input asp-for="FUpdateTime" class="form-control" />
+                <span asp-validation-for="FUpdateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FLevel" class="control-label"></label>
+                <input asp-for="FLevel" class="form-control" />
+                <span asp-validation-for="FLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">返回列表</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
