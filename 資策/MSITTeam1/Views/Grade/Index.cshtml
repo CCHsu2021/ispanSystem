@@ -79,15 +79,16 @@
                  if (id != item.fQuestionID)
                  {
                  @:var a = $('input[name=@item.fQuestionID]:checked').val();
-                 @:if (1 == a) { anscount++; $('input[name=@item.fQuestionID]:checked').parent("div").css("background-color", "green") }
-                 @:if (1 != a) { $("input[name=@item.fQuestionID][value='1']").parent("div").css("background-color", "green"); $('input[name=@item.fQuestionID]:checked').parent("div").css("background-color", "red") }
+                 @:if (1 == a) { anscount++;}
+                 @:if (1 != a) { $("input[name=@item.fQuestionID][value='1']").next().css("color", "red"); }
                  @:count++
                  id = item.fQuestionID;
                  }
              }
           }
-                 divAlert.innerHTML = Math.round((anscount / count) *100)
-             //btn.style.display='none';
+                 divAlert.innerHTML = Math.round((anscount / count) * 100)
+                 $('input').css('display','none')
+                 btn.style.display='none';
     })
 
     @*btn.addEventListener('click', (evt) => {
