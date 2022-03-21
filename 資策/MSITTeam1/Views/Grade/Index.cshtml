@@ -48,8 +48,10 @@
                 topicId = item.fQuestionID;
                 tcount++;
             }
-            <input type="radio" id="@count" name="@item.fQuestionID" value="@item.fCorrectAnswer"><label for="@count" style="font-size:18px;"> @item.fChoice</label>
-            <br />
+<div>
+    <input type="radio" id="@count" name="@item.fQuestionID" value="@item.fCorrectAnswer"><label for="@count" class="@item.fCorrectAnswer" style="font-size:18px;"> @item.fChoice</label>
+</div>
+             <br />
             count++;
         }
     }
@@ -77,14 +79,16 @@
                  if (id != item.fQuestionID)
                  {
                  @:var a = $('input[name=@item.fQuestionID]:checked').val();
-                 @:if (1 == a) { anscount++ }
+                 @:if (1 == a) { anscount++;}
+                 @:if (1 != a) { $("input[name=@item.fQuestionID][value='1']").next().css("color", "red"); }
                  @:count++
                  id = item.fQuestionID;
                  }
              }
           }
-                 divAlert.innerHTML = Math.round((anscount / count) *100)
-             //btn.style.display='none';
+                 divAlert.innerHTML = Math.round((anscount / count) * 100)
+                 $('input').css('display','none')
+                 btn.style.display='none';
     })
 
     @*btn.addEventListener('click', (evt) => {
