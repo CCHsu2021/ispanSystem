@@ -2,57 +2,67 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <div class="auto-container">
-    <div class="row py-4 justify-content-center align-items-center">
-        <div class="col-md-4">
-            <div class="row justify-content-center">
-                <div class="">
-                    <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text justify-content-center" style="min-width:75px;">帳號</div>
-                        </div>
-                        <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="請輸入帳號">
-                    </div>
-                </div>
-                @*<span class="input-group-text" id="inputGroup-sizing-default">帳號</span>
-                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">*@
-            </div>
-            <div class="row justify-content-center">
-                <div class="">
-                    <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">識別碼</div>
-                        </div>
-                        <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="請輸入識別碼">
-                    </div>
-                </div>
-                @*<span class="input-group-text" id="inputGroup-sizing-default">識別碼</span>
-                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">*@
-            </div>
-        </div>
-        <div class="ml-0 ml-md-3 ml-lg-0">
-            <a class="btn-style-two mt-3" href="#"><span>確定</span></a>
-        </div>
-
-    </div>
     @{
-        int count = 1;
-        int tcount = 1;
-        int topicId = 0;
-        foreach (var item in Model)
+        if (Model == null)
         {
-            if (topicId != item.fQuestionID)
+            <form>
+                <div class="row py-4 justify-content-center align-items-center">
+                    <div class="col-md-4">
+                        <div class="row justify-content-center">
+                            <div class="">
+                                <div class="input-group mb-2 mr-sm-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text justify-content-center" style="min-width:75px;">帳號</div>
+                                    </div>
+                                    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtaccount" placeholder="請輸入帳號">
+                                </div>
+                            </div>
+                            @*<span class="input-group-text" id="inputGroup-sizing-default">帳號</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">*@
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="">
+                                <div class="input-group mb-2 mr-sm-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">識別碼</div>
+                                    </div>
+                                    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" placeholder="請輸入識別碼">
+                                </div>
+                            </div>
+                            @*<span class="input-group-text" id="inputGroup-sizing-default">識別碼</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">*@
+                        </div>
+                    </div>
+                    <div class="ml-0 ml-md-3 ml-lg-0">
+                        <input class="btn-style-two mt-3" type="submit" value="確定" />
+                    </div>
+                </div>
+            </form>
+        }
+    }
+    @{
+        if (Model != null)
+        {
+            <br>
+            <h3>帳號 : @ViewBag.Account   密碼 : @ViewBag.Identify</h3>
+            <br>
+            int count = 1;
+            int tcount = 1;
+            int topicId = 0;
+            foreach (var item in Model)
             {
-                <h3>@tcount. @Html.DisplayFor(modelItem => item.fQuestion)</h3>
-                topicId = item.fQuestionID;
-                tcount++;
+                if (topicId != item.fQuestionID)
+                {
+                    <h3>@tcount. @Html.DisplayFor(modelItem => item.fQuestion)</h3>
+                    topicId = item.fQuestionID;
+                    tcount++;
+                }
+                <div>
+                    <input type="radio" id="@count" name="@item.fQuestionID" value="@item.fCorrectAnswer"><label for="@count" class="@item.fCorrectAnswer" style="font-size:18px;"> @item.fChoice</label>
+                </div>
+                count++;
             }
-<div>
-    <input type="radio" id="@count" name="@item.fQuestionID" value="@item.fCorrectAnswer"><label for="@count" class="@item.fCorrectAnswer" style="font-size:18px;"> @item.fChoice</label>
-</div>
-             <br />
-            count++;
         }
     }
     <br />
@@ -63,7 +73,7 @@
     <form method="post" name="grade">
         <div id="div1" class="alert alert-info"></div>
     </form>
-</div>
+    </div>
 
 <script>
     const btn = document.querySelector("#button1");
@@ -73,16 +83,19 @@
                  var anscount = 0
                  var count = 0
          @{
+             if (Model != null)
+             {
              int id = 0;
-             foreach (var item in Model )
+             foreach (var item in Model)
              {
                  if (id != item.fQuestionID)
                  {
                  @:var a = $('input[name=@item.fQuestionID]:checked').val();
-                 @:if (1 == a) { anscount++;}
+                 @:if (1 == a) { anscount++; $('input[name=@item.fQuestionID]:checked').next().css("color", "green");}
                  @:if (1 != a) { $("input[name=@item.fQuestionID][value='1']").next().css("color", "red"); }
                  @:count++
                  id = item.fQuestionID;
+                     }
                  }
              }
           }
