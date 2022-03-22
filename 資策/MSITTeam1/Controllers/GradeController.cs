@@ -34,6 +34,7 @@ namespace MSITTeam1.Controllers
                        };
                 ViewBag.Account = Grade.txtaccount;
                 ViewBag.Identify = Grade.txtidentify;
+                ViewBag.Classname = hello.TClassInfos.FirstOrDefault(c => c.FIdentify == Grade.txtidentify).FClassname;
                 return View(list);
             }
             else

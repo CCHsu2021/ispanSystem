@@ -2,6 +2,182 @@
 @{
     ViewData["Title"] = "Index";
 }
+@section Style{
+    <style>
+        @@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+            input[type='checkbox'],
+            input[type='radio'] {
+                --active: #1e3c84;
+                --active-inner: #fff;
+                --focus: 2px rgba(39, 94, 254, .3);
+                --border: #BBC1E1;
+                --border-hover: #1e3c84;
+                --background: #fff;
+                --disabled: #F6F8FF;
+                --disabled-inner: #E1E6F9;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                height: 21px;
+                outline: none;
+                display: inline-block;
+                vertical-align: top;
+                position: relative;
+                margin: 0;
+                cursor: pointer;
+                border: 1px solid var(--bc, var(--border));
+                background: var(--b, var(--background));
+                -webkit-transition: background .3s, border-color .3s, -webkit-box-shadow .2s;
+                transition: background .3s, border-color .3s, -webkit-box-shadow .2s;
+                transition: background .3s, border-color .3s, box-shadow .2s;
+                transition: background .3s, border-color .3s, box-shadow .2s, -webkit-box-shadow .2s;
+            }
+
+                input[type='checkbox']:after,
+                input[type='radio']:after {
+                    content: '';
+                    display: block;
+                    left: 0;
+                    top: 0;
+                    position: absolute;
+                    -webkit-transition: opacity var(--d-o, 0.2s), -webkit-transform var(--d-t, 0.3s) var(--d-t-e, ease);
+                    transition: opacity var(--d-o, 0.2s), -webkit-transform var(--d-t, 0.3s) var(--d-t-e, ease);
+                    transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
+                    transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s), -webkit-transform var(--d-t, 0.3s) var(--d-t-e, ease);
+                }
+
+                input[type='checkbox']:checked,
+                input[type='radio']:checked {
+                    --b: var(--active);
+                    --bc: var(--active);
+                    --d-o: .3s;
+                    --d-t: .6s;
+                    --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+                }
+
+                input[type='checkbox']:disabled,
+                input[type='radio']:disabled {
+                    --b: var(--disabled);
+                    cursor: not-allowed;
+                    opacity: .9;
+                }
+
+                    input[type='checkbox']:disabled:checked,
+                    input[type='radio']:disabled:checked {
+                        --b: var(--disabled-inner);
+                        --bc: var(--border);
+                    }
+
+                    input[type='checkbox']:disabled + label,
+                    input[type='radio']:disabled + label {
+                        cursor: not-allowed;
+                    }
+
+                input[type='checkbox']:hover:not(:checked):not(:disabled),
+                input[type='radio']:hover:not(:checked):not(:disabled) {
+                    --bc: var(--border-hover);
+                }
+
+                input[type='checkbox']:focus,
+                input[type='radio']:focus {
+                    -webkit-box-shadow: 0 0 0 var(--focus);
+                    box-shadow: 0 0 0 var(--focus);
+                }
+
+                input[type='checkbox']:not(.switch),
+                input[type='radio']:not(.switch) {
+                    width: 21px;
+                }
+
+                    input[type='checkbox']:not(.switch):after,
+                    input[type='radio']:not(.switch):after {
+                        opacity: var(--o, 0);
+                    }
+
+                    input[type='checkbox']:not(.switch):checked,
+                    input[type='radio']:not(.switch):checked {
+                        --o: 1;
+                    }
+
+                input[type='checkbox'] + label,
+                input[type='radio'] + label {
+                    font-size: 14px;
+                    line-height: 21px;
+                    display: inline-block;
+                    vertical-align: top;
+                    cursor: pointer;
+                    margin-left: 4px;
+                }
+
+                input[type='checkbox']:not(.switch) {
+                    border-radius: 7px;
+                }
+
+                    input[type='checkbox']:not(.switch):after {
+                        width: 5px;
+                        height: 9px;
+                        border: 2px solid var(--active-inner);
+                        border-top: 0;
+                        border-left: 0;
+                        left: 7px;
+                        top: 4px;
+                        -webkit-transform: rotate(var(--r, 20deg));
+                        transform: rotate(var(--r, 20deg));
+                    }
+
+                    input[type='checkbox']:not(.switch):checked {
+                        --r: 43deg;
+                    }
+
+                input[type='checkbox'].switch {
+                    width: 38px;
+                    border-radius: 11px;
+                }
+
+                    input[type='checkbox'].switch:after {
+                        left: 2px;
+                        top: 2px;
+                        border-radius: 50%;
+                        width: 15px;
+                        height: 15px;
+                        background: var(--ab, var(--border));
+                        -webkit-transform: translateX(var(--x, 0));
+                        transform: translateX(var(--x, 0));
+                    }
+
+                    input[type='checkbox'].switch:checked {
+                        --ab: var(--active-inner);
+                        --x: 17px;
+                    }
+
+                    input[type='checkbox'].switch:disabled:not(:checked):after {
+                        opacity: .6;
+                    }
+
+            input[type='radio'] {
+                border-radius: 50%;
+            }
+
+                input[type='radio']:after {
+                    width: 19px;
+                    height: 19px;
+                    border-radius: 50%;
+                    background: var(--active-inner);
+                    opacity: 0;
+                    -webkit-transform: scale(var(--s, 0.7));
+                    transform: scale(var(--s, 0.7));
+                }
+
+                input[type='radio']:checked {
+                    --s: .5;
+                }
+        }
+
+        *:before, *:after {
+            -webkit-box-sizing: inherit;
+            box-sizing: inherit;
+        }
+    </style>
+}
 <div class="auto-container">
     @{
         if (Model == null)
@@ -35,7 +211,7 @@
                         </div>
                     </div>
                     <div class="ml-0 ml-md-3 ml-lg-0">
-                        <input class="btn-style-two mt-3" type="submit" value="確定" />
+                        <input class="btn-style-two mt-3" type="submit" name="createpaper" value="確定" />
                     </div>
                 </div>
             </form>
@@ -44,9 +220,13 @@
     @{
         if (Model != null)
         {
-            <br>
-            <h3>帳號 : @ViewBag.Account   密碼 : @ViewBag.Identify</h3>
-            <br>
+            <div class="py-4 ">
+                <div class="row bg-beige justify-content-center p-1 p-md-4 py-3 text-center">
+                    <div class="py-1 col-md-12 col-lg-6"><h4>課程名稱 : @ViewBag.Classname</h4></div>
+                    <div class="py-1 col-md-6 col-lg-3"><h4>帳號 : @ViewBag.Account</h4></div>
+                    <div class="py-1 col-md-6 col-lg-3"><h4>驗證碼 : @ViewBag.Identify</h4></div>
+                </div>
+            </div>
             int count = 1;
             int tcount = 1;
             int topicId = 0;
@@ -54,23 +234,25 @@
             {
                 if (topicId != item.fQuestionID)
                 {
-                    <h3>@tcount. @Html.DisplayFor(modelItem => item.fQuestion)</h3>
+                    <h5 class="my-2 mt-3 font-weight-bold">@tcount. @Html.DisplayFor(modelItem => item.fQuestion)</h5>
                     topicId = item.fQuestionID;
                     tcount++;
                 }
+
                 <div>
-                    <input type="radio" id="@count" name="@item.fQuestionID" value="@item.fCorrectAnswer"><label for="@count" class="@item.fCorrectAnswer" style="font-size:18px;"> @item.fChoice</label>
+                    <input type="radio" id="@count" name="@item.fQuestionID" value="@item.fCorrectAnswer">
+                    <label for="@count" class="@item.fCorrectAnswer" style="font-size:18px;"> @item.fChoice</label>
                 </div>
                 count++;
             }
 
-        <br />
-        <br />
-        <div class="sec-title text-center">
-            <button class="btn btn-primary" type="submit" id="button1">送出</button>
-        </div>
-            }
+            <br />
+            <br />
+            <div class="sec-title text-center">
+                <button class="btn-style-two mt-3" type="submit" id="button1">送出</button>
+            </div>
         }
+    }
     <form method="post" name="grade">
         <div id="div1" class="alert alert-info"></div>
     </form>
@@ -78,7 +260,26 @@
 
 <script>
     const btn = document.querySelector("#button1");
+    const createpaper = document.querySelector("#createpaper");
     const divAlert = document.querySelector("#div1");
+
+    @*btn.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        @{ 
+            if()
+        }
+    })*@
+
+
+
+
+
+
+
+
+
+
+
              btn.addEventListener('click', (evt) => {
                  evt.preventDefault();
                  var anscount = 0
@@ -101,7 +302,7 @@
              }
           }
                  divAlert.innerHTML = Math.round((anscount / count) * 100)
-                 $('input').css('display','none')
+                 $('input').attr('disabled', 'true')
                  btn.style.display='none';
     })
 

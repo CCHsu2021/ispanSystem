@@ -327,6 +327,9 @@ figure{
 .bg-orange{
 	background-color: #ed731a;
 }
+.bg-beige {
+	background-color: #FDF6EC;
+}
 
 /* btn style one */
 
@@ -416,6 +419,7 @@ figure{
 	z-index: 4;
 	background-color: #ffffff;
 	border: #1e3c84 solid 1px;
+	cursor:pointer;
   }
 
 /* btn style three */
