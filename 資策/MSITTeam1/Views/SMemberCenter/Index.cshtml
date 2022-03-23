@@ -1,4 +1,4 @@
-﻿
+﻿@addTagHelper *, MSITTeam1
 @{
     ViewData["Title"] = "Index";
 }
@@ -42,8 +42,7 @@
                 <div class="tab-content shadow-sm">
                     <div id="home" class="container tab-pane active">
                         <div class="row about-box">
-                            @Html.Partial("../Student/Information",CDictionary.SK_LOGINED_USER_ACCOUNT);
-                            @*<partial name="../Student/Information.cshtml" />*@
+                            <vc:student-resume></vc:student-resume>
                         </div>
                     </div>
                     <div id="menu1" class="container tab-pane fade">

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+
+
+<div class="container">
+    
+    <div >
+        @foreach (var item in Model) {
+        <h5  class="my-3">確認基本資料</h5> 
+        <hr />
+        <p>@Html.DisplayNameFor(model => model.fName)   @Html.DisplayFor(modelItem=> item.fName)</p>
+        <p>@Html.DisplayNameFor(model => model.fGender) @Html.DisplayFor(modelItem => item.fGender)</p>
+        <p>@Html.DisplayNameFor(model => model.fBirthDate) @Html.DisplayFor(modelItem => item.fBirthDate)</p>
+        <p>@Html.DisplayNameFor(model => model.fEmail) @Html.DisplayFor(modelItem => item.fEmail)</p>
+        <p>@Html.DisplayNameFor(model => model.fPhone) @Html.DisplayFor(modelItem => item.fPhone)</p>
+        <p>@Html.DisplayNameFor(model => model.fAddress) @Html.DisplayFor(modelItem => item.fAddress)</p>
+        <p>@Html.DisplayNameFor(model => model.fAutobiography) @Html.DisplayFor(modelItem => item.fAutobiography)</p>
+        <p>@Html.DisplayNameFor(model => model.fPortrait) </p>
+        <p> <img class="my-3" src="~/images/student/@item.fPortrait" width="200" height="150" /></p>
+
+        @Html.ActionLink("修改", "Edit", new {  id=item.fAccount } ,new {@class="btn btn-primary"})
+        }
+    
+    </div>
+    <div>
+
+    </div>
+</div>
