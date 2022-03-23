@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MSITTeam1.Models;
+using MSITTeam1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,31 @@ namespace MSITTeam1.Controllers
         {
             hello = _hello;
         }
-        public IActionResult Index()
+        public IActionResult Index(GradeIdentify Grade)
         {
-            IEnumerable<TClassTestPaper> list = from t in hello.TClassTestPapers
-                                         select t;
+            IEnumerable<CTestPaperViewModel> list = null;
+            if (hello.TClassInfos.FirstOrDefault(c => c.FAccount == Grade.txtaccount) != null && hello.TClassInfos.FirstOrDefault(c => c.FAccount == Grade.txtaccount).FIdentify == Grade.txtidentify)
+            {
+                int Testpaper = int.Parse(hello.TClassInfos.FirstOrDefault(c => c.FIdentify == Grade.txtidentify).FTestpaper);
+                list = from d in hello.TQuestionDetails
+                       join l in hello.TQuestionLists on new { d.FSubjectId, d.FQuestionId } equals new { l.FSubjectId, l.FQuestionId }
+                       join p in hello.TTestPapers on new { d.FSubjectId, d.FQuestionId } equals new { p.FSubjectId, p.FQuestionId }
+                       where p.FTestPaperId == Testpaper
+                       select new CTestPaperViewModel
+                       {
+                           fQuestionID = p.FSn,
+                           fQuestion = l.FQuestion,
+                           fChoice = d.FChoice,
+                           fCorrectAnswer = d.FCorrectAnswer
+                       };
+                ViewBag.Account = Grade.txtaccount;
+                ViewBag.Identify = Grade.txtidentify;
+                ViewBag.Classname = hello.TClassInfos.FirstOrDefault(c => c.FIdentify == Grade.txtidentify).FClassname;
+                return View(list);
+            }
+            else
+                return View(list);
 
-            return View(list);
         }
         public IActionResult Grade(TTestPaper z)
         {

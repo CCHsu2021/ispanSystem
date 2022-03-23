@@ -266,7 +266,7 @@ p,.text{
 ::-ms-input-placeholder{color: inherit;}
 
 .page-wrapper{
-	position:relative;
+	/*position:relative;*/
 	margin:0 auto;
 	width:100%;
 	min-width:300px;
@@ -326,6 +326,9 @@ figure{
 
 .bg-orange{
 	background-color: #ed731a;
+}
+.bg-beige {
+	background-color: #FDF6EC;
 }
 
 /* btn style one */
@@ -405,6 +408,7 @@ figure{
   .btn-style-two {
 	text-align: center;
 	color: #ffffff;
+	max-width:200px;
 	background-color: #1e3c84;
 	position: relative;
 	transition: all .3s linear;
@@ -415,6 +419,7 @@ figure{
 	z-index: 4;
 	background-color: #ffffff;
 	border: #1e3c84 solid 1px;
+	cursor:pointer;
   }
 
 /* btn style three */
@@ -757,10 +762,10 @@ img{
 ***/
 
 .main-header{
-	/* position: relative; */
+	 /*position: absolute;*/ 
 	display: block;
 	width: 100%;
-	z-index: 99999;
+	z-index: 1000;
 }
 
 /*=== Header Upper ===*/
@@ -1604,23 +1609,29 @@ img{
 ====================================================================
 
 ***/
-
-.search-popup{
-	position:fixed;
-	left:0px;
-	top:-100%;
-	width:100%;
-	height:100%;
-	z-index:9999;
-	visibility:hidden;
-	opacity:0;
-	overflow:auto;
-	background:rgba(0,0,0,0.80);
-	transition:all 700ms ease;
-	-moz-transition:all 700ms ease;
-	-webkit-transition:all 700ms ease;
-	-ms-transition:all 700ms ease;
-	-o-transition:all 700ms ease;
+.input-group-rounded .btn-group-right {
+	border-top-right-radius: 100px;
+	border-bottom-right-radius: 100px;
+}
+.input-group-rounded .form-control {
+	border-radius: 100px;
+}
+.search-popup {
+	position: fixed;
+	left: 0px;
+	top: -100%;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	visibility: hidden;
+	opacity: 0;
+	overflow: auto;
+	background: rgba(0,0,0,0.80);
+	transition: all 700ms ease;
+	-moz-transition: all 700ms ease;
+	-webkit-transition: all 700ms ease;
+	-ms-transition: all 700ms ease;
+	-o-transition: all 700ms ease;
 }
 
 .search-popup .overlay-layer{

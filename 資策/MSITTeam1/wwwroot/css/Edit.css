@@ -1,5 +1,5 @@
 ﻿.background {
-    background: url(../images/photo/bg6.png) no-repeat center;
+    background: url(../images/photo/bg7.jpg) no-repeat center;
     padding-bottom: 1rem;
     padding-top: 1rem;
     background-size: cover;
@@ -89,3 +89,10 @@ textarea {
     height:50px;
     /*text-align:justify;*/
 }
+.btnflex {
+    display: flex;
+}
+.inputstyle{
+    font-size:1.15em;
+}
+

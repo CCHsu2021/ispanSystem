@@ -3,7 +3,7 @@
 
 <div class="container">
     
-    <div class="col-lg-8">
+    <div >
         @foreach (var item in Model) {
         <h5  class="my-3">確認基本資料</h5> 
         <hr />
@@ -20,6 +20,9 @@
         @Html.ActionLink("修改", "Edit", new {  id=item.fAccount } ,new {@class="btn btn-primary"})
         }
     
+    </div>
+    <div>
+
     </div>
 </div>
 
