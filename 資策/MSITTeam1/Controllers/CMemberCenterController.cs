@@ -23,18 +23,6 @@ namespace MSITTeam1.Controllers
             return View();
         }
 
-        public IActionResult CompanyInformationEdit(string id)
-        {
-            if (!string.IsNullOrEmpty(id))
-            {
-                var company = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == id);
-                if (company != null)
-                    return PartialView(new CCompanyBasicViewModel() { com = company });
-            }
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
         public IActionResult CompanyInformationEdit(CCompanyBasicViewModel company)
         {
             TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == company.FAccount);
@@ -48,9 +36,12 @@ namespace MSITTeam1.Controllers
                 c.FFax = company.FFax;
                 c.FPhoneCode = company.FPhoneCode;
                 c.FPhone = company.FPhone;
+                c.FContactPerson = company.FContactPerson;
+                c.FBenefits = company.FBenefits;
+                c.FCustomInfo = company.FCustomInfo;
                 hello.SaveChanges();
             }
-            return RedirectToAction("Index");
+            return Content("success");
         }
     }
 }

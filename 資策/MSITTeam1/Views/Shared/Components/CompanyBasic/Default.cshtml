@@ -42,12 +42,12 @@
         <hr />
         <div class="inputstyle">
             <label for="FBan"> @Html.DisplayNameFor(model => model.FBenefits)：</label><br />
-            <span>@Html.DisplayFor(modelItem => item.FBenefits)</span>
+            <textarea style="overflow-y:scroll;resize:none">@Html.DisplayFor(modelItem => item.FBenefits)</textarea>
         </div>
         <hr />
         <div class="inputstyle">
             <label for="FBan"> @Html.DisplayNameFor(model => model.FCustomInfo)：</label><br />
-            <span>@Html.DisplayFor(modelItem => item.FCustomInfo)</span>
+            <textarea style="overflow-y:scroll;resize:none">@Html.DisplayFor(modelItem => item.FCustomInfo)</textarea>
         </div>
         <hr />
         <div class="btnflex">
@@ -69,10 +69,8 @@
                 <div class="modal-body">
                     <vc:company-basic-edit id="@ViewBag.Account"></vc:company-basic-edit>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-                </div>
             </div>
         </div>
     </div>
+
+
