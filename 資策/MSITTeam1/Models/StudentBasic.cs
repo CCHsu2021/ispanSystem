@@ -26,7 +26,7 @@ namespace MSITTeam1.Models
         public string Phone { get; set; }
         public string ContactAddress { get; set; }
         public string Autobiography { get; set; }
-        public byte[] Portrait { get; set; }
+        public string Portrait { get; set; }
         public string FClassMessage { get; set; }
         public string FCompany { get; set; }
         public string FCity { get; set; }

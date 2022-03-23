@@ -1,0 +1,70 @@
+﻿@model MSITTeam1.ViewModels.CStudentResumeViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+
+<div class="container">
+    <h5 class="my-3">修改基本資料</h5>
+    <hr />
+    <div class="col-md-4">
+        <form asp-action="Edit"  enctype="multipart/form-data">  @*要加上enctype="multipart/form-data 不然傳回的照片是null*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="fAccount" />
+            <div class="form-group">
+                <label asp-for="fName" class="control-label"></label>
+                <input asp-for="fName" class="form-control" />
+                <span asp-validation-for="fName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fGender" class="control-label"></label>
+                <input asp-for="fGender" class="form-control" />
+                <span asp-validation-for="fGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fBirthDate" class="control-label"></label>
+                <input asp-for="fBirthDate" class="form-control" />
+                <span asp-validation-for="fBirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fEmail" class="control-label"></label>
+                <input asp-for="fEmail" class="form-control" />
+                <span asp-validation-for="fEmail" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="fPhone" class="control-label"></label>
+                <input asp-for="fPhone" class="form-control" />
+                <span asp-validation-for="fPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fAddress" class="control-label"></label>
+                <input asp-for="fAddress" class="form-control" />
+                <span asp-validation-for="fAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fAutobiography" class="control-label"></label>
+                <input asp-for="fAutobiography" class="form-control" />
+                <span asp-validation-for="fAutobiography" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fPortrait" class="control-label"></label>
+                <input type="file" name="photo" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="送出" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List">回到基本資料</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

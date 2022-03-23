@@ -22,7 +22,7 @@ namespace MSITTeam1.ViewModels
         public string Phone { get { return this.stu.Phone; } set { this.stu.Phone = value; } }
         public string ContactAddress { get { return this.stu.ContactAddress; } set { this.stu.ContactAddress = value; } }
         public string Autobiography { get { return this.stu.Autobiography; } set { this.stu.Autobiography = value; } }
-        public byte[] Portrait { get { return this.stu.Portrait; } set { this.stu.Portrait = value; } }
+        public string Portrait { get { return this.stu.Portrait; } set { this.stu.Portrait = value; } }
         public string FClassMessage { get { return this.stu.FClassMessage; } set { this.stu.FClassMessage = value; } }
         public string FCompany { get { return this.stu.FCompany; } set { this.stu.FCompany = value; } }
         public string FCity { get { return this.stu.FCity; } set { this.stu.FCity = value; } }
