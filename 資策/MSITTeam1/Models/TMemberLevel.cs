@@ -7,8 +7,8 @@ namespace MSITTeam1.Models
 {
     public partial class TMemberLevel
     {
-        public int MemberLevel { get; set; }
+        public int FLevel { get; set; }
         public string Title { get; set; }
-        public double? BonusParcent { get; set; }
+        public double? BonusPercent { get; set; }
     }
 }

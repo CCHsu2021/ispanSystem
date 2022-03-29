@@ -32,6 +32,8 @@ namespace MSITTeam1.Models
         public int FPointState { get; set; }
         public string FCity { get; set; }
         public string FDistrict { get; set; }
+        public byte[] FPassword { get; set; }
+        public byte[] FSalt { get; set; }
 
         public virtual ICollection<TJobVacancy> TJobVacancies { get; set; }
     }

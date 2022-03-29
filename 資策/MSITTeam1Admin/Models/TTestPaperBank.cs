@@ -11,5 +11,6 @@ namespace MSITTeam1Admin.Models
         public string FUserId { get; set; }
         public string FTestPaperName { get; set; }
         public string FSubjectId { get; set; }
+        public string FNote { get; set; }
     }
 }

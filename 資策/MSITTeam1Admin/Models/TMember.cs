@@ -9,7 +9,7 @@ namespace MSITTeam1Admin.Models
     {
         public TMember()
         {
-            TOrderInformations = new HashSet<TOrderInformation>();
+            TClassOrders = new HashSet<TClassOrder>();
         }
 
         public string FAccount { get; set; }
@@ -19,6 +19,6 @@ namespace MSITTeam1Admin.Models
         public string FGuid { get; set; }
         public string FDateTime { get; set; }
 
-        public virtual ICollection<TOrderInformation> TOrderInformations { get; set; }
+        public virtual ICollection<TClassOrder> TClassOrders { get; set; }
     }
 }

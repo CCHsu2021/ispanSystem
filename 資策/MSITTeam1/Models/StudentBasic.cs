@@ -31,6 +31,10 @@ namespace MSITTeam1.Models
         public string FCompany { get; set; }
         public string FCity { get; set; }
         public string FDistrict { get; set; }
+        public byte[] FPassword { get; set; }
+        public byte[] FSalt { get; set; }
+        public string FGuid { get; set; }
+        public string FDateTime { get; set; }
 
         public virtual ICollection<StudentEducation> StudentEducations { get; set; }
         public virtual ICollection<StudentLanguage> StudentLanguages { get; set; }

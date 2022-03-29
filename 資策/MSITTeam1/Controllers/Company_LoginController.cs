@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MSITTeam1.Controllers
 {
-    
+
     public class Company_LoginController : Controller
     {
         private readonly helloContext hello;
@@ -36,7 +36,7 @@ namespace MSITTeam1.Controllers
             }
             byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
             byte[] passwordhashed = sha.ComputeHash(merged);
-            TMember mem = hello.TMembers.FirstOrDefault(p => p.FAccount == account);
+            TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
             if (mem != null)
             {
                 byte[] passwordhash = mem.FPassword.ToArray();
@@ -46,9 +46,7 @@ namespace MSITTeam1.Controllers
                 if (passwordhash.SequenceEqual(hashBytes))
                 {
                     string act = mem.FAccount;
-                    string type = mem.FMemberType.ToString();
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
-                    HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE, type);
                     string name = getUserName();
                     return $"{name}";
                 }
@@ -59,8 +57,7 @@ namespace MSITTeam1.Controllers
         public string register(String account, String password)
         {
             SHA384Managed sha = new SHA384Managed();
-            //helloContext hello = new helloContext();
-            TMember mem = hello.TMembers.FirstOrDefault(p => p.FAccount == account);
+            TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
             if (mem != null)
             {
                 return "此帳號已被註冊過";
@@ -86,50 +83,47 @@ namespace MSITTeam1.Controllers
         }
         public string getUserName()
         {
-            //helloContext hello = new helloContext();
             string account = "";
-            string type = "";
-            string Username = "";
             if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGINED_USER_ACCOUNT))
             {
                 account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
-                type = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE);
-                CDictionary.memtype = type;
-                if (type == "1")
+                TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
+                if (com.FName == "")
                 {
-                    StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
-                    if (stu == null)
-                    {
-                        CDictionary.username = "親愛的用戶";
-                    }
-                    else
-                    {
-                        CDictionary.username = stu.Name;
-                    }
+                    CDictionary.username = "親愛的用戶";
                 }
-                else if (type == "2")
+                else
                 {
-                    TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
-                    if (com == null)
-                    {
-                        CDictionary.username = "親愛的用戶";
-                    }
-                    else
-                    {
-                        CDictionary.username = com.FName;
-                    }
+                    CDictionary.username = com.FName;
                 }
             }
-            else
-            {
-
-            }
-            return Username;
-        }
+            return CDictionary.username;
+        } 
+       
+        
 
         public IActionResult ForgetPWD()
         {
             return View();
+        }
+
+        public IActionResult ResetPWD(String password)
+        {
+            string account = "company1";
+            TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
+            if(com != null)
+            {
+                SHA384Managed sha = new SHA384Managed();
+                byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
+                byte[] saltbyte = new byte[20];
+                using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(saltbyte);
+                }
+                byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
+                byte[] passwordhashed = sha.ComputeHash(merged);
+            }
+            return Content("修改成功");
         }
 
         public string PasswordIdentify(CForgetPasswordAccountViewModel fpav)

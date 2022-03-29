@@ -9,14 +9,16 @@ namespace MSITTeam1.Models
     {
         public TMember()
         {
-            TOrderInformations = new HashSet<TOrderInformation>();
+            TClassOrders = new HashSet<TClassOrder>();
         }
 
         public string FAccount { get; set; }
         public byte[] FPassword { get; set; }
         public byte[] FSalt { get; set; }
         public int? FMemberType { get; set; }
+        public string FGuid { get; set; }
+        public string FDateTime { get; set; }
 
-        public virtual ICollection<TOrderInformation> TOrderInformations { get; set; }
+        public virtual ICollection<TClassOrder> TClassOrders { get; set; }
     }
 }

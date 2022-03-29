@@ -23,6 +23,7 @@ namespace MSITTeam1.Controllers
         public IActionResult Index()
         {
             ViewBag.Name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
             return View();
         }
         [HttpPost]

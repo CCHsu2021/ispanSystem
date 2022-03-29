@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	  <AssemblyName>MSITTeam1</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

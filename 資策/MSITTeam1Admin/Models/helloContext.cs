@@ -31,9 +31,12 @@ namespace MSITTeam1Admin.Models
         public virtual DbSet<TCityContrast> TCityContrasts { get; set; }
         public virtual DbSet<TClassGrade> TClassGrades { get; set; }
         public virtual DbSet<TClassInfo> TClassInfos { get; set; }
+        public virtual DbSet<TClassOrder> TClassOrders { get; set; }
+        public virtual DbSet<TClassOrderDetail> TClassOrderDetails { get; set; }
         public virtual DbSet<TClassTestPaper> TClassTestPapers { get; set; }
         public virtual DbSet<TCompanyAppendix> TCompanyAppendices { get; set; }
         public virtual DbSet<TCompanyBasic> TCompanyBasics { get; set; }
+        public virtual DbSet<TCompanyPoint> TCompanyPoints { get; set; }
         public virtual DbSet<TCompanyRespond> TCompanyResponds { get; set; }
         public virtual DbSet<TCompanyRespondTemp> TCompanyRespondTemps { get; set; }
         public virtual DbSet<TJobDirect> TJobDirects { get; set; }
@@ -42,19 +45,18 @@ namespace MSITTeam1Admin.Models
         public virtual DbSet<TMember> TMembers { get; set; }
         public virtual DbSet<TMemberCoverLetterTemp> TMemberCoverLetterTemps { get; set; }
         public virtual DbSet<TMemberLevel> TMemberLevels { get; set; }
-        public virtual DbSet<TMemberPoint> TMemberPoints { get; set; }
         public virtual DbSet<TMemberResumeSend> TMemberResumeSends { get; set; }
-        public virtual DbSet<TOrderDetail> TOrderDetails { get; set; }
-        public virtual DbSet<TOrderInformation> TOrderInformations { get; set; }
         public virtual DbSet<TPhoto> TPhotos { get; set; }
         public virtual DbSet<TProductInformation> TProductInformations { get; set; }
         public virtual DbSet<TQuestionBank> TQuestionBanks { get; set; }
         public virtual DbSet<TQuestionDetail> TQuestionDetails { get; set; }
         public virtual DbSet<TQuestionList> TQuestionLists { get; set; }
         public virtual DbSet<TQuestionType> TQuestionTypes { get; set; }
+        public virtual DbSet<TRelation> TRelations { get; set; }
         public virtual DbSet<TSkill> TSkills { get; set; }
         public virtual DbSet<TSkillGrade> TSkillGrades { get; set; }
         public virtual DbSet<TSkillTestPaper> TSkillTestPapers { get; set; }
+        public virtual DbSet<TStudentPoint> TStudentPoints { get; set; }
         public virtual DbSet<TStudioInformation> TStudioInformations { get; set; }
         public virtual DbSet<TSubmittedAnswer> TSubmittedAnswers { get; set; }
         public virtual DbSet<TTestPaper> TTestPapers { get; set; }
@@ -65,7 +67,7 @@ namespace MSITTeam1Admin.Models
 //            if (!optionsBuilder.IsConfigured)
 //            {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Data Source=msit40team1.database.windows.net;Initial Catalog=hello;User ID=MSIT40;Password=Ispan40team1");
+//                optionsBuilder.UseSqlServer("Data Source=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;User ID=MSIT40;Password=Ispan40team1;");
 //            }
 //        }
 
@@ -459,6 +461,46 @@ namespace MSITTeam1Admin.Models
                     .HasColumnName("fTestpaper");
             });
 
+            modelBuilder.Entity<TClassOrder>(entity =>
+            {
+                entity.HasKey(e => new { e.MemberId, e.OrderId })
+                    .HasName("PK_tOrderInformation");
+
+                entity.ToTable("tClassOrder");
+
+                entity.Property(e => e.MemberId).HasMaxLength(20);
+
+                entity.Property(e => e.OrderId).HasColumnName("OrderID");
+
+                entity.Property(e => e.Date).HasMaxLength(50);
+
+                entity.Property(e => e.Invoice).HasMaxLength(50);
+
+                entity.Property(e => e.PayMethod).HasMaxLength(50);
+
+                entity.Property(e => e.TotalPrice).HasColumnType("money");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.TClassOrders)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tOrderInformation_tMember");
+            });
+
+            modelBuilder.Entity<TClassOrderDetail>(entity =>
+            {
+                entity.HasKey(e => new { e.OrderId, e.ClassCode })
+                    .HasName("PK_tOrderDetail");
+
+                entity.ToTable("tClassOrderDetail");
+
+                entity.Property(e => e.OrderId)
+                    .HasMaxLength(50)
+                    .HasColumnName("OrderID");
+
+                entity.Property(e => e.ClassCode).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<TClassTestPaper>(entity =>
             {
                 entity.HasKey(e => new { e.TestPaperId, e.TopicId, e.ChoseAnswer })
@@ -571,6 +613,34 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.FSalt)
                     .HasMaxLength(20)
                     .HasColumnName("fSalt");
+            });
+
+            modelBuilder.Entity<TCompanyPoint>(entity =>
+            {
+                entity.HasKey(e => new { e.CompanyTaxid, e.PointUsageId })
+                    .HasName("PK_tMemberPoint");
+
+                entity.ToTable("tCompanyPoint");
+
+                entity.Property(e => e.CompanyTaxid)
+                    .HasMaxLength(20)
+                    .HasColumnName("CompanyTAXID");
+
+                entity.Property(e => e.PointUsageId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("PointUsageID");
+
+                entity.Property(e => e.PointDate)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PointDescription)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PointType)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<TCompanyRespond>(entity =>
@@ -813,40 +883,13 @@ namespace MSITTeam1Admin.Models
 
             modelBuilder.Entity<TMemberLevel>(entity =>
             {
-                entity.HasKey(e => e.MemberLevel);
+                entity.HasKey(e => e.FLevel);
 
                 entity.ToTable("tMemberLevel");
 
-                entity.Property(e => e.MemberLevel).ValueGeneratedNever();
+                entity.Property(e => e.FLevel).HasColumnName("fLevel");
 
                 entity.Property(e => e.Title).HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<TMemberPoint>(entity =>
-            {
-                entity.HasKey(e => new { e.FAccount, e.PointUsageId });
-
-                entity.ToTable("tMemberPoint");
-
-                entity.Property(e => e.FAccount)
-                    .HasMaxLength(20)
-                    .HasColumnName("fAccount");
-
-                entity.Property(e => e.PointUsageId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("PointUsageID");
-
-                entity.Property(e => e.PointDate)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.PointDescription)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.PointType)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<TMemberResumeSend>(entity =>
@@ -898,52 +941,6 @@ namespace MSITTeam1Admin.Models
                     .HasForeignKey(d => d.ResumeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tMemberResumeSend_StudentResume");
-            });
-
-            modelBuilder.Entity<TOrderDetail>(entity =>
-            {
-                entity.HasKey(e => new { e.OrderId, e.ProductId });
-
-                entity.ToTable("tOrderDetail");
-
-                entity.Property(e => e.OrderId)
-                    .HasMaxLength(50)
-                    .HasColumnName("OrderID");
-
-                entity.Property(e => e.ProductId)
-                    .HasMaxLength(50)
-                    .HasColumnName("ProductID");
-            });
-
-            modelBuilder.Entity<TOrderInformation>(entity =>
-            {
-                entity.HasKey(e => new { e.FAccount, e.OrderId });
-
-                entity.ToTable("tOrderInformation");
-
-                entity.Property(e => e.FAccount)
-                    .HasMaxLength(20)
-                    .HasColumnName("fAccount");
-
-                entity.Property(e => e.OrderId).HasColumnName("OrderID");
-
-                entity.Property(e => e.Date).HasMaxLength(50);
-
-                entity.Property(e => e.Invoice).HasMaxLength(50);
-
-                entity.Property(e => e.PayMethod).HasMaxLength(50);
-
-                entity.Property(e => e.ShipBy).HasMaxLength(50);
-
-                entity.Property(e => e.ShipTo).HasMaxLength(50);
-
-                entity.Property(e => e.TotalPrice).HasColumnType("money");
-
-                entity.HasOne(d => d.FAccountNavigation)
-                    .WithMany(p => p.TOrderInformations)
-                    .HasForeignKey(d => d.FAccount)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tOrderInformation_tMember");
             });
 
             modelBuilder.Entity<TPhoto>(entity =>
@@ -1049,6 +1046,8 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.FLevel).HasColumnName("fLevel");
 
+                entity.Property(e => e.FNotes).HasColumnName("fNotes");
+
                 entity.Property(e => e.FQuestion)
                     .IsRequired()
                     .HasColumnName("fQuestion");
@@ -1073,6 +1072,31 @@ namespace MSITTeam1Admin.Models
                     .HasColumnName("QuestionTypeID");
 
                 entity.Property(e => e.QuestionType).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TRelation>(entity =>
+            {
+                entity.HasKey(e => new { e.CompanyTaxid, e.FAccountEmail });
+
+                entity.ToTable("tRelation");
+
+                entity.Property(e => e.CompanyTaxid)
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyTAXID");
+
+                entity.Property(e => e.FAccountEmail)
+                    .HasMaxLength(50)
+                    .HasColumnName("fAccount(Email)");
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.JobPosition).HasMaxLength(50);
+
+                entity.Property(e => e.UpdateDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Updater).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TSkill>(entity =>
@@ -1135,6 +1159,30 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.TopicAnswer).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<TStudentPoint>(entity =>
+            {
+                entity.HasKey(e => new { e.PointUsageId, e.FAccount })
+                    .HasName("PK_StudentPoint");
+
+                entity.ToTable("tStudentPoint");
+
+                entity.Property(e => e.PointUsageId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("PointUsageID");
+
+                entity.Property(e => e.FAccount)
+                    .HasMaxLength(50)
+                    .HasColumnName("fAccount");
+
+                entity.Property(e => e.PointDate).HasMaxLength(50);
+
+                entity.Property(e => e.PointDescription).HasMaxLength(50);
+
+                entity.Property(e => e.PointRecord).HasMaxLength(50);
+
+                entity.Property(e => e.PointType).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<TStudioInformation>(entity =>
             {
                 entity.HasNoKey();
@@ -1172,11 +1220,6 @@ namespace MSITTeam1Admin.Models
                     .ValueGeneratedNever()
                     .HasColumnName("fSN");
 
-                entity.Property(e => e.FCorrectAnswer)
-                    .HasMaxLength(20)
-                    .HasColumnName("fCorrectAnswer")
-                    .IsFixedLength(true);
-
                 entity.Property(e => e.FMemberAccount)
                     .IsRequired()
                     .HasMaxLength(20)
@@ -1188,6 +1231,8 @@ namespace MSITTeam1Admin.Models
                     .HasColumnName("fQuestionID")
                     .IsFixedLength(true);
 
+                entity.Property(e => e.FResultId).HasColumnName("fResultID");
+
                 entity.Property(e => e.FSubjectId)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -1197,10 +1242,6 @@ namespace MSITTeam1Admin.Models
                     .IsRequired()
                     .HasMaxLength(200)
                     .HasColumnName("fSubmitAnswer");
-
-                entity.Property(e => e.FSubmitTime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("fSubmitTime");
             });
 
             modelBuilder.Entity<TTestPaper>(entity =>
@@ -1228,6 +1269,8 @@ namespace MSITTeam1Admin.Models
                 entity.ToTable("tTestPaperBank");
 
                 entity.Property(e => e.FTestPaperId).HasColumnName("fTestPaperID");
+
+                entity.Property(e => e.FNote).HasColumnName("fNote");
 
                 entity.Property(e => e.FSubjectId)
                     .HasMaxLength(30)

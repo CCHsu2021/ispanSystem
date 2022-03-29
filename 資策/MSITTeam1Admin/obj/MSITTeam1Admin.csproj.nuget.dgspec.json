@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\Users\\User\\Documents\\ispanProject\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj": {}
   },
   "projects": {
@@ -9,30 +8,13 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "C:\\Users\\User\\Documents\\ispanProject\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj",
-        "projectName": "MSITTeam1Admin",
+        "projectName": "MSITTeam1",
         "projectPath": "C:\\Users\\User\\Documents\\ispanProject\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\User\\Documents\\ispanProject\\資策\\MSITTeam1Admin\\obj\\",
-=======
-    "C:\\Users\\LEE\\Source\\Repos\\ispanSystem\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\LEE\\Source\\Repos\\ispanSystem\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\LEE\\Source\\Repos\\ispanSystem\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj",
-        "projectName": "MSITTeam1Admin",
-        "projectPath": "C:\\Users\\LEE\\Source\\Repos\\ispanSystem\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj",
-        "packagesPath": "C:\\Users\\LEE\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LEE\\Source\\Repos\\ispanSystem\\資策\\MSITTeam1Admin\\obj\\",
->>>>>>> cbc12580e41ccb0b52ca787c5058bccf5135160e
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\LEE\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
