@@ -22,11 +22,11 @@ namespace MSITTeam1.ViewComponent
         {
             if (!string.IsNullOrEmpty(id))
             {
-                var company = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == id);
+                var company = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == id);
                 if (company != null)
                     return View(new CCompanyBasicViewModel() { com = company });
             }
-            return View("../CMemberCenter/Index");
+            return View(Url.Content("~/CMemberCenter/Index"));
         }
     }
 }

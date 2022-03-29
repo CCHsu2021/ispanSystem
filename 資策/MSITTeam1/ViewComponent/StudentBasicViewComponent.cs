@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using MSITTeam1.Models;
@@ -9,24 +10,25 @@ using System.Linq;
 namespace MSITTeam1.ViewComponent
 {
     [Microsoft.AspNetCore.Mvc.ViewComponent]
-    public class StudentResumeViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
+    public class StudentBasicViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
         private readonly helloContext hello;
         //IWebHostEnvironment _enviroment;
 
         [ActivatorUtilitiesConstructor]
-        public StudentResumeViewComponent(helloContext _hello/*, IWebHostEnvironment p*/)
+        public StudentBasicViewComponent(helloContext _hello/*, IWebHostEnvironment p*/)
         {
             hello = _hello;
             //_enviroment = p;
         }
         public IViewComponentResult Invoke()
         {
-            int keyword = 111;
+            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            ViewBag.Account = account;
 
             CStudentResumeViewModel SBvModel = new CStudentResumeViewModel();
             List<CStudentResumeViewModel> sb = new List<CStudentResumeViewModel>();
-            var datas = from b in hello.StudentBasics.Where(p => p.FAccount == keyword.ToString())
+            var datas = from b in hello.StudentBasics.Where(p => p.FAccount == account)
                         select new
                         {
                             Account = b.FAccount,

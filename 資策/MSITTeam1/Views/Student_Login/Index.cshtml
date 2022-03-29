@@ -31,7 +31,7 @@
                     </div>
                     <div class="sign-up-htm">
                         <div class="group">
-                            <label for="user" class="label">帳號(身分證號碼)</label>
+                            <label for="user" class="label">帳號(Email)</label>
                             <input id="RAccount" type="text" class="input" name="txtAccount" required>
                         </div>
                         <div class="group">
@@ -75,20 +75,19 @@
         const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
         $("#registerbtn").click(function ()
         {
-            $(function() {
-                $.ajax({
-                    type: "Post",
-                    url: "../Student_Login/ValidAccount",
-                    data: { account: $("#RAccount").val()},
-                    dataType: "text",
-                    success: function (message) {
-                        if (message == "false") {
-                            Swal.fire("身分證格式錯誤", message, "warning");
-                            return;
-                        }
+            $.ajax({
+                type: "Post",
+                url: "../Student_Login/ValidAccount",
+                data: { account: $("#RAccount").val() },
+                dataType: "text",
+                success: function (message) {
+                    if (message == "false") {
+                        Swal.fire("帳號格式錯誤", message, "warning");
+                        return;
                     }
-                })
+                }
             })
+
             if (!regex.test($("#RPassword").val()))
             {
                 Swal.fire("密碼格式不符請再次確認", "請輸入8-16碼包含一大一小寫英數字", "warning")

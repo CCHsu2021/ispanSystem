@@ -13,5 +13,6 @@ namespace MSITTeam1.Models
         public string PointType { get; set; }
         public string PointDescription { get; set; }
         public string PointRecord { get; set; }
+        public string OrderId { get; set; }
     }
 }
