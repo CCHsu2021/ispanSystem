@@ -43,12 +43,12 @@
         if (pwd == pwd2) {
             $.ajax({
                 type: "Post",
-                url: "@Url.Content("~/Company_Login/ResetPWD")",
+                url: "@Url.Content("~/Student_Login/ResetPWD")",
                 data: { password: $("#RPassword").val() },
                 dataType: "text",
                 success: function (message) {
                     if (message == "此帳號已被註冊過") {
-                        Swal.fire("Uh Oh!", message, "warning");
+                        Swal.fire("Uh Oh", message, "warning");
                     } else if (message == "修改成功") {
                         Swal.fire("密碼已重設請重新登入", message, "success").then((result) => {
                             if (result.isConfirmed) {
@@ -61,7 +61,7 @@
         }
         else
         {
-            
+            Swal.fire("Uh Oh", "密碼不一致請再次輸入", "warning");
         }
 
     })

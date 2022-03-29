@@ -36,7 +36,7 @@ namespace MSITTeam1.Controllers
             }
             byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
             byte[] passwordhashed = sha.ComputeHash(merged);
-            TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
+            TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
             if (mem != null)
             {
                 byte[] passwordhash = mem.FPassword.ToArray();
@@ -45,7 +45,7 @@ namespace MSITTeam1.Controllers
                 byte[] hashBytes = sha.ComputeHash(passwordBytes.Concat(salt).ToArray());
                 if (passwordhash.SequenceEqual(hashBytes))
                 {
-                    string act = mem.FAccount;
+                    string act = mem.CompanyTaxid;
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
                     string name = getUserName();
                     return $"{name}";
@@ -57,7 +57,7 @@ namespace MSITTeam1.Controllers
         public string register(String account, String password)
         {
             SHA384Managed sha = new SHA384Managed();
-            TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
+            TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
             if (mem != null)
             {
                 return "此帳號已被註冊過";
@@ -70,14 +70,13 @@ namespace MSITTeam1.Controllers
             }
             byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
             byte[] passwordhashed = sha.ComputeHash(merged);
-            TMember viewModel = new TMember()
+            TCompanyBasic company = new TCompanyBasic()
             {
-                FAccount = account,
+                CompanyTaxid = account,
                 FPassword = passwordhashed,
                 FSalt = saltbyte,
-                FMemberType = 2,
             };
-            hello.TMembers.Add(viewModel);
+            hello.TCompanyBasics.Add(company);
             hello.SaveChanges();
             return "帳號註冊成功";
         }
@@ -87,14 +86,16 @@ namespace MSITTeam1.Controllers
             if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGINED_USER_ACCOUNT))
             {
                 account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
-                TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
+                TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
                 if (com.FName == "")
                 {
                     CDictionary.username = "親愛的用戶";
+                    CDictionary.memtype = "2";
                 }
                 else
                 {
                     CDictionary.username = com.FName;
+                    CDictionary.memtype = "2";
                 }
             }
             return CDictionary.username;
@@ -109,8 +110,8 @@ namespace MSITTeam1.Controllers
 
         public IActionResult ResetPWD(String password)
         {
-            string account = "company1";
-            TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == account);
+            string account = "222";
+            TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
             if(com != null)
             {
                 SHA384Managed sha = new SHA384Managed();
@@ -122,6 +123,10 @@ namespace MSITTeam1.Controllers
                 }
                 byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
                 byte[] passwordhashed = sha.ComputeHash(merged);
+                com.CompanyTaxid = account;
+                com.FPassword = passwordhashed;
+                com.FSalt = saltbyte;
+                hello.SaveChanges();
             }
             return Content("修改成功");
         }

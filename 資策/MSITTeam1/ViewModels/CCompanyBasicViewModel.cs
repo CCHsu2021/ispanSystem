@@ -16,8 +16,7 @@ namespace MSITTeam1.ViewModels
         }
         public TCompanyBasic com { get { return _com; } set { _com = value; } }
         [DisplayName("統編")]
-        public int FBan { get { return this._com.FBan; } set { this._com.FBan = value; } }
-        public string FAccount { get { return this._com.FAccount; } set { this._com.FAccount = value; } }
+        public string CompanyTaxid { get { return this._com.CompanyTaxid; } set { this._com.CompanyTaxid = value; } }
         [DisplayName("公司名稱")]
         public string FName { get { return this._com.FName; } set { this._com.FName = value; } }
         [DisplayName("員工總數")]

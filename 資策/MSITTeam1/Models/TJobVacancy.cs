@@ -9,7 +9,6 @@ namespace MSITTeam1.Models
     {
         public TJobVacancy()
         {
-            TMemberResumeSends = new HashSet<TMemberResumeSend>();
             TSkills = new HashSet<TSkill>();
         }
 
@@ -32,11 +31,14 @@ namespace MSITTeam1.Models
         public string FNeedPerson { get; set; }
         public string FJobName { get; set; }
         public string FLanguage { get; set; }
+        public string FContactPerson { get; set; }
+        public string FContactPhone { get; set; }
+        public string FFax { get; set; }
+        public string FEmail { get; set; }
 
         public virtual TCityContrast F { get; set; }
         public virtual TCompanyBasic FAccountNavigation { get; set; }
         public virtual TJobDirect FJoblist { get; set; }
-        public virtual ICollection<TMemberResumeSend> TMemberResumeSends { get; set; }
         public virtual ICollection<TSkill> TSkills { get; set; }
     }
 }

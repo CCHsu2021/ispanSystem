@@ -29,7 +29,7 @@ namespace MSITTeam1.Controllers
         [HttpPost]
         public IActionResult CompanyInformationEdit([FromBody]CCompanyBasicViewModel company)
         {
-            TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == company.FAccount);
+            TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == company.CompanyTaxid);
             if (c != null)
             {
                 c.FAddress = company.FAddress;

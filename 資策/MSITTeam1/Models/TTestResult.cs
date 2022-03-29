@@ -11,6 +11,7 @@ namespace MSITTeam1.Models
         public string FMemberAccount { get; set; }
         public DateTime FTestDateTime { get; set; }
         public int? FTypeInfoId { get; set; }
+        public byte[] FTypeInfoImage { get; set; }
         public int? FTestGrade { get; set; }
         public int FTestPaperId { get; set; }
     }

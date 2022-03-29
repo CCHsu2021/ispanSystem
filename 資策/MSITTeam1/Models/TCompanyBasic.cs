@@ -12,8 +12,7 @@ namespace MSITTeam1.Models
             TJobVacancies = new HashSet<TJobVacancy>();
         }
 
-        public int FBan { get; set; }
-        public string FAccount { get; set; }
+        public string CompanyTaxid { get; set; }
         public string FName { get; set; }
         public int? FCapitalAmount { get; set; }
         public int? FPhoneCode { get; set; }
