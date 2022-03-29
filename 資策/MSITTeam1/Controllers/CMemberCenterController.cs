@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using MSITTeam1.Models;
 using MSITTeam1.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,11 +25,11 @@ namespace MSITTeam1.Controllers
             ViewBag.Name = CDictionary.username;
             return View();
         }
-
-        public IActionResult CompanyInformationEdit(CCompanyBasicViewModel company)
+        [HttpPost]
+        public IActionResult CompanyInformationEdit([FromBody]CCompanyBasicViewModel company)
         {
             TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.FAccount == company.FAccount);
-            if(c != null)
+            if (c != null)
             {
                 c.FAddress = company.FAddress;
                 c.FCity = company.FCity;

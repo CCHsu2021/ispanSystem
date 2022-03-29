@@ -6,7 +6,7 @@
         <form>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <input type="hidden" asp-for="FAccount" />
+            <input type="hidden" asp-for="FAccount" id="FAccount" />
             <div class="form-group">
                 <label asp-for="FName" class="control-label"></label>
                 <input id="FName" asp-for="FName" class="form-control" />
@@ -66,36 +66,4 @@
         </form>
     </div>
 </div>
-<script src="~/js/jquery.js"></script>
-<script>
-    $("#savechanges").click(() => {
-        var jsondata = ({
-            FName: $("#FName").val(),
-            FPhoneCode: $("#FPhoneCode").val(),
-            FPhone: $("#FPhone").val(),
-            FFaxCode: $("#FFaxCode").val(),
-            FFax: $("#FFax").val(),
-            FContactPerson: $("#FContactPerson").val(),
-            FCity: $("#FCity").val(),
-            FDistrict: $("#FDistrict").val(),
-            FAddress: $("#FAddress").val(),
-            FEmail: $("#FEmail").val(),
-            FBenefits: $("#FBenefits").val(),
-            FCustomInfo: $("#FCustomInfo").val(),
-        })
-        $.ajax({
-            url: "@Url.Content("~/CMemberCenter/CompanyInformationEdit")",
-            type: "Post",
-            contentType: "application/json",
-            data: jsondata,
-            dataType: "text",
-            success: function (message) {
-                if (message == "success") {
-                    Swal.fire("Success","修改成功", "success",)
-                } else {
-                    Swal.fire(error.responseText, "修改失敗", "warning")
-                }
-            }
-        })
-    })
-</script>
+
