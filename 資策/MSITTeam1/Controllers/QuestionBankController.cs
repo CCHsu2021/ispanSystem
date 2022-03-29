@@ -22,21 +22,26 @@ namespace MSITTeam1.Controllers
 
 		public IActionResult List()
 		{
-			var quesList = from choice in _context.TQuestionDetails
-					   join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
-					   select new CQuestionBankViewModel
-					   {
-						   subject = ques.FSubjectId,
-						   questionId = ques.FQuestionId,
-						   question = ques.FQuestion,
-						   level = ques.FLevel,
-						   //updateTime = ques.FUpdateTime.ToString('YYMMDD'),
-						   questionType = ques.FQuestionTypeId.ToString(),
-						   choice = choice.FChoice,
-						   correctAnswer = choice.FCorrectAnswer
-					   };
+			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
+			var quesQuery = from choice in _context.TQuestionDetails
+							join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
+							select new CQuestionBankViewModel
+							{
+								Vsubject = ques.FSubjectId,
+								VquestionId = ques.FQuestionId,
+								Vquestion = ques.FQuestion,
+								Vlevel = ques.FLevel,
+								//updateTime = ques.FUpdateTime.ToString('YYMMDD'),
+								VquestionType = ques.FQuestionTypeId.ToString(),
+								Vchoice = choice.FChoice,
+								VcorrectAnswer = choice.FCorrectAnswer
+							};
+			foreach (var q in quesQuery)
+			{
+				quesList.Add(q);
+			}
 
-			return View(quesList.ToList());
+			return View(quesList);
 		}
 
 		public IActionResult Create()

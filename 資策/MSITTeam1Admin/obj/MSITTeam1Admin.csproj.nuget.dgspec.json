@@ -1,21 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\ispanProject\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj": {}
+    "E:\\iSpanSystem_Team1\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\ispanProject\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj": {
+    "E:\\iSpanSystem_Team1\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\ispanProject\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj",
+        "projectUniqueName": "E:\\iSpanSystem_Team1\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj",
         "projectName": "MSITTeam1",
-        "projectPath": "C:\\Users\\User\\Documents\\ispanProject\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\ispanProject\\資策\\MSITTeam1Admin\\obj\\",
+        "projectPath": "E:\\iSpanSystem_Team1\\資策\\MSITTeam1Admin\\MSITTeam1Admin.csproj",
+        "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
+        "outputPath": "E:\\iSpanSystem_Team1\\資策\\MSITTeam1Admin\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

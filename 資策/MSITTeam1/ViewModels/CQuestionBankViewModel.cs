@@ -9,24 +9,24 @@ namespace MSITTeam1.ViewModels
 	public class CQuestionBankViewModel
 	{
 		[DisplayName("課程名稱")]
-		public string subject { get; set; }
+		public string Vsubject { get; set; }
 
 		[DisplayName("題目編號")]
-		public int questionId { get; set; }
+		public int VquestionId { get; set; }
 		[DisplayName("題目")]
-		public string question { get; set; }
+		public string Vquestion { get; set; }
 
 		[DisplayName("選項")]
-		public string choice { get; set; }
+		public string Vchoice { get; set; }
 
 		[DisplayName("難度")]
-		public int level { get; set; }
+		public int Vlevel { get; set; }
 		[DisplayName("更新時間")]
 
-		public string updateTime { get; set; }
-		public int correctAnswer { get; set; }
+		public string VupdateTime { get; set; }
+		public int VcorrectAnswer { get; set; }
 		[DisplayName("題目類型")]
 
-		public string questionType { get; set; }
+		public string VquestionType { get; set; }
 	}
 }

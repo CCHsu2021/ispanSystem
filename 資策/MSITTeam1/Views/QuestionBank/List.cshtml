@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MSITTeam1.ViewModels.CQuestionBankViewModel>
+﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
 
 @{
     ViewData["Title"] = "List";
@@ -13,23 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.subject)
+                @Html.DisplayNameFor(model => model[0].Vsubject)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.questionId)
+                @Html.DisplayNameFor(model => model[0].VquestionId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.question)
+                @Html.DisplayNameFor(model => model[0].Vquestion)
             </th>
             <th>
                 選項
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.questionType)
+                @Html.DisplayNameFor(model => model[0].VquestionType)
             </th>
-
             <th>
-                @Html.DisplayNameFor(model => model.level)
+                @Html.DisplayNameFor(model => model[0].Vlevel)
             </th>
             <th></th>
         </tr>
@@ -39,29 +38,25 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.subject)
+                    @Html.DisplayFor(modelItem => item.Vsubject)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.questionId)
+                    @Html.DisplayFor(modelItem => item.VquestionId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.question)
+                    @Html.DisplayFor(modelItem => item.Vquestion)
                 </td>
                 <td>
-                    <ol>
-                        <li>item1</li>
-                        <li>item2</li>
-                        <li>item3</li>
-                    </ol>
+                    @Html.DisplayFor(modelItem => item.Vchoice)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.questionType)
+                    @Html.DisplayFor(modelItem => item.VquestionType)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.level)
+                    @Html.DisplayFor(modelItem => item.Vlevel)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { subjectID = item.subject, questionID = (int)item.questionId }) |
+                    @Html.ActionLink("Edit", "Edit", new { subjectID = item.Vsubject, questionID = (int)item.VquestionId }) |
                     @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
