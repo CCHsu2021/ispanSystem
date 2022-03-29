@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MSITTeam1.Models.TQuestionList>
+﻿@model IEnumerable<MSITTeam1.ViewModels.CQuestionBankViewModel>
 
 @{
     ViewData["Title"] = "List";
@@ -13,47 +13,59 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FQuestion)
+                @Html.DisplayNameFor(model => model.subject)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FQuestionImage)
+                @Html.DisplayNameFor(model => model.questionId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FQuestionTypeId)
+                @Html.DisplayNameFor(model => model.question)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FUpdateTime)
+                選項
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FLevel)
+                @Html.DisplayNameFor(model => model.questionType)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.level)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FQuestion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FQuestionImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FQuestionTypeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FUpdateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FLevel)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }) |
-                @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.questionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.question)
+                </td>
+                <td>
+                    <ol>
+                        <li>item1</li>
+                        <li>item2</li>
+                        <li>item3</li>
+                    </ol>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.questionType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.level)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { subjectID = item.subject, questionID = (int)item.questionId }) |
+                    @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
