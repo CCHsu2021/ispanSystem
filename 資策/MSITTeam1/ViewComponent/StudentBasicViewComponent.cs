@@ -10,13 +10,13 @@ using System.Linq;
 namespace MSITTeam1.ViewComponent
 {
     [Microsoft.AspNetCore.Mvc.ViewComponent]
-    public class StudentResumeViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
+    public class StudentBasicViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
         private readonly helloContext hello;
         //IWebHostEnvironment _enviroment;
 
         [ActivatorUtilitiesConstructor]
-        public StudentResumeViewComponent(helloContext _hello/*, IWebHostEnvironment p*/)
+        public StudentBasicViewComponent(helloContext _hello/*, IWebHostEnvironment p*/)
         {
             hello = _hello;
             //_enviroment = p;
