@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using MSITTeam1.Models;
@@ -22,11 +23,12 @@ namespace MSITTeam1.ViewComponent
         }
         public IViewComponentResult Invoke()
         {
-            int keyword = 111;
+            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            ViewBag.Account = account;
 
             CStudentResumeViewModel SBvModel = new CStudentResumeViewModel();
             List<CStudentResumeViewModel> sb = new List<CStudentResumeViewModel>();
-            var datas = from b in hello.StudentBasics.Where(p => p.FAccount == keyword.ToString())
+            var datas = from b in hello.StudentBasics.Where(p => p.FAccount == account)
                         select new
                         {
                             Account = b.FAccount,
