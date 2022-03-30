@@ -1,63 +1,68 @@
 ﻿@addTagHelper *, MSITTeam1
 @model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
 
-@foreach (var item in Model)
-{   <div class="row">
-         <div class="col-6">
+    @foreach (var item in Model)
+{   
+    
+         <div class="col-md-6">
+            <h3>基本資料</h3>
+            <hr/>
             <div class="inputstyle">
-                <label>@Html.DisplayNameFor(model => model.fName)：</label>
+                <label>@Html.DisplayNameFor(model => model.fName)</label>
                 <span>@Html.DisplayFor(modelItem => item.fName)</span>
             </div>
             <hr />
             <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fGender)：</label>
+                <label> @Html.DisplayNameFor(model => model.fGender)</label>
                 <span>@Html.DisplayFor(modelItem => item.fGender)</span>
             </div>
             <hr />
             <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fBirthDate)：</label>
+                <label> @Html.DisplayNameFor(model => model.fBirthDate)</label>
                 <span>@Html.DisplayFor(modelItem => item.fBirthDate)</span>
             </div>
             <hr />
             <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fEmail)：</label>
+                <label> @Html.DisplayNameFor(model => model.fEmail)</label>
                 <span>@Html.DisplayFor(modelItem => item.fEmail)</span>
             </div>
             <hr />
             <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fPhone)：</label>
+                <label> @Html.DisplayNameFor(model => model.fPhone)</label>
                 <span>@Html.DisplayFor(modelItem => item.fPhone)</span>
             </div>
             <hr />
             <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fAddress)：</label>
+                <label> @Html.DisplayNameFor(model => model.fAddress)</label>
                 <span>@Html.DisplayFor(modelItem => item.fAddress)</span>
             </div>
         </div>
 
-        <div col-6>
+        <div class="col-md-6">
             <div class="inputstyle">
-                <span>@Html.DisplayFor(modelItem => item.fPortrait)</span>
+                <img class="mt-5 mb-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
             </div>
             <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fAutobiography)：</label>
+                <label> @Html.DisplayNameFor(model => model.fAutobiography)</label>
+                <br/>
                 <span>@Html.DisplayFor(modelItem => item.fAutobiography)</span>
             </div>
         </div>
-    </div>
-    
-    <div class="btnflex">
-        <button class="btn-style-two " type="button" data-toggle="modal" data-target="#staticBackdrop">修改資料</button>
-        
-    </div>
+
+        <div class="btnflex w-100">
+        <button class="btn-style-two" type="button" data-toggle="modal" data-target="#staticBackdrop">資料修改</button>
+        </div>
 
 }
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">修改資料</h5>
+                <h5 class="modal-title" id="exampleModalLabel">資料修改</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

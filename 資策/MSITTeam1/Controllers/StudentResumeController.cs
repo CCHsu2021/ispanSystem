@@ -63,20 +63,20 @@ namespace MSITTeam1.Controllers
         }
 
         
-        public IActionResult Edit(string? id)
-        {
-            if (id != null)
-            {
+        //public IActionResult Edit(string? id)
+        //{
+        //    if (id != null)
+        //    {
 
-                StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.FAccount == (string)id);
-                if (sb != null)
-                    return View(new CStudentResumeViewModel() { student = sb ,fGender = sb.Gender.Equals("0")?"男":"女"});
-            }
-            return RedirectToAction("List");
-        }
+        //        StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.FAccount == (string)id);
+        //        if (sb != null)
+        //            return View(new CStudentResumeViewModel() { student = sb ,fGender = sb.Gender.Equals("0")?"男":"女"});
+        //    }
+        //    return RedirectToAction("List");
+        //}
 
         [HttpPost]
-        public IActionResult Edit(CStudentResumeViewModel p)
+        public IActionResult Edit([FromBody]CStudentResumeViewModel p)
         {
 
             StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.FAccount == p.fAccount);
@@ -99,7 +99,7 @@ namespace MSITTeam1.Controllers
                 sb.Autobiography = p.fAutobiography;
                 hello.SaveChanges();
             }
-            return RedirectToAction("List");
+            return Content("修改成功");
         }
     }
 }

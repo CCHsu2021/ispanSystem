@@ -175,6 +175,7 @@
     $("#savechanges").click(() => {
         var jsondata = JSON.stringify({
             fAccount:$("#fAccount").val(),
+            fName:$("#fName").val(),
             fGender: $("#fGender").val(),
             fBirthDate: $("#fBirthDate").val(),
             fEmail: $("#fEmail").val(),
@@ -192,7 +193,7 @@
             Swal.fire({
                         
                         icon: 'success',
-                        title: '修改成功!!',
+                        title: '修改成功',
                         showConfirmButton: false,
                         timer: 1500
                         }).then(() => {
