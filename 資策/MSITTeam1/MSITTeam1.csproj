@@ -1,0 +1,122 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>MSITTeam1</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="js\**" />
+    <Content Remove="js\**" />
+    <EmbeddedResource Remove="js\**" />
+    <None Remove="js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\js\appear.js" />
+    <Content Remove="wwwroot\js\bootstrap.min.js" />
+    <Content Remove="wwwroot\js\jquery-ui.js" />
+    <Content Remove="wwwroot\js\jquery.countdown.js" />
+    <Content Remove="wwwroot\js\jquery.fancybox.js" />
+    <Content Remove="wwwroot\js\jquery.js" />
+    <Content Remove="wwwroot\js\main-slider-script.js" />
+    <Content Remove="wwwroot\js\map-script.js" />
+    <Content Remove="wwwroot\js\owl.js" />
+    <Content Remove="wwwroot\js\parallax.min.js" />
+    <Content Remove="wwwroot\js\popper.min.js" />
+    <Content Remove="wwwroot\js\respond.js" />
+    <Content Remove="wwwroot\js\script.js" />
+    <Content Remove="wwwroot\js\validate.js" />
+    <Content Remove="wwwroot\js\wow.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\animate.css" />
+    <None Include="wwwroot\css\bootstrap.css" />
+    <None Include="wwwroot\css\btn.css" />
+    <None Include="wwwroot\css\cardHavorInteraction.css" />
+    <None Include="wwwroot\css\flaticon.css" />
+    <None Include="wwwroot\css\fontawesome-all.css" />
+    <None Include="wwwroot\css\images\ui-icons_444444_256x240.png" />
+    <None Include="wwwroot\css\images\ui-icons_555555_256x240.png" />
+    <None Include="wwwroot\css\jquery-ui.css" />
+    <None Include="wwwroot\css\jquery.fancybox.min.css" />
+    <None Include="wwwroot\css\jquery.touchspin.css" />
+    <None Include="wwwroot\css\owl.css" />
+    <None Include="wwwroot\css\responsive.css" />
+    <None Include="wwwroot\css\style.css" />
+    <None Include="wwwroot\fonts\fa-brands-400.eot" />
+    <None Include="wwwroot\fonts\fa-brands-400.ttf" />
+    <None Include="wwwroot\fonts\fa-brands-400.woff" />
+    <None Include="wwwroot\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\fonts\fa-solid-900.eot" />
+    <None Include="wwwroot\fonts\fa-solid-900.ttf" />
+    <None Include="wwwroot\fonts\fa-solid-900.woff" />
+    <None Include="wwwroot\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\js\appear.js" />
+    <None Include="wwwroot\js\bootstrap.min.js" />
+    <None Include="wwwroot\js\jquery-ui.js" />
+    <None Include="wwwroot\js\jquery.countdown.js" />
+    <None Include="wwwroot\js\jquery.fancybox.js" />
+    <None Include="wwwroot\js\jquery.js" />
+    <None Include="wwwroot\js\main-slider-script.js" />
+    <None Include="wwwroot\js\map-script.js" />
+    <None Include="wwwroot\js\owl.js" />
+    <None Include="wwwroot\js\parallax.min.js" />
+    <None Include="wwwroot\js\popper.min.js" />
+    <None Include="wwwroot\js\respond.js" />
+    <None Include="wwwroot\js\script.js" />
+    <None Include="wwwroot\js\validate.js" />
+    <None Include="wwwroot\js\wow.js" />
+    <None Include="wwwroot\plugins\revolution\assets\coloredbg.png" />
+    <None Include="wwwroot\plugins\revolution\assets\gridtile.png" />
+    <None Include="wwwroot\plugins\revolution\assets\gridtile_3x3.png" />
+    <None Include="wwwroot\plugins\revolution\assets\gridtile_3x3_white.png" />
+    <None Include="wwwroot\plugins\revolution\assets\gridtile_white.png" />
+    <None Include="wwwroot\plugins\revolution\assets\loader.gif" />
+    <None Include="wwwroot\plugins\revolution\css\layers.css" />
+    <None Include="wwwroot\plugins\revolution\css\navigation.css" />
+    <None Include="wwwroot\plugins\revolution\css\settings.css" />
+    <None Include="wwwroot\plugins\revolution\fonts\revicons\revicons.eot" />
+    <None Include="wwwroot\plugins\revolution\fonts\revicons\revicons.ttf" />
+    <None Include="wwwroot\plugins\revolution\fonts\revicons\revicons.woff" />
+    <None Include="wwwroot\plugins\revolution\js\extensions\revolution.extension.actions.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\extensions\revolution.extension.carousel.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\extensions\revolution.extension.kenburn.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\extensions\revolution.extension.layeranimation.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\extensions\revolution.extension.migration.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\extensions\revolution.extension.navigation.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\extensions\revolution.extension.parallax.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\extensions\revolution.extension.slideanims.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\extensions\revolution.extension.video.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\jquery.themepunch.revolution.min.js" />
+    <None Include="wwwroot\plugins\revolution\js\jquery.themepunch.tools.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.3" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols" Version="6.16.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SendGrid" Version="9.26.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\student\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>
