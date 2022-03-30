@@ -22,7 +22,7 @@ namespace MSITTeam1.ViewComponent
         {
             if (!string.IsNullOrEmpty(id))
             {
-                var student = hello.StudentBasics.FirstOrDefault(p => p.FAccount == id);
+                var student = hello.StudentBasics.FirstOrDefault(p => p.MemberId == id);
                 if (student != null)
                     return View(new CStudentResumeViewModel() { student = student, fGender = student.Gender.Equals("0") ? "男" : "女" });
             }
