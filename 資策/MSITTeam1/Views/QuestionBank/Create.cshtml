@@ -1,63 +1,90 @@
-﻿@model MSITTeam1.Models.TQuestionList
+﻿@model MSITTeam1.ViewModels.CQuestionBankViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
+<div class="container" style="padding:20px">
+    <h1>新增</h1>
 
-<h1>新增</h1>
+    <h4>新增題目</h4>
+    <hr />
 
-<h4>新增題目</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FSubjectId" class="control-label"></label>
-                <input asp-for="FSubjectId" class="form-control" />
-                <span asp-validation-for="FSubjectId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FQuestionId" class="control-label"></label>
-                <input asp-for="FQuestionId" class="form-control" />
-                <span asp-validation-for="FQuestionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FQuestion" class="control-label"></label>
-                <input asp-for="FQuestion" class="form-control" />
-                <span asp-validation-for="FQuestion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FQuestionImage" class="control-label"></label>
-                <input asp-for="FQuestionImage" class="form-control" />
-                <span asp-validation-for="FQuestionImage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FQuestionTypeId" class="control-label"></label>
-                <input asp-for="FQuestionTypeId" class="form-control" />
-                <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FUpdateTime" class="control-label"></label>
-                <input asp-for="FUpdateTime" class="form-control" />
-                <span asp-validation-for="FUpdateTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FLevel" class="control-label"></label>
-                <input asp-for="FLevel" class="form-control" />
-                <span asp-validation-for="FLevel" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="row" style="padding:20px;">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Vsubject" class="control-label"></label>
+                    <input asp-for="Vsubject" class="form-control" />
+                    <span asp-validation-for="Vsubject" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="VquestionId" class="control-label"></label>
+                    <input asp-for="VquestionId" class="form-control" />
+                    <span asp-validation-for="VquestionId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Vquestion" class="control-label"></label>
+                    <input asp-for="Vquestion" class="form-control" />
+                    <span asp-validation-for="Vquestion" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                        <label asp-for="FQuestionImage" class="control-label"></label>
+                        <input asp-for="FQuestionImage" class="form-control" />
+                        <span asp-validation-for="FQuestionImage" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <label asp-for="VquestionType" class="control-label"></label>
+                    <input asp-for="VquestionType" class="form-control" />
+                    <span asp-validation-for="VquestionType" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="choice">
+                    <label asp-for="Vchoice" class="control-label"></label>
+                    <input asp-for="Vchoice" class="form-control" />
+                    <span asp-validation-for="Vchoice" class="text-danger"></span>
+                </div>
+                <div style="padding:10px 0px 30px 30px;">
+                    <btn id="BtnNewChoice" class="btn btn-primary btn-outline small">新增答案選項</btn>
+                </div>
+                @*<div class="form-group">
+                        <label asp-for="FUpdateTime" class="control-label"></label>
+                        <input asp-for="FUpdateTime" class="form-control" />
+                        <span asp-validation-for="FUpdateTime" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <label asp-for="Vlevel" class="control-label"></label>
+                    <input asp-for="Vlevel" class="form-control" />
+                    <span asp-validation-for="Vlevel" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">返回列表</a>
+    <div>
+        <a asp-action="List">返回列表</a>
+    </div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+    var count = 1;
+    const btnNewChoice = document.querySelector('#BtnNewChoice');
+    //var textbox = "<h4>1111<h4 />"
+
+    var textbox = "<input type=text class=form-control id=Vchoice name=Vchoice value/>"
+
+    btnNewChoice.addEventListener('click', function () {
+        count++;
+        var label = '<label class=control-label for=Vchoice>選項 ' + count + '</label>';
+        //label.text = text + count;
+        $('#choice').append(label);
+        $('#choice').append(textbox);
+        //console.log(`count`);
+    })
+    </script>
 }
