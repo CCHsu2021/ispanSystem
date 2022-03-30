@@ -26,8 +26,8 @@ namespace MSITTeam1Admin.Models
         public virtual DbSet<StudentSchool> StudentSchools { get; set; }
         public virtual DbSet<StudentSkill> StudentSkills { get; set; }
         public virtual DbSet<StudentWorkExperience> StudentWorkExperiences { get; set; }
+        public virtual DbSet<TAdministrator> TAdministrators { get; set; }
         public virtual DbSet<TBonusDefination> TBonusDefinations { get; set; }
-        public virtual DbSet<TChoiceQuestion> TChoiceQuestions { get; set; }
         public virtual DbSet<TCityContrast> TCityContrasts { get; set; }
         public virtual DbSet<TClassGrade> TClassGrades { get; set; }
         public virtual DbSet<TClassInfo> TClassInfos { get; set; }
@@ -45,14 +45,17 @@ namespace MSITTeam1Admin.Models
         public virtual DbSet<TMember> TMembers { get; set; }
         public virtual DbSet<TMemberCoverLetterTemp> TMemberCoverLetterTemps { get; set; }
         public virtual DbSet<TMemberLevel> TMemberLevels { get; set; }
+        public virtual DbSet<TMemberLevelRecord> TMemberLevelRecords { get; set; }
         public virtual DbSet<TMemberResumeSend> TMemberResumeSends { get; set; }
         public virtual DbSet<TPhoto> TPhotos { get; set; }
-        public virtual DbSet<TProductInformation> TProductInformations { get; set; }
-        public virtual DbSet<TQuestionBank> TQuestionBanks { get; set; }
+        public virtual DbSet<TProduct> TProducts { get; set; }
+        public virtual DbSet<TProductOrder> TProductOrders { get; set; }
+        public virtual DbSet<TProductOrderDetail> TProductOrderDetails { get; set; }
         public virtual DbSet<TQuestionDetail> TQuestionDetails { get; set; }
         public virtual DbSet<TQuestionList> TQuestionLists { get; set; }
-        public virtual DbSet<TQuestionType> TQuestionTypes { get; set; }
+        public virtual DbSet<TReceipt> TReceipts { get; set; }
         public virtual DbSet<TRelation> TRelations { get; set; }
+        public virtual DbSet<TResultDescription> TResultDescriptions { get; set; }
         public virtual DbSet<TSkill> TSkills { get; set; }
         public virtual DbSet<TSkillGrade> TSkillGrades { get; set; }
         public virtual DbSet<TSkillTestPaper> TSkillTestPapers { get; set; }
@@ -61,15 +64,17 @@ namespace MSITTeam1Admin.Models
         public virtual DbSet<TSubmittedAnswer> TSubmittedAnswers { get; set; }
         public virtual DbSet<TTestPaper> TTestPapers { get; set; }
         public virtual DbSet<TTestPaperBank> TTestPaperBanks { get; set; }
+        public virtual DbSet<TTestResult> TTestResults { get; set; }
+        public virtual DbSet<VGetDate> VGetDates { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Data Source=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;User ID=MSIT40;Password=Ispan40team1;");
-//            }
-//        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;Persist Security Info=False;User ID=MSIT40;Password=Ispan40team1");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -77,20 +82,25 @@ namespace MSITTeam1Admin.Models
 
             modelBuilder.Entity<StudentBasic>(entity =>
             {
-                entity.HasKey(e => e.FAccount);
+                entity.HasKey(e => e.MemberId)
+                    .HasName("PK_StudentBasic_1");
 
                 entity.ToTable("StudentBasic");
 
-                entity.Property(e => e.FAccount)
+                entity.Property(e => e.MemberId)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fAccount");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.BirthDate).HasMaxLength(20);
 
                 entity.Property(e => e.ContactAddress).HasMaxLength(80);
 
                 entity.Property(e => e.Email).HasMaxLength(50);
+
+                entity.Property(e => e.FAccount)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("fAccount");
 
                 entity.Property(e => e.FCity)
                     .HasMaxLength(50)
@@ -115,6 +125,8 @@ namespace MSITTeam1Admin.Models
                     .HasColumnName("fDistrict");
 
                 entity.Property(e => e.FGuid).HasColumnName("fGuid");
+
+                entity.Property(e => e.FMemberType).HasColumnName("fMemberType");
 
                 entity.Property(e => e.FPassword)
                     .HasMaxLength(48)
@@ -145,23 +157,17 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.EducationId).HasColumnName("EducationID");
 
-                entity.Property(e => e.FAccount)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fAccount");
-
                 entity.Property(e => e.GraduateDepartment).HasMaxLength(50);
 
                 entity.Property(e => e.GraduateSchool).HasMaxLength(50);
 
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.StudyFrom).HasMaxLength(50);
 
                 entity.Property(e => e.StudyTo).HasMaxLength(50);
-
-                entity.HasOne(d => d.FAccountNavigation)
-                    .WithMany(p => p.StudentEducations)
-                    .HasForeignKey(d => d.FAccount)
-                    .HasConstraintName("FK_StudentEducation_StudentBasic");
             });
 
             modelBuilder.Entity<StudentLanguage>(entity =>
@@ -173,25 +179,19 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.LanguageId).HasColumnName("LanguageID");
 
-                entity.Property(e => e.FAccount)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fAccount");
-
                 entity.Property(e => e.LanguageName).HasMaxLength(10);
 
                 entity.Property(e => e.Listening).HasMaxLength(10);
+
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Reading).HasMaxLength(10);
 
                 entity.Property(e => e.Speaking).HasMaxLength(10);
 
                 entity.Property(e => e.Writing).HasMaxLength(10);
-
-                entity.HasOne(d => d.FAccountNavigation)
-                    .WithMany(p => p.StudentLanguages)
-                    .HasForeignKey(d => d.FAccount)
-                    .HasConstraintName("FK_StudentLanguage_StudentBasic");
             });
 
             modelBuilder.Entity<StudentPortfolio>(entity =>
@@ -202,21 +202,15 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.PortfolioId).HasColumnName("PortfolioID");
 
-                entity.Property(e => e.FAccount)
+                entity.Property(e => e.MemberId)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fAccount");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PortfolioTitle).HasMaxLength(50);
 
                 entity.Property(e => e.PortfolioUrl)
                     .IsUnicode(false)
                     .HasColumnName("PortfolioURL");
-
-                entity.HasOne(d => d.FAccountNavigation)
-                    .WithMany(p => p.StudentPortfolios)
-                    .HasForeignKey(d => d.FAccount)
-                    .HasConstraintName("FK_StudentPortfolio_StudentBasic");
             });
 
             modelBuilder.Entity<StudentReflection>(entity =>
@@ -227,17 +221,11 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.ReflectionId).HasColumnName("ReflectionID");
 
-                entity.Property(e => e.FAccount)
+                entity.Property(e => e.MemberId)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fAccount");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ReflectionTitle).HasMaxLength(50);
-
-                entity.HasOne(d => d.FAccountNavigation)
-                    .WithMany(p => p.StudentReflections)
-                    .HasForeignKey(d => d.FAccount)
-                    .HasConstraintName("FK_StudentReflection_StudentBasic");
             });
 
             modelBuilder.Entity<StudentResume>(entity =>
@@ -248,10 +236,9 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.ResumeId).HasColumnName("ResumeID");
 
-                entity.Property(e => e.FAccount)
+                entity.Property(e => e.MemberId)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fAccount");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.RBasic).HasColumnName("rBasic");
 
@@ -264,11 +251,6 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.RSkill).HasColumnName("rSkill");
 
                 entity.Property(e => e.RWorkExp).HasColumnName("rWorkExp");
-
-                entity.HasOne(d => d.FAccountNavigation)
-                    .WithMany(p => p.StudentResumes)
-                    .HasForeignKey(d => d.FAccount)
-                    .HasConstraintName("FK_StudentResume_StudentBasic");
             });
 
             modelBuilder.Entity<StudentSchool>(entity =>
@@ -291,17 +273,11 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.SkillId).HasColumnName("SkillID");
 
-                entity.Property(e => e.FAccount)
+                entity.Property(e => e.MemberId)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fAccount");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.SkillName).HasMaxLength(50);
-
-                entity.HasOne(d => d.FAccountNavigation)
-                    .WithMany(p => p.StudentSkills)
-                    .HasForeignKey(d => d.FAccount)
-                    .HasConstraintName("FK_StudentSkill_StudentBasic");
             });
 
             modelBuilder.Entity<StudentWorkExperience>(entity =>
@@ -320,17 +296,33 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.EmploymentTo).HasMaxLength(50);
 
-                entity.Property(e => e.FAccount)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("fAccount");
-
                 entity.Property(e => e.JobTitle).HasMaxLength(50);
 
-                entity.HasOne(d => d.FAccountNavigation)
-                    .WithMany(p => p.StudentWorkExperiences)
-                    .HasForeignKey(d => d.FAccount)
-                    .HasConstraintName("FK_StudentWorkExperience_StudentBasic");
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TAdministrator>(entity =>
+            {
+                entity.HasKey(e => e.FId)
+                    .HasName("PK_administrator");
+
+                entity.ToTable("tAdministrator");
+
+                entity.Property(e => e.FId).HasColumnName("fId");
+
+                entity.Property(e => e.FAccount)
+                    .HasMaxLength(50)
+                    .HasColumnName("fAccount");
+
+                entity.Property(e => e.FName)
+                    .HasMaxLength(50)
+                    .HasColumnName("fName");
+
+                entity.Property(e => e.FPassword)
+                    .HasMaxLength(50)
+                    .HasColumnName("fPassword");
             });
 
             modelBuilder.Entity<TBonusDefination>(entity =>
@@ -345,48 +337,6 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.BonusTitle)
                     .IsRequired()
                     .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<TChoiceQuestion>(entity =>
-            {
-                entity.HasKey(e => new { e.FSubjectId, e.FQuestionId });
-
-                entity.ToTable("tChoiceQuestion");
-
-                entity.Property(e => e.FSubjectId)
-                    .HasMaxLength(50)
-                    .HasColumnName("fSubjectID");
-
-                entity.Property(e => e.FQuestionId).HasColumnName("fQuestionID");
-
-                entity.Property(e => e.FAnswer)
-                    .HasMaxLength(50)
-                    .HasColumnName("fAnswer");
-
-                entity.Property(e => e.FChoiceA)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fChoiceA");
-
-                entity.Property(e => e.FChoiceB)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fChoiceB");
-
-                entity.Property(e => e.FChoiceC)
-                    .HasMaxLength(50)
-                    .HasColumnName("fChoiceC");
-
-                entity.Property(e => e.FChoiceD)
-                    .HasMaxLength(50)
-                    .HasColumnName("fChoiceD");
-
-                entity.Property(e => e.FLevel).HasColumnName("fLevel");
-
-                entity.Property(e => e.FQuestion)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fQuestion");
             });
 
             modelBuilder.Entity<TCityContrast>(entity =>
@@ -468,23 +418,15 @@ namespace MSITTeam1Admin.Models
 
                 entity.ToTable("tClassOrder");
 
-                entity.Property(e => e.MemberId).HasMaxLength(20);
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.OrderId).HasColumnName("OrderID");
+                entity.Property(e => e.OrderId).HasMaxLength(50);
 
                 entity.Property(e => e.Date).HasMaxLength(50);
 
                 entity.Property(e => e.Invoice).HasMaxLength(50);
-
-                entity.Property(e => e.PayMethod).HasMaxLength(50);
-
-                entity.Property(e => e.TotalPrice).HasColumnType("money");
-
-                entity.HasOne(d => d.Member)
-                    .WithMany(p => p.TClassOrders)
-                    .HasForeignKey(d => d.MemberId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tOrderInformation_tMember");
             });
 
             modelBuilder.Entity<TClassOrderDetail>(entity =>
@@ -494,9 +436,7 @@ namespace MSITTeam1Admin.Models
 
                 entity.ToTable("tClassOrderDetail");
 
-                entity.Property(e => e.OrderId)
-                    .HasMaxLength(50)
-                    .HasColumnName("OrderID");
+                entity.Property(e => e.OrderId).HasMaxLength(50);
 
                 entity.Property(e => e.ClassCode).HasMaxLength(50);
             });
@@ -542,20 +482,18 @@ namespace MSITTeam1Admin.Models
 
             modelBuilder.Entity<TCompanyBasic>(entity =>
             {
-                entity.HasKey(e => e.FAccount)
+                entity.HasKey(e => e.CompanyTaxid)
                     .HasName("PK_tCompanyBasic_1");
 
                 entity.ToTable("tCompanyBasic");
 
-                entity.Property(e => e.FAccount)
-                    .HasMaxLength(20)
-                    .HasColumnName("fAccount");
+                entity.Property(e => e.CompanyTaxid)
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyTAXID");
 
                 entity.Property(e => e.FAddress)
                     .HasMaxLength(50)
                     .HasColumnName("fAddress");
-
-                entity.Property(e => e.FBan).HasColumnName("fBAN");
 
                 entity.Property(e => e.FBenefits).HasColumnName("fBenefits");
 
@@ -630,6 +568,8 @@ namespace MSITTeam1Admin.Models
                     .ValueGeneratedOnAdd()
                     .HasColumnName("PointUsageID");
 
+                entity.Property(e => e.OrderId).HasMaxLength(50);
+
                 entity.Property(e => e.PointDate)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -652,17 +592,13 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.CompanyRespondId).HasColumnName("CompanyRespondID");
 
-                entity.Property(e => e.CompanyWindow).HasMaxLength(20);
+                entity.Property(e => e.ContactPerson).HasMaxLength(50);
 
-                entity.Property(e => e.CompanyWindowEmail)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("CompanyWindowEMail");
+                entity.Property(e => e.ContactPersonEmail).HasMaxLength(50);
 
-                entity.Property(e => e.CompanyWindowPhone)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.ContactPersonFax).HasMaxLength(50);
+
+                entity.Property(e => e.ContactPersonPhone).HasMaxLength(50);
 
                 entity.Property(e => e.CreatTime)
                     .IsRequired()
@@ -678,20 +614,21 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.InterviewTime).HasMaxLength(50);
 
-                entity.Property(e => e.MemberRespondTime)
-                    .HasMaxLength(2)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
                 entity.Property(e => e.ModifyTime)
                     .IsRequired()
                     .HasMaxLength(50);
 
                 entity.Property(e => e.ResumeSendId).HasColumnName("ResumeSendID");
 
+                entity.Property(e => e.StudentRespondTime)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
                 entity.HasOne(d => d.ResumeSend)
                     .WithMany(p => p.TCompanyResponds)
                     .HasForeignKey(d => d.ResumeSendId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tCompanyRespond_tMemberResumeSend");
             });
 
@@ -743,7 +680,7 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.FAccount)
                     .IsRequired()
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .HasColumnName("fAccount");
 
                 entity.Property(e => e.FCity)
@@ -751,6 +688,14 @@ namespace MSITTeam1Admin.Models
                     .HasColumnName("fCity");
 
                 entity.Property(e => e.FCompanyId).HasColumnName("fCompanyID");
+
+                entity.Property(e => e.FContactPerson)
+                    .HasMaxLength(50)
+                    .HasColumnName("fContactPerson");
+
+                entity.Property(e => e.FContactPhone)
+                    .HasMaxLength(50)
+                    .HasColumnName("fContactPhone");
 
                 entity.Property(e => e.FDistrict)
                     .HasMaxLength(50)
@@ -760,9 +705,17 @@ namespace MSITTeam1Admin.Models
                     .HasMaxLength(50)
                     .HasColumnName("fEducation");
 
+                entity.Property(e => e.FEmail)
+                    .HasMaxLength(50)
+                    .HasColumnName("fEmail");
+
                 entity.Property(e => e.FEmployeesType)
                     .HasMaxLength(50)
                     .HasColumnName("fEmployeesType");
+
+                entity.Property(e => e.FFax)
+                    .HasMaxLength(50)
+                    .HasColumnName("fFax");
 
                 entity.Property(e => e.FJobName)
                     .HasMaxLength(50)
@@ -876,9 +829,7 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.CoverLetterName).HasMaxLength(20);
 
-                entity.Property(e => e.FAccount)
-                    .HasMaxLength(20)
-                    .HasColumnName("fAccount");
+                entity.Property(e => e.MemberId).HasMaxLength(20);
             });
 
             modelBuilder.Entity<TMemberLevel>(entity =>
@@ -892,6 +843,20 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.Title).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<TMemberLevelRecord>(entity =>
+            {
+                entity.HasKey(e => e.CompanyTaxid)
+                    .HasName("PK_MemberLevelRecord");
+
+                entity.ToTable("tMemberLevelRecord");
+
+                entity.Property(e => e.CompanyTaxid)
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyTAXID");
+
+                entity.Property(e => e.Date).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<TMemberResumeSend>(entity =>
             {
                 entity.HasKey(e => e.ResumeSendId)
@@ -902,6 +867,11 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.ResumeSendId).HasColumnName("ResumeSendID");
 
                 entity.Property(e => e.ComReadOrNot).HasMaxLength(10);
+
+                entity.Property(e => e.CompanyTaxid)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyTAXID");
 
                 entity.Property(e => e.ContactEmail).HasMaxLength(50);
 
@@ -915,12 +885,13 @@ namespace MSITTeam1Admin.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.FAccount)
+                entity.Property(e => e.JobName)
                     .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("fAccount");
+                    .HasMaxLength(50);
 
-                entity.Property(e => e.FJobId).HasColumnName("fJobID");
+                entity.Property(e => e.MemberId)
+                    .IsRequired()
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.ModifyTime)
                     .IsRequired()
@@ -929,18 +900,6 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.ResumeId).HasColumnName("ResumeID");
 
                 entity.Property(e => e.TimeToContact).HasMaxLength(50);
-
-                entity.HasOne(d => d.FJob)
-                    .WithMany(p => p.TMemberResumeSends)
-                    .HasForeignKey(d => d.FJobId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tMemberResumeSend_tJobVacancy");
-
-                entity.HasOne(d => d.Resume)
-                    .WithMany(p => p.TMemberResumeSends)
-                    .HasForeignKey(d => d.ResumeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tMemberResumeSend_StudentResume");
             });
 
             modelBuilder.Entity<TPhoto>(entity =>
@@ -967,15 +926,14 @@ namespace MSITTeam1Admin.Models
                     .IsFixedLength(true);
             });
 
-            modelBuilder.Entity<TProductInformation>(entity =>
+            modelBuilder.Entity<TProduct>(entity =>
             {
-                entity.HasKey(e => e.ProductId);
+                entity.HasKey(e => e.ProductId)
+                    .HasName("PK_tProductInformation");
 
-                entity.ToTable("tProductInformation");
+                entity.ToTable("tProduct");
 
-                entity.Property(e => e.ProductId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ProductID");
+                entity.Property(e => e.ProductId).HasMaxLength(50);
 
                 entity.Property(e => e.Cost).HasColumnType("money");
 
@@ -986,28 +944,33 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.Price).HasColumnType("money");
             });
 
-            modelBuilder.Entity<TQuestionBank>(entity =>
+            modelBuilder.Entity<TProductOrder>(entity =>
             {
-                entity.HasKey(e => new { e.FSubjectId, e.FQuestionId });
+                entity.HasKey(e => new { e.OrderId, e.MemberId })
+                    .HasName("PK_ProductOrder");
 
-                entity.ToTable("tQuestionBank");
+                entity.ToTable("tProductOrder");
 
-                entity.Property(e => e.FSubjectId)
-                    .HasMaxLength(30)
-                    .HasColumnName("fSubjectID")
-                    .IsFixedLength(true);
+                entity.Property(e => e.OrderId).HasMaxLength(50);
 
-                entity.Property(e => e.FQuestionId).HasColumnName("fQuestionID");
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.FQuestionTypeId)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("fQuestionTypeID")
-                    .IsFixedLength(true);
+                entity.Property(e => e.Date).HasMaxLength(50);
 
-                entity.Property(e => e.FUpdateTime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("fUpdateTime");
+                entity.Property(e => e.Invoice).HasMaxLength(50);
+
+                entity.Property(e => e.ShipTo).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TProductOrderDetail>(entity =>
+            {
+                entity.HasKey(e => new { e.OrderId, e.ProductId });
+
+                entity.ToTable("tProductOrderDetail");
+
+                entity.Property(e => e.OrderId).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TQuestionDetail>(entity =>
@@ -1057,21 +1020,46 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.FQuestionTypeId).HasColumnName("fQuestionTypeID");
 
                 entity.Property(e => e.FUpdateTime)
-                    .HasColumnType("smalldatetime")
+                    .HasColumnType("datetime")
                     .HasColumnName("fUpdateTime");
             });
 
-            modelBuilder.Entity<TQuestionType>(entity =>
+            modelBuilder.Entity<TReceipt>(entity =>
             {
-                entity.HasKey(e => e.QuestionTypeId);
+                entity.HasKey(e => e.FId)
+                    .HasName("PK_Receipt");
 
-                entity.ToTable("tQuestionType");
+                entity.ToTable("tReceipt");
 
-                entity.Property(e => e.QuestionTypeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("QuestionTypeID");
+                entity.Property(e => e.FId).HasColumnName("fId");
 
-                entity.Property(e => e.QuestionType).HasMaxLength(50);
+                entity.Property(e => e.CompanyTaxid)
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyTAXID");
+
+                entity.Property(e => e.EmergencyContactPerson).HasMaxLength(50);
+
+                entity.Property(e => e.EmergencyContactPersonEmail).HasMaxLength(50);
+
+                entity.Property(e => e.EmergencyContactPersonPhone).HasMaxLength(50);
+
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NewsFrom).HasMaxLength(50);
+
+                entity.Property(e => e.Note).HasMaxLength(50);
+
+                entity.Property(e => e.OrderId).HasMaxLength(50);
+
+                entity.Property(e => e.ReceiptTitle).HasMaxLength(50);
+
+                entity.Property(e => e.Undertaker).HasMaxLength(50);
+
+                entity.Property(e => e.UndertakerEmail).HasMaxLength(50);
+
+                entity.Property(e => e.UndertakerPhone).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TRelation>(entity =>
@@ -1097,6 +1085,23 @@ namespace MSITTeam1Admin.Models
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Updater).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TResultDescription>(entity =>
+            {
+                entity.HasKey(e => e.FTypeInfoId);
+
+                entity.ToTable("tResultDescription");
+
+                entity.Property(e => e.FTypeInfoId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("fTypeInfoID");
+
+                entity.Property(e => e.FResult)
+                    .IsRequired()
+                    .HasColumnName("fResult");
+
+                entity.Property(e => e.FTestPaperId).HasColumnName("fTestPaperID");
             });
 
             modelBuilder.Entity<TSkill>(entity =>
@@ -1173,6 +1178,8 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.FAccount)
                     .HasMaxLength(50)
                     .HasColumnName("fAccount");
+
+                entity.Property(e => e.OrderId).HasMaxLength(50);
 
                 entity.Property(e => e.PointDate).HasMaxLength(50);
 
@@ -1270,22 +1277,62 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.FTestPaperId).HasColumnName("fTestPaperID");
 
+                entity.Property(e => e.FDesignerAccount)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fDesignerAccount");
+
                 entity.Property(e => e.FNote).HasColumnName("fNote");
 
                 entity.Property(e => e.FSubjectId)
-                    .HasMaxLength(30)
-                    .HasColumnName("fSubjectID")
-                    .IsFixedLength(true);
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fSubjectID");
 
                 entity.Property(e => e.FTestPaperName)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("fTestPaperName");
+            });
 
-                entity.Property(e => e.FUserId)
+            modelBuilder.Entity<TTestResult>(entity =>
+            {
+                entity.HasKey(e => e.FResultId);
+
+                entity.ToTable("tTestResult");
+
+                entity.Property(e => e.FResultId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("fResultID");
+
+                entity.Property(e => e.FMemberAccount)
                     .IsRequired()
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("fUserID");
+                    .HasMaxLength(50)
+                    .HasColumnName("fMemberAccount");
+
+                entity.Property(e => e.FTestDateTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fTestDateTime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.FTestGrade).HasColumnName("fTestGrade");
+
+                entity.Property(e => e.FTestPaperId).HasColumnName("fTestPaperID");
+
+                entity.Property(e => e.FTypeInfoId).HasColumnName("fTypeInfoID");
+
+                entity.Property(e => e.FTypeInfoImage).HasColumnName("fTypeInfoImage");
+            });
+
+            modelBuilder.Entity<VGetDate>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("v_GetDate");
+
+                entity.Property(e => e.Nowdate)
+                    .HasMaxLength(50)
+                    .HasColumnName("nowdate");
             });
 
             OnModelCreatingPartial(modelBuilder);

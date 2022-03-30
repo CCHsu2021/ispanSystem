@@ -65,15 +65,16 @@ namespace MSITTeam1.Models
         public virtual DbSet<TTestPaper> TTestPapers { get; set; }
         public virtual DbSet<TTestPaperBank> TTestPaperBanks { get; set; }
         public virtual DbSet<TTestResult> TTestResults { get; set; }
+        public virtual DbSet<VGetDate> VGetDates { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Data Source=tcp:msit40team1.database.windows.net;Initial Catalog=hello;User ID=MSIT40;Password=Ispan40team1");
-//            }
-//        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;Persist Security Info=False;User ID=MSIT40;Password=Ispan40team1");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -613,16 +614,16 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.InterviewTime).HasMaxLength(50);
 
-                entity.Property(e => e.MemberRespondTime)
-                    .HasMaxLength(2)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
                 entity.Property(e => e.ModifyTime)
                     .IsRequired()
                     .HasMaxLength(50);
 
                 entity.Property(e => e.ResumeSendId).HasColumnName("ResumeSendID");
+
+                entity.Property(e => e.StudentRespondTime)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
                 entity.HasOne(d => d.ResumeSend)
                     .WithMany(p => p.TCompanyResponds)
@@ -828,9 +829,7 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.CoverLetterName).HasMaxLength(20);
 
-                entity.Property(e => e.FAccount)
-                    .HasMaxLength(20)
-                    .HasColumnName("fAccount");
+                entity.Property(e => e.MemberId).HasMaxLength(20);
             });
 
             modelBuilder.Entity<TMemberLevel>(entity =>
@@ -1323,6 +1322,17 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.FTypeInfoId).HasColumnName("fTypeInfoID");
 
                 entity.Property(e => e.FTypeInfoImage).HasColumnName("fTypeInfoImage");
+            });
+
+            modelBuilder.Entity<VGetDate>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("v_GetDate");
+
+                entity.Property(e => e.Nowdate)
+                    .HasMaxLength(50)
+                    .HasColumnName("nowdate");
             });
 
             OnModelCreatingPartial(modelBuilder);
