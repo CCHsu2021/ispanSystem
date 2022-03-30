@@ -14,8 +14,9 @@ namespace MSITTeam1Admin.Models
 
         public long ResumeSendId { get; set; }
         public long ResumeId { get; set; }
-        public string FAccount { get; set; }
-        public long FJobId { get; set; }
+        public string MemberId { get; set; }
+        public string CompanyTaxid { get; set; }
+        public string JobName { get; set; }
         public string ContactPhone { get; set; }
         public string ContactEmail { get; set; }
         public string ComReadOrNot { get; set; }
@@ -24,8 +25,6 @@ namespace MSITTeam1Admin.Models
         public string CreatTime { get; set; }
         public string ModifyTime { get; set; }
 
-        public virtual TJobVacancy FJob { get; set; }
-        public virtual StudentResume Resume { get; set; }
         public virtual ICollection<TCompanyRespond> TCompanyResponds { get; set; }
     }
 }
