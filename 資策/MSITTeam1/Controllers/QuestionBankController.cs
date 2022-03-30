@@ -49,7 +49,7 @@ namespace MSITTeam1.Controllers
 			return View();
 		}
 
-		[HttpPost]
+		//[HttpPost]
 		//public IActionResult Create()
 		//{
 		//	_context.TQuestionLists.Add
@@ -84,13 +84,13 @@ namespace MSITTeam1.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Edit(TQuestionList ques)
+		public IActionResult Edit(CQuestionBankViewModel ques)
 		{
-			TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(ques.FSubjectId) && q.FQuestionId == ques.FQuestionId);
+			TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(ques.Vsubject) && q.FQuestionId == ques.VquestionId);
 			if (quesSel != null)
 			{
-				quesSel.FQuestion = ques.FQuestion;
-				quesSel.FQuestionTypeId = ques.FQuestionTypeId;
+				quesSel.FQuestion = ques.Vquestion;
+				quesSel.FQuestionTypeId = Convert.ToInt32(ques.VquestionType);
 				_context.SaveChanges();
 			}
 			return RedirectToAction("List");
