@@ -1,5 +1,12 @@
 ﻿@model MSITTeam1.ViewModels.CStudentResumeViewModel
-
+<style>
+    textarea {
+        overflow-y: scroll;
+        height: 150px;
+        resize: none; 
+    }
+    
+</style>
 
 <div class="row">
     <div class="col-12">
@@ -39,11 +46,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="fAutobiography" class="control-label"></label>
-                <input id="fAutobiography" asp-for="fAutobiography" class="form-control" />
+                <textarea id="fAutobiography" asp-for="fAutobiography" class="form-control" > </textarea>
                 <span asp-validation-for="fAutobiography" class="text-danger"></span>
             </div>
             <div>
-                <button id="savechanges" type="button" class="btn style-two" >儲存變更</button>
+                <button id="savechanges" type="button" class="btn-style-two" >儲存變更</button>
             </div>
         
          </form>   

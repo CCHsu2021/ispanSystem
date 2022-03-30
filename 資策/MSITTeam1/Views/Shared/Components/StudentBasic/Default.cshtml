@@ -1,12 +1,10 @@
 ﻿@addTagHelper *, MSITTeam1
 @model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
 
-            
-
     @foreach (var item in Model)
 {   
     
-         <div class="col-6">
+         <div class="col-md-6">
             <h3>基本資料</h3>
             <hr/>
             <div class="inputstyle">
@@ -40,19 +38,19 @@
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-md-6">
             <div class="inputstyle">
-                <img class="my-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
+                <img class="mt-5 mb-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
             </div>
             <div class="inputstyle">
                 <label> @Html.DisplayNameFor(model => model.fAutobiography)</label>
                 <br/>
-                <p>@Html.DisplayFor(modelItem => item.fAutobiography)</p>
+                <span>@Html.DisplayFor(modelItem => item.fAutobiography)</span>
             </div>
         </div>
 
-        <div class="btnflex">
-        <button class="btn-style-two" type="button" data-toggle="modal" data-target="#staticBackdrop">修改資料</button>
+        <div class="btnflex w-100">
+        <button class="btn-style-two" type="button" data-toggle="modal" data-target="#staticBackdrop">資料修改</button>
         </div>
 
 }
@@ -64,7 +62,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">修改資料</h5>
+                <h5 class="modal-title" id="exampleModalLabel">資料修改</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
