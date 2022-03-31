@@ -32,7 +32,7 @@ namespace MSITTeam1.Controllers
 								Vquestion = ques.FQuestion,
 								Vlevel = ques.FLevel,
 								//updateTime = ques.FUpdateTime.ToString('YYMMDD'),
-								VquestionType = ques.FQuestionTypeId.ToString(),
+								VquestionType = ques.FQuestionTypeId,
 								Vchoice = choice.FChoice,
 								VcorrectAnswer = choice.FCorrectAnswer
 							};
@@ -60,25 +60,27 @@ namespace MSITTeam1.Controllers
 			if (subjectID != null && questionID > 0)
 			{
 				TQuestionList ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
-				//List<CQuestionBankViewModel> temp = null;
+				TQuestionDetail cho = _context.TQuestionDetails.FirstOrDefault(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID);
+				List<CQuestionBankViewModel> temp = null;
 				if (ques != null)
 				{
-					//	IQueryable<CQuestionBankViewModel> selectQues = from choice in _context.TQuestionDetails
-					//					 join q in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId }
-					//					 equals new { q.FSubjectId, q.FQuestionId }
-					//					 select new CQuestionBankViewModel
-					//					 {
-					//						 subject = q.FSubjectId,
-					//						 questionId = q.FQuestionId,
-					//						 question = q.FQuestion,
-					//						 choice = choice.FChoice
-					//					 };
-					//	foreach(var q in selectQues)
-					//	{
-					//		temp.Add(q);
-					//	}
+					//IQueryable<CQuestionBankViewModel> selectQues = from choice in _context.TQuestionDetails
+					//												join q in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId }
+					//												equals new { q.FSubjectId, q.FQuestionId }
+					//												select new CQuestionBankViewModel
+					//												{
+					//													Vsubject = q.FSubjectId,
+					//													VquestionId = q.FQuestionId,
+					//													Vquestion = q.FQuestion,
+					//													Vchoice = choice.FChoice
+					//												};
+					//foreach (var q in selectQues)
+					//{
+					//	temp.Add(q);
+					//}
 
-					return View(ques);
+					return View(new CQuestionBankViewModel() { question = ques , choice = cho});
+					//return View(ques);
 				}
 			}
 			return RedirectToAction("List");
