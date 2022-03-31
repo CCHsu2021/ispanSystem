@@ -358,15 +358,16 @@
         $(function()
         {
             console.log("@ViewBag.Name");
-            if ("@ViewBag.Name" == "親愛的用戶" && "@ViewBag.Type" == "1") {
+            if ("@ViewBag.Name"=="未填寫" && "@ViewBag.Type" == "1") {
                 Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
-                setTimeout("javascript:location.href='../SMemberCenter/Index'", 2000);
-            } else if ("@ViewBag.Name" == "親愛的用戶" && "@ViewBag.Type" == "2")
+                setTimeout("location.href='../SMemberCenter/Index'", 2000);
+            } 
+            if ("@ViewBag.Name" == "親愛的用戶" && "@ViewBag.Type" == "2")
             {
                 Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
-                setTimeout("javascript:location.href='../CMemberCenter/Index'", 2000);
+                setTimeout("location.href='../CMemberCenter/Index'", 2000);
             }
-            if ("@ViewBag.Name" != "")
+            if ("@ViewBag.Name" != "未填寫"||"@ViewBag.Name" != "親愛的用戶")
             {
                 if ("@ViewBag.Type" == "1") {
                     $("#username").attr("href", "../SMemberCenter/Index")

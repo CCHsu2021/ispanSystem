@@ -24,7 +24,7 @@ namespace MSITTeam1.ViewComponent
             {
                 var student = hello.StudentBasics.FirstOrDefault(p => p.MemberId == id);
                 if (student != null)
-                    return View(new CStudentResumeViewModel() { student = student, fGender = student.Gender.Equals("0") ? "男" : "女" });
+                    return View(new CStudentResumeViewModel() { student = student, fGender = student.Gender.Equals("0") ? "男" : student.Gender.Equals("1") ?"女":"未填寫"});
             }
             return View("../CMemberCenter/Index");
         }

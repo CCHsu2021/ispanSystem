@@ -32,7 +32,7 @@ namespace MSITTeam1.Controllers
             var datas = from b in hello.StudentBasics.Where(p => p.FAccount == keyword.ToString())
                         select new
                         {
-                            Account = b.FAccount,
+                            MemberId = b.FAccount,
                             Name = b.Name,
                             Email = b.Email,
                             Phone = b.Phone,
@@ -46,7 +46,7 @@ namespace MSITTeam1.Controllers
             foreach (var a in datas)
 
             {
-                SBvModel.fAccount = a.Account;
+                SBvModel.MemberId = a.MemberId;
                 SBvModel.fName = a.Name;
                 SBvModel.fGender = a.gen.Equals("0") ? "男" : "女";
                 SBvModel.fBirthDate = a.birthday;
@@ -79,7 +79,7 @@ namespace MSITTeam1.Controllers
         public IActionResult Edit([FromBody]CStudentResumeViewModel p)
         {
 
-            StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.FAccount == p.fAccount);
+            StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.FAccount == p.MemberId);
             if (sb != null)
             {
                 if (p.photo != null)
@@ -91,7 +91,7 @@ namespace MSITTeam1.Controllers
                         _enviroment.WebRootPath + @"\images\student\" + photoName, FileMode.Create)); 
                 }
                 sb.Name = p.fName;
-                sb.Gender = p.fGender.Equals("男")?"0":"1";
+                sb.Gender = p.fGender.Equals("男")?"0":p.fGender.Equals("女")?"1":"2";
                 sb.BirthDate= p.fBirthDate;
                 sb.Email = p.fEmail;
                 sb.Phone = p.fPhone;

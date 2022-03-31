@@ -93,16 +93,29 @@ namespace MSITTeam1.Models
                     .HasColumnName("MemberID")
                     .HasDefaultValueSql("([dbo].[MemberIDnum]())");
 
-                entity.Property(e => e.BirthDate).HasMaxLength(20);
+                entity.Property(e => e.Autobiography).HasDefaultValueSql("('未填寫')");
 
-                entity.Property(e => e.ContactAddress).HasMaxLength(80);
+                entity.Property(e => e.BirthDate)
+                    .HasMaxLength(20)
+                    .HasDefaultValueSql("('未填寫')");
 
-                entity.Property(e => e.Email).HasMaxLength(50);
+                entity.Property(e => e.ContactAddress)
+                    .HasMaxLength(80)
+                    .HasDefaultValueSql("('未填寫')");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("('未填寫')");
 
                 entity.Property(e => e.FAccount)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("fAccount");
+
+                entity.Property(e => e.FCheckStatus)
+                    .HasMaxLength(10)
+                    .HasColumnName("fCheckStatus")
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.FCity)
                     .HasMaxLength(50)
@@ -138,19 +151,23 @@ namespace MSITTeam1.Models
                     .HasMaxLength(20)
                     .HasColumnName("fSalt");
 
-                entity.Property(e => e.Gender).HasMaxLength(10);
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("('未填寫')");
 
                 entity.Property(e => e.Member).HasMaxLength(50);
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(10)
+                    .HasDefaultValueSql("('未填寫')")
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(15)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('未填寫')");
 
-                entity.Property(e => e.Portrait).IsUnicode(false);
+                entity.Property(e => e.Portrait).HasDefaultValueSql("('未上傳')");
             });
 
             modelBuilder.Entity<StudentEducation>(entity =>
