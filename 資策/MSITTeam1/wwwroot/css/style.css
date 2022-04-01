@@ -85,6 +85,15 @@ font-family: 'Fredoka One', cursive;
 	font-size: 100%;
 	line-height: inherit;
 }
+::selection {
+	background: #FFE09D;
+	color: #176D67;
+}
+
+::-moz-selection {
+	background: #FFE09D;
+	color: #176D67;
+}
 
 /*** 
 

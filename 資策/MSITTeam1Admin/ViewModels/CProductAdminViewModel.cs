@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
-using MSITTeam1.Models;
+using MSITTeam1Admin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MSITTeam1.ViewModels
+namespace MSITTeam1Admin.ViewModels
 {
-    public class CProductViewModel
+    public class CProductAdminViewModel
     {
         private TProduct _product = null;
-        public CProductViewModel()
+        public CProductAdminViewModel()
         {
             _product = new TProduct();
         }

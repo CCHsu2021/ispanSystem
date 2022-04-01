@@ -25,6 +25,8 @@
     <link href="~/css/lib/menubar/sidebar.css" rel="stylesheet">
     <link href="~/css/lib/bootstrap.min.css" rel="stylesheet">
     <link href="~/css/lib/helper.css" rel="stylesheet">
+    <link href="~/css/lib/data-table/buttons.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/lib/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="~/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -73,7 +75,7 @@
                             <i class="far fa-clipboard"></i>產品管理<span class="sidebar-collapse-icon ti-angle-down"></span>
                         </a>
                         <ul>
-                            <li><a href="chart-morris.html">產品維護</a></li>
+                            <li><a href="@Url.Action("Index","Products")">產品維護</a></li>
                             <li><a href="chart-flot.html">訂單一覽</a></li>
                         </ul>
                     </li>
@@ -331,15 +333,16 @@
         <div class="main">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-8 p-r-0 title-margin-right">
+                    <!--<div class="col-lg-8 p-r-0 title-margin-right">
                         <div class="page-header">
                             <div class="page-title">
-                                <h1>Hello, <span>Welcome Here</span></h1>
-                            </div>
+                                <h2>產品管理</h2>-->
+                                @*<h1>Hello, <span>Welcome Here</span></h1>*@
+                            <!--</div>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- /# column -->
-                    <div class="col-lg-4 p-l-0 title-margin-left">
+                    @*<div class="col-lg-4 p-l-0 title-margin-left">
                         <div class="page-header">
                             <div class="page-title">
                                 <ol class="breadcrumb">
@@ -348,7 +351,7 @@
                                 </ol>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <!-- /# column -->
                 </div>
                 <!-- /# row -->
@@ -372,16 +375,12 @@
     <script src="~/js/lib/menubar/sidebar.js"></script>
     <script src="~/js/lib/preloader/pace.min.js"></script>
     <!-- sidebar -->
-
     <script src="~/js/lib/bootstrap.min.js"></script>
     <script src="~/js/scripts.js"></script>
     <!-- bootstrap -->
-
     <script src="~/js/lib/calendar-2/moment.latest.min.js"></script>
     <script src="~/js/lib/calendar-2/pignose.calendar.min.js"></script>
     <script src="~/js/lib/calendar-2/pignose.init.js"></script>
-
-
     <script src="~/js/lib/weather/jquery.simpleWeather.min.js"></script>
     <script src="~/js/lib/weather/weather-init.js"></script>
     <script src="~/js/lib/circle-progress/circle-progress.min.js"></script>
@@ -391,6 +390,19 @@
     <script src="~/js/lib/sparklinechart/sparkline.init.js"></script>
     <script src="~/js/lib/owl-carousel/owl.carousel.min.js"></script>
     <script src="~/js/lib/owl-carousel/owl.carousel-init.js"></script>
+    <script src="~/js/lib/sweetalert/sweetalert.min.js"></script>
+    <script src="~/js/lib/sweetalert/sweetalert.init.js"></script>
+    <script src="~/js/lib/data-table/jquery.dataTables.min.js"></script>
+    <script src="~/js/lib/data-table/datatables.min.js"></script>
+    <script src="~/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="~/js/lib/data-table/buttons.flash.min.js"></script>
+    <script src="~/js/lib/data-table/jszip.min.js"></script>
+    @*<script src="~/js/lib/data-table/pdfmake.min.js"></script>*@
+    <script src="~/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="~/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="~/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="~/js/lib/data-table/datatables-init.js"></script>
+    <script src="~/js/lib/data-table/buttons.colVis.min.js"></script>
     <!-- scripit init-->
     <script src="~/js/dashboard2.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
