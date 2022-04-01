@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using MSITTeam1.Models;
@@ -22,17 +23,23 @@ namespace MSITTeam1.Controllers
             _enviroment = p;
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         public IActionResult List()
         {
-            int keyword = 111;
-            ViewBag.k = keyword;
+
+            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            ViewBag.fAccount = account;
 
             CStudentResumeViewModel SBvModel = new CStudentResumeViewModel();
             List<CStudentResumeViewModel> sb = new List<CStudentResumeViewModel>();
-            var datas = from b in hello.StudentBasics.Where(p => p.FAccount == keyword.ToString())
+            var datas = from b in hello.StudentBasics.Where(p => p.MemberId == account)
                         select new
                         {
-                            MemberId = b.FAccount,
+                            MemberId = b.MemberId,
                             Name = b.Name,
                             Email = b.Email,
                             Phone = b.Phone,
@@ -42,13 +49,15 @@ namespace MSITTeam1.Controllers
                             gen = b.Gender,
                             c = b.FCompany,
                             protrait = b.Portrait
+
                         };
             foreach (var a in datas)
 
             {
+
                 SBvModel.MemberId = a.MemberId;
                 SBvModel.fName = a.Name;
-                SBvModel.fGender = a.gen.Equals("0") ? "男" : "女";
+                SBvModel.fGender = a.gen.Equals("0") ? "男" : a.gen.Equals("1") ? "女" : "未填寫";
                 SBvModel.fBirthDate = a.birthday;
                 SBvModel.fEmail = a.Email;
                 SBvModel.fPhone = a.Phone;
@@ -62,18 +71,18 @@ namespace MSITTeam1.Controllers
             return View(sb);
         }
 
-        
-        //public IActionResult Edit(string? id)
-        //{
-        //    if (id != null)
-        //    {
 
-        //        StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.FAccount == (string)id);
-        //        if (sb != null)
-        //            return View(new CStudentResumeViewModel() { student = sb ,fGender = sb.Gender.Equals("0")?"男":"女"});
-        //    }
-        //    return RedirectToAction("List");
-        //}
+        public IActionResult Edit(string? id)
+        {
+            if (id != null)
+            {
+
+                StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)id);
+                if (sb != null)
+                    return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女":"未指定" });
+            }
+            return RedirectToAction("List");
+        }
 
         [HttpPost]
         public IActionResult Edit([FromBody]CStudentResumeViewModel p)
