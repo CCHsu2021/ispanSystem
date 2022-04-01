@@ -87,15 +87,15 @@ namespace MSITTeam1.Controllers
             {
                 account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
                 TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
-                if (com.FName == "")
+                CDictionary.memtype = "2";
+                CDictionary.account = account;
+                if (com.FName == null)
                 {
                     CDictionary.username = "親愛的用戶";
-                    CDictionary.memtype = "2";
                 }
                 else
                 {
                     CDictionary.username = com.FName;
-                    CDictionary.memtype = "2";
                 }
             }
             return CDictionary.username;

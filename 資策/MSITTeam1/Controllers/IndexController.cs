@@ -13,6 +13,7 @@ namespace MSITTeam1.Controllers
         public IActionResult Index()
         {
             ViewBag.Name = CDictionary.username;
+            ViewBag.account = CDictionary.account;
             if (CDictionary.username != null)
             {
                 ViewBag.Name = CDictionary.username.Trim();
