@@ -395,27 +395,17 @@ span.badge {
   float: left;
   margin-right: 30px;
 }
-.paginate_button{
-    padding-right:3px;
-    padding-left:3px;
-}
-.dataTables_info{
-    padding-right:3rem;
-}
-.buttons-pdf, .buttons-csv {
-    display: none !important;
-}
-/*.dt-buttons {
+.dt-buttons {
   margin-bottom: 15px;
-}*/
+}
 .dt-buttons .dt-button {
-    background-image: none;
-    background: #ffffff;
-    color: #373757;
-    border-color: #e7e7e7;
-    margin-right: 10px;
-    padding: 7px 20px;
-    border-radius: 0px;
+  background-image: none;
+  background: #ffffff;
+  color: #373757;
+  border-color: #e7e7e7;
+  margin-right: 10px;
+  padding: 7px 20px;
+  border-radius: 0px;
 }
 .dt-buttons .dt-button:hover:not(.disabled),
 .dt-buttons .dt-button:focus,

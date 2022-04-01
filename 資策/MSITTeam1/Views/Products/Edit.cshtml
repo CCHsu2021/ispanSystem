@@ -1,4 +1,4 @@
-﻿@model MSITTeam1Admin.Models.TProduct
+﻿@model MSITTeam1.Models.TProduct
 
 @{
     ViewData["Title"] = "Edit";
@@ -54,3 +54,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

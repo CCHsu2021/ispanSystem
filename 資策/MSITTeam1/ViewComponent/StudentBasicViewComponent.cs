@@ -23,7 +23,7 @@ namespace MSITTeam1.ViewComponent
         }
         public IViewComponentResult Invoke()
         {
-            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            string account = CDictionary.account;
             ViewBag.fAccount = account;
 
             CStudentResumeViewModel SBvModel = new CStudentResumeViewModel();

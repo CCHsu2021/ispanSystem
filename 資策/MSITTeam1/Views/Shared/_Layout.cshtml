@@ -358,7 +358,7 @@
 
         $(function()
         {
-            console.log("@ViewBag.account");
+            @*console.log("@ViewBag.account");
             if ("@ViewBag.Name"=="未填寫" && "@ViewBag.Type" == "1") {
                 Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
                 setTimeout("location.href='../SMemberCenter/Index'", 2000);
@@ -371,7 +371,7 @@
                     timer: 1500
                 }).then(() => {
                     window.open('@Url.Content("~/CMemberCenter/CompanyInformationEdit/")@ViewBag.account')
-                })}
+                })}*@
 
             if ("@ViewBag.account" != "")
             {
