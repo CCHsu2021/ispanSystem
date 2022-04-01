@@ -13,7 +13,7 @@
     <div class="col-md-4">
         <form asp-action="Edit"  enctype="multipart/form-data">  @*要加上enctype="multipart/form-data 不然傳回的照片是null*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="fAccount" />
+            <input type="hidden" asp-for="MemberId" />
             <div class="form-group">
                 <label asp-for="fName" class="control-label"></label>
                 <input asp-for="fName" class="form-control" />

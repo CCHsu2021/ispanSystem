@@ -9,7 +9,7 @@ namespace MSITTeam1.Models
     {
         public int FPhotoId { get; set; }
         public string FAccount { get; set; }
-        public byte[] FPhoto { get; set; }
+        public string FPhoto { get; set; }
         public string FType { get; set; }
     }
 }

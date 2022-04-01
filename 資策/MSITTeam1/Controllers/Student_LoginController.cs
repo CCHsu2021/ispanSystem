@@ -92,6 +92,7 @@ namespace MSITTeam1.Controllers
             {
                 account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
                 StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
+                CDictionary.account = stu.MemberId;
                 if (stu.Name == null)
                 {
                     CDictionary.username = "親愛的用戶";

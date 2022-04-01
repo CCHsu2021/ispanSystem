@@ -1992,6 +1992,7 @@ img{
 	background-size:cover;
 	background-position:center center;
 	background-repeat:no-repeat;
+	background-image:url(~/images/AboutUs/Members.jpg);
 }
 
 .page-title:before{

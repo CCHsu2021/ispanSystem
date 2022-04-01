@@ -27,5 +27,6 @@ namespace MSITTeam1.Models
         public string FDateTime { get; set; }
         public int? FMemberType { get; set; }
         public string Member { get; set; }
+        public string FCheckStatus { get; set; }
     }
 }

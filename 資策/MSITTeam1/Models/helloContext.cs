@@ -93,16 +93,29 @@ namespace MSITTeam1.Models
                     .HasColumnName("MemberID")
                     .HasDefaultValueSql("([dbo].[MemberIDnum]())");
 
-                entity.Property(e => e.BirthDate).HasMaxLength(20);
+                entity.Property(e => e.Autobiography).HasDefaultValueSql("('未填寫')");
 
-                entity.Property(e => e.ContactAddress).HasMaxLength(80);
+                entity.Property(e => e.BirthDate)
+                    .HasMaxLength(20)
+                    .HasDefaultValueSql("('未填寫')");
 
-                entity.Property(e => e.Email).HasMaxLength(50);
+                entity.Property(e => e.ContactAddress)
+                    .HasMaxLength(80)
+                    .HasDefaultValueSql("('未填寫')");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("('未填寫')");
 
                 entity.Property(e => e.FAccount)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("fAccount");
+
+                entity.Property(e => e.FCheckStatus)
+                    .HasMaxLength(10)
+                    .HasColumnName("fCheckStatus")
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.FCity)
                     .HasMaxLength(50)
@@ -138,19 +151,23 @@ namespace MSITTeam1.Models
                     .HasMaxLength(20)
                     .HasColumnName("fSalt");
 
-                entity.Property(e => e.Gender).HasMaxLength(10);
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("('未填寫')");
 
                 entity.Property(e => e.Member).HasMaxLength(50);
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(10)
+                    .HasDefaultValueSql("('未填寫')")
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(15)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('未填寫')");
 
-                entity.Property(e => e.Portrait).IsUnicode(false);
+                entity.Property(e => e.Portrait).HasDefaultValueSql("('未上傳')");
             });
 
             modelBuilder.Entity<StudentEducation>(entity =>
@@ -362,26 +379,30 @@ namespace MSITTeam1.Models
 
             modelBuilder.Entity<TClassGrade>(entity =>
             {
-                entity.HasKey(e => e.FAccount);
+                entity.HasKey(e => e.FAccountId);
 
                 entity.ToTable("tClassGrade");
 
-                entity.Property(e => e.FAccount)
+                entity.Property(e => e.FAccountId)
                     .HasMaxLength(50)
-                    .HasColumnName("fAccount");
+                    .HasColumnName("fAccountID");
 
                 entity.Property(e => e.FAfterClassGrade).HasColumnName("fAfterClassGrade");
 
+                entity.Property(e => e.FAfterClassTime)
+                    .HasColumnType("date")
+                    .HasColumnName("fAfterClassTime");
+
                 entity.Property(e => e.FBeforeClassGrade).HasColumnName("fBeforeClassGrade");
 
-                entity.Property(e => e.FIscompany).HasColumnName("fIscompany");
+                entity.Property(e => e.FBeforeClassTime)
+                    .HasColumnType("date")
+                    .HasColumnName("fBeforeClassTime");
 
-                entity.Property(e => e.FMemberName)
+                entity.Property(e => e.FClassCode)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .HasColumnName("fMemberName");
-
-                entity.Property(e => e.FTestPaperId).HasColumnName("fTestPaperId");
+                    .HasColumnName("fClassCode");
             });
 
             modelBuilder.Entity<TClassInfo>(entity =>
@@ -535,10 +556,11 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.FLevel).HasColumnName("fLevel");
 
-                entity.Property(e => e.FLogo).HasColumnName("fLogo");
+                entity.Property(e => e.FLogo)
+                    .HasMaxLength(50)
+                    .HasColumnName("fLogo");
 
                 entity.Property(e => e.FName)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("fName");
 
@@ -921,13 +943,12 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.FPhoto)
                     .IsRequired()
+                    .HasMaxLength(50)
                     .HasColumnName("fPhoto");
 
                 entity.Property(e => e.FType)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .HasColumnName("fType")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .HasColumnName("fType");
             });
 
             modelBuilder.Entity<TProduct>(entity =>
@@ -1079,6 +1100,8 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.FAccountEmail)
                     .HasMaxLength(50)
                     .HasColumnName("fAccount(Email)");
+
+                entity.Property(e => e.ClassCode).HasMaxLength(50);
 
                 entity.Property(e => e.DepartmentName).HasMaxLength(50);
 

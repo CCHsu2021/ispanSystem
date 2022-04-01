@@ -24,14 +24,14 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke()
         {
             string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
-            ViewBag.Account = account;
+            ViewBag.fAccount = account;
 
             CStudentResumeViewModel SBvModel = new CStudentResumeViewModel();
             List<CStudentResumeViewModel> sb = new List<CStudentResumeViewModel>();
-            var datas = from b in hello.StudentBasics.Where(p => p.FAccount == account)
+            var datas = from b in hello.StudentBasics.Where(p => p.MemberId == account)
                         select new
                         {
-                            Account = b.FAccount,
+                            MemberId = b.MemberId,
                             Name = b.Name,
                             Email = b.Email,
                             Phone = b.Phone,
@@ -41,13 +41,15 @@ namespace MSITTeam1.ViewComponent
                             gen = b.Gender,
                             c = b.FCompany,
                             protrait = b.Portrait
+                            
                         };
             foreach (var a in datas)
 
             {
-                SBvModel.fAccount = a.Account;
+                
+                SBvModel.MemberId = a.MemberId;
                 SBvModel.fName = a.Name;
-                SBvModel.fGender = a.gen.Equals("0") ? "男" : "女";
+                SBvModel.fGender = a.gen.Equals("0") ? "男" : a.gen.Equals("1") ? "女" : "未填寫";
                 SBvModel.fBirthDate = a.birthday;
                 SBvModel.fEmail = a.Email;
                 SBvModel.fPhone = a.Phone;
