@@ -23,6 +23,11 @@ namespace MSITTeam1.Controllers
             _enviroment = p;
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         public IActionResult List()
         {
 
