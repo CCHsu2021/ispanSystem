@@ -60,7 +60,6 @@ namespace MSITTeam1.Controllers
 			if (subjectID != null && questionID > 0)
 			{
 				TQuestionList ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
-				
 				TQuestionDetail cho = _context.TQuestionDetails.FirstOrDefault(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID);
 				List<CQuestionBankViewModel> temp = null;
 				if (ques != null)

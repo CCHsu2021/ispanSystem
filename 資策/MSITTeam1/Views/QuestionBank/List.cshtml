@@ -34,42 +34,34 @@
             </tr>
         </thead>
         <tbody>
-
-            @{ 
-                int choiceCount = 0;
-                string sub = "";
-                int queID = 0;
-
-                foreach (var item in Model)
-                {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vsubject)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VquestionId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vquestion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vchoice)
-                    @choiceCount ++;
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VquestionType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vlevel)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { subjectID = item.Vsubject, questionID = (int)item.VquestionId }) |
-                    @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-                    }
-                }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vsubject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VquestionId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vquestion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vchoice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VquestionType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vlevel)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { subjectID = item.Vsubject, questionID = (int)item.VquestionId }) |
+                        @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
 
         </tbody>
     </table>
