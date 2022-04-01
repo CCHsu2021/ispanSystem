@@ -20,7 +20,7 @@ namespace MSITTeam1.ViewComponent
         }
         public IViewComponentResult Invoke()
         {
-            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            string account = CDictionary.account;
             ViewBag.Account = account;
             IEnumerable<TCompanyBasic> com = null;
             com = hello.TCompanyBasics.Where(t => t.CompanyTaxid == account);

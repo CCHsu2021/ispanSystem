@@ -261,6 +261,16 @@ p,.text{
 	margin: 0;
 }
 
+::selection {
+	background: #FFE09D;
+	color: #176D67;
+}
+
+::-moz-selection {
+	background: #FFE09D;
+	color: #176D67;
+}
+
 ::-webkit-input-placeholder{color: inherit;}
 ::-moz-input-placeholder{color: inherit;}
 ::-ms-input-placeholder{color: inherit;}

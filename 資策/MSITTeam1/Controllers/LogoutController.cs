@@ -16,6 +16,7 @@ namespace MSITTeam1.Controllers
             HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE, "");
             CDictionary.username = "";
             CDictionary.memtype = "";
+            CDictionary.account = "";
             return Redirect("../Index");
         }
     }
