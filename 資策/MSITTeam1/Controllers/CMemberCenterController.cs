@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MSITTeam1.Models;
 using MSITTeam1.ViewModels;
@@ -15,15 +16,28 @@ namespace MSITTeam1.Controllers
     public class CMemberCenterController : Controller
     {
         private readonly helloContext hello;
+        IWebHostEnvironment _enviroment;
 
-        public CMemberCenterController(helloContext _hello)
+        public CMemberCenterController(helloContext _hello, IWebHostEnvironment p )
         {
             hello = _hello;
+            _enviroment = p;
         }
         public IActionResult Index()
         {
             ViewBag.Name = CDictionary.username;
             ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
+            return View();
+        }
+        public IActionResult CompanyInformationEdit(String CompanyTaxid)
+        {
+            TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == CompanyTaxid);
+            if (c != null)
+            {
+                return View(new CCompanyBasicViewModel() { com = c });
+            }
+
             return View();
         }
         [HttpPost]
@@ -32,6 +46,12 @@ namespace MSITTeam1.Controllers
             TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == company.CompanyTaxid);
             if (c != null)
             {
+                if (company.FLogo != null)
+                {
+                    string photoName = Guid.NewGuid().ToString() + ".jpg";
+                    c.FLogo = photoName;
+                    company.photo.CopyTo(new FileStream(_enviroment.WebRootPath + @"\UploadImage\" + photoName,FileMode.Create));
+                }
                 c.FAddress = company.FAddress;
                 c.FCity = company.FCity;
                 c.FDistrict = company.FDistrict;

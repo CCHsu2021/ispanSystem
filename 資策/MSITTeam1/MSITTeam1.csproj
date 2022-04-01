@@ -115,6 +115,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\student\" />
+    <Folder Include="wwwroot\UploadImage\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
