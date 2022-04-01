@@ -465,11 +465,15 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.OrderId).HasMaxLength(50);
 
-                entity.Property(e => e.Id).HasMaxLength(50);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ClassCode).HasMaxLength(50);
 
                 entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TClassTestPaper>(entity =>
@@ -1092,13 +1096,9 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.ProductId).HasMaxLength(50);
 
-                entity.Property(e => e.Cost).HasColumnType("money");
-
                 entity.Property(e => e.ImgPath).HasMaxLength(50);
 
                 entity.Property(e => e.Name).HasMaxLength(50);
-
-                entity.Property(e => e.Price).HasColumnType("money");
             });
 
             modelBuilder.Entity<TProductOrder>(entity =>
