@@ -36,6 +36,7 @@ namespace MSITTeam1.Models
         public virtual DbSet<TClassTestPaper> TClassTestPapers { get; set; }
         public virtual DbSet<TCompanyAppendix> TCompanyAppendices { get; set; }
         public virtual DbSet<TCompanyBasic> TCompanyBasics { get; set; }
+        public virtual DbSet<TCompanyContactPerson> TCompanyContactPeople { get; set; }
         public virtual DbSet<TCompanyPoint> TCompanyPoints { get; set; }
         public virtual DbSet<TCompanyRespond> TCompanyResponds { get; set; }
         public virtual DbSet<TCompanyRespondTemp> TCompanyRespondTemps { get; set; }
@@ -47,6 +48,7 @@ namespace MSITTeam1.Models
         public virtual DbSet<TMemberLevel> TMemberLevels { get; set; }
         public virtual DbSet<TMemberLevelRecord> TMemberLevelRecords { get; set; }
         public virtual DbSet<TMemberResumeSend> TMemberResumeSends { get; set; }
+        public virtual DbSet<TNewJobVacancy> TNewJobVacancies { get; set; }
         public virtual DbSet<TPhoto> TPhotos { get; set; }
         public virtual DbSet<TProduct> TProducts { get; set; }
         public virtual DbSet<TProductOrder> TProductOrders { get; set; }
@@ -67,14 +69,14 @@ namespace MSITTeam1.Models
         public virtual DbSet<TTestResult> TTestResults { get; set; }
         public virtual DbSet<VGetDate> VGetDates { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Data Source=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;User ID=MSIT40;Password=Ispan40team1");
-//            }
-//        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;Persist Security Info=False;User ID=MSIT40;Password=Ispan40team1");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -456,14 +458,22 @@ namespace MSITTeam1.Models
 
             modelBuilder.Entity<TClassOrderDetail>(entity =>
             {
-                entity.HasKey(e => new { e.OrderId, e.ClassCode })
+                entity.HasKey(e => new { e.OrderId, e.Id })
                     .HasName("PK_tOrderDetail");
 
                 entity.ToTable("tClassOrderDetail");
 
                 entity.Property(e => e.OrderId).HasMaxLength(50);
 
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.ClassCode).HasMaxLength(50);
+
+                entity.Property(e => e.DepartmentName).HasMaxLength(50);
+
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TClassTestPaper>(entity =>
@@ -577,6 +587,48 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.FSalt)
                     .HasMaxLength(20)
                     .HasColumnName("fSalt");
+            });
+
+            modelBuilder.Entity<TCompanyContactPerson>(entity =>
+            {
+                entity.HasKey(e => e.FId);
+
+                entity.ToTable("tCompanyContactPerson");
+
+                entity.Property(e => e.FId).HasColumnName("fId");
+
+                entity.Property(e => e.FAccount)
+                    .HasMaxLength(50)
+                    .HasColumnName("fAccount");
+
+                entity.Property(e => e.FCompanyTaxid)
+                    .HasMaxLength(50)
+                    .HasColumnName("fCompanyTAXID");
+
+                entity.Property(e => e.FContactFax)
+                    .HasMaxLength(50)
+                    .HasColumnName("fContactFAX");
+
+                entity.Property(e => e.FContactPerson)
+                    .HasMaxLength(50)
+                    .HasColumnName("fContactPerson");
+
+                entity.Property(e => e.FContactPhone)
+                    .HasMaxLength(50)
+                    .HasColumnName("fContactPhone");
+
+                entity.Property(e => e.FDepartmentName)
+                    .HasMaxLength(50)
+                    .HasColumnName("fDepartmentName");
+
+                entity.Property(e => e.FPassword)
+                    .HasMaxLength(50)
+                    .HasColumnName("fPassword");
+
+                entity.Property(e => e.FStatus)
+                    .HasMaxLength(10)
+                    .HasColumnName("fStatus")
+                    .IsFixedLength(true);
             });
 
             modelBuilder.Entity<TCompanyPoint>(entity =>
@@ -928,6 +980,90 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.TimeToContact).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<TNewJobVacancy>(entity =>
+            {
+                entity.HasKey(e => new { e.FCompanyTaxid, e.FJobName });
+
+                entity.ToTable("tNewJobVacancy");
+
+                entity.Property(e => e.FCompanyTaxid)
+                    .HasMaxLength(50)
+                    .HasColumnName("fCompanyTAXID");
+
+                entity.Property(e => e.FJobName)
+                    .HasMaxLength(50)
+                    .HasColumnName("fJobName");
+
+                entity.Property(e => e.FContactEmail)
+                    .HasMaxLength(50)
+                    .HasColumnName("fContactEmail");
+
+                entity.Property(e => e.FContactFax)
+                    .HasMaxLength(50)
+                    .HasColumnName("fContactFAX");
+
+                entity.Property(e => e.FContactPerson)
+                    .HasMaxLength(50)
+                    .HasColumnName("fContactPerson");
+
+                entity.Property(e => e.FContactPhone)
+                    .HasMaxLength(50)
+                    .HasColumnName("fContactPhone");
+
+                entity.Property(e => e.FCreatTime)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fCreatTime");
+
+                entity.Property(e => e.FEducation)
+                    .HasMaxLength(50)
+                    .HasColumnName("fEducation");
+
+                entity.Property(e => e.FEmployeeType)
+                    .HasMaxLength(50)
+                    .HasColumnName("fEmployeeType");
+
+                entity.Property(e => e.FJobListId).HasColumnName("fJobListId");
+
+                entity.Property(e => e.FJobSkill)
+                    .HasMaxLength(50)
+                    .HasColumnName("fJobSkill");
+
+                entity.Property(e => e.FJobStatus)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fJobStatus");
+
+                entity.Property(e => e.FLeaveSystem)
+                    .HasMaxLength(50)
+                    .HasColumnName("fLeaveSystem");
+
+                entity.Property(e => e.FModifyTime)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fModifyTime");
+
+                entity.Property(e => e.FOther).HasColumnName("fOther");
+
+                entity.Property(e => e.FSalary).HasColumnName("fSalary");
+
+                entity.Property(e => e.FSalaryMode)
+                    .HasMaxLength(50)
+                    .HasColumnName("fSalaryMode");
+
+                entity.Property(e => e.FWorkAddress)
+                    .HasMaxLength(50)
+                    .HasColumnName("fWorkAddress");
+
+                entity.Property(e => e.FWorkExp)
+                    .HasMaxLength(50)
+                    .HasColumnName("fWorkEXP");
+
+                entity.Property(e => e.FWorkHours)
+                    .HasMaxLength(50)
+                    .HasColumnName("fWorkHours");
+            });
+
             modelBuilder.Entity<TPhoto>(entity =>
             {
                 entity.HasKey(e => e.FPhotoId);
@@ -960,13 +1096,9 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.ProductId).HasMaxLength(50);
 
-                entity.Property(e => e.Cost).HasColumnType("money");
-
                 entity.Property(e => e.ImgPath).HasMaxLength(50);
 
                 entity.Property(e => e.Name).HasMaxLength(50);
-
-                entity.Property(e => e.Price).HasColumnType("money");
             });
 
             modelBuilder.Entity<TProductOrder>(entity =>
