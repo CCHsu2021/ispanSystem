@@ -29,12 +29,12 @@ namespace MSITTeam1Admin.ViewModels
         public decimal? Price
         {
             get { return this.prodcut.Price; }
-            set { this.prodcut.Price = value; }
+            set { this.prodcut.Price = (int?)value; }
         }
         public decimal? Cost
         {
             get { return this.prodcut.Cost; }
-            set { this.prodcut.Cost = value; }
+            set { this.prodcut.Cost = (int?)value; }
         }
         public IFormFile ImgPath { get; set; }
         public int? Barcode
