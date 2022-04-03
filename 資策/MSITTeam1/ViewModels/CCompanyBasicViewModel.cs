@@ -1,4 +1,5 @@
-﻿using MSITTeam1.Models;
+﻿using Microsoft.AspNetCore.Http;
+using MSITTeam1.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,14 +11,14 @@ namespace MSITTeam1.ViewModels
     public class CCompanyBasicViewModel
     {
         private TCompanyBasic _com = null;
+        public IFormFile photo { get; set; }
         public CCompanyBasicViewModel()
         {
             _com = new TCompanyBasic();
         }
         public TCompanyBasic com { get { return _com; } set { _com = value; } }
         [DisplayName("統編")]
-        public int FBan { get { return this._com.FBan; } set { this._com.FBan = value; } }
-        public string FAccount { get { return this._com.FAccount; } set { this._com.FAccount = value; } }
+        public string CompanyTaxid { get { return this._com.CompanyTaxid; } set { this._com.CompanyTaxid = value; } }
         [DisplayName("公司名稱")]
         public string FName { get { return this._com.FName; } set { this._com.FName = value; } }
         [DisplayName("員工總數")]
@@ -41,7 +42,7 @@ namespace MSITTeam1.ViewModels
         [DisplayName("信箱")]
         public string FEmail { get { return this._com.FEmail; } set { this._com.FEmail = value; } }
         [DisplayName("Logo")]
-        public byte[] FLogo { get { return this._com.FLogo; } set { this._com.FLogo = value; } }
+        public string FLogo { get { return this._com.FLogo; } set { this._com.FLogo = value; } }
         [DisplayName("簡介")]
         public string FCustomInfo { get { return this._com.FCustomInfo; } set { this._com.FCustomInfo = value; } }
         public int? FLevel { get { return this._com.FLevel; } set { this._com.FLevel = value; } }

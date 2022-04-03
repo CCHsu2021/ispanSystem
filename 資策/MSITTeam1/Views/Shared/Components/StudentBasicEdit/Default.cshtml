@@ -1,0 +1,59 @@
+﻿@model MSITTeam1.ViewModels.CStudentResumeViewModel
+<style>
+    textarea {
+        overflow-y: scroll;
+        height: 150px;
+        resize: none; 
+    }
+    
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="MemberId" id="MemberId" />
+            <div class="form-group">
+                <label asp-for="fName" class="control-label"></label>
+                <input id="fName" asp-for="fName" class="form-control" />
+                <span asp-validation-for="fName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fGender" class="control-label"></label>
+                <input id="fGender" asp-for="fGender" class="form-control" type="text" />
+                <span asp-validation-for="fGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fBirthDate" class="control-label"></label>
+                <input id="fBirthDate" asp-for="fBirthDate" class="form-control" type="text" />
+                <span asp-validation-for="fBirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fEmail" class="control-label"></label>
+                <input id="fEmail" asp-for="fEmail" class="form-control" />
+                <span asp-validation-for="fEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fPhone" class="control-label"></label>
+                <input id="fPhone" asp-for="fPhone" class="form-control" />
+                <span asp-validation-for="fPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fAddress" class="control-label"></label>
+                <input id="fAddress" asp-for="fAddress" class="form-control" />
+                <span asp-validation-for="fAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fAutobiography" class="control-label"></label>
+                <textarea id="fAutobiography" asp-for="fAutobiography" class="form-control" > </textarea>
+                <span asp-validation-for="fAutobiography" class="text-danger"></span>
+            </div>
+            <div>
+                <button id="savechanges" type="button" class="btn-style-two" >儲存變更</button>
+            </div>
+        
+         </form>   
+        
+    </div>
+</div>

@@ -1,59 +1,68 @@
-﻿@model IEnumerable<MSITTeam1.Models.TQuestionList>
+﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
 
 @{
     ViewData["Title"] = "List";
 }
+<div class="container" style="padding:20px;">
+    <h1>題目列表</h1>
 
-<h1>題目列表</h1>
+    <p>
+        <a asp-action="Create">新增題目</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Vsubject)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].VquestionId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Vquestion)
+                </th>
+                <th>
+                    選項
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].VquestionType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Vlevel)
+                </th>
+                <th>編輯</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vsubject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VquestionId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vquestion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vchoice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VquestionType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vlevel)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { subjectID = item.Vsubject, questionID = (int)item.VquestionId }) |
+                        @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
 
-<p>
-    <a asp-action="Create">新增題目</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FQuestion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FQuestionImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FQuestionTypeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FUpdateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FLevel)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FQuestion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FQuestionImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FQuestionTypeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FUpdateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FLevel)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }) |
-                @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

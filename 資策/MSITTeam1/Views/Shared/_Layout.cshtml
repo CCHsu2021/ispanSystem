@@ -18,7 +18,7 @@
     <link href="~/css/style.css?@date" rel="stylesheet">
     <link href="~/css/responsive.css?@date" rel="stylesheet">
 
-    <link href="~/css/cardHavorInteraction.css?@date" rel="stylesheet">
+    
     @await RenderSectionAsync("Style", required: false)
 
     <!-- Responsive -->
@@ -95,7 +95,8 @@
                             <div class="collapse navbar-collapse clearfix" id="navbarSupportedContent">
                                 <ul class="navigation clearfix">
                                     <li>
-                                        <a href="about.html">關於我們</a>
+                                        @*<a href="~/AboutUs">關於我們</a>*@
+                                        @Html.ActionLink("關於我們","AboutUs","Home")
                                     </li>
                                     <li class="dropdown">
                                         <a class="dropdown-toggle-title" href="#">學員專區</a>
@@ -110,7 +111,7 @@
                                                 <a href="events.html">學員須知</a>
                                             </li>
                                             <li>
-                                                <a href="event-detail.html">履歷製作</a>
+                                                <a href="@Url.Content("~/StudentResume/create")">履歷製作</a>
                                             </li>
                                             <li>
                                                 <a href="event-detail.html">職缺搜尋</a>
@@ -330,6 +331,7 @@
     <script src="~/js/parallax.min.js"></script>
     <script src="~/js/script.js"></script>
     <script src="~/js/sweetalert2.all.min.js"></script>
+    <script src="~/js/Resumebar.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 <script>
         //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
@@ -354,18 +356,25 @@
             //    });
             //});
 
+
         $(function()
         {
-            console.log("@ViewBag.Name");
-            if ("@ViewBag.Name" == "親愛的用戶" && "@ViewBag.Type" == "1") {
+            @*console.log("@ViewBag.account");
+            if ("@ViewBag.Name"=="未填寫" && "@ViewBag.Type" == "1") {
                 Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
-                setTimeout("javascript:location.href='../SMemberCenter/Index'", 2000);
-            } else if ("@ViewBag.Name" == "親愛的用戶" && "@ViewBag.Type" == "2")
-            {
-                Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
-                setTimeout("javascript:location.href='../CMemberCenter/Index'", 2000);
+                setTimeout("location.href='../SMemberCenter/Index'", 2000);
             }
-            if ("@ViewBag.Name" != "")
+            if ("@ViewBag.Name" == "親愛的用戶" && "@ViewBag.Type" == "2") {
+                Swal.fire({
+                    icon: 'info',
+                    title: '請先填寫基本資料',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.open('@Url.Content("~/CMemberCenter/CompanyInformationEdit/")@ViewBag.account')
+                })}*@
+
+            if ("@ViewBag.account" != "")
             {
                 if ("@ViewBag.Type" == "1") {
                     $("#username").attr("href", "../SMemberCenter/Index")

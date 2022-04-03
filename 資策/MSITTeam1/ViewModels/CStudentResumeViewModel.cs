@@ -17,10 +17,10 @@ namespace MSITTeam1.ViewModels
             get { return _student; }
             set { _student = value; }
         }
-        public string fAccount
+        public string MemberId
         {
-            get { return this.student.FAccount; }
-            set { this.student.FAccount = value; }
+            get { return this.student.MemberId; }
+            set { this.student.MemberId = value; }
         }
         [DisplayName("姓名:")]
         public string fName
@@ -60,7 +60,7 @@ namespace MSITTeam1.ViewModels
             get { return this.student.ContactAddress; }
             set { this.student.ContactAddress = value; }
         }
-        [DisplayName("自傳:")]
+        [DisplayName("自我介紹:")]
         public string fAutobiography
         {
             get { return this.student.Autobiography; }

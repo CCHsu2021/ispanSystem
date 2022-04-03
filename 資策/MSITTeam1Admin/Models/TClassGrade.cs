@@ -7,11 +7,11 @@ namespace MSITTeam1Admin.Models
 {
     public partial class TClassGrade
     {
-        public string FAccount { get; set; }
-        public string FMemberName { get; set; }
+        public string FAccountId { get; set; }
+        public string FClassCode { get; set; }
         public int? FBeforeClassGrade { get; set; }
+        public DateTime? FBeforeClassTime { get; set; }
         public int? FAfterClassGrade { get; set; }
-        public int? FTestPaperId { get; set; }
-        public int? FIscompany { get; set; }
+        public DateTime? FAfterClassTime { get; set; }
     }
 }
