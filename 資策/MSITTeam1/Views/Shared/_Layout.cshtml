@@ -96,7 +96,7 @@
                                 <ul class="navigation clearfix">
                                     <li>
                                         @*<a href="~/AboutUs">關於我們</a>*@
-                                        @Html.ActionLink("關於我們","AboutUs","Home")
+                                        @Html.ActionLink("關於我們", "AboutUs", "Home")
                                     </li>
                                     <li class="dropdown">
                                         <a class="dropdown-toggle-title" href="#">學員專區</a>
@@ -157,22 +157,22 @@
                                         </div>
                                     </li>
                                     @*<li class="dropdown">
-            <a class="dropdown-toggle-title" href="#">在職進修班</a>
-            <ul>
-                <li><a href="index.html">Home page 01</a></li>
-                <li><a href="index-2.html">Home page 02</a></li>
-                <li class="current dropdown">
-                    <a class="dropdown-toggle-title"
-                       href="#">Header Styles</a>
-                    <ul>
-                        <li><a href="index.html">Header Style One</a></li>
-                        <li><a href="index-2.html">Header Style Two</a></li>
-                    </ul>
-                    <div class="dropdown-btn"><span class="fa fa-angle-down"></span></div>
-                </li>
-            </ul>
-            <div class="dropdown-btn"><span class="fa fa-angle-down"></span></div>
-        </li>*@
+                                            <a class="dropdown-toggle-title" href="#">在職進修班</a>
+                                            <ul>
+                                                <li><a href="index.html">Home page 01</a></li>
+                                                <li><a href="index-2.html">Home page 02</a></li>
+                                                <li class="current dropdown">
+                                                    <a class="dropdown-toggle-title"
+                                                       href="#">Header Styles</a>
+                                                    <ul>
+                                                        <li><a href="index.html">Header Style One</a></li>
+                                                        <li><a href="index-2.html">Header Style Two</a></li>
+                                                    </ul>
+                                                    <div class="dropdown-btn"><span class="fa fa-angle-down"></span></div>
+                                                </li>
+                                            </ul>
+                                            <div class="dropdown-btn"><span class="fa fa-angle-down"></span></div>
+                                        </li>*@
                                     <li class="dropdown">
                                         <a class="dropdown-toggle-title" href="#">測試平台</a>
                                         <ul>
@@ -333,7 +333,7 @@
     <script src="~/js/sweetalert2.all.min.js"></script>
     <script src="~/js/Resumebar.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-<script>
+    <script>
         //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
         var onResize = function () {
             $("body").css("padding-top", $(".main-header").height());
@@ -386,6 +386,6 @@
                 $("#username1").text("登出")
             }
         });
-</script>
+    </script>
 </body>
 </html>
