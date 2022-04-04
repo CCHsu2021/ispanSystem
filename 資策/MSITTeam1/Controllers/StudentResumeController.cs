@@ -25,6 +25,8 @@ namespace MSITTeam1.Controllers
 
         public IActionResult Create()
         {
+            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            
             return View();
         }
 
