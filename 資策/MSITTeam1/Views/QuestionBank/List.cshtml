@@ -13,22 +13,22 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].Vsubject)
+                    @Html.DisplayNameFor(model => model[0].FSubjectId)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].VquestionId)
+                    @Html.DisplayNameFor(model => model[0].FQuestionId)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].Vquestion)
+                    @Html.DisplayNameFor(model => model[0].FQuestion)
                 </th>
                 <th>
                     選項
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].VquestionType)
+                    @Html.DisplayNameFor(model => model[0].FQuestionTypeId)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].Vlevel)
+                    @Html.DisplayNameFor(model => model[0].FLevel)
                 </th>
                 <th>編輯</th>
             </tr>
@@ -38,25 +38,25 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Vsubject)
+                        @Html.DisplayFor(modelItem => item.FSubjectId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.VquestionId)
+                        @Html.DisplayFor(modelItem => item.FQuestionId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Vquestion)
+                        @Html.DisplayFor(modelItem => item.FQuestion)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Vchoice)
+                        @Html.DisplayFor(modelItem => item.FChoice)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.VquestionType)
+                        @Html.DisplayFor(modelItem => item.FQuestionTypeId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Vlevel)
+                        @Html.DisplayFor(modelItem => item.FLevel)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { subjectID = item.Vsubject, questionID = (int)item.VquestionId }) |
+                        @Html.ActionLink("Edit", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId,choice =item.FChoice }) |
                         @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                     </td>

@@ -27,14 +27,14 @@ namespace MSITTeam1.Controllers
 							join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
 							select new CQuestionBankViewModel
 							{
-								Vsubject = ques.FSubjectId,
-								VquestionId = ques.FQuestionId,
-								Vquestion = ques.FQuestion,
-								Vlevel = ques.FLevel,
+								FCSubjectId = ques.FSubjectId,
+								FCQuestionId = ques.FQuestionId,
+								FQuestion = ques.FQuestion,
+								FLevel = ques.FLevel,
 								//updateTime = ques.FUpdateTime.ToString('YYMMDD'),
-								VquestionType = ques.FQuestionTypeId,
-								Vchoice = choice.FChoice,
-								VcorrectAnswer = choice.FCorrectAnswer
+								FQuestionTypeId = ques.FQuestionTypeId,
+								FChoice = choice.FChoice,
+								FCorrectAnswer = choice.FCorrectAnswer
 							};
 			foreach (var q in quesQuery)
 			{
@@ -49,38 +49,24 @@ namespace MSITTeam1.Controllers
 			return View();
 		}
 
-		//[HttpPost]
-		//public IActionResult Create()
-		//{
-		//	_context.TQuestionLists.Add
-		//	return View();
-		//}
-		public IActionResult Edit(string subjectID, int questionID)
+		[HttpPost]
+		public IActionResult Create([Bind("FSubjectId,FQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] CQuestionBankViewModel ques)
+		{
+			//_context.TQuestionLists.Add(ques.question);
+			_context.TQuestionDetails.Add(ques.choice);
+			_context.SaveChanges();
+			return RedirectToAction("List");
+		}
+		public IActionResult Edit(string subjectID, int questionID,string choice)
 		{
 			if (subjectID != null && questionID > 0)
 			{
 				TQuestionList ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
-				TQuestionDetail cho = _context.TQuestionDetails.FirstOrDefault(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID);
-				List<CQuestionBankViewModel> temp = null;
-				if (ques != null)
+				//var cho = _context.TQuestionDetails.Where(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID);
+				TQuestionDetail cho = _context.TQuestionDetails.FirstOrDefault(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID && c.FChoice == choice);
+				if (ques != null && cho != null)
 				{
-					//IQueryable<CQuestionBankViewModel> selectQues = from choice in _context.TQuestionDetails
-					//												join q in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId }
-					//												equals new { q.FSubjectId, q.FQuestionId }
-					//												select new CQuestionBankViewModel
-					//												{
-					//													Vsubject = q.FSubjectId,
-					//													VquestionId = q.FQuestionId,
-					//													Vquestion = q.FQuestion,
-					//													Vchoice = choice.FChoice
-					//												};
-					//foreach (var q in selectQues)
-					//{
-					//	temp.Add(q);
-					//}
-
-					return View(new CQuestionBankViewModel() { question = ques , choice = cho});
-					//return View(ques);
+					return View(new CQuestionBankViewModel() { question = ques,choice = cho});
 				}
 			}
 			return RedirectToAction("List");
@@ -89,11 +75,13 @@ namespace MSITTeam1.Controllers
 		[HttpPost]
 		public IActionResult Edit(CQuestionBankViewModel ques)
 		{
-			TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(ques.Vsubject) && q.FQuestionId == ques.VquestionId);
+			TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(ques.FSubjectId) && q.FQuestionId == ques.FQuestionId);
+			TQuestionDetail choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSubjectId.Equals(ques.FSubjectId) && c.FQuestionId == ques.FQuestionId && c.FChoice == ques.FChoice);
 			if (quesSel != null)
 			{
-				quesSel.FQuestion = ques.Vquestion;
-				quesSel.FQuestionTypeId = Convert.ToInt32(ques.VquestionType);
+				//quesSel.FQuestion = ques.FQuestion;
+				//quesSel.FQuestionTypeId = Convert.ToInt32(ques.FQuestionTypeId);
+				choSel.FChoice = ques.FChoice;
 				_context.SaveChanges();
 			}
 			return RedirectToAction("List");

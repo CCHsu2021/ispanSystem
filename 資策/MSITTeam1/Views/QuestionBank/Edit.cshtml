@@ -14,12 +14,12 @@
             <div class="col-md-4">
                 <form asp-action="Edit" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Vsubject" />
-                    <input type="hidden" asp-for="VquestionId" />
+                    <input type="hidden" asp-for="FSubjectId" />
+                    <input type="hidden" asp-for="FSubjectId" />
                     <div class="form-group">
-                        <label asp-for="Vquestion" class="control-label"></label>
-                        <input asp-for="Vquestion" class="form-control" />
-                        <span asp-validation-for="Vquestion" class="text-danger"></span>
+                        <label id = "test1" asp-for="FQuestion" class="control-label"></label>
+                        <input asp-for="FQuestion" class="form-control" />
+                        <span asp-validation-for="FQuestion" class="text-danger"></span>
                     </div>
                     @*<div class="form-group">
             <label asp-for="FQuestionImage" class="control-label"></label>
@@ -28,14 +28,14 @@
             <input type="file" name="photo" class="form-control" />
         </div>*@
                     <div class="form-group">
-                        <label asp-for="VquestionType" class="control-label"></label>
-                        <input asp-for="VquestionType" class="form-control" />
-                        <span asp-validation-for="VquestionType" class="text-danger"></span>
+                        <label asp-for="FQuestionTypeId" class="control-label"></label>
+                        <input asp-for="FQuestionTypeId" class="form-control" />
+                        <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Vchoice" class="control-label"></label>
-                        <input asp-for="Vchoice" class="form-control" />
-                        <span asp-validation-for="Vchoice" class="text-danger"></span>
+                        <label asp-for="FChoice" class="control-label"></label>
+                        <input asp-for="FChoice" class="form-control" />
+                        <span asp-validation-for="FChoice" class="text-danger"></span>
                     </div>
                     @*<div class="form-group">
             <label asp-for="VupdateTime" class="control-label"></label>
@@ -43,9 +43,9 @@
             <span asp-validation-for="VupdateTime" class="text-danger"></span>
         </div>*@
                     <div class="form-group">
-                        <label asp-for="Vlevel" class="control-label"></label>
-                        <input asp-for="Vlevel" class="form-control" />
-                        <span asp-validation-for="Vlevel" class="text-danger"></span>
+                        <label asp-for="FLevel" class="control-label"></label>
+                        <input asp-for="FLevel" class="form-control" />
+                        <span asp-validation-for="FLevel" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />
