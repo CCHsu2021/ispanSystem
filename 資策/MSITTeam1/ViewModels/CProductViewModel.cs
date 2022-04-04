@@ -19,28 +19,12 @@ namespace MSITTeam1.ViewModels
             get { return _product; }
             set { _product = value; }
         }
-        public string ProductId { get { return this.prodcut.ProductId; } set { this.prodcut.ProductId = value; } }
-        public int? Type { get { return this.prodcut.Type; } set { this.prodcut.Type = value; } }
-        public string Name
-        {
-            get { return this.prodcut.Name; }
-            set { this.prodcut.Name = value; }
-        }
-        public decimal? Price
-        {
-            get { return this.prodcut.Price; }
-            set { this.prodcut.Price = value; }
-        }
-        public decimal? Cost
-        {
-            get { return this.prodcut.Cost; }
-            set { this.prodcut.Cost = value; }
-        }
+        public string ProductId { get; set; }
+        public int? Type { get; set; }
+        public string Name { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? Cost { get; set; }
         public IFormFile ImgPath { get; set; }
-        public int? Barcode
-        {
-            get { return this.prodcut.Barcode; }
-            set { this.prodcut.Barcode = value; }
-        }
+        public int? Barcode { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace MSITTeam1Admin.Models
         public string JobPosition { get; set; }
         public string Updater { get; set; }
         public DateTime? UpdateDatetime { get; set; }
+        public string ClassCode { get; set; }
     }
 }

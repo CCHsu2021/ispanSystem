@@ -1,0 +1,128 @@
+﻿@model MSITTeam1.ViewModels.CStudentResumeViewModel
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+
+<div class="resumebar">
+    <div class="pagination-container full-width-container">
+        <div class="sized-container">
+            <div class="pagination"></div>
+        </div>
+    </div>
+    <div class="viewport full-width-container">
+        <ul class="slide-container">
+            <li class="slide" data-tag="基本資料">
+                <div class="sized-container">
+                    <div class="row">
+                        <div class="col-4">
+                            @*<form>*@
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <input type="hidden" asp-for="MemberId" id="MemberId" />
+                            <div class="form-group">
+                                <label asp-for="fName" class="control-label"></label>
+                                <input id="fName" asp-for="fName" class="form-control" />
+                                <span asp-validation-for="fName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="fGender" class="control-label"></label>
+                                <input id="fGender" asp-for="fGender" class="form-control" type="text" />
+                                <span asp-validation-for="fGender" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="fBirthDate" class="control-label"></label>
+                                <input id="fBirthDate" asp-for="fBirthDate" class="form-control" type="text" />
+                                <span asp-validation-for="fBirthDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="fEmail" class="control-label"></label>
+                                <input id="fEmail" asp-for="fEmail" class="form-control" />
+                                <span asp-validation-for="fEmail" class="text-danger"></span>
+                            </div>
+
+
+                            @*</form>*@
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="fPhone" class="control-label"></label>
+                                <input id="fPhone" asp-for="fPhone" class="form-control" />
+                                <span asp-validation-for="fPhone" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="fAddress" class="control-label"></label>
+                                <input id="fAddress" asp-for="fAddress" class="form-control" />
+                                <span asp-validation-for="fAddress" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="fAutobiography" class="control-label"></label>
+                                <textarea id="fAutobiography" asp-for="fAutobiography" class="form-control"> </textarea>
+                                <span asp-validation-for="fAutobiography" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="image-upload">
+                                <label for="file-input">
+                                    <img class=" img-thumbnail" src="/images/photo/client-man.png" title="變更圖片" ; />
+                                </label>
+
+                                <input id="file-input" type="file" />
+                            </div>
+                        </div>
+                    </div>
+            </li>
+            <li class="slide" data-tag="經歷">
+                <div class="sized-container">
+                    <h1>Tell us about your area of expertise.</h1>
+                    <h2>Information about this section.</h2>
+                </div>
+            </li>
+            <li class="slide" data-tag="學歷">
+                <div class="sized-container">
+                    <h1>Lets get a little more in depth.</h1>
+                    <h2>Information about this section.</h2>
+                </div>
+            </li>
+            <li class="slide" data-tag="語言">
+                <div class="sized-container">
+                    <h1>Tell us about where you've worked before.</h1>
+                    <h2>Information about this section.</h2>
+                </div>
+            </li>
+            <li class="slide" data-tag="技能">
+                <div class="sized-container">
+                    <h1>Describe your formal education.</h1>
+                    <h2>Information about this section.</h2>
+                </div>
+            </li>
+            <li class="slide" data-tag="作品">
+                <div class="sized-container">
+                    <h1>Mention any additional comments.</h1>
+                    <h2>Information about this section.</h2>
+                </div>
+            </li>
+            <li class="slide" data-tag="樣式">
+                <div class="sized-container">
+                    <h1>Confirm your application.</h1>
+                    <h2>Information about this section.</h2>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="full-width-container ">
+        <div class="button-container sized-container">
+            <button class="next">下一步</button>
+            <button id="savechanges">儲存變更</button>
+            <button class="previous">上一步</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

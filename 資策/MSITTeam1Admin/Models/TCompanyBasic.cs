@@ -24,7 +24,7 @@ namespace MSITTeam1Admin.Models
         public string FDistrictCode { get; set; }
         public string FBenefits { get; set; }
         public string FEmail { get; set; }
-        public byte[] FLogo { get; set; }
+        public string FLogo { get; set; }
         public string FCustomInfo { get; set; }
         public int? FLevel { get; set; }
         public string FDueDate { get; set; }

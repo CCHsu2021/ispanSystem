@@ -114,7 +114,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\student\" />
     <Folder Include="wwwroot\UploadImage\" />
   </ItemGroup>
 

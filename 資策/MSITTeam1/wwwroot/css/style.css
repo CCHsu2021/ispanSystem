@@ -85,15 +85,6 @@ font-family: 'Fredoka One', cursive;
 	font-size: 100%;
 	line-height: inherit;
 }
-::selection {
-	background: #FFE09D;
-	color: #176D67;
-}
-
-::-moz-selection {
-	background: #FFE09D;
-	color: #176D67;
-}
 
 /*** 
 
@@ -268,6 +259,16 @@ p,.text{
 	font-weight: 400;
 	color: #858687;
 	margin: 0;
+}
+
+::selection {
+	background: #FFE09D;
+	color: #176D67;
+}
+
+::-moz-selection {
+	background: #FFE09D;
+	color: #176D67;
 }
 
 ::-webkit-input-placeholder{color: inherit;}

@@ -93,9 +93,9 @@ namespace MSITTeam1.Controllers
                 account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
                 StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
                 CDictionary.account = stu.MemberId;
-                if (stu.Name == null)
+                if (stu.Name.Trim() == "未填寫")
                 {
-                    CDictionary.username = "親愛的用戶";
+                    CDictionary.username = "親愛的學員";
                     CDictionary.memtype = stu.FMemberType.ToString();
                 }
                 else

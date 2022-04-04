@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<link href="~/css/cardHavorInteraction.css" rel="stylesheet">
 <!--Main Slider-->
 <section class="main-slider style-two clearfix" >
     <div class="rev_slider_wrapper fullwidthbanner-container" id="rev_slider_one_wrapper" data-source="gallery">
@@ -895,7 +895,29 @@
 @section Scripts
 {
     <script>
-
+        $(function () {
+             console.log("@ViewBag.account");
+            if ("@ViewBag.Name" == "親愛的學員" && "@ViewBag.Type" == "1") {
+                          Swal.fire({
+                    icon: 'info',
+                    title: '請先填寫基本資料',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.open('@Url.Content("~/SMemberCenter/Index")')
+                })}
+            
+            if ("@ViewBag.Name" == "親愛的用戶" && "@ViewBag.Type" == "2") {
+                Swal.fire({
+                    icon: 'info',
+                    title: '請先填寫基本資料',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.open('@Url.Content("~/CMemberCenter/Index")')
+                })
+            }
+        })
     </script>
 
 }
