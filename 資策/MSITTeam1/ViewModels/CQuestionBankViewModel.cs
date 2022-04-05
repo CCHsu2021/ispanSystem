@@ -38,8 +38,8 @@ namespace MSITTeam1.ViewModels
 
 		public string FCSubjectId
 		{
-			get { return this.choice.FSubjectId; }
-			set { this.choice.FSubjectId = value; }
+			get { return this.question.FSubjectId; }
+			set { this.question.FSubjectId = value; }
 		}
 
 		[DisplayName("題目編號")]
@@ -51,8 +51,8 @@ namespace MSITTeam1.ViewModels
 
 		public int FCQuestionId
 		{
-			get { return this.choice.FQuestionId; }
-			set { this.choice.FQuestionId = value; }
+			get { return this.question.FQuestionId; }
+			set { this.question.FQuestionId = value; }
 		}
 
 		[DisplayName("題目")]

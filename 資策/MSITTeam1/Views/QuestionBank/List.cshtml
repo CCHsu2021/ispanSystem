@@ -3,13 +3,21 @@
 @{
     ViewData["Title"] = "List";
 }
+
+@section Style{ 
+    <style>
+        td {
+            vertical-align: middle !important;
+        }
+    </style>
+}
 <div class="container" style="padding:20px;">
     <h1>題目列表</h1>
 
     <p>
         <a asp-action="Create">新增題目</a>
     </p>
-    <table class="table">
+    <table class="table table-bordered table-hover" id="quesTable" style="text-align:center;">
         <thead>
             <tr>
                 <th>
@@ -38,10 +46,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FSubjectId)
+                        @Html.DisplayFor(modelItem => item.FCSubjectId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FQuestionId)
+                        @Html.DisplayFor(modelItem => item.FCQuestionId)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FQuestion)
@@ -66,3 +74,37 @@
         </tbody>
     </table>
 </div>
+@section Scripts{ 
+    <script>
+        function mergeCell(tableId, cols) {
+            var table = document.getElementById(tableId);
+            var table_rows = table.rows;
+
+            cols.forEach((v, k) => {
+                for (let i = 0; i < table_rows.length - 1; i++) {
+                    let currRow = table_rows[i];
+                    let nextRow = table_rows[i + 1];
+
+                    let currCol = currRow.cells[v];
+                    let nextCol = nextRow.cells[v];
+
+                    if (currCol.innerHTML == nextCol.innerHTML) {
+                        $(nextCol).addClass('remove');
+                        setParentSpan(table, i, v);
+                    }
+                }
+            })
+            $(".remove").remove();
+        }
+
+        function setParentSpan(table, row, col) {
+            var colItem = table.rows[row].cells[col];
+            if ($(colItem).hasClass('remove')) {
+                setParentSpan(table, --row, col)
+            } else {
+                colItem.rowSpan += 1;
+            }
+        }
+        mergeCell('quesTable', [0, 1,2]);
+    </script>
+}

@@ -15,7 +15,9 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="FSubjectId" class="control-label"></label>
-                    <input asp-for="FSubjectId" class="form-control" />
+                    <select asp-for="FSubjectId" class="form-control">
+                        <option>其他</option>
+                    </select>
                     <span asp-validation-for="FSubjectId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -75,12 +77,10 @@
     // 新增選項textbox
     var count = 1;
     const btnNewChoice = document.querySelector('#BtnNewChoice');
-        var textbox = "<input type=text class=form-control id=FChoice name=FChoice value/>"
     btnNewChoice.addEventListener('click', function () {
         count++;
-        var label = '<label class=control-label for=FChoice>選項 ' + count + '</label><br /><button class=btn id=del-btn type=button><i class=fasfa-trash-alt> </i>Delete</button>';
-        $('#choice').append(label);
-        $('#choice').append(textbox);
+        var divChoice = "<div class=form-group id=choice><label asp -for= FChoice class= control-label>選項" + count + "</label ><input asp-for=FChoice class=form-control /><span asp-validation-for=FChoice class=text-danger></span><button class=btn id=del-btn type=button><i class=fasfa-trash-alt> </i>Delete</button></div>"
+        $('#choice').append(divChoice);
     })
         $("#outdiv").on("click", "#del-btn", function () {
              console.log("delete");
