@@ -1,188 +1,194 @@
-﻿@import url(https://fonts.googleapis.com/css?family=Lato:400,100,300,700);
+﻿@charset "UTF-8";
 
-body {
-    background-color: #ddd;
+.resumebar {
+    font-family: "TrebuchetMS", trebuchet, sans-serif;
+    box-sizing: border-box;
 }
 
-.myData .col-md-12 > h1, h2, h3, label, select {
-    font-family: 'Lato';
-    font-weight: 300;
+
+.sized-container h1, h2 {
+    text-align: center;
 }
 
-.btn {
-    font-family: 'Lato' !important;
-    font-weight: 400 !important;
-    /* font-size: 15px; */
+.sized-container h1 {
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: bold;
 }
 
-.wizard {
-    border-radius: 0 0 5px 5px;
-    margin: 20px auto;
-    background: #fff;
+.sized-container h2 {
+    font-size: 18px;
+    line-height: 25px;
+    margin-top: 20px;
 }
 
-    .wizard .nav-tabs {
-        position: relative;
-        /* margin: 40px auto; */
-        margin-bottom: 0;
-        border-bottom-color: #e0e0e0;
-        background-color: #39cb58;
-        box-shadow: inset 0px -5px rgba(0,0,0,0.25);
-    }
-
-    .wizard > div.wizard-inner {
-        position: relative;
-    }
-
-.connecting-line {
-    height: 2px;
-    background: #e0e0e0;
-    position: absolute;
-    width: 80%;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    top: 50%;
-    z-index: 1;
-}
-
-.wizard .nav-tabs > li.active > a,
-.wizard .nav-tabs > li.active > a:hover,
-.wizard .nav-tabs > li.active > a:focus {
-    color: #555555;
-    cursor: default;
+.resumebar button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     border: 0;
-    border-bottom-color: transparent;
+    padding: 14px 50px;
+    /*border-radius: 4px;*/
+    background-color: #1e3c84;
+    color: #FFFFFF;
+    text-transform: capitalize;
+    font-size: 18px;
+    line-height: 22px;
+    outline: none;
+    cursor: pointer;
+    transition: all .3s linear;
 }
 
-span.round-tab {
-    width: 70px;
-    height: 70px;
-    line-height: 70px;
-    display: inline-block;
-    border-radius: 100px;
-    background: #fff;
-    border: 2px solid #e0e0e0;
-    z-index: 2;
-    position: absolute;
-    left: 0;
-    text-align: center;
-    font-size: 25px;
-}
-
-    span.round-tab i {
-        color: #555555;
+    .resumebar button:hover {
+        /*background-color: #1A7F75;*/
+        color: #1e3c84;
+        z-index: 4;
+        background-color: #ffffff;
+        border: #1e3c84 solid 1px;
+        cursor: pointer;
     }
 
-.wizard li.active span.round-tab {
-    color: #fff;
-    background: #fff;
-    background: rgba(57, 203, 88,1);
-    border: 2px solid #5bc0de;
-    border: 2px solid green;
-}
-
-    .wizard li.active span.round-tab i {
-        color: #5bc0de;
-        color: #fff;
+    .resumebar button.previous {
+        background-color: #1e3c84;
     }
 
-span.round-tab:hover {
-    color: #333;
-    border: 2px solid #ddd;
+        .resumebar button.previous:hover {
+            color: #1e3c84;
+            background-color: #ffffff;
+        }
+
+.full-width-container {
+    width: 100%;
+    min-width: 320px;
 }
 
-.wizard .nav-tabs > li {
-    width: 25%;
-}
-
-.wizard li:after {
-    content: " ";
-    position: absolute;
-    left: 46%;
-    opacity: 0;
+.sized-container {
+    max-width: 900px;
+    width: 100%;
     margin: 0 auto;
-    bottom: 0px;
-    border: 5px solid transparent;
-    border-bottom-color: #5bc0de;
-    border-bottom-color: #fff;
-    transition: 0.1s ease-in-out;
 }
 
-.wizard li.active:after {
-    content: " ";
-    position: absolute;
-    left: 46%;
-    opacity: 1;
-    margin: 0 auto;
-    bottom: 0px;
-    border: 10px solid transparent;
-    border-bottom-color: #5bc0de;
-    border-bottom-color: #fff;
-}
-
-.wizard .nav-tabs > li a {
-    width: 70px;
-    height: 70px;
-    margin: 20px auto;
-    border-radius: 100%;
-    padding: 0;
-}
-
-    .wizard .nav-tabs > li a:hover {
-        background: transparent;
-    }
-
-.wizard .tab-pane {
+.slide-container {
     position: relative;
-    padding: 20px;
+    left: 0;
+    overflow: hidden;
 }
 
-.wizard h3 {
-    margin-top: 0;
+.slide {
+    float: left;
 }
 
-h1, h2, h3 {
-    color: #555;
+    .slide .sized-container {
+        padding: 40px 20px 20px;
+    }
+
+.button-container {
+    border-top: 1px solid black;
+    overflow: hidden;
+    padding-top: 30px;
 }
 
-label {
+    .button-container button {
+        float: right;
+        margin-left: 30px;
+        margin-bottom: 30px;
+    }
+
+.pagination-container {
+    margin-top: 60px;
+}
+
+.pagination {
+    width: 100%;
     text-align: center;
-    font-size: 16px;
+    padding: 0 25px;
 }
 
-.btn {
-    margin-top: 10px;
-    padding: 15px 25px;
+.indicator {
+    width: 35px;
+    height: 25px;
+    border: 4px solid #fab684;
+    border-radius: 50%;
+    display: inline-block;
+    transition: all 0.3s;
+    position: relative;
 }
 
-.progress {
-    margin-top: 10px;
-    /* background-color: red !important; */
-}
-
-@media( max-width: 585px) {
-    .wizard {
-        width: 90%;
-        height: auto !important;
-    }
-
-    span.round-tab {
-        font-size: 16px;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-    }
-
-    .wizard .nav-tabs > li a {
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-    }
-
-    .wizard li.active:after {
-        content: " ";
+    .indicator .tag {
         position: absolute;
-        left: 35%;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: lightgray;
+        white-space: nowrap;
+        font-family: "Yusei Magic",sans-serif;
+        font-size: 17px;
+        /*font-weight: bold;*/
     }
+
+    .indicator.active, .indicator.complete {
+        border-color: #ed731a;
+        background: #ed731a;
+    }
+
+        .indicator.active .tag, .indicator.complete .tag {
+            color: #555555;
+        }
+
+        .indicator.complete:after {
+            /*content: "✓";*/
+            background: #ed731a;
+            position: absolute;
+            color: #555555;
+            left: 4px;
+            top: -3px;
+            font-size: 14px;
+        }
+
+.progress-bar-container {
+    width: 20%;
+    height: 4px;
+    display: inline-block;
+    background-color: #fab684;
+    position: relative;
+    top: 10px;
 }
+
+    .progress-bar-container:last-of-type {
+        display: none;
+    }
+
+    .progress-bar-container .progress-bar {
+        width: 0;
+        height: 100%;
+        background-color: #ed731a;
+    }
+
+textarea {
+    overflow-y: scroll;
+    height: 125px;
+    resize: none;
+}
+
+.image-upload > input {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.image-upload {
+    overflow: hidden;
+}
+
+    .image-upload img {
+        margin-top: 25px;
+        border-radius: 15px;
+        height: 300px;
+        object-fit: contain;
+        transform: scale(1,1);
+        transition: all 0.2s ease-out
+    }
+
+        .image-upload img:hover {
+            transform: scale(1.3,1.3);
+        }

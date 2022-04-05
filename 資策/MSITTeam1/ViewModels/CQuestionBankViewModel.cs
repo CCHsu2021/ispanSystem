@@ -30,34 +30,47 @@ namespace MSITTeam1.ViewModels
 		}
 
 		[DisplayName("課程名稱")]
-		public string Vsubject
+		public string FSubjectId
 		{
-			get { return this.question.FSubjectId; }
-			set { this.question.FSubjectId = value; }
+			get { return this.choice.FSubjectId; }
+			set { this.choice.FSubjectId = value; }
+		}
+
+		public string FCSubjectId
+		{
+			get { return this.choice.FSubjectId; }
+			set { this.choice.FSubjectId = value; }
 		}
 
 		[DisplayName("題目編號")]
-		public int VquestionId 
+		public int FQuestionId
 		{ 
-			get { return this.question.FQuestionId; }
-			set { this.question.FQuestionId = value; } 
+			get { return this.choice.FQuestionId; }
+			set { this.choice.FQuestionId = value; } 
 		}
+
+		public int FCQuestionId
+		{
+			get { return this.choice.FQuestionId; }
+			set { this.choice.FQuestionId = value; }
+		}
+
 		[DisplayName("題目")]
-		public string Vquestion
+		public string FQuestion
 		{
 			get { return this.question.FQuestion; }
 			set { this.question.FQuestion = value; }
 		}
 
 		[DisplayName("選項")]
-		public string Vchoice
+		public string FChoice
 		{
 			get { return this.choice.FChoice; }
 			set { this.choice.FChoice = value; }
 		}
 
 		[DisplayName("難度")]
-		public int Vlevel
+		public int FLevel
 		{
 			get { return this.question.FLevel; }
 			set { this.question.FLevel = value; }
@@ -65,17 +78,26 @@ namespace MSITTeam1.ViewModels
 		[DisplayName("更新時間")]
 
 		public string VupdateTime { get; set; }
-		public int VcorrectAnswer
+		public int FCorrectAnswer
 		{
 			get { return this.choice.FCorrectAnswer; }
 			set { this.choice.FCorrectAnswer = value; }
 		}
 		[DisplayName("題目類型")]
 
-		public int VquestionType
+		public int FQuestionTypeId
 		{
 			get { return this.question.FQuestionTypeId; }
 			set { this.question.FQuestionTypeId = value; }
 		}
+
+		//private TQuestionDetail test { get; set; }
+
+		//public string VTchoice
+		//{
+		//	get { return this.test.FChoice; }
+		//	set { this.test.FChoice = value; }
+		//}
+
 	}
 }

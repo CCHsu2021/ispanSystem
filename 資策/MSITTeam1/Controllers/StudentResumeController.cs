@@ -25,6 +25,8 @@ namespace MSITTeam1.Controllers
 
         public IActionResult Create()
         {
+            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            
             return View();
         }
 
@@ -88,7 +90,7 @@ namespace MSITTeam1.Controllers
         public IActionResult Edit([FromBody]CStudentResumeViewModel p)
         {
 
-            StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.FAccount == p.MemberId);
+            StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == p.MemberId);
             if (sb != null)
             {
                 if (p.photo != null)
