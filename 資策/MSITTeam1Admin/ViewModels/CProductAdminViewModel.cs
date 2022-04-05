@@ -26,12 +26,12 @@ namespace MSITTeam1Admin.ViewModels
             get { return this.prodcut.Name; }
             set { this.prodcut.Name = value; }
         }
-        public decimal? Price
+        public int? Price
         {
             get { return this.prodcut.Price; }
             set { this.prodcut.Price = (int?)value; }
         }
-        public decimal? Cost
+        public int? Cost
         {
             get { return this.prodcut.Cost; }
             set { this.prodcut.Cost = (int?)value; }
