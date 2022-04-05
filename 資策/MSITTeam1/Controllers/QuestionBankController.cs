@@ -55,6 +55,23 @@ namespace MSITTeam1.Controllers
 		[HttpPost]
 		public IActionResult Create([Bind("FSn,FSubjectId,FCSubjectId,FQuestionId,FCQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] CQuestionBankViewModel ques)
 		{
+			TQuestionList quesQuery = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(ques.FSubjectId));
+			if(quesQuery == null)
+			{
+				ques.FQuestionId = 1;
+				ques.FCQuestionId = 1;
+			}
+			else
+			{
+				var searchLastId = from q in _context.TQuestionLists
+								   where q.FSubjectId.Equals(ques.FSubjectId)
+								   orderby q.FQuestionId descending
+								   select q;
+
+				int lastId = searchLastId.First().FQuestionId;
+				ques.FQuestionId = lastId + 1;
+				ques.FCQuestionId = lastId + 1;
+			}
 			_context.TQuestionLists.Add(ques.question);
 			_context.TQuestionDetails.Add(ques.choice);
 			_context.SaveChanges();
