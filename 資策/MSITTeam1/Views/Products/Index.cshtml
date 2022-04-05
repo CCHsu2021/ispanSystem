@@ -1,47 +1,357 @@
-﻿@model IEnumerable<MSITTeam1.Models.TProduct>
+﻿@model IEnumerable<MSITTeam1.ViewModels.CProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
 }
+@section Style{
+    <style>
+        .card {
+            margin-bottom: 20px;
+        }
 
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            align-self: center;
+        }
+        .pagination{
+            justify-content:center;
+        }
+        .pageBG{
+            background-color:#ff6a00;
+        }
+    </style>
+}
 <div class="container">
-    <table class="table">
-        <thead>
-            <tr>
+    <form>
+        <div class="form-group row justify-content-center py-4">
+            <div class="col-md-4">
+                <div class="input-group input-group-rounded">
+                    <input type="text" placeholder="請輸入關鍵字" name="txtKeyword" class="form-control">
+                    <span class="input-group-btn"><button class="btn bg-blue btn-group-right" type="submit"><i class="fas fa-search text-light"></i></button></span>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Nav -->
+    <nav class="navbar navbar-inverse bg-inverse fixed-top bg-faded">
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button>
+                <button class="clear-cart btn btn-danger">Clear Cart</button>
+            </div>
+        </div>
+    </nav>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ImgPath)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ImgPath)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <!-- Main -->
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-xl-3 productItem">
+                <div class="card">
+                    <a asp-action="Details" asp-route-id="@item.ProductId">
+                        <img class="card-img-top" src="~/images/products/@item.ImgPath" alt="Card image cap">
+                    </a>
+                    <div class="card-block">
+                        <h4 class="card-title text-center py-4 mb-0">@Html.DisplayFor(modelItem => item.Name)</h4>
+                        <div class="row mx-0 p-2 justify-content-between bg-light">
+                            <p class="card-text">$@Html.DisplayFor(modelItem => item.Price)</p>
+                            <a href="#" class="add-to-cart btn bg-blue"><i class="fas fa-shopping-cart text-light"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div id="ProductPagination" class="row my-4"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="show-cart table">
+                    </table>
+                    <div>
+                        Total price: $
+                        <span class="total-cart"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Order now</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+@section Scripts{
+    <script>
+        // ************************************************
+        // Shopping Cart API
+        // ************************************************
+
+        var shoppingCart = (function () {
+            // =============================
+            // Private methods and propeties
+            // =============================
+            cart = [];
+
+            // Constructor
+            function Item(name, price, count) {
+                this.name = name;
+                this.price = price;
+                this.count = count;
+            }
+
+            // Save cart
+            function saveCart() {
+                sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
+            }
+
+            // Load cart
+            function loadCart() {
+                cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
+            }
+            if (sessionStorage.getItem("shoppingCart") != null) {
+                loadCart();
+            }
+
+
+            // =============================
+            // Public methods and propeties
+            // =============================
+            var obj = {};
+
+            // Add to cart
+            obj.addItemToCart = function (name, price, count) {
+                for (var item in cart) {
+                    if (cart[item].name === name) {
+                        cart[item].count++;
+                        saveCart();
+                        return;
+                    }
+                }
+                var item = new Item(name, price, count);
+                cart.push(item);
+                saveCart();
+            }
+            // Set count from item
+            obj.setCountForItem = function (name, count) {
+                for (var i in cart) {
+                    if (cart[i].name === name) {
+                        cart[i].count = count;
+                        break;
+                    }
+                }
+            };
+            // Remove item from cart
+            obj.removeItemFromCart = function (name) {
+                for (var item in cart) {
+                    if (cart[item].name === name) {
+                        cart[item].count--;
+                        if (cart[item].count === 0) {
+                            cart.splice(item, 1);
+                        }
+                        break;
+                    }
+                }
+                saveCart();
+            }
+
+            // Remove all items from cart
+            obj.removeItemFromCartAll = function (name) {
+                for (var item in cart) {
+                    if (cart[item].name === name) {
+                        cart.splice(item, 1);
+                        break;
+                    }
+                }
+                saveCart();
+            }
+
+            // Clear cart
+            obj.clearCart = function () {
+                cart = [];
+                saveCart();
+            }
+
+            // Count cart
+            obj.totalCount = function () {
+                var totalCount = 0;
+                for (var item in cart) {
+                    totalCount += cart[item].count;
+                }
+                return totalCount;
+            }
+
+            // Total cart
+            obj.totalCart = function () {
+                var totalCart = 0;
+                for (var item in cart) {
+                    totalCart += cart[item].price * cart[item].count;
+                }
+                return Number(totalCart.toFixed(2));
+            }
+
+            // List cart
+            obj.listCart = function () {
+                var cartCopy = [];
+                for (i in cart) {
+                    item = cart[i];
+                    itemCopy = {};
+                    for (p in item) {
+                        itemCopy[p] = item[p];
+
+                    }
+                    itemCopy.total = Number(item.price * item.count).toFixed(2);
+                    cartCopy.push(itemCopy)
+                }
+                return cartCopy;
+            }
+
+            // cart : Array
+            // Item : Object/Class
+            // addItemToCart : Function
+            // removeItemFromCart : Function
+            // removeItemFromCartAll : Function
+            // clearCart : Function
+            // countCart : Function
+            // totalCart : Function
+            // listCart : Function
+            // saveCart : Function
+            // loadCart : Function
+            return obj;
+        })();
+
+
+        // *****************************************
+        // Triggers / Events
+        // *****************************************
+        // Add item
+        $('.add-to-cart').click(function (event) {
+            event.preventDefault();
+            var name = $(this).data('name');
+            var price = Number($(this).data('price'));
+            shoppingCart.addItemToCart(name, price, 1);
+            displayCart();
+        });
+
+        // Clear items
+        $('.clear-cart').click(function () {
+            shoppingCart.clearCart();
+            displayCart();
+        });
+
+
+        function displayCart() {
+            var cartArray = shoppingCart.listCart();
+            var output = "";
+            for (var i in cartArray) {
+                output += "<tr>"
+                    + "<td>" + cartArray[i].name + "</td>"
+                    + "<td>(" + cartArray[i].price + ")</td>"
+                    + "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" + cartArray[i].name + ">-</button>"
+                    + "<input type='number' class='item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+                    + "<button class='plus-item btn btn-primary input-group-addon' data-name=" + cartArray[i].name + ">+</button></div></td>"
+                    + "<td><button class='delete-item btn btn-danger' data-name=" + cartArray[i].name + ">X</button></td>"
+                    + " = "
+                    + "<td>" + cartArray[i].total + "</td>"
+                    + "</tr>";
+            }
+            $('.show-cart').html(output);
+            $('.total-cart').html(shoppingCart.totalCart());
+            $('.total-count').html(shoppingCart.totalCount());
+        }
+
+        // Delete item button
+
+        $('.show-cart').on("click", ".delete-item", function (event) {
+            var name = $(this).data('name')
+            shoppingCart.removeItemFromCartAll(name);
+            displayCart();
+        })
+
+
+        // -1
+        $('.show-cart').on("click", ".minus-item", function (event) {
+            var name = $(this).data('name')
+            shoppingCart.removeItemFromCart(name);
+            displayCart();
+        })
+        // +1
+        $('.show-cart').on("click", ".plus-item", function (event) {
+            var name = $(this).data('name')
+            shoppingCart.addItemToCart(name);
+            displayCart();
+        })
+
+        // Item count input
+        $('.show-cart').on("change", ".item-count", function (event) {
+            var name = $(this).data('name');
+            var count = Number($(this).val());
+            shoppingCart.setCountForItem(name, count);
+            displayCart();
+        });
+
+        displayCart();
+
+
+    </script>
+
+    <script>
+        $(function () {
+            initPagination('.productItem', 8, '#ProductPagination')
+        });
+        function initPagination(pageEle, showItem, paginationTarget) {
+            let pageLength = $(pageEle).length
+            let showItemLength = showItem
+            let showPage = Math.ceil(pageLength / showItemLength)
+
+            $(paginationTarget).twbsPagination({
+                totalPages: showPage,
+                visiblePages: 5,
+                first: "第一頁",
+                prev: "前一頁",
+                next: "下一頁",
+                last: "最後一頁",
+                nextClass: "page-item pageColor",
+                prevClass: "page-item pageColor",
+                lastClass: "page-item pageColor last",
+                firstClass: "page-item pageColor first",
+                pageClass: "page-item pageColor",
+                activeClass: "page-item pageBG",
+                onPageClick: function (event, page) {
+                }
+            }).on('page', function (event, page) {
+                $(pageEle).fadeOut(200)
+                let start = (page - 1) * showItemLength
+                let end = (page - 1) * showItemLength + showItemLength - 1
+                $(pageEle).each((index, item) => {
+                    if (index >= start && index <= end) {
+                        $(item).fadeIn(600)
+                    }
+                })
+            });
+
+            $(pageEle).hide()
+
+
+            pageLength <= showItemLength && $(pageEle).fadeIn(600)
+            if (pageLength > showItemLength) {
+                $(pageEle).each((index, item) => {
+                    if (index < showItemLength) {
+                        $(item).fadeIn(600)
+                    }
+                })
+            }
+        }
+    </script>
+}

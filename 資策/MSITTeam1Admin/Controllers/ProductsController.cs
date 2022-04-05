@@ -69,7 +69,7 @@ namespace MSITTeam1Admin.Controllers
 
         // GET: Products/Edit/5
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(string id)
         {
             if (id != null)
             {
@@ -79,7 +79,7 @@ namespace MSITTeam1Admin.Controllers
                     return View(new CProductAdminViewModel() { prodcut = prod });
                 }
             }
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult Edit(CProductAdminViewModel p)
@@ -87,72 +87,26 @@ namespace MSITTeam1Admin.Controllers
             TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == p.ProductId);
             if (prod != null)
             {
-                if (p.ImgPath != null)
+                if (p.photo != null)
                 {
                     string photoName = Guid.NewGuid().ToString() + ".jpg";
                     prod.ImgPath = photoName;
-                    p.ImgPath.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\" + photoName, FileMode.Create));
+                    p.photo.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\products\" + photoName, FileMode.Create));
+                }
+                else
+                {
+                    prod.ImgPath = "noImg.jpg";
                 }
                 prod.ProductId = p.ProductId;
                 prod.Name = p.Name;
                 prod.Price = p.Price;
                 prod.Cost = p.Cost;
                 prod.Barcode = p.Barcode;
-                //prod.ImgPath = p.ImgPath;
                 hello.SaveChanges();
             }
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
 
-        //public async Task<IActionResult> Edit(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var tProduct = await hello.TProducts.FindAsync(id);
-        //    if (tProduct == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(tProduct);
-        //}
-
-        //// POST: Products/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(string id, [Bind("ProductId,Type,Name,Price,Cost,ImgPath,Barcode")] TProduct tProduct)
-        //{
-        //    if (id != tProduct.ProductId)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            hello.Update(tProduct);
-        //            await hello.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!TProductExists(tProduct.ProductId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(tProduct);
-        //}
 
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(string id)

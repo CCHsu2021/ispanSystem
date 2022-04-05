@@ -1,152 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MSITTeam1.Models;
+using MSITTeam1.ViewModels;
 
 namespace MSITTeam1.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly helloContext _context;
 
-        public ProductsController(helloContext context)
+        private readonly helloContext hello;
+
+        public ProductsController(helloContext _hello)
         {
-            _context = context;
+            hello = _hello;
         }
 
-        // GET: Products
-        public async Task<IActionResult> Index()
+        #region 商品列表
+        public IActionResult Index(CQueryKeywordForProductViewModel vModel)
         {
-            return View(await _context.TProducts.ToListAsync());
+            IEnumerable<TProduct> datas = null;
+            string keyword = vModel.txtKeyword;
+            if (string.IsNullOrEmpty(keyword))
+            {
+                datas = from t in hello.TProducts
+                        select t;
+            }
+            else
+            {
+                datas = hello.TProducts.Where(t => t.Name.Contains(keyword) || (t.Barcode).ToString().Contains(keyword));
+            }
+
+            List<CProductViewModel> list = new List<CProductViewModel>();
+            foreach (TProduct t in datas)
+            {
+                list.Add(new CProductViewModel() { prodcut = t });
+            }
+            return View(list);
         }
+        #endregion
 
-        // GET: Products/Details/5
-        public async Task<IActionResult> Details(string id)
+        #region 商品詳情
+        public IActionResult Details(string id)
         {
-            if (id == null)
+            if (id != null)
             {
-                return NotFound();
-            }
-
-            var tProduct = await _context.TProducts
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (tProduct == null)
-            {
-                return NotFound();
-            }
-
-            return View(tProduct);
-        }
-
-        // GET: Products/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Type,Name,Price,Cost,ImgPath,Barcode")] TProduct tProduct)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(tProduct);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tProduct);
-        }
-
-        // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tProduct = await _context.TProducts.FindAsync(id);
-            if (tProduct == null)
-            {
-                return NotFound();
-            }
-            return View(tProduct);
-        }
-
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProductId,Type,Name,Price,Cost,ImgPath,Barcode")] TProduct tProduct)
-        {
-            if (id != tProduct.ProductId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                TProduct prod = hello.TProducts.FirstOrDefault(t => t.ProductId == id);
+                if(prod != null)
                 {
-                    _context.Update(tProduct);
-                    await _context.SaveChangesAsync();
+                    return View(new CProductViewModel() { prodcut = prod });
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TProductExists(tProduct.ProductId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
-            return View(tProduct);
+            return NotFound();
         }
-
-        // GET: Products/Delete/5
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tProduct = await _context.TProducts
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (tProduct == null)
-            {
-                return NotFound();
-            }
-
-            return View(tProduct);
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var tProduct = await _context.TProducts.FindAsync(id);
-            _context.TProducts.Remove(tProduct);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool TProductExists(string id)
-        {
-            return _context.TProducts.Any(e => e.ProductId == id);
-        }
+        #endregion
     }
 }

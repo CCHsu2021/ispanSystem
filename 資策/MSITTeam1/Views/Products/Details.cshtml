@@ -1,4 +1,4 @@
-﻿@model MSITTeam1.Models.TProduct
+﻿@model MSITTeam1.ViewModels.CProductViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -48,7 +48,4 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

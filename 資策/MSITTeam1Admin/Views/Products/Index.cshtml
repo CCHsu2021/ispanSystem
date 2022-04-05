@@ -26,7 +26,7 @@
                                         <th>名稱</th>
                                         <th>價格</th>
                                         <th>成本</th>
-                                        <th>圖片路徑</th>
+                                        <th>圖片</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -44,7 +44,7 @@
                                                 @Html.DisplayFor(modelItem => item.Cost)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ImgPath)
+                                                <img src="~/images/products/@item.ImgPath" width="100" height="100" />
                                             </td>
                                             <td>
                                                 <a class="btn btn-default" asp-action="Edit" asp-route-id="@item.ProductId">修改</a>
