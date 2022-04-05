@@ -29,6 +29,12 @@ namespace MSITTeam1.ViewModels
 			set { _choice = value; }
 		}
 
+		public int FSn
+		{
+			get { return this.choice.FSn; }
+			set { this.choice.FSn = value; }
+		}
+
 		[DisplayName("課程名稱")]
 		public string FSubjectId
 		{
