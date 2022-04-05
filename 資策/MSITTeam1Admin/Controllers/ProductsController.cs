@@ -98,7 +98,7 @@ namespace MSITTeam1Admin.Controllers
                 prod.Price = p.Price;
                 prod.Cost = p.Cost;
                 prod.Barcode = p.Barcode;
-                prod.ImgPath = p.ImgPath;
+                //prod.ImgPath = p.ImgPath;
                 hello.SaveChanges();
             }
             return RedirectToAction("List");
