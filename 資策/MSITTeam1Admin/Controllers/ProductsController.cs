@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -21,20 +22,11 @@ namespace MSITTeam1Admin.Controllers
             hello = _hello;
             _enviroment = p;
         }
-        public IActionResult Index(CQueryKeywordForProductViewModel vModel, CProductAdminViewModel p)
+        public IActionResult Index()
         {
             IEnumerable<TProduct> datas = null;
-            string keyword = vModel.txtKeyword;
-            if (string.IsNullOrEmpty(keyword))
-            {
                 datas = from t in hello.TProducts
                         select t;
-            }
-            else
-            {
-                datas = hello.TProducts.Where(t => t.Name.Contains(keyword) || (t.Barcode).ToString().Contains(keyword));
-            }
-
             List<CProductAdminViewModel> list = new List<CProductAdminViewModel>();
             foreach (TProduct t in datas)
             {
@@ -42,8 +34,6 @@ namespace MSITTeam1Admin.Controllers
             }
             return View(list);
         }
-
-
 
         // GET: Products/Create
         public IActionResult Create()
@@ -69,7 +59,7 @@ namespace MSITTeam1Admin.Controllers
                         return RedirectToAction(nameof(Index));
                     }
                 }
-                catch (Exception err)
+                catch (Exception)
                 {
                     throw;
                 }
@@ -78,55 +68,91 @@ namespace MSITTeam1Admin.Controllers
         }
 
         // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(string id)
+
+        public IActionResult Edit(int? id)
         {
-            if (id == null)
+            if (id != null)
             {
-                return NotFound();
+                TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == id.ToString());
+                if (prod != null)
+                {
+                    return View(new CProductAdminViewModel() { prodcut = prod });
+                }
             }
-
-            var tProduct = await hello.TProducts.FindAsync(id);
-            if (tProduct == null)
-            {
-                return NotFound();
-            }
-            return View(tProduct);
+            return RedirectToAction("List");
         }
-
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProductId,Type,Name,Price,Cost,ImgPath,Barcode")] TProduct tProduct)
+        public IActionResult Edit(CProductAdminViewModel p)
         {
-            if (id != tProduct.ProductId)
+            TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == p.ProductId);
+            if (prod != null)
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (p.ImgPath != null)
                 {
-                    hello.Update(tProduct);
-                    await hello.SaveChangesAsync();
+                    string photoName = Guid.NewGuid().ToString() + ".jpg";
+                    prod.ImgPath = photoName;
+                    p.ImgPath.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\" + photoName, FileMode.Create));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TProductExists(tProduct.ProductId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                prod.ProductId = p.ProductId;
+                prod.Name = p.Name;
+                prod.Price = p.Price;
+                prod.Cost = p.Cost;
+                prod.Barcode = p.Barcode;
+                prod.ImgPath = p.ImgPath;
+                hello.SaveChanges();
             }
-            return View(tProduct);
+            return RedirectToAction("List");
         }
+
+        //public async Task<IActionResult> Edit(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var tProduct = await hello.TProducts.FindAsync(id);
+        //    if (tProduct == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(tProduct);
+        //}
+
+        //// POST: Products/Edit/5
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(string id, [Bind("ProductId,Type,Name,Price,Cost,ImgPath,Barcode")] TProduct tProduct)
+        //{
+        //    if (id != tProduct.ProductId)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            hello.Update(tProduct);
+        //            await hello.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!TProductExists(tProduct.ProductId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(tProduct);
+        //}
 
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(string id)
