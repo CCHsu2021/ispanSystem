@@ -27,8 +27,11 @@ namespace MSITTeam1.Controllers
 							join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
 							select new CQuestionBankViewModel
 							{
-								FCSubjectId = ques.FSubjectId,
-								FCQuestionId = ques.FQuestionId,
+								FSn = choice.FSn,
+								FCSubjectId = choice.FSubjectId,
+								FSubjectId = ques.FSubjectId,
+								FCQuestionId = choice.FQuestionId,
+								FQuestionId = ques.FQuestionId,
 								FQuestion = ques.FQuestion,
 								FLevel = ques.FLevel,
 								//updateTime = ques.FUpdateTime.ToString('YYMMDD'),
@@ -50,20 +53,22 @@ namespace MSITTeam1.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Create([Bind("FSubjectId,FQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] CQuestionBankViewModel ques)
+		public IActionResult Create([Bind("FSn,FSubjectId,FCSubjectId,FQuestionId,FCQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] CQuestionBankViewModel ques)
 		{
-			//_context.TQuestionLists.Add(ques.question);
+			_context.TQuestionLists.Add(ques.question);
 			_context.TQuestionDetails.Add(ques.choice);
 			_context.SaveChanges();
 			return RedirectToAction("List");
 		}
-		public IActionResult Edit(string subjectID, int questionID,string choice)
+		public IActionResult Edit(string subjectID, int questionID,int choiceSn)
 		{
+			// TODO-1:可以一次編輯此題的所有選項和選擇正確選項
+			// TODO-2:加入題型判斷
 			if (subjectID != null && questionID > 0)
 			{
 				TQuestionList ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
 				//var cho = _context.TQuestionDetails.Where(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID);
-				TQuestionDetail cho = _context.TQuestionDetails.FirstOrDefault(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID && c.FChoice == choice);
+				TQuestionDetail cho = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == choiceSn);
 				if (ques != null && cho != null)
 				{
 					return View(new CQuestionBankViewModel() { question = ques,choice = cho});
@@ -76,12 +81,13 @@ namespace MSITTeam1.Controllers
 		public IActionResult Edit(CQuestionBankViewModel ques)
 		{
 			TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(ques.FSubjectId) && q.FQuestionId == ques.FQuestionId);
-			TQuestionDetail choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSubjectId.Equals(ques.FSubjectId) && c.FQuestionId == ques.FQuestionId && c.FChoice == ques.FChoice);
+			TQuestionDetail choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ques.FSn);
 			if (quesSel != null)
 			{
-				//quesSel.FQuestion = ques.FQuestion;
-				//quesSel.FQuestionTypeId = Convert.ToInt32(ques.FQuestionTypeId);
+				quesSel.FQuestion = ques.FQuestion;
+				quesSel.FQuestionTypeId = Convert.ToInt32(ques.FQuestionTypeId);
 				choSel.FChoice = ques.FChoice;
+				choSel.FCorrectAnswer = ques.FCorrectAnswer;
 				_context.SaveChanges();
 			}
 			return RedirectToAction("List");

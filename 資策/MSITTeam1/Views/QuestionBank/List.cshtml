@@ -46,10 +46,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FCSubjectId)
+                        @Html.DisplayFor(modelItem => item.FSubjectId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FCQuestionId)
+                        @Html.DisplayFor(modelItem => item.FQuestionId)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FQuestion)
@@ -64,7 +64,7 @@
                         @Html.DisplayFor(modelItem => item.FLevel)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId,choice =item.FChoice }) |
+                        @Html.ActionLink("Edit", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId,choiceSn =item.FSn }) |
                         @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                     </td>
