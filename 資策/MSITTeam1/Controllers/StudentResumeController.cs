@@ -25,10 +25,18 @@ namespace MSITTeam1.Controllers
 
         public IActionResult Create()
         {
-            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+            string account = CDictionary.account;
+            if (account != null)
+            {
+
+                StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)account);
+                if (sb != null)
+                    return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
+            }
             
             return View();
         }
+
 
         public IActionResult List()
         {

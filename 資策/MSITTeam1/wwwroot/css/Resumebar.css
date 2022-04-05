@@ -164,7 +164,7 @@
         background-color: #ed731a;
     }
 
-textarea {
+.form-group > textarea {
     overflow-y: scroll;
     height: 125px;
     resize: none;
