@@ -66,13 +66,15 @@
                         <div class="col-4">
                             <div class="image-upload">
                                 <label for="file-input">
-                                    <img class=" img-thumbnail" src="/images/photo/client-man.png" title="變更圖片" ; />
+                                    <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
                                 </label>
 
                                 <input id="file-input" type="file" />
                             </div>
+
                         </div>
                     </div>
+                </div>
             </li>
             <li class="slide" data-tag="經歷">
                 <div class="sized-container">
@@ -124,6 +126,23 @@
 @section Scripts
 {
     <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {  //reader加載成功
+                    $('#blah').attr('src', e.target.result);
+                   
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#file-input").change(function () {
+            readURL(this);
+        });
+
     $("#savechanges").click(() => {
         var jsondata = JSON.stringify({
             MemberId:$("#MemberId").val(),
@@ -133,7 +152,8 @@
             fEmail: $("#fEmail").val(),
             fPhone: $("#fPhone").val(),
             fAddress: $("#fAddress").val(),
-            fAutobiography: $("#fAutobiography").val()
+            fAutobiography: $("#fAutobiography").val(),
+            photo: $("#file-input")[0].files[0]
 
         })
         $.ajax({
@@ -153,8 +173,9 @@
                             window.location.reload()
                             });
         })
-
     })
+
+       
     </script>
 }
 
