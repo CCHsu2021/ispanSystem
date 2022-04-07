@@ -126,7 +126,6 @@
             </div>
         </div>
     </form>
-
    
     <div class="row">
         @foreach (var item in Model)
@@ -143,29 +142,7 @@
             </div>
     }
         </div>
-
-        <!-- Main -->
-        @*<div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4 col-xl-3 productItem">
-                    <div class="card">
-                        <div class="cover-card" style="position:relative;">
-                            <a href="#" class="add-to-cart btn bg-blue"><i class="fas fa-shopping-cart text-light"></i></a>
-                            <a asp-action="Details" asp-route-id="@item.ProductId" class="add-to-cart btn bg-blue"><i class="fas fa-info-circle text-light"></i></a>
-                            <img class="card-img-top" src="~/images/products/@item.ImgPath" alt="Card image cap">
-                        </div>
-                        <div class="card-block p-2">
-                            <h5 class="card-title mb-0">@Html.DisplayFor(modelItem => item.Name)</h5>
-                            <p class="card-text color-orange font-weight-bold">$@Html.DisplayFor(modelItem => item.Price)</p>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>*@
         <div id="ProductPagination" class="row my-4"></div>
-
-
     </div>
 @section Scripts{
     <script>

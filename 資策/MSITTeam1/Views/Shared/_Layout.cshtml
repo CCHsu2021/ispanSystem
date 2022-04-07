@@ -62,7 +62,8 @@
 
                             <div class="link-box" id="usernamebox">
                                 <a href="~/Student_Login" id="username"><i class="fas fa-user-graduate text-light"></i> &nbsp;學員登入</a>&nbsp;&nbsp;&nbsp;
-                                <a href="~/Company_Login" id="username1"><i class="fas fa-briefcase text-light"></i> &nbsp;企業登入</a>
+                                <a href="~/Company_Login" id="username1"><i class="fas fa-briefcase text-light"></i> &nbsp;企業登入</a>&nbsp;&nbsp;&nbsp;
+                                <a href="#" id="add-to-cart-icon"><i class="fas fa-shopping-bag text-light"></i>&nbsp;</a>
                             </div>
 
                         </div>
@@ -144,9 +145,6 @@
                                                 <a href="event-detail.html">媒合活動</a>
                                             </li>
                                             <li>
-                                                <a href="event-detail.html">刊登職缺</a>
-                                            </li>
-                                            <li>
                                                 <a href="event-detail.html">徵才專區</a>
                                             </li>
                                             <li>
@@ -179,13 +177,15 @@
                                         <ul>
                                             <li>@Html.ActionLink("前後課堂測試", "Index", "Grade")</li>
                                             <li><a href="event-detail.html">技能綜合測試</a></li>
+                                            <li><a href="event-detail.html">入職測驗</a></li>
+                                            <li><a href="event-detail.html">其他測驗</a></li>
                                         </ul>
                                         <div class="dropdown-btn">
                                             <span class="fa fa-angle-down"></span>
                                         </div>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("Index","Products")">資展小物兌換</a>
+                                        <a href="@Url.Action("Index","Products")">資展小物</a>
                                     </li>
                                     <li>
                                         <a href="about.html">服務據點</a>
@@ -296,7 +296,7 @@
                         <li><a href="https://www.youtube.com/channel/UCObZbQQVeVvznp9TIPkqIPA"><span class="fab fa-youtube"></span></a></li>
                     </ul> -->
                     <div class="copyright">
-                        <a href="" title="chinaz">資展國際股份有限公司 &copy; All Rights Reserved.</a>
+                        <span href="" title="chinaz">資展國際股份有限公司 &copy; All Rights Reserved.</span>
                         <br>
                         <a href="https://www.ispan.com.tw/privacypolicy">服務條款及隱私權保護政策</a>
                     </div>
@@ -375,7 +375,7 @@
                 }).then(() => {
                     window.open('@Url.Content("~/CMemberCenter/CompanyInformationEdit/")@ViewBag.account')
                 })}*@
-
+            $("#add-to-cart-icon").hide();
             if ("@ViewBag.account" != "")
             {
                 if ("@ViewBag.Type" == "1") {
@@ -386,6 +386,7 @@
                 $("#username").text("會員中心")
                 $("#username1").attr("href", "../Logout/Index")
                 $("#username1").text("登出")
+                $("#add-to-cart-icon").show();
             }
         });
     </script>
