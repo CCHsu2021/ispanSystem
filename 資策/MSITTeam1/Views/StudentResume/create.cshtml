@@ -14,9 +14,8 @@
         <ul class="slide-container">
             <li class="slide" data-tag="基本資料">
                 <div class="sized-container">
-                    <div class="row">
+                    <div class="row data">
                         <div class="col-4">
-                            @*<form>*@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <input type="hidden" asp-for="MemberId" id="MemberId" />
@@ -40,9 +39,6 @@
                                 <input id="fEmail" asp-for="fEmail" class="form-control" />
                                 <span asp-validation-for="fEmail" class="text-danger"></span>
                             </div>
-
-
-                            @*</form>*@
                         </div>
 
                         <div class="col-4">
@@ -62,16 +58,15 @@
                                 <span asp-validation-for="fAutobiography" class="text-danger"></span>
                             </div>
                         </div>
-
                         <div class="col-4">
-                            <div class="image-upload">
+                            <form name="file" enctype="multipart/form-data" >
+                                <div class="image-upload">
                                 <label for="file-input">
                                     <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
                                 </label>
-
                                 <input id="file-input" type="file" />
                             </div>
-
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -126,15 +121,15 @@
 @section Scripts
 {
     <script>
+        
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {  //reader加載成功
                     $('#blah').attr('src', e.target.result);
-                   
+                
                 }
-
                 reader.readAsDataURL(input.files[0]);
             }
         }
@@ -144,6 +139,9 @@
         });
 
     $("#savechanges").click(() => {
+
+        
+
         var jsondata = JSON.stringify({
             MemberId:$("#MemberId").val(),
             fName:$("#fName").val(),
@@ -153,14 +151,14 @@
             fPhone: $("#fPhone").val(),
             fAddress: $("#fAddress").val(),
             fAutobiography: $("#fAutobiography").val(),
-            photo: $("#file-input")[0].files[0]
-
+           
         })
         $.ajax({
             url: "@Url.Content("~/StudentResume/Edit")",
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            data: jsondata,
+            data: jsondata
+
          }).done(function (data) {
             Swal.fire({
 
@@ -170,9 +168,10 @@
                         timer: 1500
                         }).then(() => {
                             $('#staticBackdrop').hide()
-                            window.location.reload()
+                            //window.location.reload()
                             });
         })
+        $("row data").load("@Url.Content("~/StudentResume/Create")");
     })
 
        
