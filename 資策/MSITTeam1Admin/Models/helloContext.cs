@@ -1132,24 +1132,27 @@ namespace MSITTeam1Admin.Models
 
             modelBuilder.Entity<TQuestionDetail>(entity =>
             {
-                entity.HasKey(e => new { e.FSubjectId, e.FQuestionId, e.FChoice })
-                    .HasName("PK_tQuestionDetail_1");
+                entity.HasKey(e => e.FSn);
 
                 entity.ToTable("tQuestionDetail");
 
-                entity.Property(e => e.FSubjectId)
-                    .HasMaxLength(50)
-                    .HasColumnName("fSubjectID");
-
-                entity.Property(e => e.FQuestionId).HasColumnName("fQuestionID");
+                entity.Property(e => e.FSn).HasColumnName("fSN");
 
                 entity.Property(e => e.FChoice)
+                    .IsRequired()
                     .HasMaxLength(200)
                     .HasColumnName("fChoice");
 
                 entity.Property(e => e.FCorrectAnswer).HasColumnName("fCorrectAnswer");
 
                 entity.Property(e => e.FImage).HasColumnName("fImage");
+
+                entity.Property(e => e.FQuestionId).HasColumnName("fQuestionID");
+
+                entity.Property(e => e.FSubjectId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fSubjectID");
             });
 
             modelBuilder.Entity<TQuestionList>(entity =>

@@ -13,6 +13,7 @@ namespace MSITTeam1Admin.Models
         public int? Price { get; set; }
         public int? Cost { get; set; }
         public string ImgPath { get; set; }
+        public string Description { get; set; }
         public int? Barcode { get; set; }
     }
 }
