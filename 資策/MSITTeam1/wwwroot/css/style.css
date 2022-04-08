@@ -664,7 +664,7 @@ figure{
 	border-radius: 0;
 }
 
-@@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
 	input[type='checkbox'],
 	input[type='radio'] {
 		--active: #1e3c84;
