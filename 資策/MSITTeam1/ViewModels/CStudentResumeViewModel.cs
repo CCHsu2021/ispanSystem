@@ -72,5 +72,19 @@ namespace MSITTeam1.ViewModels
             get { return this.student.Portrait; }
             set { this.student.Portrait = value; }
         }
+
+        /// 工作經歷
+        [DisplayName("公司名稱:")]
+        public string CompanyName{ get; set; }
+        [DisplayName("工作部門:")]
+        public string CompanyDepartment { get; set; }
+        [DisplayName("職位名稱:")]
+        public string JobTitle { get; set; }
+        [DisplayName("開始時間:")]
+        public string EmploymentFrom { get; set; }
+        [DisplayName("結束時間:")]
+        public string EmploymentTo { get; set; }
+        [DisplayName("內容描述:")]
+        public string JobDescription { get; set; }
     }
 }

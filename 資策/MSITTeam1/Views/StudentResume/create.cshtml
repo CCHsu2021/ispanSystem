@@ -64,7 +64,7 @@
                                 <label for="file-input">
                                     <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
                                 </label>
-                                <input id="file-input" type="file" />
+                                <input id="file-input" type="file" name="photo"/>
                             </div>
                             </form>
                         </div>
@@ -139,9 +139,10 @@
         });
 
     $("#savechanges").click(() => {
-
+        //var formData = new FormData(document.file);
+        //formData.enctype="multipart/form-data";
+        //formData.append('photo', $('#file-input')[0].files[0]);
         
-
         var jsondata = JSON.stringify({
             MemberId:$("#MemberId").val(),
             fName:$("#fName").val(),
@@ -153,11 +154,13 @@
             fAutobiography: $("#fAutobiography").val(),
            
         })
+        
         $.ajax({
             url: "@Url.Content("~/StudentResume/Edit")",
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            data: jsondata
+            data: jsondata /*,formData*/
+
 
          }).done(function (data) {
             Swal.fire({
