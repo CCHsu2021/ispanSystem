@@ -42,6 +42,11 @@ namespace MSITTeam1.ViewModels
             get { return this.prodcut.ImgPath; }
             set { this.prodcut.ImgPath = value; }
         }
+        public string Description
+        {
+            get { return this.prodcut.Description; }
+            set { this.prodcut.Description = value; }
+        }
         public int? Barcode
         {
             get { return this.prodcut.Barcode; }
