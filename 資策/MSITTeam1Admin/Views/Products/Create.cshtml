@@ -1,5 +1,4 @@
-﻿@model MSITTeam1Admin.Models.TProduct
-
+﻿@model MSITTeam1Admin.ViewModels.CProductAdminViewModel
 @{
     ViewData["Title"] = "Create";
 }
@@ -10,11 +9,11 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ProductId" class="control-label"></label>
-                <input asp-for="ProductId" class="form-control" />
+                <input type="hidden" id="productId-input" value="@ViewBag.productId" asp-for="ProductId" class="form-control" />
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,8 +38,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ImgPath" class="control-label"></label>
-                <input asp-for="ImgPath" class="form-control" />
-                <span asp-validation-for="ImgPath" class="text-danger"></span>
+                <input type="file" name="photo" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="Barcode" class="control-label"></label>
@@ -48,12 +46,50 @@
                 <span asp-validation-for="Barcode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" id="check-create" />
             </div>
         </form>
     </div>
 </div>
 
+@section Scripts{
+    @*<script>
+        $("#check-create").click(function () {
+            $.ajax({
+                type: "Post",
+                url: "../Products/createNewProduct",
+                data: { productId: $("#productId-input").val()},
+                dataType: "text",
+                success: function (message) {
+                    if (message == "此產品ID已被使用") {
+                        Swal.fire("Uh Oh!", message, "warning");
+                    } else if (message == "新增成功") {
+                        Swal.fire("太棒了!", message, "success").then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = "../Products";
+                            }
+                        })
+                    }
+                }
+            })
+        })
+    </script>*@
+
+    @*
+                @if (ViewBag.Message != null)
+                {
+                    <script>
+                        $(document).on('click', '#check-create', function (e) {
+                            swal({
+                                type: 'error',
+                                title: '此商品ID已被使用',
+                                showConfirmButton: false,
+                            })
+                        });
+                    </script>
+        }
+    *@
+}
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
