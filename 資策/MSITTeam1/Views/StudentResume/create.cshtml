@@ -73,8 +73,45 @@
             </li>
             <li class="slide" data-tag="經歷">
                 <div class="sized-container">
-                    <h1>Tell us about your area of expertise.</h1>
-                    <h2>Information about this section.</h2>
+                    <div class="row data">
+                        <div class="col-6">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <input type="hidden" asp-for="MemberId" id="MemberId" />
+                            <div class="form-group">
+                                <label asp-for="CompanyName" class="control-label"></label>
+                                <input id="CompanyName" asp-for="CompanyName" class="form-control" />
+                                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CompanyDepartment" class="control-label"></label>
+                                <input id="CompanyDepartment" asp-for="CompanyDepartment" class="form-control" type="text" />
+                                <span asp-validation-for="CompanyDepartment" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="JobTitle" class="control-label"></label>
+                                <input id="JobTitle" asp-for="JobTitle" class="form-control" type="text" />
+                                <span asp-validation-for="JobTitle" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="EmploymentFrom" class="control-label"></label>
+                                <input id="EmploymentFrom" asp-for="EmploymentFrom" class="form-control" />
+                                <span asp-validation-for="EmploymentFrom" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EmploymentTo" class="control-label"></label>
+                                <input id="EmploymentTo" asp-for="EmploymentTo" class="form-control" />
+                                <span asp-validation-for="EmploymentTo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="JobDescription" class="control-label"></label>
+                                <input id="JobDescription" asp-for="JobDescription" class="form-control" />
+                                <span asp-validation-for="JobDescription" class="text-danger"></span>
+                            </div>
+                        </div>
                 </div>
             </li>
             <li class="slide" data-tag="學歷">

@@ -30,8 +30,9 @@ namespace MSITTeam1.Controllers
             {
 
                 StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)account);
-                if (sb != null)
-                    return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
+                StudentWorkExperience sbw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == (string)account);
+                if (sb != null && sbw != null)
+                    return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定", workExperience=sbw  });
             }
             
             return View();

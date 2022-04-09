@@ -7,15 +7,22 @@ namespace MSITTeam1.ViewModels
     public class CStudentResumeViewModel
     {
         private StudentBasic _student = null;
+        private StudentWorkExperience _workExperience = null;
         public IFormFile photo { get; set; }
         public CStudentResumeViewModel()
         {
             _student = new StudentBasic();
+            _workExperience = new StudentWorkExperience();
         }
         public StudentBasic student
         {
             get { return _student; }
             set { _student = value; }
+        }
+        public StudentWorkExperience workExperience
+        {
+            get { return _workExperience; }
+            set { _workExperience = value; }
         }
         public string MemberId
         {
@@ -75,16 +82,40 @@ namespace MSITTeam1.ViewModels
 
         /// 工作經歷
         [DisplayName("公司名稱:")]
-        public string CompanyName{ get; set; }
+        public string CompanyName
+        {
+            get { return this.workExperience.CompanyName; }
+            set { this.workExperience.CompanyName = value; }
+        }
         [DisplayName("工作部門:")]
-        public string CompanyDepartment { get; set; }
+        public string CompanyDepartment
+        {
+            get { return this.workExperience.CompanyDepartment; }
+            set { this.workExperience.CompanyDepartment = value; }
+        }
         [DisplayName("職位名稱:")]
-        public string JobTitle { get; set; }
+        public string JobTitle
+        {
+            get { return this.workExperience.JobTitle; }
+            set { this.workExperience.JobTitle = value; }
+        }
         [DisplayName("開始時間:")]
-        public string EmploymentFrom { get; set; }
+        public string EmploymentFrom
+        {
+            get { return this.workExperience.EmploymentFrom; }
+            set { this.workExperience.EmploymentFrom = value; }
+        }
         [DisplayName("結束時間:")]
-        public string EmploymentTo { get; set; }
+        public string EmploymentTo
+        {
+            get { return this.workExperience.EmploymentTo; }
+            set { this.workExperience.EmploymentTo = value; }
+        }
         [DisplayName("內容描述:")]
-        public string JobDescription { get; set; }
+        public string JobDescription
+        {
+            get { return this.workExperience.JobDescription; }
+            set { this.workExperience.JobDescription = value; }
+        }
     }
 }
