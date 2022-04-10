@@ -19,8 +19,7 @@ namespace MSITTeam1.Controllers
 		{
 			return View();
 		}
-
-		public IActionResult List()
+		public IActionResult List(string keyword)
 		{
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 			var quesQuery = from choice in _context.TQuestionDetails
@@ -39,12 +38,22 @@ namespace MSITTeam1.Controllers
 								FChoice = choice.FChoice,
 								FCorrectAnswer = choice.FCorrectAnswer
 							};
-			foreach (var q in quesQuery)
+			if (!string.IsNullOrEmpty(keyword))
 			{
-				quesList.Add(q);
+				var showList = quesQuery.Where(q =>
+				q.FSubjectId.Contains(keyword) ||
+				q.FQuestion.Contains(keyword));
+				foreach (var q in showList)
+				{
+					quesList.Add(q);
+				}
+				return View(quesList);
 			}
-
-			return View(quesList);
+			else
+			{
+				return View(quesList);
+				//return Content("Hello Mia");
+			}
 		}
 
 		public IActionResult Create()
