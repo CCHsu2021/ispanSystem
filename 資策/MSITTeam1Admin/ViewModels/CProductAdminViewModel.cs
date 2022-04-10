@@ -37,6 +37,11 @@ namespace MSITTeam1Admin.ViewModels
             set { this.prodcut.Cost = (int?)value; }
         }
         public IFormFile photo { get; set; }
+        public string Description
+        {
+            get { return this.prodcut.Description; }
+            set { this.prodcut.Description = value; }
+        }
         public string ImgPath
         {
             get { return this.prodcut.ImgPath; }
