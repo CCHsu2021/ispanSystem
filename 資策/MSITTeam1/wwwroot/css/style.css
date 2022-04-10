@@ -434,56 +434,42 @@ figure{
 
 /* btn style three */
 
-  .btn-style-one {
+.btn-style-three {
 	text-align: center;
 	color: #1e3c84;
-	transition: color 1.3s linear ;
-  }
-  
-  .btn-style-one:before, .btn-style-one:after,
-  .btn-style-one span:before,
-  .btn-style-one span:after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 0;
-	height: 80px;
-	background-color: #1e3d847a;
-	-webkit-transition: 0.3s;
-	box-sizing: border-box;
-	transition: 0.3s ease-in-out;
-	z-index: -1;
-  }
-  
-  .btn-style-one:after,
-  .btn-style-one span:before {
-	left: auto;
-	right: 0;
-	box-sizing: border-box;
-	transition: 0.3s ease-in-out;
-  }
-  
-  .btn-style-one span:before,
-  .btn-style-one span:after {
-	-webkit-transition-delay: 0.3s;
-			transition-delay: 0.3s;
-  }
-  
-  .btn-style-one:hover {
-	color: #eeeeee;
-	transition: 0.3s ease-in-out;
-  }
-  
-  .btn-style-one:hover:before, .btn-style-one:hover:after,
-  .btn-style-one:hover span:before,
-  .btn-style-one:hover span:after {
-	width: 250px;
-  }
-  
-  .btn-style-one:active {
-	background-color: #1e3c84;
-  }
+	max-width: 200px;
+	background-color: #ffffff;
+	position: relative;
+	transition: all .3s linear;
+}
+
+	.btn-style-three:hover {
+		color: #ffffff;
+		z-index: 4;
+		background-color: #1e3c84;
+		border: #ffffff solid 1px;
+		cursor: pointer;
+	}
+
+/* btn style four */
+
+.btn-style-four {
+	text-align: center;
+	color: #555;
+	max-width: 200px;
+	background-color: #EEE;
+	position: relative;
+	border:none;
+	transition: all .3s linear;
+}
+
+	.btn-style-four:hover {
+		color: #ffffff;
+		z-index: 4;
+		background-color: #ed731a;
+		border: #ffffff solid 1px;
+		cursor: pointer;
+	}
 
 .btn-default {
 	background: #878787;

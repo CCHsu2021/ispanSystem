@@ -83,7 +83,7 @@ namespace MSITTeam1Admin.Controllers
                     throw;
                 }
             }
-            return View("Index");
+            return View("Create");
         }
 
         // GET: Products/Edit/5

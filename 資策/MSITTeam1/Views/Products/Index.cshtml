@@ -19,6 +19,7 @@
 
         .pagination {
             justify-content: center;
+            padding:0;
         }
 
             .pagination .pageBG > a {
@@ -130,13 +131,15 @@
     <div class="row">
         @foreach (var item in Model)
         {
-            <div class="col-md-4 col-lg-3">
+            <div class="col-md-4 col-lg-3 text-center">
                 <figure class="product-item">
-                    <img src="~/images/products/@item.ImgPath" alt="" />
-                    <div class="icons"><a title="加入購物車"><i class="fas fa-shopping-cart"></i></a><a title="商品詳情" asp-action="Details" asp-route-id="@item.ProductId"><i class="fas fa-info-circle"></i></a></div>
+                    <div class="icons"><a class="add-to-cart-index" title="加入購物車" style="z-index:9"><i class="fas fa-shopping-cart"></i></a></div>
+                    <a class="d-block" asp-action="Details" asp-route-id="@item.ProductId">
+                        <img src="~/images/products/@item.ImgPath" alt="" />
+                    </a>
                     <figcaption>
                         <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
-                        <div class="price h5">$@Html.DisplayFor(modelItem => item.Price)</div>
+                        <div class="price h5">NT$@Html.DisplayFor(modelItem => item.Price)</div>
                     </figcaption>
                 </figure>
             </div>
@@ -163,7 +166,7 @@
 
     <script>
         $(function () {
-            initPagination('.product-item', 8, '#ProductPagination')
+            initPagination('.product-item', 12, '#ProductPagination')
         });
         function initPagination(pageEle, showItem, paginationTarget) {
             let pageLength = $(pageEle).length
@@ -198,7 +201,6 @@
 
             $(pageEle).hide()
 
-
             pageLength <= showItemLength && $(pageEle).fadeIn(600)
             if (pageLength > showItemLength) {
                 $(pageEle).each((index, item) => {
@@ -208,5 +210,26 @@
                 })
             }
         }
+    </script>
+
+    <script>
+      //判斷是否已登入
+        $(".add-to-cart-index").click(function () {
+        if ("@ViewBag.account" == "") {
+            Swal.fire({
+                icon: 'info',
+                title: '請先登入會員',
+                showConfirmButton: false,
+                timer: 1300
+            })
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: '已加入購物車',
+                showConfirmButton: false,
+                timer: 1300
+            })
+        }
+    })
     </script>
 }
