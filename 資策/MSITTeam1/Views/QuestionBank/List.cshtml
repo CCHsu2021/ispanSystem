@@ -5,6 +5,7 @@
 }
 
 @section Style{
+    <link href="~/css/SearchBar.css" rel="stylesheet" />
     <style>
         td {
             vertical-align: middle !important;
@@ -63,7 +64,7 @@
             background: #ffffff;
             box-sizing: border-box;
             font-size: 15px;
-            color:dimgray;
+            color: dimgray;
             -moz-box-sizing: border-box;
         }
 
@@ -72,21 +73,73 @@
                 background: #fff;
             }
 
-    #title-font{
-        font-size:15px;
-    }
+        #title-font {
+            font-size: 15px;
+        }
 
-    #editBlock{
-        text-align:right;
-    }
+        #editBlock {
+            text-align: right;
+        }
+
+        /*searchbar*/
+        input {
+            border: 1px solid #ccc;
+            font-size: 12px;
+            height: 30px;
+            padding: 4px 8px;
+            position: absolute;
+            width: 50%;
+        }
+
+            input:focus {
+                outline: none;
+            }
+
+        button {
+            text-align: center;
+        }
+
+            button:focus {
+                outline: none;
+            }
+
+            button.btn-search, button.btn-reset {
+                background: orange;
+                border: none;
+                height: 30px;
+                font-size: 12px;
+                padding: 4px;
+                position: absolute;
+                width: 30px;
+            }
+
+        .sample {
+            float: left;
+            height: 50px;
+            margin: 0 8px;
+            position: relative;
+            width: 100%;
+        }
     </style>
 }
-<div class="container" style="padding:20px;">
+<div class="container" style="padding:40px;">
     <h1>題目列表</h1>
-
     <p>
         <a asp-action="Create">新增題目</a>
     </p>
+
+    <div style="margin:20px">
+        <form method="post" action="~/QuestionBank/List" enctype="application/x-www-form-urlencoded">
+            <div class="sample ten">
+                <input type="text" name="keyword" placeholder="search" id="keyword">
+                <button type="submit" class="btn btn-search">
+                    <i class="fa fa-search"></i>
+                </button>
+                <button type="reset" class="btn btn-reset fa fa-times"></button>
+            </div>
+        </form>
+    </div>
+
     <div>
         @{
             if (Model != null)
@@ -149,9 +202,9 @@
             }
         }
     </div>
-    </div>
+</div>
 
-    @section Scripts{
-        <script>
-        </script>
-    }
+@section Scripts{
+    <script>
+    </script>
+}
