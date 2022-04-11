@@ -25,8 +25,8 @@ namespace MSITTeam1Admin.Controllers
         public IActionResult Index()
         {
             IEnumerable<TProduct> datas = null;
-                datas = from t in hello.TProducts
-                        select t;
+            datas = from t in hello.TProducts
+                    select t;
             List<CProductAdminViewModel> list = new List<CProductAdminViewModel>();
             foreach (TProduct t in datas)
             {
@@ -36,8 +36,19 @@ namespace MSITTeam1Admin.Controllers
         }
 
         // GET: Products/Create
+
         public IActionResult Create()
         {
+            var id = hello.TProducts.Max(t => t.ProductId);
+            if (id != null)
+            {
+                int pid = int.Parse(id.Substring(1, 8)) + 1;
+                ViewBag.productId = $"P" + pid.ToString("00000000");
+            }
+            else
+            {
+                ViewBag.productId = "P00000001";
+            }
             return View();
         }
 
@@ -46,25 +57,33 @@ namespace MSITTeam1Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Type,Name,Price,Cost,ImgPath,Barcode")] TProduct tProduct, CProductAdminViewModel p)
+        public async Task<IActionResult> Create(CProductAdminViewModel p)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (tProduct.ProductId != p.ProductId)
+                    if (p.photo != null)
                     {
-                        hello.Add(tProduct);
-                        await hello.SaveChangesAsync();
-                        return RedirectToAction(nameof(Index));
+                        string photoName = Guid.NewGuid().ToString() + ".jpg";
+                        p.ImgPath = photoName;
+                        p.photo.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\products\" + photoName, FileMode.Create));
                     }
+                    else
+                    {
+                        p.ImgPath = "noImg.jpg";
+                    }
+
+                    hello.Add(p.prodcut);
+                    await hello.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
                     throw;
                 }
             }
-            return View(tProduct);
+            return View("Create");
         }
 
         // GET: Products/Edit/5
@@ -91,17 +110,19 @@ namespace MSITTeam1Admin.Controllers
                 {
                     string photoName = Guid.NewGuid().ToString() + ".jpg";
                     prod.ImgPath = photoName;
+                    ViewBag.imgPath = photoName;
                     p.photo.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\products\" + photoName, FileMode.Create));
                 }
-                else
-                {
-                    prod.ImgPath = "noImg.jpg";
-                }
+                //else
+                //{
+                //    prod.ImgPath = "noImg.jpg";
+                //}
                 prod.ProductId = p.ProductId;
                 prod.Name = p.Name;
                 prod.Price = p.Price;
                 prod.Cost = p.Cost;
                 prod.Barcode = p.Barcode;
+                prod.Description = p.Description;
                 hello.SaveChanges();
             }
             return RedirectToAction("Index");

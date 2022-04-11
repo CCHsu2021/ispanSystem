@@ -30,56 +30,57 @@ namespace MSITTeam1.Controllers
             {
 
                 StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)account);
-                if (sb != null)
-                    return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
+                StudentWorkExperience sbw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == (string)account);
+                if (sb != null && sbw != null)
+                    return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定", workExperience=sbw  });
             }
             
             return View();
         }
 
 
-        public IActionResult List()
-        {
+        //public IActionResult List()
+        //{
 
-            string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
-            ViewBag.fAccount = account;
+        //    string account = HttpContext.Session.GetString(CDictionary.SK_LOGINED_USER_ACCOUNT);
+        //    ViewBag.fAccount = account;
 
-            CStudentResumeViewModel SBvModel = new CStudentResumeViewModel();
-            List<CStudentResumeViewModel> sb = new List<CStudentResumeViewModel>();
-            var datas = from b in hello.StudentBasics.Where(p => p.MemberId == account)
-                        select new
-                        {
-                            MemberId = b.MemberId,
-                            Name = b.Name,
-                            Email = b.Email,
-                            Phone = b.Phone,
-                            birthday = b.BirthDate,
-                            Address = b.ContactAddress,
-                            Autobiography = b.Autobiography,
-                            gen = b.Gender,
-                            c = b.FCompany,
-                            protrait = b.Portrait
+        //    CStudentResumeViewModel SBvModel = new CStudentResumeViewModel();
+        //    List<CStudentResumeViewModel> sb = new List<CStudentResumeViewModel>();
+        //    var datas = from b in hello.StudentBasics.Where(p => p.MemberId == account)
+        //                select new
+        //                {
+        //                    MemberId = b.MemberId,
+        //                    Name = b.Name,
+        //                    Email = b.Email,
+        //                    Phone = b.Phone,
+        //                    birthday = b.BirthDate,
+        //                    Address = b.ContactAddress,
+        //                    Autobiography = b.Autobiography,
+        //                    gen = b.Gender,
+        //                    c = b.FCompany,
+        //                    protrait = b.Portrait
 
-                        };
-            foreach (var a in datas)
+        //                };
+        //    foreach (var a in datas)
 
-            {
+        //    {
 
-                SBvModel.MemberId = a.MemberId;
-                SBvModel.fName = a.Name;
-                SBvModel.fGender = a.gen.Equals("0") ? "男" : a.gen.Equals("1") ? "女" : "未填寫";
-                SBvModel.fBirthDate = a.birthday;
-                SBvModel.fEmail = a.Email;
-                SBvModel.fPhone = a.Phone;
-                SBvModel.fAddress = a.Address;
-                SBvModel.fAutobiography = a.Autobiography;
-                SBvModel.fPortrait = a.protrait;
-            }
-            sb.Add(SBvModel);
+        //        SBvModel.MemberId = a.MemberId;
+        //        SBvModel.fName = a.Name;
+        //        SBvModel.fGender = a.gen.Equals("0") ? "男" : a.gen.Equals("1") ? "女" : "未填寫";
+        //        SBvModel.fBirthDate = a.birthday;
+        //        SBvModel.fEmail = a.Email;
+        //        SBvModel.fPhone = a.Phone;
+        //        SBvModel.fAddress = a.Address;
+        //        SBvModel.fAutobiography = a.Autobiography;
+        //        SBvModel.fPortrait = a.protrait;
+        //    }
+        //    sb.Add(SBvModel);
 
 
-            return View(sb);
-        }
+        //    return View(sb);
+        //}
 
 
         public IActionResult Edit(string? id)

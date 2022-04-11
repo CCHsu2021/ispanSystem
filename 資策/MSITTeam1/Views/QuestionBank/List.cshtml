@@ -4,107 +4,207 @@
     ViewData["Title"] = "List";
 }
 
-@section Style{ 
+@section Style{
+    <link href="~/css/SearchBar.css" rel="stylesheet" />
     <style>
         td {
             vertical-align: middle !important;
         }
+        /*        .container {
+            max-width: 1500px !important;
+        }*/
+        /*-----------------------------Card-----------------------------*/
+        .card-body {
+            padding: 0;
+        }
+
+        .card {
+            background: #ffffff;
+            margin: 7.5px 0;
+            padding: 20px;
+            border: 1px solid #e7e7e7;
+            border-radius: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease-in;
+        }
+
+        .card-title {
+            font-weight: 400;
+            font-size: 18px;
+            margin: 0;
+            text-align: right;
+            color: darkblue;
+        }
+
+        .p-10 {
+            padding: 10px;
+        }
+
+        .dd {
+            position: relative;
+            display: block;
+            margin: 0 0 12px 0;
+            padding: 0;
+            width: 100% !important;
+            max-width: 100%;
+            list-style: none;
+            font-size: 13px;
+            line-height: 20px;
+        }
+
+        .dd-handle {
+            display: block;
+            height: 35px;
+            margin: 5px 0;
+            padding: 8px 10px;
+            color: black;
+            text-decoration: none;
+            font-weight: normal;
+            border: 0px solid #e5e5e5;
+            background: #ffffff;
+            box-sizing: border-box;
+            font-size: 15px;
+            color: dimgray;
+            -moz-box-sizing: border-box;
+        }
+
+            .dd-handle:hover {
+                color: #2ea8e5;
+                background: #fff;
+            }
+
+        #title-font {
+            font-size: 15px;
+        }
+
+        #editBlock {
+            text-align: right;
+        }
+
+        /*searchbar*/
+        input {
+            border: 1px solid #ccc;
+            font-size: 12px;
+            height: 30px;
+            padding: 4px 8px;
+            position: absolute;
+            width: 50%;
+        }
+
+            input:focus {
+                outline: none;
+            }
+
+        button {
+            text-align: center;
+        }
+
+            button:focus {
+                outline: none;
+            }
+
+            button.btn-search, button.btn-reset {
+                background: orange;
+                border: none;
+                height: 30px;
+                font-size: 12px;
+                padding: 4px;
+                position: absolute;
+                width: 30px;
+            }
+
+        .sample {
+            float: left;
+            height: 50px;
+            margin: 0 8px;
+            position: relative;
+            width: 100%;
+        }
     </style>
 }
-<div class="container" style="padding:20px;">
+<div class="container" style="padding:40px;">
     <h1>題目列表</h1>
-
     <p>
         <a asp-action="Create">新增題目</a>
     </p>
-    <table class="table table-bordered table-hover" id="quesTable" style="text-align:center;">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].FSubjectId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].FQuestionId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].FQuestion)
-                </th>
-                <th>
-                    選項
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].FQuestionTypeId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model[0].FLevel)
-                </th>
-                <th>編輯</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+
+    <div style="margin:20px">
+        <form method="post" action="~/QuestionBank/List" enctype="application/x-www-form-urlencoded">
+            <div class="sample ten">
+                <input type="text" name="keyword" placeholder="search" id="keyword">
+                <button type="submit" class="btn btn-search">
+                    <i class="fa fa-search"></i>
+                </button>
+                <button type="reset" class="btn btn-reset fa fa-times"></button>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        @{
+            if (Model != null)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FSubjectId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FQuestionId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FQuestion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FChoice)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FQuestionTypeId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FLevel)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId,choiceSn =item.FSn }) |
-                        @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-    </table>
-</div>
-@section Scripts{ 
-    <script>
-        function mergeCell(tableId, cols) {
-            var table = document.getElementById(tableId);
-            var table_rows = table.rows;
-
-            cols.forEach((v, k) => {
-                for (let i = 0; i < table_rows.length - 1; i++) {
-                    let currRow = table_rows[i];
-                    let nextRow = table_rows[i + 1];
-
-                    let currCol = currRow.cells[v];
-                    let nextCol = nextRow.cells[v];
-
-                    if (currCol.innerHTML == nextCol.innerHTML) {
-                        $(nextCol).addClass('remove');
-                        setParentSpan(table, i, v);
+                string subject = "";
+                int quesId = 0;
+                foreach (var item in Model)
+                {
+                    if (item.FSubjectId != subject || item.FQuestionId != quesId)
+                    {
+                        subject = item.FSubjectId;
+                        quesId = item.FQuestionId;
+                        <div class="card" id="quesCard">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    @Html.DisplayFor(modelItem => item.FSubjectId)
+                                </h4>
+                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="home2" role="tabpanel">
+                                        <div class="p-10">
+                                            <h5>
+                                                @Html.DisplayFor(modelItem => item.FQuestion)
+                                            </h5>
+                                        </div>
+                                        <div class="nestable">
+                                            <div class="dd" id="nestable">
+                                                <ol class="dd-list">
+                                                    <li class="dd-item" data-id="2">
+                                                        @*<div class="dd-handle" id="title-font">選項</div>*@
+                                                        <ol class="dd-list" id="title-font">
+                                                            @foreach (var choice in Model)
+                                                            {
+                                                                if (choice.FSubjectId == subject && choice.FQuestionId == quesId)
+                                                                {
+                                                                    <li class="dd-item" data-id="2">
+                                                                        <div class="dd-handle">
+                                                                            @Html.DisplayFor(modelItem => choice.FChoice)
+                                                                        </div>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        </ol>
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                        <div id="editBlock">
+                                            @Html.ActionLink("編輯", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId, choiceSn = item.FSn }) |
+                                            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                                            @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
                     }
                 }
-            })
-            $(".remove").remove();
-        }
-
-        function setParentSpan(table, row, col) {
-            var colItem = table.rows[row].cells[col];
-            if ($(colItem).hasClass('remove')) {
-                setParentSpan(table, --row, col)
-            } else {
-                colItem.rowSpan += 1;
             }
         }
-        mergeCell('quesTable', [0, 1,2]);
+    </div>
+</div>
+
+@section Scripts{
+    <script>
     </script>
 }

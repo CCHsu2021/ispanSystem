@@ -14,9 +14,8 @@
         <ul class="slide-container">
             <li class="slide" data-tag="基本資料">
                 <div class="sized-container">
-                    <div class="row">
+                    <div class="row data">
                         <div class="col-4">
-                            @*<form>*@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <input type="hidden" asp-for="MemberId" id="MemberId" />
@@ -40,9 +39,6 @@
                                 <input id="fEmail" asp-for="fEmail" class="form-control" />
                                 <span asp-validation-for="fEmail" class="text-danger"></span>
                             </div>
-
-
-                            @*</form>*@
                         </div>
 
                         <div class="col-4">
@@ -62,24 +58,60 @@
                                 <span asp-validation-for="fAutobiography" class="text-danger"></span>
                             </div>
                         </div>
-
                         <div class="col-4">
-                            <div class="image-upload">
+                            <form name="file" enctype="multipart/form-data" >
+                                <div class="image-upload">
                                 <label for="file-input">
                                     <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
                                 </label>
-
-                                <input id="file-input" type="file" />
+                                <input id="file-input" type="file" name="photo"/>
                             </div>
-
+                            </form>
                         </div>
                     </div>
                 </div>
             </li>
             <li class="slide" data-tag="經歷">
                 <div class="sized-container">
-                    <h1>Tell us about your area of expertise.</h1>
-                    <h2>Information about this section.</h2>
+                    <div class="row data">
+                        <div class="col-6">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <input type="hidden" asp-for="MemberId" id="MemberId" />
+                            <div class="form-group">
+                                <label asp-for="CompanyName" class="control-label"></label>
+                                <input id="CompanyName" asp-for="CompanyName" class="form-control" />
+                                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CompanyDepartment" class="control-label"></label>
+                                <input id="CompanyDepartment" asp-for="CompanyDepartment" class="form-control" type="text" />
+                                <span asp-validation-for="CompanyDepartment" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="JobTitle" class="control-label"></label>
+                                <input id="JobTitle" asp-for="JobTitle" class="form-control" type="text" />
+                                <span asp-validation-for="JobTitle" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="EmploymentFrom" class="control-label"></label>
+                                <input id="EmploymentFrom" asp-for="EmploymentFrom" class="form-control" />
+                                <span asp-validation-for="EmploymentFrom" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EmploymentTo" class="control-label"></label>
+                                <input id="EmploymentTo" asp-for="EmploymentTo" class="form-control" />
+                                <span asp-validation-for="EmploymentTo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="JobDescription" class="control-label"></label>
+                                <input id="JobDescription" asp-for="JobDescription" class="form-control" />
+                                <span asp-validation-for="JobDescription" class="text-danger"></span>
+                            </div>
+                        </div>
                 </div>
             </li>
             <li class="slide" data-tag="學歷">
@@ -126,15 +158,15 @@
 @section Scripts
 {
     <script>
+        
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {  //reader加載成功
                     $('#blah').attr('src', e.target.result);
-                   
+                
                 }
-
                 reader.readAsDataURL(input.files[0]);
             }
         }
@@ -144,6 +176,10 @@
         });
 
     $("#savechanges").click(() => {
+        //var formData = new FormData(document.file);
+        //formData.enctype="multipart/form-data";
+        //formData.append('photo', $('#file-input')[0].files[0]);
+        
         var jsondata = JSON.stringify({
             MemberId:$("#MemberId").val(),
             fName:$("#fName").val(),
@@ -153,14 +189,16 @@
             fPhone: $("#fPhone").val(),
             fAddress: $("#fAddress").val(),
             fAutobiography: $("#fAutobiography").val(),
-            photo: $("#file-input")[0].files[0]
-
+           
         })
+        
         $.ajax({
             url: "@Url.Content("~/StudentResume/Edit")",
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            data: jsondata,
+            data: jsondata /*,formData*/
+
+
          }).done(function (data) {
             Swal.fire({
 
@@ -170,9 +208,10 @@
                         timer: 1500
                         }).then(() => {
                             $('#staticBackdrop').hide()
-                            window.location.reload()
+                            //window.location.reload()
                             });
         })
+        $("row data").load("@Url.Content("~/StudentResume/Create")");
     })
 
        

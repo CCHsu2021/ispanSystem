@@ -7,6 +7,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MSITTeam1</title>
+    <link href="~/css/nestable.css?@date" rel="stylesheet">
+    <link href="~/css/barRating.css?@date" rel="stylesheet">
     <link href="~/css/bootstrap.css?@date" rel="stylesheet">
     <link href="~/plugins/revolution/css/settings.css?@date" rel="stylesheet" type="text/css">
     <!-- REVOLUTION SETTINGS STYLES -->
@@ -18,7 +20,6 @@
     <link href="~/css/style.css?@date" rel="stylesheet">
     <link href="~/css/responsive.css?@date" rel="stylesheet">
     <link href="~/css/Resumebar.css?@date" rel="stylesheet">
-
 
     @await RenderSectionAsync("Style", required: false)
 
@@ -145,7 +146,7 @@
                                                 <a href="event-detail.html">媒合活動</a>
                                             </li>
                                             <li>
-                                                <a href="event-detail.html">徵才專區</a>
+                                                <a href="event-detail.html">人才搜尋</a>
                                             </li>
                                             <li>
                                                 <a href="event-detail.html">題庫及試卷</a>
@@ -306,6 +307,8 @@
         <!--End Main Footer-->
 
     </div>
+    @*<script src="~/js/barRating.init.js"></script>
+    <script src="~/js/jquery.barrating.js"></script>*@
     <script src="~/js/jquery.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>

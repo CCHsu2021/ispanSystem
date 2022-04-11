@@ -25,6 +25,9 @@ namespace MSITTeam1.Controllers
         #region 商品列表
         public IActionResult Index(CQueryKeywordForProductViewModel vModel)
         {
+            ViewBag.Name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
             IEnumerable<TProduct> datas = null;
             string keyword = vModel.txtKeyword;
             if (string.IsNullOrEmpty(keyword))
@@ -49,6 +52,9 @@ namespace MSITTeam1.Controllers
         #region 商品詳情
         public IActionResult Details(string id)
         {
+            ViewBag.Name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
             if (id != null)
             {
                 TProduct prod = hello.TProducts.FirstOrDefault(t => t.ProductId == id);
