@@ -66,22 +66,22 @@
                                     <input class="form-control" @Html.EditorFor(modelItem => item.FQuestionTypeId) />
                                     <span class="text-danger" @Html.ValidationMessageFor(modelItem => item.FQuestionTypeId)></span>
                                 </div>
-                                @foreach (var choice in Model)
+                                @for (int i = 0;i < Model.Count;i++)
                                 {
-                                    if (choice.FSubjectId == item.FSubjectId && choice.FQuestionId == item.FCQuestionId)
+                                    if (Model[i].FSubjectId == item.FSubjectId && Model[i].FQuestionId == item.FCQuestionId)
                                     {
-                                        <input type="hidden" value="@Html.DisplayFor(modelItem => choice.FSn)" />
+                                        <input type="hidden" value="@Html.DisplayFor(modelItem => Model[i].FSn)" />
                                         <div class="form-group">
-                                            <label class="control-label">@Html.DisplayNameFor(modelItem => choice.FChoice)</label>
-                                            <input class="form-control" @Html.EditorFor(modelItem => choice.FChoice) />
-                                            <span class="text-danger" @Html.ValidationMessageFor(modelItem => choice.FChoice)></span>
+                                            <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FChoice)</label>
+                                            <input class="form-control" @Html.EditorFor(modelItem => Model[i].FChoice) />
+                                            <span class="text-danger" @Html.ValidationMessageFor(modelItem => Model[i].FChoice)></span>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label">@Html.DisplayNameFor(modelItem => choice.FCorrectAnswer)</label>
-                                            <input class="form-control" @Html.EditorFor(modelItem => choice.FCorrectAnswer) />
-                                            <span class="text-danger" @Html.ValidationMessageFor(modelItem => choice.FCorrectAnswer)></span>
+                                            <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FCorrectAnswer)</label>
+                                            <input class="form-control" @Html.EditorFor(modelItem => Model[i].FCorrectAnswer) />
+                                            <span class="text-danger" @Html.ValidationMessageFor(modelItem => Model[i].FCorrectAnswer)></span>
                                         </div>                                 
-                                        var choiceItem = quesQuery.FirstOrDefault(ci => ci.FSn == choice.FSn);
+                                        var choiceItem = quesQuery.FirstOrDefault(ci => ci.FSn == Model[i].FSn);
                                         quesList.Add(choiceItem);
                                     }
                                 }
