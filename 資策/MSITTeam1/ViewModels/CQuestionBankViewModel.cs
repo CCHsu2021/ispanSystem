@@ -38,27 +38,27 @@ namespace MSITTeam1.ViewModels
 		[DisplayName("課程名稱")]
 		public string FSubjectId
 		{
-			get { return this.choice.FSubjectId; }
-			set { this.choice.FSubjectId = value; }
+			get { return this.question.FSubjectId; }
+			set { this.question.FSubjectId = value; }
 		}
 
 		public string FCSubjectId
 		{
-			get { return this.question.FSubjectId; }
-			set { this.question.FSubjectId = value; }
+			get { return this.choice.FSubjectId; }
+			set { this.choice.FSubjectId = value; }
 		}
 
 		[DisplayName("題目編號")]
 		public int FQuestionId
 		{ 
-			get { return this.choice.FQuestionId; }
-			set { this.choice.FQuestionId = value; } 
+			get { return this.question.FQuestionId; }
+			set { this.question.FQuestionId = value; } 
 		}
 
 		public int FCQuestionId
 		{
-			get { return this.question.FQuestionId; }
-			set { this.question.FQuestionId = value; }
+			get { return this.choice.FQuestionId; }
+			set { this.choice.FQuestionId = value; }
 		}
 
 		[DisplayName("題目")]

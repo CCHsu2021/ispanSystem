@@ -70,9 +70,11 @@ namespace MSITTeam1.Controllers
 
 				int lastId = searchLastId.First().FQuestionId;
 				ques.FQuestionId = lastId + 1;
-				ques.FCQuestionId = lastId + 1;
+				//ques.FCQuestionId = lastId + 1;
 			}
 			_context.TQuestionLists.Add(ques.question);
+			ques.FCSubjectId = ques.FSubjectId;
+			ques.FCQuestionId = ques.FQuestionId;
 			_context.TQuestionDetails.Add(ques.choice);
 			_context.SaveChanges();
 			return RedirectToAction("List");
