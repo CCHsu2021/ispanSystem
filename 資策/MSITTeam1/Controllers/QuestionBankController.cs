@@ -88,36 +88,67 @@ namespace MSITTeam1.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("List");
 		}
-		public IActionResult Edit(string subjectID, int questionID,int choiceSn)
+		public IActionResult Edit(string subjectID, int questionID)
 		{
 			// TODO-1:可以一次編輯此題的所有選項和選擇正確選項
 			// TODO-2:加入題型判斷
+
 			if (subjectID != null && questionID > 0)
 			{
-				TQuestionList ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
+				//TQuestionList ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
 				//var cho = _context.TQuestionDetails.Where(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID);
-				TQuestionDetail cho = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == choiceSn);
-				if (ques != null && cho != null)
+				//TQuestionDetail cho = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == choiceSn);
+				List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
+				var quesQuery = from choice in _context.TQuestionDetails
+								join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
+								select new CQuestionBankViewModel
+								{
+									FSn = choice.FSn,
+									FCSubjectId = choice.FSubjectId,
+									FSubjectId = ques.FSubjectId,
+									FCQuestionId = choice.FQuestionId,
+									FQuestionId = ques.FQuestionId,
+									FQuestion = ques.FQuestion,
+									FLevel = ques.FLevel,
+									//updateTime = ques.FUpdateTime.ToString('YYMMDD'),
+									FQuestionTypeId = ques.FQuestionTypeId,
+									FChoice = choice.FChoice,
+									FCorrectAnswer = choice.FCorrectAnswer
+								};
+				foreach (var q in quesQuery)
 				{
-					return View(new CQuestionBankViewModel() { question = ques,choice = cho});
+					quesList.Add(q);
+				}
+				if (quesList != null)
+				{
+					return View(quesList);
 				}
 			}
 			return RedirectToAction("List");
 		}
 
 		[HttpPost]
-		public IActionResult Edit(CQuestionBankViewModel ques)
+		public IActionResult Edit(List<CQuestionBankViewModel> quesList)
 		{
-			TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(ques.FSubjectId) && q.FQuestionId == ques.FQuestionId);
-			TQuestionDetail choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ques.FSn);
+			string subject = quesList[0].FSubjectId;
+			int questionId = quesList[0].FQuestionId;
+
+			TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subject) && q.FQuestionId == questionId);
+			TQuestionDetail choSel = null;
 			if (quesSel != null)
 			{
-				quesSel.FQuestion = ques.FQuestion;
-				quesSel.FQuestionTypeId = Convert.ToInt32(ques.FQuestionTypeId);
-				choSel.FChoice = ques.FChoice;
-				choSel.FCorrectAnswer = ques.FCorrectAnswer;
+				quesSel.FQuestion = quesList[0].FQuestion;
+				quesSel.FQuestionTypeId = Convert.ToInt32(quesList[0].FQuestionTypeId);
 				_context.SaveChanges();
-			}
+				foreach(var ans in quesList)
+				{
+					choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSn);
+					choSel.FChoice = ans.FChoice;
+					choSel.FCorrectAnswer = ans.FCorrectAnswer;
+					// TODO3:savechange不要放在迴圈
+					_context.SaveChanges();
+				}
+			}			
 			return RedirectToAction("List");
 		}
 	}
