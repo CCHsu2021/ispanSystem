@@ -1,4 +1,4 @@
-﻿@model MSITTeam1.ViewModels.CQuestionBankViewModel
+﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
 
 @{
     ViewData["Title"] = "Edit";
@@ -10,63 +10,77 @@
 
         <h4>題目內容</h4>
         <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <form asp-action="Edit" method="post" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="FSubjectId" />
-                    <input type="hidden" asp-for="FCSubjectId" />
-                    <input type="hidden" asp-for="FQuestionId" />
-                    <input type="hidden" asp-for="FCQuestionId" />
-                    <input type="hidden" asp-for="FSn" />
-                    <div class="form-group">
-                        <label id="test1" asp-for="FQuestion" class="control-label"></label>
-                        <input asp-for="FQuestion" class="form-control" />
-                        <span asp-validation-for="FQuestion" class="text-danger"></span>
+        @*@{
+            if (Model != null)
+            {
+                string subject = "";
+                int quesId = 0;
+                foreach (var item in Model)
+                {
+                    if (item.FSubjectId != subject || item.FQuestionId != quesId)
+                    {
+                        subject = item.FSubjectId;
+                        quesId = item.FQuestionId;
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
+                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCSubjectId)" />
+                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
+                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCQuestionId)" />
+                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FSn)" />
+                                <div class="form-group">
+                                    <label id="test1" class="control-label">@Html.DisplayFor(modelItem => item.FQuestion)</label>
+                                    <input @Html.EditorFor(modelItem => item.FQuestion) class="form-control" />
+                                    <span @Html.ValidationMessageFor(modelItem => item.FQuestion) class="text-danger"></span>
+                                </div>*@
+                                @*<div class="form-group">
+                                    <label asp-for="FQuestionImage" class="control-label"></label>
+                                        <input asp-for="FQuestionImage" class="form-control" />
+                                        <span asp-validation-for="FQuestionImage" class="text-danger"></span>
+                                    <input type="file" name="photo" class="form-control" />
+                                </div>*@
+                                @*<div class="form-group">
+                                    <label asp-for="FQuestionTypeId" class="control-label"></label>
+                                    <input asp-for="FQuestionTypeId" class="form-control" />
+                                    <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FChoice" class="control-label"></label>
+                                    <input asp-for="FChoice" class="form-control" />
+                                    <span asp-validation-for="FChoice" class="text-danger"></span>
+                                </div>*@
+                                @*<div class="form-group">
+                                    <label asp-for="VupdateTime" class="control-label"></label>
+                                    <input asp-for="VupdateTime" class="form-control" />
+                                    <span asp-validation-for="VupdateTime" class="text-danger"></span>
+                                </div>*@
+                                @*<div class="form-group">
+                                    <label asp-for="FLevel" class="control-label"></label>
+                                    <input asp-for="FLevel" class="form-control" />
+                                    <span asp-validation-for="FLevel" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FCorrectAnswer" class="control-label"></label>
+                                    <input asp-for="FCorrectAnswer" class="form-control" />
+                                    <span asp-validation-for="FCorrectAnswer" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>*@
+                                @*<div>
+                                    <a asp-action="List">返回題目列表</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    @*<div class="form-group">
-            <label asp-for="FQuestionImage" class="control-label"></label>
-                <input asp-for="FQuestionImage" class="form-control" />
-                <span asp-validation-for="FQuestionImage" class="text-danger"></span>
-            <input type="file" name="photo" class="form-control" />
-        </div>*@
-                    <div class="form-group">
-                        <label asp-for="FQuestionTypeId" class="control-label"></label>
-                        <input asp-for="FQuestionTypeId" class="form-control" />
-                        <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="FChoice" class="control-label"></label>
-                        <input asp-for="FChoice" class="form-control" />
-                        <span asp-validation-for="FChoice" class="text-danger"></span>
-                    </div>
-                    @*<div class="form-group">
-            <label asp-for="VupdateTime" class="control-label"></label>
-            <input asp-for="VupdateTime" class="form-control" />
-            <span asp-validation-for="VupdateTime" class="text-danger"></span>
-        </div>*@
-                    <div class="form-group">
-                        <label asp-for="FLevel" class="control-label"></label>
-                        <input asp-for="FLevel" class="form-control" />
-                        <span asp-validation-for="FLevel" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="FCorrectAnswer" class="control-label"></label>
-                        <input asp-for="FCorrectAnswer" class="form-control" />
-                        <span asp-validation-for="FCorrectAnswer" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" />
-                    </div>
-                </form>
-            </div>
-        </div>
+                }
+            }
 
-        <div>
-            <a asp-action="List">返回題目列表</a>
-        </div>
+        }
     </div>
-</div>
+</div>*@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
