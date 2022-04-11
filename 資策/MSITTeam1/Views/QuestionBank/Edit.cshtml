@@ -1,26 +1,45 @@
 ﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
+    @using MSITTeam1.ViewModels;
 
-@{
-    ViewData["Title"] = "Edit";
-}
+    @{
+        ViewData["Title"] = "Edit";
+    }
 
-<div class="container" style="padding:20px;">
-    <div>
-        <h1>題目編輯</h1>
+    <div class="container" style="padding:20px;">
+        <div>
+            <h1>題目編輯</h1>
+            <h4>題目內容</h4>
+            <hr />
+        </div>
 
-        <h4>題目內容</h4>
-        <hr />
-        @*@{
-            if (Model != null)
-            {
-                string subject = "";
-                int quesId = 0;
-                foreach (var item in Model)
+        <div>
+            @{
+                var hello = new helloContext();
+                List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
+                if (Model != null)
                 {
-                    if (item.FSubjectId != subject || item.FQuestionId != quesId)
-                    {
-                        subject = item.FSubjectId;
-                        quesId = item.FQuestionId;
+                    int count = 1;
+                    int index = 0;
+                    var item = Model[0];
+
+                    var quesQuery = from c in hello.TQuestionDetails
+                                    join q in hello.TQuestionLists on new { c.FSubjectId, c.FQuestionId } equals new { q.FSubjectId, q.FQuestionId }
+                                    where q.FSubjectId.Equals(item.FSubjectId) && q.FQuestionId == item.FQuestionId
+                                    select new CQuestionBankViewModel
+                                    {
+                                        FSn = c.FSn,
+                                        FCSubjectId = c.FSubjectId,
+                                        FSubjectId = q.FSubjectId,
+                                        FCQuestionId = c.FQuestionId,
+                                        FQuestionId = q.FQuestionId,
+                                        FQuestion = q.FQuestion,
+                                        FLevel = q.FLevel,
+                                        //updateTime = ques.FUpdateTime.ToString('YYMMDD'),
+                                        FQuestionTypeId = q.FQuestionTypeId,
+                                        FChoice = c.FChoice,
+                                        FCorrectAnswer = c.FCorrectAnswer
+                                    };
+
                     <div class="row">
                         <div class="col-md-4">
                             <form asp-action="Edit" method="post" enctype="multipart/form-data">
@@ -29,47 +48,53 @@
                                 <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCSubjectId)" />
                                 <input type="hidden" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
                                 <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCQuestionId)" />
-                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FSn)" />
                                 <div class="form-group">
-                                    <label id="test1" class="control-label">@Html.DisplayFor(modelItem => item.FQuestion)</label>
-                                    <input @Html.EditorFor(modelItem => item.FQuestion) class="form-control" />
-                                    <span @Html.ValidationMessageFor(modelItem => item.FQuestion) class="text-danger"></span>
-                                </div>*@
-                                @*<div class="form-group">
-                                    <label asp-for="FQuestionImage" class="control-label"></label>
-                                        <input asp-for="FQuestionImage" class="form-control" />
-                                        <span asp-validation-for="FQuestionImage" class="text-danger"></span>
-                                    <input type="file" name="photo" class="form-control" />
-                                </div>*@
-                                @*<div class="form-group">
-                                    <label asp-for="FQuestionTypeId" class="control-label"></label>
-                                    <input asp-for="FQuestionTypeId" class="form-control" />
-                                    <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
+                                    <label id="test1" class="control-label">選項 @count . @Html.DisplayNameFor(modelItem => item.FQuestion)</label>
+                                    <input class="form-control" @Html.EditorFor(modelItem => item.FQuestion) />
+                                    <span class="text-danger" @Html.ValidationMessageFor(modelItem => item.FQuestion)></span>
                                 </div>
+
+                                @*<div class="form-group">
+                                        <label asp-for="FQuestionImage" class="control-label"></label>
+                                            <input asp-for="FQuestionImage" class="form-control" />
+                                            <span asp-validation-for="FQuestionImage" class="text-danger"></span>
+                                        <input type="file" name="photo" class="form-control" />
+                                    </div>*@
+
                                 <div class="form-group">
-                                    <label asp-for="FChoice" class="control-label"></label>
-                                    <input asp-for="FChoice" class="form-control" />
-                                    <span asp-validation-for="FChoice" class="text-danger"></span>
-                                </div>*@
-                                @*<div class="form-group">
-                                    <label asp-for="VupdateTime" class="control-label"></label>
-                                    <input asp-for="VupdateTime" class="form-control" />
-                                    <span asp-validation-for="VupdateTime" class="text-danger"></span>
-                                </div>*@
-                                @*<div class="form-group">
-                                    <label asp-for="FLevel" class="control-label"></label>
-                                    <input asp-for="FLevel" class="form-control" />
-                                    <span asp-validation-for="FLevel" class="text-danger"></span>
+                                    <label class="control-label">@Html.DisplayNameFor(modelItem => item.FQuestionTypeId)</label>
+                                    <input class="form-control" @Html.EditorFor(modelItem => item.FQuestionTypeId) />
+                                    <span class="text-danger" @Html.ValidationMessageFor(modelItem => item.FQuestionTypeId)></span>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="FCorrectAnswer" class="control-label"></label>
-                                    <input asp-for="FCorrectAnswer" class="form-control" />
-                                    <span asp-validation-for="FCorrectAnswer" class="text-danger"></span>
-                                </div>
+                                @foreach (var choice in Model)
+                                {
+                                    if (choice.FSubjectId == item.FSubjectId && choice.FQuestionId == item.FCQuestionId)
+                                    {
+                                        <input type="hidden" value="@Html.DisplayFor(modelItem => choice.FSn)" />
+                                        <div class="form-group">
+                                            <label class="control-label">@Html.DisplayNameFor(modelItem => choice.FChoice)</label>
+                                            <input class="form-control" @Html.EditorFor(modelItem => choice.FChoice) />
+                                            <span class="text-danger" @Html.ValidationMessageFor(modelItem => choice.FChoice)></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">@Html.DisplayNameFor(modelItem => choice.FCorrectAnswer)</label>
+                                            <input class="form-control" @Html.EditorFor(modelItem => choice.FCorrectAnswer) />
+                                            <span class="text-danger" @Html.ValidationMessageFor(modelItem => choice.FCorrectAnswer)></span>
+                                        </div>                                 
+                                        var choiceItem = quesQuery.FirstOrDefault(ci => ci.FSn == choice.FSn);
+                                        quesList.Add(choiceItem);
+                                    }
+                                }
+
+                                @*<div class="form-group">
+                                        <label asp-for="VupdateTime" class="control-label"></label>
+                                        <input asp-for="VupdateTime" class="form-control" />
+                                        <span asp-validation-for="VupdateTime" class="text-danger"></span>
+                                    </div>*@
                                 <div class="form-group">
                                     <input type="submit" value="Save" class="btn btn-primary" />
-                                </div>*@
-                                @*<div>
+                                </div>
+                                <div>
                                     <a asp-action="List">返回題目列表</a>
                                 </div>
                             </form>
@@ -77,10 +102,10 @@
                     </div>
                 }
             }
-
-        }
+        </div>
     </div>
-</div>*@
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

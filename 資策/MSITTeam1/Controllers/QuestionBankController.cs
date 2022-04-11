@@ -130,26 +130,33 @@ namespace MSITTeam1.Controllers
 		[HttpPost]
 		public IActionResult Edit(List<CQuestionBankViewModel> quesList)
 		{
-			string subject = quesList[0].FSubjectId;
-			int questionId = quesList[0].FQuestionId;
-
-			TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subject) && q.FQuestionId == questionId);
-			TQuestionDetail choSel = null;
-			if (quesSel != null)
+			if (quesList.Count != 0)
 			{
-				quesSel.FQuestion = quesList[0].FQuestion;
-				quesSel.FQuestionTypeId = Convert.ToInt32(quesList[0].FQuestionTypeId);
-				_context.SaveChanges();
-				foreach(var ans in quesList)
+				string subject = quesList[0].FSubjectId;
+				int questionId = quesList[0].FQuestionId;
+
+				TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subject) && q.FQuestionId == questionId);
+				TQuestionDetail choSel = null;
+				if (quesSel != null)
 				{
-					choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSn);
-					choSel.FChoice = ans.FChoice;
-					choSel.FCorrectAnswer = ans.FCorrectAnswer;
-					// TODO3:savechange不要放在迴圈
+					quesSel.FQuestion = quesList[0].FQuestion;
+					quesSel.FQuestionTypeId = Convert.ToInt32(quesList[0].FQuestionTypeId);
 					_context.SaveChanges();
+					foreach (var ans in quesList)
+					{
+						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSn);
+						choSel.FChoice = ans.FChoice;
+						choSel.FCorrectAnswer = ans.FCorrectAnswer;
+						// TODO3:savechange不要放在迴圈
+						_context.SaveChanges();
+					}
 				}
-			}			
-			return RedirectToAction("List");
+				return RedirectToAction("List");
+			}
+			else
+			{
+				return Content("HIAHIAHIAHIAHIA");
+			}
 		}
 	}
 }
