@@ -23,8 +23,11 @@ namespace MSITTeam1.ViewComponent
             if (!string.IsNullOrEmpty(id))
             {
                 var company = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == id);
-                if (company != null)
+                if (company != null) 
+                {
+                    ViewBag.picture = company.FLogo;
                     return View(new CCompanyBasicViewModel() { com = company });
+                }
             }
             return View(Url.Content("~/CMemberCenter/Index"));
         }
