@@ -57,16 +57,16 @@
                                 <textarea id="fAutobiography" asp-for="fAutobiography" class="form-control"> </textarea>
                                 <span asp-validation-for="fAutobiography" class="text-danger"></span>
                             </div>
-
+                            
                         </div>
                         <div class="col-4">
-                            <form name="file" enctype="multipart/form-data">
+                            <form name="file" enctype="multipart/form-data" >
                                 <div class="image-upload">
-                                    <label for="file-input">
-                                        <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
-                                    </label>
-                                    <input id="file-input" type="file" name="photo" />
-                                </div>
+                                <label for="file-input">
+                                    <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
+                                </label>
+                                <input id="file-input" type="file" name="photo"/>
+                            </div>
                             </form>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
             <li class="slide" data-tag="經歷">
                 <div class="sized-container">
                     <div class="row data">
-                        <div class="col-4">
+                        <div class="col-6">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <input type="hidden" asp-for="MemberId" id="MemberId" />
@@ -95,13 +95,14 @@
                                 <input id="JobTitle" asp-for="JobTitle" class="form-control" type="text" />
                                 <span asp-validation-for="JobTitle" class="text-danger"></span>
                             </div>
+
+                        </div>
+                        <div class="col-6">
                             <div class="form-group">
                                 <label asp-for="EmploymentFrom" class="control-label"></label>
                                 <input id="EmploymentFrom" asp-for="EmploymentFrom" class="form-control" />
                                 <span asp-validation-for="EmploymentFrom" class="text-danger"></span>
                             </div>
-                        </div>
-                        <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="EmploymentTo" class="control-label"></label>
                                 <input id="EmploymentTo" asp-for="EmploymentTo" class="form-control" />
@@ -109,15 +110,10 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="JobDescription" class="control-label"></label>
-                                <textarea id="JobDescription" asp-for="JobDescription" class="form-control" ></textarea>
+                                <input id="JobDescription" asp-for="JobDescription" class="form-control" />
                                 <span asp-validation-for="JobDescription" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-4">
-
-                        </div>
-                    </div>
-                    <button class="savebtn my-3" id="createWork">新增</button>
                 </div>
             </li>
             <li class="slide" data-tag="學歷">
@@ -162,14 +158,15 @@
 
 @section Scripts
 {
-<script>
-        ////圖片瀏覽
+    <script>
+        
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {  //reader加載成功
                     $('#blah').attr('src', e.target.result);
+                
                 }
                 reader.readAsDataURL(input.files[0]);
             }
@@ -179,15 +176,14 @@
             readURL(this);
         });
 
-    //// 儲存基本資料
     $("#savechanges").click(() => {
         var file_data = $("#file-input").prop("files")[0];
         var form_data = new FormData();
-        form_data.append("photo", file_data);
+        form_data.append("photo", file_data); 
         //var formData = new FormData(document.file);
         //formData.enctype="multipart/form-data";
         //formData.append('photo', $('#file-input')[0].files[0]);
-
+        
         var jsondata = JSON.stringify({
             MemberId:$("#MemberId").val(),
             fName:$("#fName").val(),
@@ -197,12 +193,16 @@
             fPhone: $("#fPhone").val(),
             fAddress: $("#fAddress").val(),
             fAutobiography: $("#fAutobiography").val(),
+           
         })
+        
         $.ajax({
             url: "@Url.Content("~/StudentResume/Edit")",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: jsondata /*,formData*/
+
+
          }).done(function (data) {
             Swal.fire({
 
@@ -210,41 +210,16 @@
                         title: '修改成功',
                         showConfirmButton: false,
                         timer: 1500
-                        })
+                        }).then(() => {
+                            $('#staticBackdrop').hide()
+                            //window.location.reload()
+                            });
         })
         $("row data").load("@Url.Content("~/StudentResume/Create")");
     })
-    /////儲存工作經歷
-    $("#createWork").click(()=>{
-        var jsondata = JSON.stringify({
-            WorkMemberId:$("#MemberId").val(),
-            CompanyName:$("#CompanyName").val(),
-            CompanyDepartment:$("#CompanyDepartment").val(),
-            JobTitle:$("#JobTitle").val(),
-            EmploymentFrom:$("#EmploymentFrom").val(),
-            EmploymentTo:$("#EmploymentTo").val(),
-            JobDescription:$("#JobDescription").val()
-            })
-            $.ajax({
-            url: "@Url.Content("~/StudentResume/CreateWork")",
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: jsondata 
-         }).done(function (data) {
-            Swal.fire({
 
-                        icon: 'success',
-                        title: '新增成功',
-                        showConfirmButton: false,
-                        timer: 1500
-                        })
-        })
-        //$("row data").load("@Url.Content("~/StudentResume/Create")");
-        })
-    
-
-
-</script>
+       
+    </script>
 }
 
 

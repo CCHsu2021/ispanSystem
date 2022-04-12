@@ -43,7 +43,7 @@
         if (pwd == pwd2) {
             $.ajax({
                 type: "Post",
-                url: "@Url.Content("~/Student_Login/ResetPWD")",
+                url: "@Url.Content("~/Company_Login/ResetPWD")",
                 data: { password: $("#RPassword").val() },
                 dataType: "text",
                 success: function (message) {

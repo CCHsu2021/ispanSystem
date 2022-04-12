@@ -121,12 +121,5 @@ namespace MSITTeam1.Controllers
             }
             return Content("修改成功");
         }
-        public IActionResult CreateWork([FromBody]CStudentResumeViewModel p)
-        {
-            
-            hello.StudentWorkExperiences.Add(p.workExperience);
-            hello.SaveChanges();
-            return Content("新增成功");
-        }
     }
 }

@@ -30,7 +30,7 @@ namespace MSITTeam1.ViewComponent
                 list.Add(new CCompanyBasicViewModel() { com = t });
                 if(t.FLogo == null)
                 {
-                    ViewBag.picture = "upload.jpeg";
+                    ViewBag.picture = "upload.png";
                 }
                 else
                 {

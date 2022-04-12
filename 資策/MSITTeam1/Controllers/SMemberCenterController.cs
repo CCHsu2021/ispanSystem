@@ -13,6 +13,7 @@ namespace MSITTeam1.Controllers
         {
             ViewBag.Name = CDictionary.username;
             ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
             return View();
         }
         public IActionResult Information()
