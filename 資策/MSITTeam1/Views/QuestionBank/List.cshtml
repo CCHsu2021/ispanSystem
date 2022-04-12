@@ -5,7 +5,7 @@
 }
 
 @section Style{
-    <link href="~/css/SearchBar.css" rel="stylesheet" />
+    @*<link href="~/css/SearchBar.css" rel="stylesheet" />*@
     <style>
         td {
             vertical-align: middle !important;
@@ -81,8 +81,8 @@
             text-align: right;
         }
 
-        /*searchbar*/
-        input {
+        /*searchbar----------------------Start*/
+        /*        input {
             border: 1px solid #ccc;
             font-size: 12px;
             height: 30px;
@@ -119,7 +119,9 @@
             margin: 0 8px;
             position: relative;
             width: 100%;
-        }
+        }*/
+        /*searchbar----------------------End*/
+
     </style>
 }
 <div class="container" style="padding:40px;">
@@ -130,12 +132,22 @@
 
     <div style="margin:20px">
         <form method="post" action="~/QuestionBank/List" enctype="application/x-www-form-urlencoded">
-            <div class="sample ten">
-                <input type="text" name="keyword" placeholder="search" id="keyword">
-                <button type="submit" class="btn btn-search">
-                    <i class="fa fa-search"></i>
-                </button>
-                <button type="reset" class="btn btn-reset fa fa-times"></button>
+
+            @*<div class="sample ten">
+                    <input type="text" name="keyword" placeholder="search" id="keyword">
+                    <button type="submit" class="btn btn-search">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <button type="reset" class="btn btn-reset fa fa-times"></button>
+                </div>*@
+
+            <div class="form-group row justify-content-center py-4">
+                <div class="col-md-4">
+                    <div class="input-group input-group-rounded">
+                        <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="searchBarSim">
+                        <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -188,7 +200,7 @@
                                             </div>
                                         </div>
                                         <div id="editBlock">
-                                            @Html.ActionLink("編輯", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId}) |
+                                            @Html.ActionLink("編輯", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }) |
                                             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
                                             @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
                                         </div>
