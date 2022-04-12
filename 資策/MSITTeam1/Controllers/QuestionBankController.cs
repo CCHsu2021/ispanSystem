@@ -42,7 +42,9 @@ namespace MSITTeam1.Controllers
 			{
 				var showList = quesQuery.Where(q =>
 				q.FSubjectId.Contains(keyword) ||
-				q.FQuestion.Contains(keyword));
+				q.FQuestion.Contains(keyword) ||
+				q.FChoice.Contains(keyword));
+		
 				foreach (var q in showList)
 				{
 					quesList.Add(q);
@@ -52,7 +54,6 @@ namespace MSITTeam1.Controllers
 			else
 			{
 				return View(quesList);
-				//return Content("Hello Mia");
 			}
 		}
 
@@ -62,29 +63,31 @@ namespace MSITTeam1.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Create([Bind("FSn,FSubjectId,FCSubjectId,FQuestionId,FCQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] CQuestionBankViewModel ques)
+		public IActionResult Create([Bind("FSn,FSubjectId,FCSubjectId,FQuestionId,FCQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] List<CQuestionBankViewModel> newques)
 		{
-			TQuestionList quesQuery = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(ques.FSubjectId));
+			TQuestionList quesQuery = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(newques[0].FSubjectId));
 			if(quesQuery == null)
 			{
-				ques.FQuestionId = 1;
-				ques.FCQuestionId = 1;
+				newques[0].FQuestionId = 1;
+				newques[0].FCQuestionId = 1;
 			}
 			else
 			{
 				var searchLastId = from q in _context.TQuestionLists
-								   where q.FSubjectId.Equals(ques.FSubjectId)
+								   where q.FSubjectId.Equals(newques[0].FSubjectId)
 								   orderby q.FQuestionId descending
 								   select q;
 
 				int lastId = searchLastId.First().FQuestionId;
-				ques.FQuestionId = lastId + 1;
-				//ques.FCQuestionId = lastId + 1;
+				newques[0].FQuestionId = lastId + 1;
 			}
-			_context.TQuestionLists.Add(ques.question);
-			ques.FCSubjectId = ques.FSubjectId;
-			ques.FCQuestionId = ques.FQuestionId;
-			_context.TQuestionDetails.Add(ques.choice);
+			_context.TQuestionLists.Add(newques[0].question);
+			//foreach (var c in newques)
+			//{
+			//	newques[i].FCSubjectId = newques[0].FSubjectId;
+			//	newques[i].FCQuestionId = newques[0].FQuestionId;
+			//	_context.TQuestionDetails.Add(newques[i].choice);
+			//}
 			_context.SaveChanges();
 			return RedirectToAction("List");
 		}
@@ -95,12 +98,10 @@ namespace MSITTeam1.Controllers
 
 			if (subjectID != null && questionID > 0)
 			{
-				//TQuestionList ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
-				//var cho = _context.TQuestionDetails.Where(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID);
-				//TQuestionDetail cho = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == choiceSn);
 				List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 				var quesQuery = from choice in _context.TQuestionDetails
 								join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
+								where choice.FSubjectId.Equals(subjectID) && choice.FQuestionId == questionID
 								select new CQuestionBankViewModel
 								{
 									FSn = choice.FSn,

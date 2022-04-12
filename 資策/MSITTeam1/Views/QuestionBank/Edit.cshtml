@@ -1,111 +1,92 @@
 ﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
-    @using MSITTeam1.ViewModels;
 
-    @{
-        ViewData["Title"] = "Edit";
-    }
+@{
+    ViewData["Title"] = "Edit";
+}
 
-    <div class="container" style="padding:20px;">
-        <div>
-            <h1>題目編輯</h1>
-            <h4>題目內容</h4>
-            <hr />
-        </div>
-
-        <div>
-            @{
-                var hello = new helloContext();
-                List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
-                if (Model != null)
-                {
-                    int count = 1;
-                    int index = 0;
-                    var item = Model[0];
-
-                    var quesQuery = from c in hello.TQuestionDetails
-                                    join q in hello.TQuestionLists on new { c.FSubjectId, c.FQuestionId } equals new { q.FSubjectId, q.FQuestionId }
-                                    where q.FSubjectId.Equals(item.FSubjectId) && q.FQuestionId == item.FQuestionId
-                                    select new CQuestionBankViewModel
-                                    {
-                                        FSn = c.FSn,
-                                        FCSubjectId = c.FSubjectId,
-                                        FSubjectId = q.FSubjectId,
-                                        FCQuestionId = c.FQuestionId,
-                                        FQuestionId = q.FQuestionId,
-                                        FQuestion = q.FQuestion,
-                                        FLevel = q.FLevel,
-                                        //updateTime = ques.FUpdateTime.ToString('YYMMDD'),
-                                        FQuestionTypeId = q.FQuestionTypeId,
-                                        FChoice = c.FChoice,
-                                        FCorrectAnswer = c.FCorrectAnswer
-                                    };
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <form asp-action="Edit" method="post" enctype="multipart/form-data">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
-                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCSubjectId)" />
-                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
-                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCQuestionId)" />
-                                <div class="form-group">
-                                    <label id="test1" class="control-label">選項 @count . @Html.DisplayNameFor(modelItem => item.FQuestion)</label>
-                                    <input class="form-control" @Html.EditorFor(modelItem => item.FQuestion) />
-                                    <span class="text-danger" @Html.ValidationMessageFor(modelItem => item.FQuestion)></span>
-                                </div>
-
-                                @*<div class="form-group">
-                                        <label asp-for="FQuestionImage" class="control-label"></label>
-                                            <input asp-for="FQuestionImage" class="form-control" />
-                                            <span asp-validation-for="FQuestionImage" class="text-danger"></span>
-                                        <input type="file" name="photo" class="form-control" />
-                                    </div>*@
-
-                                <div class="form-group">
-                                    <label class="control-label">@Html.DisplayNameFor(modelItem => item.FQuestionTypeId)</label>
-                                    <input class="form-control" @Html.EditorFor(modelItem => item.FQuestionTypeId) />
-                                    <span class="text-danger" @Html.ValidationMessageFor(modelItem => item.FQuestionTypeId)></span>
-                                </div>
-                                @for (int i = 0;i < Model.Count;i++)
-                                {
-                                    if (Model[i].FSubjectId == item.FSubjectId && Model[i].FQuestionId == item.FCQuestionId)
-                                    {
-                                        <input type="hidden" value="@Html.DisplayFor(modelItem => Model[i].FSn)" />
-                                        <div class="form-group">
-                                            <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FChoice)</label>
-                                            <input class="form-control" @Html.EditorFor(modelItem => Model[i].FChoice) />
-                                            <span class="text-danger" @Html.ValidationMessageFor(modelItem => Model[i].FChoice)></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FCorrectAnswer)</label>
-                                            <input class="form-control" @Html.EditorFor(modelItem => Model[i].FCorrectAnswer) />
-                                            <span class="text-danger" @Html.ValidationMessageFor(modelItem => Model[i].FCorrectAnswer)></span>
-                                        </div>                                 
-                                        var choiceItem = quesQuery.FirstOrDefault(ci => ci.FSn == Model[i].FSn);
-                                        quesList.Add(choiceItem);
-                                    }
-                                }
-
-                                @*<div class="form-group">
-                                        <label asp-for="VupdateTime" class="control-label"></label>
-                                        <input asp-for="VupdateTime" class="form-control" />
-                                        <span asp-validation-for="VupdateTime" class="text-danger"></span>
-                                    </div>*@
-                                <div class="form-group">
-                                    <input type="submit" value="Save" class="btn btn-primary" />
-                                </div>
-                                <div>
-                                    <a asp-action="List">返回題目列表</a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
+<div class="container" style="padding:20px;">
+    <div>
+        <h1>題目編輯</h1>
+        <h4>題目內容</h4>
+        <hr />
     </div>
 
+    <div>
+        @{
+            if (Model != null)
+            {
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+                            @*<div class="form-group">
+                                    <label asp-for="FQuestionImage" class="control-label"></label>
+                                        <input asp-for="FQuestionImage" class="form-control" />
+                                        <span asp-validation-for="FQuestionImage" class="text-danger"></span>
+                                    <input type="file" name="photo" class="form-control" />
+                                </div>*@
+                            @*<div>
+                                    <select id="selector" name="selector">
+                                        <option value="1"></option>
+                                    </select>
+                                </div>*@
+
+                            <div class="form-group">
+                                <label id="test1" class="control-label">@Html.DisplayNameFor(modelItem => Model[0].FQuestion)</label>
+                                <input class="form-control" @Html.EditorFor(modelItem => Model[0].FQuestion) />
+                                <span class="text-danger" @Html.ValidationMessageFor(modelItem => Model[0].FQuestion)></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">@Html.DisplayNameFor(modelItem => Model[0].FQuestionTypeId)</label>
+                                <input class="form-control" @Html.EditorFor(modelItem => Model[0].FQuestionTypeId) />
+                                <span class="text-danger" @Html.ValidationMessageFor(modelItem => Model[0].FQuestionTypeId)></span>
+                            </div>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                if (Model[i].FSubjectId == Model[0].FSubjectId && Model[i].FQuestionId == Model[0].FCQuestionId)
+                                {
+                                    <div class="form-group">
+                                        @Html.HiddenFor(modelItem => Model[i].FSn)
+                                        @Html.HiddenFor(modelItem => Model[0].FSubjectId)
+                                        @Html.HiddenFor(modelItem => Model[0].FCSubjectId)
+                                        @Html.HiddenFor(modelItem => Model[0].FQuestionId)
+                                        @Html.HiddenFor(modelItem => Model[0].FCQuestionId)
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FChoice)</label>
+                                        <input class="form-control" @Html.EditorFor(modelItem => Model[i].FChoice) />
+                                        <span class="text-danger" @Html.ValidationMessageFor(modelItem => Model[i].FChoice)></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FCorrectAnswer)</label>
+                                        <input class="form-control" @Html.EditorFor(modelItem => Model[i].FCorrectAnswer) />
+                                        <span class="text-danger" @Html.ValidationMessageFor(modelItem => Model[i].FCorrectAnswer)></span>
+                                    </div>
+                                }
+                            }
+
+                            @*<div class="form-group">
+                                    <label asp-for="VupdateTime" class="control-label"></label>
+                                    <input asp-for="VupdateTime" class="form-control" />
+                                    <span asp-validation-for="VupdateTime" class="text-danger"></span>
+                                </div>*@
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                            <div>
+                                <a asp-action="List">返回題目列表</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

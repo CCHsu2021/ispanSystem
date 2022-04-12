@@ -134,12 +134,12 @@
         <form method="post" action="~/QuestionBank/List" enctype="application/x-www-form-urlencoded">
 
             @*<div class="sample ten">
-                    <input type="text" name="keyword" placeholder="search" id="keyword">
-                    <button type="submit" class="btn btn-search">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <button type="reset" class="btn btn-reset fa fa-times"></button>
-                </div>*@
+            <input type="text" name="keyword" placeholder="search" id="keyword">
+            <button type="submit" class="btn btn-search">
+                <i class="fa fa-search"></i>
+            </button>
+            <button type="reset" class="btn btn-reset fa fa-times"></button>
+        </div>*@
 
             <div class="form-group row justify-content-center py-4">
                 <div class="col-md-4">
@@ -149,6 +149,15 @@
                     </div>
                 </div>
             </div>
+
+            @*<div class="form-group row justify-content-center py-4">
+                <div class="col-md-4">
+                    <select>
+                        <option>SQL</option>
+                        <option>其他</option>
+                    </select>
+                </div>
+            </div>*@
         </form>
     </div>
 
@@ -156,10 +165,12 @@
         @{
             if (Model != null)
             {
+                //List<string> subjectInTable = new List<string>();
                 string subject = "";
                 int quesId = 0;
                 foreach (var item in Model)
                 {
+                    //subjectInTable.Add(item.FSubjectId);
                     if (item.FSubjectId != subject || item.FQuestionId != quesId)
                     {
                         subject = item.FSubjectId;
