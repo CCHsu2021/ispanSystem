@@ -6,6 +6,12 @@
 @foreach (var item in Model)
 {
     <div class="inputstyle">
+        <label for="picture-file">
+            <img id="picture" src="../wwwroot/images/company/@ViewBag.picture" width="200" height="150" />
+        </label>
+        <input type="file" id="picture-file" style="visibility:hidden"/>
+    </div>
+    <div class="inputstyle">
         <label>@Html.DisplayNameFor(model => model.CompanyTaxid)：</label>
         <span>@Html.DisplayFor(modelItem => item.CompanyTaxid)</span>
     </div>

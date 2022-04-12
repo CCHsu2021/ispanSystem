@@ -28,6 +28,14 @@ namespace MSITTeam1.ViewComponent
             foreach (TCompanyBasic t in com)
             {
                 list.Add(new CCompanyBasicViewModel() { com = t });
+                if(t.FLogo == null)
+                {
+                    ViewBag.picture = "upload.jpeg";
+                }
+                else
+                {
+                    ViewBag.picture = t.FLogo;
+                }        
             }
             ViewBag.Name = CDictionary.username;
             return View(list);
