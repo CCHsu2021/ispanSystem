@@ -30,10 +30,14 @@
                 <span asp-validation-for="FContactPerson" class="text-danger"></span>
             </div>
             <div class="form-group">
-                
-                <label asp-for="FCity" class="control-label"></label>
-                <input id="FCity" asp-for="FCity" class="form-control" />
-                <span asp-validation-for="FCity" class="text-danger"></span>
+                @using (Html.BeginForm("Index", "DropDown", FormMethod.Post, new { name = "dropdownlist" }))
+                {
+                    @Html.DropDownList("City", ViewBag.City as SelectList, new { onchange = "tab(this)" })
+                    @Html.DropDownList("District", ViewBag.District as SelectList, new { onchange = "tab(this)" })
+                }
+                @*<label asp-for="FCity" class="control-label"></label>*@
+                @*<input id="FCity" asp-for="FCity" class="form-control" />
+                <span asp-validation-for="FCity" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="FDistrict" class="control-label"></label>
@@ -67,4 +71,12 @@
         </form>
     </div>
 </div>
+
+<script>
+    function tab(value) {
+        $.ajax({
+            type: "Post",
+        })
+    }
+</script>
 
