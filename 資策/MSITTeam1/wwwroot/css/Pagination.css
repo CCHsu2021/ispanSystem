@@ -1,0 +1,13 @@
+﻿.pagination {
+    justify-content: center;
+    padding: 0;
+}
+
+    .pagination .pageBG > a {
+        background-color: #1e3c84;
+        color: white;
+    }
+
+    .pagination .page-link {
+        color: #1e3c84;
+    }

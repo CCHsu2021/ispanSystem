@@ -30,7 +30,7 @@ namespace MSITTeam1Admin.ViewComponent
             {
                 ViewBag.productId = "P00000001";
             }
-            return View(".. / Product / Index");
+            return View(new CProductAdminViewModel());
         }
     }
 }

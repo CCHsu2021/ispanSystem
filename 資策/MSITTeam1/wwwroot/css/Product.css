@@ -1,0 +1,90 @@
+﻿@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+
+.product-item {
+    font-family: 'Fira Sans Extra Condensed', Arial, sans-serif;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    background-color: #fff;
+    color: #111;
+}
+
+    .product-item *,
+    .product-item *:before,
+    .product-item *:after {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-transition: all 0.35s ease;
+        transition: all 0.35s ease;
+    }
+
+    .product-item img {
+        max-width: 100%;
+        height: 250px;
+        vertical-align: top;
+    }
+
+    .product-item figcaption {
+        padding: 10px;
+    }
+
+    .product-item .price {
+        margin: 8px 0;
+        font-weight: 700;
+        color: #1e3c84;
+    }
+
+    .product-item .icons {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+        .product-item .icons a {
+            margin: 3px;
+            opacity: 0;
+            -webkit-transform: translateY(50%);
+            transform: translateY(50%);
+            width: fit-content;
+        }
+
+            .product-item .icons a i {
+                display: block;
+                font-size: 23.52941176px;
+                line-height: 40px;
+                width: 40px;
+                background-color: #ffffff;
+                text-align: center;
+                color: #000;
+                transition: all 0.1s linear;
+            }
+
+                .product-item .icons a i:hover {
+                    background-color: #ed731a;
+                    color: #ffffff;
+                    cursor: pointer;
+                    transition: background-color 0.5s linear;
+                }
+
+    .product-item:hover a,
+    .product-item.hover a {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        transition: all 0.1s linear;
+    }
+.card {
+    margin-bottom: 20px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 250px;
+    align-self: center;
+}
