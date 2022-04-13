@@ -1,0 +1,77 @@
+﻿@model MSITTeam1Admin.ViewModels.CProductAdminViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="row">
+    <div class="col-sm-3 d-none text-left text-sm-center">
+        @Html.DisplayNameFor(model => model.Type)
+    </div>
+    <div class="col-sm-9 text-left d-none">
+        @Html.DisplayFor(model => model.Type)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3 text-left text-sm-center">
+        @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="col-sm-9 text-left">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3 text-left text-sm-center">
+        @Html.DisplayNameFor(model => model.Price)
+    </div>
+    <div class="col-sm-9 text-left">
+        @Html.DisplayFor(model => model.Price)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3 text-left text-sm-center">
+        @Html.DisplayNameFor(model => model.Cost)
+    </div>
+    <div class="col-sm-9 text-left">
+        @Html.DisplayFor(model => model.Cost)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3 text-left text-sm-center">
+        @Html.DisplayNameFor(model => model.ImgPath)
+    </div>
+    <div class="col-sm-9 text-left">
+        <img src="~/images/products/@Html.DisplayFor(model => model.ImgPath)" width="80" height="80" />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3 text-left text-sm-center">
+        @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="col-sm-9 text-left">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3 text-left text-sm-center d-none">
+        @Html.DisplayNameFor(model => model.Barcode)
+    </div>
+    <div class="col-sm-9 text-left d-none">
+        @Html.DisplayFor(model => model.Barcode)
+    </div>
+</div>
+<hr />
+<form asp-action="Delete">
+    <input type="hidden" asp-for="ProductId" />
+    <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">關閉視窗</button>
+    <input type="submit" value="確定刪除" class="btn btn-danger" />
+</form>
+
+
+

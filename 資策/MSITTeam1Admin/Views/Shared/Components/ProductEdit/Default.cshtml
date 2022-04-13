@@ -1,0 +1,78 @@
+﻿@model MSITTeam1Admin.ViewModels.CProductAdminViewModel
+
+    <div class="row mx-0">
+        <form asp-action="Edit" asp-controller="Products" class="w-100" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProductId" />
+            <div class="row d-none">
+                <div class="col-md-3 text-left text-md-right">
+                    <label asp-for="Type"></label>
+                </div>
+                <div class="col-md-9">
+                    <input asp-for="Type" class="form-control w-100" />
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 text-left text-md-right">
+                    <label asp-for="Name"></label>
+                </div>
+                <div class="col-md-9">
+                    <input asp-for="Name" class="form-control w-100" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 text-left text-md-right">
+                    <label asp-for="Price"></label>
+                </div>
+                <div class="col-md-9">
+                    <input asp-for="Price" class="form-control w-100" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 text-left text-md-right">
+                    <label asp-for="Cost"></label>
+                </div>
+                <div class="col-md-9">
+                    <input asp-for="Cost" class="form-control w-100" />
+                    <span asp-validation-for="Cost" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 text-left text-md-right">
+                    <label asp-for="ImgPath"></label>
+                </div>
+                <div class="col-md-9">
+                    <input type="file" name="photo" class="form-control w-100" />
+                    <span asp-validation-for="ImgPath" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 text-left text-md-right">
+                    <label asp-for="Description"></label>
+                </div>
+                <div class="col-md-9">
+                    <textarea rows="8" asp-for="Description" class="form-control w-100 h-100" /></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row d-none">
+                <div class="col-md-3 text-left text-md-right">
+                    <label asp-for="Barcode"></label>
+                </div>
+                <div class="col-md-9">
+                    <input asp-for="Barcode" class="form-control w-100" />
+                    <span asp-validation-for="Barcode" class="text-danger"></span>
+                </div>
+            </div>
+            <hr />
+            <div class="row mx-0 justify-content-end">
+                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">關閉視窗</button>
+                <input type="submit" value="儲存變更" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+
