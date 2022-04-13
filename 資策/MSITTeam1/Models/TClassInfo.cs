@@ -13,5 +13,6 @@ namespace MSITTeam1.Models
         public string FClassOpenDate { get; set; }
         public string FClassCloseDate { get; set; }
         public string FClassAdress { get; set; }
+        public string FClassTestpaper { get; set; }
     }
 }

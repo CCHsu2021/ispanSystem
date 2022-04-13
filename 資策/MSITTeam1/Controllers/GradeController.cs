@@ -18,9 +18,9 @@ namespace MSITTeam1.Controllers
         public IActionResult Index(GradeIdentify Grade)
         {
             IEnumerable<CTestPaperViewModel> list = null;
-            if (hello.TClassInfos.FirstOrDefault(c => c.FAccount == Grade.txtaccount) != null && hello.TClassInfos.FirstOrDefault(c => c.FAccount == Grade.txtaccount).FIdentify == Grade.txtidentify)
+            if (hello.StudentBasics.FirstOrDefault(c => c.Email == Grade.txtaccount) != null && hello.TClassOrderDetails.FirstOrDefault(q => q.MemberId == (hello.StudentBasics.FirstOrDefault(c => c.Email == Grade.txtaccount).MemberId)).ClassExponent == Grade.txtidentify)
             {
-                int Testpaper = int.Parse(hello.TClassInfos.FirstOrDefault(c => c.FIdentify == Grade.txtidentify).FTestpaper);
+                int Testpaper = int.Parse(hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassTestpaper);
                 list = from d in hello.TQuestionDetails
                        join l in hello.TQuestionLists on new { d.FSubjectId, d.FQuestionId } equals new { l.FSubjectId, l.FQuestionId }
                        join p in hello.TTestPapers on new { d.FSubjectId, d.FQuestionId } equals new { p.FSubjectId, p.FQuestionId }
@@ -34,7 +34,7 @@ namespace MSITTeam1.Controllers
                        };
                 ViewBag.Account = Grade.txtaccount;
                 ViewBag.Identify = Grade.txtidentify;
-                ViewBag.Classname = hello.TClassInfos.FirstOrDefault(c => c.FIdentify == Grade.txtidentify).FClassname;
+                ViewBag.Classname = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassname;
                 return View(list);
             }
             else

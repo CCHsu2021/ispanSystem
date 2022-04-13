@@ -438,6 +438,10 @@ namespace MSITTeam1.Models
                     .HasMaxLength(50)
                     .HasColumnName("fClassOpenDate");
 
+                entity.Property(e => e.FClassTestpaper)
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassTestpaper");
+
                 entity.Property(e => e.FClassname)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -1184,6 +1188,12 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.FQuestionImage).HasColumnName("fQuestionImage");
 
                 entity.Property(e => e.FQuestionTypeId).HasColumnName("fQuestionTypeID");
+
+                entity.Property(e => e.FState).HasColumnName("fState");
+
+                entity.Property(e => e.FSubmitterId)
+                    .HasMaxLength(50)
+                    .HasColumnName("fSubmitterId");
 
                 entity.Property(e => e.FUpdateTime)
                     .HasColumnType("datetime")
