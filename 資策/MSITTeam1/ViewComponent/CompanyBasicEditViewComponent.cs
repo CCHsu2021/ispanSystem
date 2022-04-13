@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MSITTeam1.Models;
 using MSITTeam1.ViewModels;
 using System;
@@ -23,6 +24,10 @@ namespace MSITTeam1.ViewComponent
             if (!string.IsNullOrEmpty(id))
             {
                 var company = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == id);
+                var citylist = from c in hello.TCityContrasts select c.FCityName;
+                var districtlist = from c in hello.TCityContrasts select c.FDistrictName;
+                ViewBag.City = new SelectList(citylist, "fPostCode", "fCityName",company.FDistrictCode);
+                ViewBag.District = new SelectList(districtlist, "fPostCode", "fDistrictName",company.FDistrictCode);
                 if (company != null) 
                 {
                     ViewBag.picture = company.FLogo;
