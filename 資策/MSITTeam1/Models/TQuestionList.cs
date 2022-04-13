@@ -16,6 +16,6 @@ namespace MSITTeam1.Models
         public int FLevel { get; set; }
         public string FNotes { get; set; }
         public string FSubmitterId { get; set; }
-        public int? FState { get; set; }
+        public int FState { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace MSITTeam1.Controllers
         }
         public string login(String account, String password)
         {
-            if (password != "")
+            if (password != null)
             {
                 SHA384Managed sha = new SHA384Managed();
                 byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
