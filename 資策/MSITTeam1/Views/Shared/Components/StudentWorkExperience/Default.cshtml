@@ -1,0 +1,65 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th  style="white-space:nowrap">
+                履歷號:
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th style="white-space:nowrap">
+                @Html.DisplayNameFor(model => model.CompanyDepartment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th style="white-space:nowrap">
+                @Html.DisplayNameFor(model => model.EmploymentFrom)
+            </th style="white-space:nowrap">
+            <th style="white-space:nowrap">
+                @Html.DisplayNameFor(model => model.EmploymentTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobDescription)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@{
+    int count = 0;
+    foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <td>
+                @count
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyDepartment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmploymentFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmploymentTo)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.JobDescription)
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        }
+    }
+    </tbody>
+</table>

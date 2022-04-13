@@ -1,4 +1,5 @@
-﻿@model MSITTeam1.ViewModels.CStudentResumeViewModel
+﻿@addTagHelper *, MSITTeam1
+@model MSITTeam1.ViewModels.CStudentResumeViewModel
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,14 +35,14 @@
                                 <input id="fBirthDate" asp-for="fBirthDate" class="form-control" type="text" />
                                 <span asp-validation-for="fBirthDate" class="text-danger"></span>
                             </div>
+                        </div>
+
+                        <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="fEmail" class="control-label"></label>
                                 <input id="fEmail" asp-for="fEmail" class="form-control" />
                                 <span asp-validation-for="fEmail" class="text-danger"></span>
                             </div>
-                        </div>
-
-                        <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="fPhone" class="control-label"></label>
                                 <input id="fPhone" asp-for="fPhone" class="form-control" />
@@ -52,12 +53,6 @@
                                 <input id="fAddress" asp-for="fAddress" class="form-control" />
                                 <span asp-validation-for="fAddress" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="fAutobiography" class="control-label"></label>
-                                <textarea id="fAutobiography" asp-for="fAutobiography" class="form-control"> </textarea>
-                                <span asp-validation-for="fAutobiography" class="text-danger"></span>
-                            </div>
-
                         </div>
                         <div class="col-4">
                             <form name="file" enctype="multipart/form-data">
@@ -70,13 +65,20 @@
                             </form>
                         </div>
                     </div>
-                    <button class="savebtn my-3" id="savechanges">儲存</button>
+                    <div class="form-group">
+                        <label asp-for="fAutobiography" class="control-label"></label>
+                        <textarea id="fAutobiography" asp-for="fAutobiography" class="form-control"> </textarea>
+                        <span asp-validation-for="fAutobiography" class="text-danger"></span>
+                    <div class="btndiv">
+                        <button class="savebtn my-3" id="savechanges">儲存</button>
+                    </div>
+                    </div>
                 </div>
             </li>
             <li class="slide" data-tag="經歷">
                 <div class="sized-container">
                     <div class="row data">
-                        <div class="col-4">
+                        <div class="col-6">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <input type="hidden" asp-for="MemberId" id="MemberId" />
@@ -101,7 +103,7 @@
                                 <span asp-validation-for="EmploymentFrom" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-6">
                             <div class="form-group">
                                 <label asp-for="EmploymentTo" class="control-label"></label>
                                 <input id="EmploymentTo" asp-for="EmploymentTo" class="form-control" />
@@ -113,11 +115,13 @@
                                 <span asp-validation-for="JobDescription" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-4">
-
-                        </div>
                     </div>
-                    <button class="savebtn my-3" id="createWork">新增</button>
+                    <div class="btndiv2">
+                             <button class="saveworkbtn my-3" id="createWork">新增</button>
+                    </div>
+                    <div class="card workdata">
+                     <vc:student-work-experience></vc:student-work-experience>
+                    </div>
                 </div>
             </li>
             <li class="slide" data-tag="學歷">
@@ -239,10 +243,10 @@
                         timer: 1500
                         })
         })
-        //$("row data").load("@Url.Content("~/StudentResume/Create")");
-        })
+        //$("#card workdata").load("@Url.Content("~/StudentResume/Create")");
+    })
     
-
+        
 
 </script>
 }

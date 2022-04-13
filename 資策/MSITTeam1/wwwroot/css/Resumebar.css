@@ -67,15 +67,25 @@
 }
 
 .sized-container {
-    max-width: 1200px;
+    max-width: 1100px;
     width: 100%;
     margin: 0 auto;
     padding-right:20px;   
 }
     .sized-container .savebtn {
-        float: right;
         background: #ed731a;
     }
+.sized-container .saveworkbtn {
+    background: #ed731a;
+}
+.btndiv {
+    text-align: center;
+    margin-top:15px;
+}
+.btndiv2 {
+    text-align: center;
+    padding-bottom:15px;
+}
 
 .slide-container {
     position: relative;
@@ -89,7 +99,7 @@
 }
 
     .slide .sized-container {
-        padding: 40px 20px 20px;
+        padding: 40px 20px 0px;
     }
 
 .button-container {
@@ -176,7 +186,7 @@
 
 .form-group > textarea {
     overflow-y: scroll;
-    height: 125px;
+    height: 180px;
     resize: none;
 }
 
@@ -194,6 +204,7 @@
 
 .image-upload {
     overflow: hidden;
+    text-align: center
 }
 
     .image-upload img {
@@ -203,6 +214,7 @@
         object-fit: contain;
         transform: scale(1,1);
         transition: all 0.2s ease-out
+        
     }
 
         .image-upload img:hover {

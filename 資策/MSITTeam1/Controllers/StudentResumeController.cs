@@ -30,9 +30,9 @@ namespace MSITTeam1.Controllers
             {
 
                 StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)account);
-                StudentWorkExperience sbw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == (string)account);
+                //StudentWorkExperience sbw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == (string)account);
                 if (sb != null /*&& sbw != null*/)
-                    return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
+                    return View(new CStudentResumeViewModel() { student = sb,/*workExperience=sbw*/  fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
             }
             
             return View();
@@ -128,5 +128,7 @@ namespace MSITTeam1.Controllers
             hello.SaveChanges();
             return Content("新增成功");
         }
+
+
     }
 }
