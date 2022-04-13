@@ -19,10 +19,10 @@ namespace MSITTeam1.Controllers
 		{
 			return View();
 		}
-		public IActionResult List(string keyword)
+		public IActionResult List(string keyword,string subject,string level)
 		{
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
-			var quesQuery = from choice in _context.TQuestionDetails
+			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails
 							join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
 							select new CQuestionBankViewModel
 							{
@@ -38,22 +38,62 @@ namespace MSITTeam1.Controllers
 								FChoice = choice.FChoice,
 								FCorrectAnswer = choice.FCorrectAnswer
 							};
-			if (!string.IsNullOrEmpty(keyword))
-			{
-				var showList = quesQuery.Where(q =>
-				q.FSubjectId.Contains(keyword) ||
-				q.FQuestion.Contains(keyword) ||
-				q.FChoice.Contains(keyword));
-		
-				foreach (var q in showList)
+			//if (!string.IsNullOrEmpty(keyword))
+			//{
+			//	var showList = quesQuery.Where(q =>
+			//	q.FSubjectId.Contains(keyword) ||
+			//	q.FQuestion.Contains(keyword) ||
+			//	q.FChoice.Contains(keyword));
+
+			quesQuery = this.FilterByClass(quesQuery, subject);
+			quesQuery = this.FilterByKeyWork(quesQuery, keyword);
+			quesQuery = this.FilterByLevel(quesQuery, level);
+
+			foreach (var q in quesQuery)
 				{
 					quesList.Add(q);
 				}
 				return View(quesList);
+		}
+
+		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string level)
+		{
+			if (!string.IsNullOrEmpty(level))
+			{
+				int tempLevel = int.Parse(level);
+				return table.Where(q => q.FLevel == tempLevel);
 			}
 			else
 			{
-				return View(quesList);
+				return table;
+			}
+		}
+
+		private IQueryable<CQuestionBankViewModel> FilterByKeyWork(IQueryable<CQuestionBankViewModel> table, string keyword)
+		{
+			if (!string.IsNullOrEmpty(keyword))
+			{
+				return table.Where(q =>
+						q.FQuestion.Contains(keyword)
+						|| q.FChoice.Contains(keyword)
+						|| q.FSubjectId.Contains(keyword));
+			}
+			else
+			{
+				return table;
+			}
+		}
+
+		private IQueryable<CQuestionBankViewModel> FilterByClass(IQueryable<CQuestionBankViewModel> table,string className)
+		{
+			if (!string.IsNullOrEmpty(className))
+			{
+				return table.Where(q => q.FSubjectId.Trim().Equals(className.Trim()));
+			}
+			else
+			{
+				// return all
+				return table;
 			}
 		}
 

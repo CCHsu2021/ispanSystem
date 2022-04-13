@@ -1192,6 +1192,7 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.FState).HasColumnName("fState");
 
                 entity.Property(e => e.FSubmitterId)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("fSubmitterId");
 
@@ -1401,9 +1402,7 @@ namespace MSITTeam1.Models
 
                 entity.ToTable("tSubmittedAnswer");
 
-                entity.Property(e => e.FSn)
-                    .ValueGeneratedNever()
-                    .HasColumnName("fSN");
+                entity.Property(e => e.FSn).HasColumnName("fSN");
 
                 entity.Property(e => e.FMemberAccount)
                     .IsRequired()

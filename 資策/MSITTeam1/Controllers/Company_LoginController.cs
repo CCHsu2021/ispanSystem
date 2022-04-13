@@ -26,6 +26,7 @@ namespace MSITTeam1.Controllers
         }
         public string login(String account, String password)
         {
+            if(password != null) { 
             SHA384Managed sha = new SHA384Managed();
             //helloContext hello = new helloContext();
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
@@ -44,6 +45,18 @@ namespace MSITTeam1.Controllers
                 byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
                 byte[] hashBytes = sha.ComputeHash(passwordBytes.Concat(salt).ToArray());
                 if (passwordhash.SequenceEqual(hashBytes))
+                {
+                    string act = mem.CompanyTaxid;
+                    HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
+                    string name = getUserName();
+                    return $"{name}";
+                }
+            }
+                return "帳號密碼錯誤請重新輸入";
+            }else if (password == null)
+            {
+                TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
+                if (mem != null)
                 {
                     string act = mem.CompanyTaxid;
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);

@@ -6403,24 +6403,24 @@ img{
 
 /* ===== Scrollbar CSS ===== */
   /* Firefox */
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: #f9f9f9 transparent;
-  }
+.testimonial-section > .content > .text {
+	scrollbar-width: auto;
+	scrollbar-color: #FAFAFA;
+}
 
   /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 8px;
-  }
+	*::-webkit-scrollbar {
+		width: 10px;
+	}
 
-  *::-webkit-scrollbar-track {
-    background: transparent;
-  }
+*::-webkit-scrollbar-track {
+	background: #9E9FA3;
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #f9f9f971;
-    border-radius: 10px;
-    border: 0px dashed #819636;
-  }
+*::-webkit-scrollbar-thumb {
+	background-color: #f9f9f971;
+	border-radius: 10px;
+	border: 0px dashed #819636;
+}
 
 

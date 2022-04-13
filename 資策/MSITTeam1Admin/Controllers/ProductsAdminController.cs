@@ -12,12 +12,12 @@ using MSITTeam1Admin.ViewModels;
 
 namespace MSITTeam1Admin.Controllers
 {
-    public class ProductsController : Controller
+    public class ProductsAdminController : Controller
     {
         private readonly helloContext hello;
         IWebHostEnvironment _enviroment;
 
-        public ProductsController(helloContext _hello, IWebHostEnvironment p)
+        public ProductsAdminController(helloContext _hello, IWebHostEnvironment p)
         {
             hello = _hello;
             _enviroment = p;

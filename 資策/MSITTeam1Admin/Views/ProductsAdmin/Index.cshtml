@@ -1,0 +1,133 @@
+﻿@addTagHelper *, MSITTeam1Admin
+@model IEnumerable<MSITTeam1Admin.ViewModels.CProductAdminViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container">
+    <div class="col-12">
+        <div class="page-title my-4">
+            <h2>產品維護</h2>
+        </div>
+    </div>
+    <div class="col-12">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateProduct">
+            新增產品
+        </button>
+        <!--新增Modal-->
+        <div class="modal fade" id="CreateProduct" tabindex="-1" aria-labelledby="ProductDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ProductDeleteModalLabel">新增產品</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <vc:product-create></vc:product-create>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<p>
+            <a asp-action="Create" class="btn btn-primary">新增產品</a>
+        </p>*@
+    </div>
+    <section id="main-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="bootstrap-data-table-panel">
+                        <div class="table-responsive">
+                            <table id="bootstrap-data-table-export" class="table table-striped table-bordered my-3">
+                                <thead>
+                                    <tr>
+                                        <th width="17%">名稱</th>
+                                        <th width="8%">價格</th>
+                                        <th width="8%">成本</th>
+                                        <th width="13%">圖片</th>
+                                        <th width="38%">商品介紹</th>
+                                        <th width="16%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model)
+                                        {
+                                            string Did = $"D{item.ProductId}";
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Price)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Cost)
+                                                </td>
+                                                <td>
+                                                    <img src="~/images/products/@item.ImgPath" width="100" height="100" />
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Description)
+                                                </td>
+                                                <td>
+                                                    <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#@item.ProductId">
+                                                        修改
+                                                    </button>
+                                                    <!-- 修改Modal -->
+        <div class="modal fade" id="@item.ProductId" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ProductEditModalLabel">修改產品資料</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <vc:product-edit id="@item.ProductId"></vc:product-edit>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#@Did">
+            刪除
+        </button>
+        <!-- 刪除Modal -->
+        <div class="modal fade" id="@Did" tabindex="-1" aria-labelledby="ProductDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ProductDeleteModalLabel">是否確定刪除此資料？</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <vc:product-delete id="@item.ProductId"></vc:product-delete>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProductId">刪除</a>*@
+        </td>
+        </tr>
+    }
+    }
+    </tbody>
+    </table>
+    </div>
+                    </div>
+                </div>
+                <!-- /# card -->
+            </div>
+            <!-- /# column -->
+        </div>
+        <!-- /# row -->
+    </section>
+</div>
+
+
