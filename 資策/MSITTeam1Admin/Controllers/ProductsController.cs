@@ -130,31 +130,32 @@ namespace MSITTeam1Admin.Controllers
 
 
         // GET: Products/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public ActionResult Delete(string id)
         {
-            if (id == null)
+            if (id != null)
             {
-                return NotFound();
+                TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == id.ToString());
+                if (prod != null)
+                {
+                    return View(new CProductAdminViewModel() { prodcut = prod });
+                }
             }
-
-            var tProduct = await hello.TProducts
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (tProduct == null)
-            {
-                return NotFound();
-            }
-
-            return View(tProduct);
+            return RedirectToAction("Index");
         }
 
         // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        [HttpPost]
+        public IActionResult Delete(CProductAdminViewModel vModel)
         {
-            var tProduct = await hello.TProducts.FindAsync(id);
-            hello.TProducts.Remove(tProduct);
-            await hello.SaveChangesAsync();
+            TProduct prod = hello.TProducts.FirstOrDefault(t => t.ProductId == vModel.ProductId);
+            if (prod != null)
+            {
+                hello.TProducts.Remove(prod);
+                hello.SaveChanges();
+            }
+            //var tProduct = await hello.TProducts.FindAsync(id);
+            //hello.TProducts.Remove(tProduct);
+            //await hello.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

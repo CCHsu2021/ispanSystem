@@ -1,0 +1,63 @@
+﻿@model MSITTeam1Admin.ViewModels.CProductAdminViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container my-5">
+    <h3>新增產品</h3>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" id="productId-input" value="@ViewBag.productId" asp-for="ProductId" class="form-control" />
+                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                        <label asp-for="Type" class="control-label"></label>
+                        <input asp-for="Type" class="form-control" />
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cost" class="control-label"></label>
+                    <input asp-for="Cost" class="form-control" />
+                    <span asp-validation-for="Cost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImgPath" class="control-label"></label>
+                    <input type="file" name="photo" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea rows="10" asp-for="Description" class="form-control h-100" /></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                @*<div class="form-group">
+                        <label asp-for="Barcode" class="control-label"></label>
+                        <input asp-for="Barcode" class="form-control" />
+                        <span asp-validation-for="Barcode" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <a class="btn btn-secondary" asp-action="Index">返回列表</a>
+                    <input type="submit" value="確定新增" class="btn btn-primary" id="check-create" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
