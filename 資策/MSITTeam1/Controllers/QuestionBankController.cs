@@ -53,7 +53,7 @@ namespace MSITTeam1.Controllers
 				{
 					quesList.Add(q);
 				}
-				return View(quesQuery);
+				return View(quesList);
 		}
 
 		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string level)
