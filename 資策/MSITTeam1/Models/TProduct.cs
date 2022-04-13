@@ -15,5 +15,7 @@ namespace MSITTeam1.Models
         public string ImgPath { get; set; }
         public string Description { get; set; }
         public int? Barcode { get; set; }
+        public int? InStock { get; set; }
+        public int? Active { get; set; }
     }
 }

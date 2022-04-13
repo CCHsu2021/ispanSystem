@@ -117,8 +117,7 @@
                  if (id != item.fQuestionID)
                  {
                  @:var a = $('input[name=@item.fQuestionID]:checked').val();
-                 @:if (1 == a) { anscount++; $('input[name=@item.fQuestionID]:checked').next().css("color", "green");}
-                 @:if (1 != a) { $("input[name=@item.fQuestionID][value='1']").next().css("color", "red"); }
+                 @:if (1 == a) { anscount++; }
                  @:count++
                  id = item.fQuestionID;
                      }

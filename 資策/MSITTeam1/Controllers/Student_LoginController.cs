@@ -29,23 +29,41 @@ namespace MSITTeam1.Controllers
         }
         public string login(String account, String password)
         {
-            SHA384Managed sha = new SHA384Managed();
-            byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
-            byte[] saltbyte = new byte[20];
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            if (password != null)
             {
-                rng.GetBytes(saltbyte);
+                SHA384Managed sha = new SHA384Managed();
+                byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
+                byte[] saltbyte = new byte[20];
+                using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(saltbyte);
+                }
+                byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
+                byte[] passwordhashed = sha.ComputeHash(merged);
+                StudentBasic mem = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
+                if (mem != null)
+                {
+                    byte[] passwordhash = mem.FPassword.ToArray();
+                    byte[] salt = mem.FSalt.ToArray();
+                    byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                    byte[] hashBytes = sha.ComputeHash(passwordBytes.Concat(salt).ToArray());
+                    if (passwordhash.SequenceEqual(hashBytes))
+                    {
+                        string act = mem.FAccount;
+                        string type = mem.FMemberType.ToString();
+                        HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
+                        HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE, type);
+                        string name = getUserName();
+                        return $"{name}";
+                    }
+                }
+                return "帳號密碼錯誤請重新輸入";
             }
-            byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
-            byte[] passwordhashed = sha.ComputeHash(merged);
-            StudentBasic mem = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
-            if (mem != null)
+            //Todo 測試完刪除下面程式碼
+            else if(password == "" || password == null)
             {
-                byte[] passwordhash = mem.FPassword.ToArray();
-                byte[] salt = mem.FSalt.ToArray();
-                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-                byte[] hashBytes = sha.ComputeHash(passwordBytes.Concat(salt).ToArray());
-                if (passwordhash.SequenceEqual(hashBytes))
+                StudentBasic mem = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
+                if (mem != null)
                 {
                     string act = mem.FAccount;
                     string type = mem.FMemberType.ToString();
@@ -53,7 +71,7 @@ namespace MSITTeam1.Controllers
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_MEMBERTYPE, type);
                     string name = getUserName();
                     return $"{name}";
-                }
+                }  
             }
             return "帳號密碼錯誤請重新輸入";
         }
