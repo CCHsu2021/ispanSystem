@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MSITTeam1.Models;
 using MSITTeam1.ViewModels;
 using System;
@@ -21,6 +22,7 @@ namespace MSITTeam1.Controllers
 		}
 		public IActionResult List(string keyword,string subject,string level)
 		{
+			// 從資料庫讀取題目
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails
 							join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
@@ -38,17 +40,47 @@ namespace MSITTeam1.Controllers
 								FChoice = choice.FChoice,
 								FCorrectAnswer = choice.FCorrectAnswer
 							};
-			//if (!string.IsNullOrEmpty(keyword))
-			//{
-			//	var showList = quesQuery.Where(q =>
-			//	q.FSubjectId.Contains(keyword) ||
-			//	q.FQuestion.Contains(keyword) ||
-			//	q.FChoice.Contains(keyword));
 
+			// DropDownList - 課程			
+			List<SelectListItem> subjectItems = new List<SelectListItem>();
+			string temp = "";
+			foreach(var s in quesQuery)
+			{
+				if(s.FSubjectId.Trim() != temp)
+				{
+					subjectItems.Add(new SelectListItem()
+					{
+						Text = s.FCSubjectId
+					});
+				}
+				temp = s.FSubjectId.Trim();
+			}			
+
+			// DropDownList - 題型			
+			List<SelectListItem> typeItems = new List<SelectListItem>();
+			typeItems.Add(new SelectListItem()
+			{
+				Text = "單選題",
+				Value = "1"
+			}); 
+			typeItems.Add(new SelectListItem()
+			{
+				Text = "多選題",
+				Value = "2"
+			}); 
+			typeItems.Add(new SelectListItem()
+			{
+				Text = "填空題",
+				Value = "3"
+			});
+			ViewBag.Subjects = subjectItems;
+			ViewBag.Type = typeItems;
+
+			// 篩選題目
 			quesQuery = this.FilterByClass(quesQuery, subject);
 			quesQuery = this.FilterByKeyWork(quesQuery, keyword);
 			quesQuery = this.FilterByLevel(quesQuery, level);
-
+			
 			foreach (var q in quesQuery)
 				{
 					quesList.Add(q);
