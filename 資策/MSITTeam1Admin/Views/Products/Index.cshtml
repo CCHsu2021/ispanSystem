@@ -11,11 +11,11 @@
         </div>
     </div>
     <div class="col-12">
-        <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateProduct">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateProduct">
             新增產品
-        </button>-->
-        <!-- 新增Modal -->
-        <!--<div class="modal fade" id="CreateProduct" tabindex="-1" aria-labelledby="ProductDeleteModalLabel" aria-hidden="true">
+        </button>
+        <!--新增Modal-->
+        <div class="modal fade" id="CreateProduct" tabindex="-1" aria-labelledby="ProductDeleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -29,10 +29,10 @@
                     </div>
                 </div>
             </div>
-        </div>-->
-        <p>
+        </div>
+        @*<p>
             <a asp-action="Create" class="btn btn-primary">新增產品</a>
-        </p>
+        </p>*@
     </div>
     <section id="main-content">
         <div class="row">
@@ -77,49 +77,49 @@
                                                         修改
                                                     </button>
                                                     <!-- 修改Modal -->
-                                                    <div class="modal fade" id="@item.ProductId" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="ProductEditModalLabel">修改產品資料</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <vc:product-edit id="@item.ProductId"></vc:product-edit>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+        <div class="modal fade" id="@item.ProductId" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ProductEditModalLabel">修改產品資料</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <vc:product-edit id="@item.ProductId"></vc:product-edit>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#@Did">
-                                                        刪除
-                                                    </button>
-                                                    <!-- 刪除Modal -->
-                                                    <div class="modal fade" id="@Did" tabindex="-1" aria-labelledby="ProductDeleteModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="ProductDeleteModalLabel">是否確定刪除此資料？</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <vc:product-delete id="@item.ProductId"></vc:product-delete>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProductId">刪除</a>*@
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#@Did">
+            刪除
+        </button>
+        <!-- 刪除Modal -->
+        <div class="modal fade" id="@Did" tabindex="-1" aria-labelledby="ProductDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ProductDeleteModalLabel">是否確定刪除此資料？</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <vc:product-delete id="@item.ProductId"></vc:product-delete>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProductId">刪除</a>*@
+        </td>
+        </tr>
+    }
+    }
+    </tbody>
+    </table>
+    </div>
                     </div>
                 </div>
                 <!-- /# card -->

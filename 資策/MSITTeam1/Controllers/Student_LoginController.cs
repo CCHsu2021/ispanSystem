@@ -59,6 +59,7 @@ namespace MSITTeam1.Controllers
                 }
                 return "帳號密碼錯誤請重新輸入";
             }
+            //Todo 測試完刪除下面程式碼
             else if(password == "" || password == null)
             {
                 StudentBasic mem = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
