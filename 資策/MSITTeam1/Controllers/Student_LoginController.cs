@@ -72,7 +72,7 @@ namespace MSITTeam1.Controllers
                     return $"{name}";
                 }  
             }
-        
+            return "帳號密碼錯誤請重新輸入";
         }
 
         public string register(String account,String password)
