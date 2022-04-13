@@ -18,7 +18,7 @@ namespace MSITTeam1.Controllers
         public IActionResult Index(GradeIdentify Grade)
         {
             IEnumerable<CTestPaperViewModel> list = null;
-            if (hello.StudentBasics.FirstOrDefault(c => c.Email == Grade.txtaccount) != null && hello.TClassOrderDetails.FirstOrDefault(q => q.MemberId == (hello.StudentBasics.FirstOrDefault(c => c.Email == Grade.txtaccount).MemberId)).ClassExponent == Grade.txtidentify)
+            if (hello.StudentBasics.FirstOrDefault(c => c.FAccount == Grade.txtaccount) != null && hello.TClassOrderDetails.FirstOrDefault(q => q.MemberId == hello.StudentBasics.FirstOrDefault(c => c.FAccount == Grade.txtaccount).MemberId).ClassExponent == Grade.txtidentify)
             {
                 int Testpaper = int.Parse(hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassTestpaper);
                 list = from d in hello.TQuestionDetails
