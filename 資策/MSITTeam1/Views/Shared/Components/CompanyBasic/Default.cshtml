@@ -5,56 +5,71 @@
 
 @foreach (var item in Model)
 {
-    <div class="inputstyle">
-        <label>@Html.DisplayNameFor(model => model.CompanyTaxid)：</label>
-        <span>@Html.DisplayFor(modelItem => item.CompanyTaxid)</span>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="inputstyle">
+            <label>@Html.DisplayNameFor(model => model.CompanyTaxid)：</label>
+            <span>@Html.DisplayFor(modelItem => item.CompanyTaxid)</span>
+        </div>
+        <hr />
+        <div class="inputstyle">
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FContactPerson)：</label>
+            <span>@Html.DisplayFor(modelItem => item.FContactPerson)</span>
+        </div>
+        <hr />
+        <div class="inputstyle">
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FPhone)：</label>
+            <span>(0@(@Html.DisplayFor(modelItem => item.FPhoneCode)))-@Html.DisplayFor(modelItem => item.FPhone)</span>
+        </div>
+        <hr />
+        <div class="inputstyle">
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FFax)：</label>
+            <span>(0@(@Html.DisplayFor(modelItem => item.FFaxCode)))-@Html.DisplayFor(modelItem => item.FFax)</span>
+        </div>
     </div>
-    <hr />
-    <div class="inputstyle">
-        <label for="FBan"> @Html.DisplayNameFor(model => model.FContactPerson)：</label>
-        <span>@Html.DisplayFor(modelItem => item.FContactPerson)</span>
+    <div class="col-md-4 text-center">
+        <input type="file" id="picture-file" class="p-0" style="visibility:hidden;width:0;height:0;" />
+        <label for="picture-file">
+            <img id="picture" src="../images/company/@ViewBag.picture" style="border:5px solid black;float:right;width:200px;height:200px" />
+        </label>
     </div>
-    <hr />
-    <div class="inputstyle">
-        <label for="FBan"> @Html.DisplayNameFor(model => model.FPhone)：</label>
-        <span>(0@(@Html.DisplayFor(modelItem => item.FPhoneCode)))-@Html.DisplayFor(modelItem => item.FPhone)</span>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <hr />
+        <div class="inputstyle">
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FAddress)：</label>
+            <span>@Html.DisplayFor(modelItem => item.FCity)@Html.DisplayFor(modelItem => item.FDistrict)@Html.DisplayFor(modelItem => item.FAddress)</span>
+        </div>
+        <hr />
+        <div class="inputstyle">
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FEmail)：</label>
+            <span>@Html.DisplayFor(modelItem => item.FEmail)</span>
+        </div>
+        <hr />
+        <div class="inputstyle">
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FCapitalAmount)：</label>
+            <span>@Html.DisplayFor(modelItem => item.FCapitalAmount)</span>
+        </div>
+        <hr />
+        <div class="inputstyle">
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FBenefits)：</label><br />
+            <div class="content">@Html.DisplayFor(modelItem => item.FBenefits)</div>
+        </div>
+        <hr />
+        <div class="inputstyle">
+            <label for="FBan"> @Html.DisplayNameFor(model => model.FCustomInfo)：</label><br />
+            <div class="content">@Html.DisplayFor(modelItem => item.FCustomInfo)</div>
+        </div>
+        <hr />
     </div>
-    <hr />
-    <div class="inputstyle">
-        <label for="FBan"> @Html.DisplayNameFor(model => model.FFax)：</label>
-        <span>(0@(@Html.DisplayFor(modelItem => item.FFaxCode)))-@Html.DisplayFor(modelItem => item.FFax)</span>
-    </div>
-    <hr />
-    <div class="inputstyle">
-        <label for="FBan"> @Html.DisplayNameFor(model => model.FAddress)：</label>
-        <span>@Html.DisplayFor(modelItem => item.FCity)@Html.DisplayFor(modelItem => item.FDistrict)@Html.DisplayFor(modelItem => item.FAddress)</span>
-    </div>
-    <hr />
-    <div class="inputstyle">
-        <label for="FBan"> @Html.DisplayNameFor(model => model.FEmail)：</label>
-        <span>@Html.DisplayFor(modelItem => item.FEmail)</span>
-    </div>
-    <hr />
-    <div class="inputstyle">
-        <label for="FBan"> @Html.DisplayNameFor(model => model.FCapitalAmount)：</label>
-        <span>@Html.DisplayFor(modelItem => item.FCapitalAmount)</span>
-    </div>
-    <hr />
-    <div class="inputstyle">
-        <label for="FBan"> @Html.DisplayNameFor(model => model.FBenefits)：</label><br />
-        <textarea style="overflow-y:scroll;resize:none">@Html.DisplayFor(modelItem => item.FBenefits)</textarea>
-    </div>
-    <hr />
-    <div class="inputstyle">
-        <label for="FBan"> @Html.DisplayNameFor(model => model.FCustomInfo)：</label><br />
-        <textarea style="overflow-y:scroll;resize:none">@Html.DisplayFor(modelItem => item.FCustomInfo)</textarea>
-    </div>
-    <hr />
+</div>
+
     <div class="btnflex">
         <button class="btn-style-two " type="button" data-toggle="modal" data-target="#staticBackdrop">修改資料</button>
         <button class="btn-style-two " type="button">預覽資料</button>
     </div>
-
 }
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">

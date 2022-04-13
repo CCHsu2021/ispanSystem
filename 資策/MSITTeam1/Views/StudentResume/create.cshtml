@@ -57,6 +57,7 @@
                                 <textarea id="fAutobiography" asp-for="fAutobiography" class="form-control"> </textarea>
                                 <span asp-validation-for="fAutobiography" class="text-danger"></span>
                             </div>
+                            
                         </div>
                         <div class="col-4">
                             <form name="file" enctype="multipart/form-data" >
@@ -69,6 +70,7 @@
                             </form>
                         </div>
                     </div>
+                    <button class="savebtn my-3" id="savechanges">儲存</button>
                 </div>
             </li>
             <li class="slide" data-tag="經歷">
@@ -149,7 +151,6 @@
     <div class="full-width-container ">
         <div class="button-container sized-container">
             <button class="next">下一步</button>
-            <button id="savechanges">儲存變更</button>
             <button class="previous">上一步</button>
         </div>
     </div>
@@ -176,6 +177,9 @@
         });
 
     $("#savechanges").click(() => {
+        var file_data = $("#file-input").prop("files")[0];
+        var form_data = new FormData();
+        form_data.append("photo", file_data); 
         //var formData = new FormData(document.file);
         //formData.enctype="multipart/form-data";
         //formData.append('photo', $('#file-input')[0].files[0]);

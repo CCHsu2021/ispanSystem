@@ -81,6 +81,11 @@ namespace MSITTeam1.ViewModels
         }
 
         /// 工作經歷
+        public string WorkMemberId
+        {
+            get { return this.workExperience.MemberId; }
+            set { this.workExperience.MemberId = value; }
+        }
         [DisplayName("公司名稱:")]
         public string CompanyName
         {

@@ -110,7 +110,7 @@ namespace MSITTeam1.Controllers
 
         public IActionResult ResetPWD(String password)
         {
-            string account = "222";
+            string account = "company1";
             TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
             if(com != null)
             {
