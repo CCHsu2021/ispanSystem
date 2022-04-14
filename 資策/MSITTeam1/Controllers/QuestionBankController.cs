@@ -124,7 +124,6 @@ namespace MSITTeam1.Controllers
 			}
 			else
 			{
-				// return all
 				return table;
 			}
 		}
@@ -135,37 +134,64 @@ namespace MSITTeam1.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Create([Bind("FSn,FSubjectId,FCSubjectId,FQuestionId,FCQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] List<CQuestionBankViewModel> newques)
+		//public IActionResult Create([Bind("FSn,FSubjectId,FCSubjectId,FQuestionId,FCQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] List<CQuestionBankViewModel> newques)
+		//{
+		//	TQuestionList quesQuery = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(newques[0].FSubjectId));
+		//	if(quesQuery == null)
+		//	{
+		//		newques[0].FQuestionId = 1;
+		//		newques[0].FCQuestionId = 1;
+		//	}
+		//	else
+		//	{
+		//		var searchLastId = from q in _context.TQuestionLists
+		//						   where q.FSubjectId.Equals(newques[0].FSubjectId)
+		//						   orderby q.FQuestionId descending
+		//						   select q;
+
+		//		int lastId = searchLastId.First().FQuestionId;
+		//		newques[0].FQuestionId = lastId + 1;
+		//	}
+		//	_context.TQuestionLists.Add(newques[0].question);
+		//	//foreach (var c in newques)
+		//	//{
+		//	//	newques[i].FCSubjectId = newques[0].FSubjectId;
+		//	//	newques[i].FCQuestionId = newques[0].FQuestionId;
+		//	//	_context.TQuestionDetails.Add(newques[i].choice);
+		//	//}
+		//	_context.SaveChanges();
+		//	return RedirectToAction("List");
+		//}
+
+		public IActionResult Create([Bind("FSn,FSubjectId,FCSubjectId,FQuestionId,FCQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] CQuestionBankViewModel newques)
 		{
-			TQuestionList quesQuery = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(newques[0].FSubjectId));
-			if(quesQuery == null)
+			TQuestionList quesQuery = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(newques.FSubjectId));
+			if (quesQuery == null)
 			{
-				newques[0].FQuestionId = 1;
-				newques[0].FCQuestionId = 1;
+				newques.FQuestionId = 1;
+				newques.FCQuestionId = 1;
 			}
 			else
 			{
 				var searchLastId = from q in _context.TQuestionLists
-								   where q.FSubjectId.Equals(newques[0].FSubjectId)
+								   where q.FSubjectId.Equals(newques.FSubjectId)
 								   orderby q.FQuestionId descending
 								   select q;
 
 				int lastId = searchLastId.First().FQuestionId;
-				newques[0].FQuestionId = lastId + 1;
+				newques.FQuestionId = lastId + 1;
 			}
-			_context.TQuestionLists.Add(newques[0].question);
-			//foreach (var c in newques)
-			//{
-			//	newques[i].FCSubjectId = newques[0].FSubjectId;
-			//	newques[i].FCQuestionId = newques[0].FQuestionId;
-			//	_context.TQuestionDetails.Add(newques[i].choice);
-			//}
+			newques.FSubmitterId = "測試";
+			newques.FState = 0;
+			_context.TQuestionLists.Add(newques.question);
+			newques.FCSubjectId = newques.FSubjectId;
+			newques.FCQuestionId = newques.FCQuestionId;
+			_context.TQuestionDetails.Add(newques.choice);
 			_context.SaveChanges();
 			return RedirectToAction("List");
 		}
 		public IActionResult Edit(string subjectID, int questionID)
 		{
-			// TODO-1:可以一次編輯此題的所有選項和選擇正確選項
 			// TODO-2:加入題型判斷
 
 			if (subjectID != null && questionID > 0)
@@ -183,7 +209,6 @@ namespace MSITTeam1.Controllers
 									FQuestionId = ques.FQuestionId,
 									FQuestion = ques.FQuestion,
 									FLevel = ques.FLevel,
-									//updateTime = ques.FUpdateTime.ToString('YYMMDD'),
 									FQuestionTypeId = ques.FQuestionTypeId,
 									FChoice = choice.FChoice,
 									FCorrectAnswer = choice.FCorrectAnswer

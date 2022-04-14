@@ -87,48 +87,6 @@
             display: flex;
         }
 
-
-        /*searchbar----------------------Start*/
-        /*        input {
-            border: 1px solid #ccc;
-            font-size: 12px;
-            height: 30px;
-            padding: 4px 8px;
-            position: absolute;
-            width: 50%;
-        }
-
-            input:focus {
-                outline: none;
-            }
-
-        button {
-            text-align: center;
-        }
-
-            button:focus {
-                outline: none;
-            }
-
-            button.btn-search, button.btn-reset {
-                background: orange;
-                border: none;
-                height: 30px;
-                font-size: 12px;
-                padding: 4px;
-                position: absolute;
-                width: 30px;
-            }
-
-        .sample {
-            float: left;
-            height: 50px;
-            margin: 0 8px;
-            position: relative;
-            width: 100%;
-        }*/
-        /*searchbar----------------------End*/
-
     </style>
 }
 <div class="container" style="padding:40px;">
@@ -140,44 +98,34 @@
     <div style="margin:20px">
         <form method="post" action="~/QuestionBank/List" enctype="application/x-www-form-urlencoded">
 
-            @*<div class="sample ten">
-                    <input type="text" name="keyword" placeholder="search" id="keyword">
-                    <button type="submit" class="btn btn-search">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <button type="reset" class="btn btn-reset fa fa-times"></button>
-                </div>*@
-
             <div class="form-group row justify-content-around py-4">
                 <div>
-                    @*<div class="col-md-4">
-            @Html.DropDownList("Subjects", (IEnumerable<SelectListItem>)ViewBag.subjectItems, "請選擇類別", new { @class = "form-control" })
-        </div>*@
-                    @{
-                        if (Model != null)
-                        {
-                            string subject = "";
-                                        <div class="col-md-4">
-                                            <select class="form-select" aria-label="Default select example" name="subject">
-                                                <option selected>Open this select menu</option>
-                                                @foreach (var item in Model)
-                                                {
-                                                    if (item.FSubjectId != subject)
+                    <div class="col-md-4">
+                        @Html.DropDownList("Subjects", (IEnumerable<SelectListItem>)ViewBag.subjectItems, "請選擇類別", new { @class = "form-control" })
+                    </div>
+                    @*@{
+                            if (Model != null)
+                            {
+                                string subject = "";
+                                            <div class="col-md-4">
+                                                <select class="form-select form-control" aria-label="Default select example" name="subject">
+                                                    @foreach (var item in Model)
                                                     {
-                                                        <option value="@Html.DisplayFor(modelItem => item.FSubjectId)">@Html.DisplayFor(modelItem => item.FSubjectId)</option>
-                                                        subject = item.FSubjectId;
+                                                        if (item.FSubjectId != subject)
+                                                        {
+                                                            <option value="@Html.DisplayFor(modelItem => item.FSubjectId)">@Html.DisplayFor(modelItem => item.FSubjectId)</option>
+                                                            subject = item.FSubjectId;
+                                                        }
                                                     }
-                                                }
 
-                                            </select>
-                                            <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>
-                                        </div>
-                        }
-                    }
+                                                </select>
+                                            </div>
+                            }
+                        }*@
                     <div class="col-md-4">
                         @Html.DropDownList("Type", (IEnumerable<SelectListItem>)ViewBag.typeItems, "請選擇題目類型", new { @class = "form-control" })
                     </div>
-                    <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>
+                    @*<span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>*@
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-rounded">
@@ -221,7 +169,6 @@
                                             <div class="dd" id="nestable">
                                                 <ol class="dd-list">
                                                     <li class="dd-item" data-id="2">
-                                                        @*<div class="dd-handle" id="title-font">選項</div>*@
                                                         <ol class="dd-list" id="title-font">
                                                             @foreach (var choice in Model)
                                                             {
