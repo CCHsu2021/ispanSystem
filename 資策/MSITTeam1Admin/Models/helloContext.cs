@@ -74,7 +74,7 @@ namespace MSITTeam1Admin.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;Persist Security Info=False;User ID=MSIT40;Password=Ispan40team1");
+                optionsBuilder.UseSqlServer("Server=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;Persist Security Info=False;User ID=MSIT40;Password=Ispan40team1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -409,33 +409,43 @@ namespace MSITTeam1Admin.Models
 
             modelBuilder.Entity<TClassInfo>(entity =>
             {
-                entity.HasKey(e => e.FAccount);
+                entity.HasKey(e => e.FClassCode)
+                    .HasName("PK_tClassInfo_1");
 
                 entity.ToTable("tClassInfo");
 
-                entity.Property(e => e.FAccount)
+                entity.Property(e => e.FClassCode)
                     .HasMaxLength(50)
-                    .HasColumnName("fAccount");
+                    .HasColumnName("fClassCode");
+
+                entity.Property(e => e.FClassAdress)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassAdress");
+
+                entity.Property(e => e.FClassCloseDate)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassCloseDate");
+
+                entity.Property(e => e.FClassExponent)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassExponent");
+
+                entity.Property(e => e.FClassOpenDate)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassOpenDate");
+
+                entity.Property(e => e.FClassTestpaper)
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassTestpaper");
 
                 entity.Property(e => e.FClassname)
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("fClassname");
-
-                entity.Property(e => e.FIdentify)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fIdentify");
-
-                entity.Property(e => e.FName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fName");
-
-                entity.Property(e => e.FTestpaper)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fTestpaper");
             });
 
             modelBuilder.Entity<TClassOrder>(entity =>
@@ -467,7 +477,7 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.ClassCode).HasMaxLength(50);
+                entity.Property(e => e.ClassExponent).HasMaxLength(50);
 
                 entity.Property(e => e.DepartmentName).HasMaxLength(50);
 
@@ -1096,8 +1106,6 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.ProductId).HasMaxLength(50);
 
-                entity.Property(e => e.ImgPath).HasMaxLength(50);
-
                 entity.Property(e => e.Name).HasMaxLength(50);
             });
 
@@ -1178,6 +1186,13 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.FQuestionImage).HasColumnName("fQuestionImage");
 
                 entity.Property(e => e.FQuestionTypeId).HasColumnName("fQuestionTypeID");
+
+                entity.Property(e => e.FState).HasColumnName("fState");
+
+                entity.Property(e => e.FSubmitterId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fSubmitterId");
 
                 entity.Property(e => e.FUpdateTime)
                     .HasColumnType("datetime")
@@ -1385,9 +1400,7 @@ namespace MSITTeam1Admin.Models
 
                 entity.ToTable("tSubmittedAnswer");
 
-                entity.Property(e => e.FSn)
-                    .ValueGeneratedNever()
-                    .HasColumnName("fSN");
+                entity.Property(e => e.FSn).HasColumnName("fSN");
 
                 entity.Property(e => e.FMemberAccount)
                     .IsRequired()
@@ -1399,8 +1412,6 @@ namespace MSITTeam1Admin.Models
                     .HasMaxLength(10)
                     .HasColumnName("fQuestionID")
                     .IsFixedLength(true);
-
-                entity.Property(e => e.FResultId).HasColumnName("fResultID");
 
                 entity.Property(e => e.FSubjectId)
                     .IsRequired()

@@ -26,11 +26,11 @@
                 <figure class="product-item">
                     <div class="icons"><a class="add-to-cart-index" title="加入購物車" style="z-index:9"><i class="fas fa-shopping-cart"></i></a></div>
                     <a class="d-block" asp-action="Details" asp-route-id="@item.ProductId">
-                        <img src="~/images/products/@item.ImgPath" alt="" />
+                        <img src="@item.ImgPath" alt="" />
                     </a>
                     <figcaption>
                         <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
-                        <div class="price h5">NT$@Html.DisplayFor(modelItem => item.Price)</div>
+                        <div class="price h5">NT$@Html.DisplayFor(modelItem => item.Price, "Money")</div>
                     </figcaption>
                 </figure>
             </div>

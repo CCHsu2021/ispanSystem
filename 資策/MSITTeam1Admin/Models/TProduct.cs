@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -16,5 +15,7 @@ namespace MSITTeam1Admin.Models
         public string ImgPath { get; set; }
         public string Description { get; set; }
         public int? Barcode { get; set; }
+        public int? InStock { get; set; }
+        public int? Active { get; set; }
     }
 }
