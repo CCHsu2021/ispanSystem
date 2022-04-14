@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MSITTeam1.Models;
 using MSITTeam1.ViewModels;
 using Newtonsoft.Json;
@@ -66,6 +67,12 @@ namespace MSITTeam1.Controllers
                 hello.SaveChanges();
             }
             return Content("success");
+        }
+        [HttpPost]
+        public JsonResult GetCityByCityGroup(string selectedCity)
+        {
+            var districtlist = from c in hello.TCityContrasts where c.FCityName == selectedCity select c;
+            return Json(districtlist);
         }
     }
 }

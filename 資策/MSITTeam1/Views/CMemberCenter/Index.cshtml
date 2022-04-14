@@ -175,7 +175,7 @@
     <script>
     $("#savechanges").click(() => {
         var jsondata = JSON.stringify({
-            FAccount:$("#FAccount").val(),
+            CompanyTaxid: $("#CompanyTaxid").val(),
             FName: $("#FName").val(),
             FPhoneCode: $("#FPhoneCode").val(),
             FPhone: $("#FPhone").val(),
@@ -188,6 +188,9 @@
             FEmail: $("#FEmail").val(),
             FBenefits: $("#FBenefits").val(),
             FCustomInfo: $("#FCustomInfo").val(),
+            FCity: $("#City").val(),
+            FDistrictCode: $("#District").val(),
+            FDistrict: $("#District option:selected").text(),
         })
         $.ajax({
             url: "@Url.Content("~/CMemberCenter/CompanyInformationEdit")",
@@ -208,6 +211,26 @@
             Swal.fire(error.status + ":" + error.statusText);
         })
     })
+        $("#City").change(function () {
+        $("#District").empty();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Content("~/CMemberCenter/GetCityByCityGroup")',
+            dataType: "json",
+            data: { selectedCity: $("#City").val() },
+            success: function (mems) {
+                $.each(mems, function (key, val) {
+                    $("#District").append(
+                        '<option value="' + mems[key]["fPostCode"] + '">' + mems[key]["fDistrictName"] + "</option>"
+                     );
+                });
+            },
+            error: function (ex) {
+                alert("Failed to retrieve states : " + ex);
+            },
+        });
+        return false;
+    });
     </script>
 }
 
