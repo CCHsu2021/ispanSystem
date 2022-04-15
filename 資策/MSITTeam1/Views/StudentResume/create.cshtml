@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <form name="file" enctype="multipart/form-data">
+                            <form name="picturefile" enctype="multipart/form-data">
                                 <div class="image-upload">
                                     <label for="file-input">
                                         <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
@@ -185,9 +185,9 @@
 
     //// 儲存基本資料
     $("#savechanges").click(() => {
-        var file_data = $("#file-input").prop("files")[0];
-        var form_data = new FormData();
-        form_data.append("photo", file_data);
+        //var file_data = $("#file-input")[0].files[0];
+        //var form_data = new FormData(document.picturefile);
+        //form_data.append("photo", file_data);
         //var formData = new FormData(document.file);
         //formData.enctype="multipart/form-data";
         //formData.append('photo', $('#file-input')[0].files[0]);
@@ -200,13 +200,13 @@
             fEmail: $("#fEmail").val(),
             fPhone: $("#fPhone").val(),
             fAddress: $("#fAddress").val(),
-            fAutobiography: $("#fAutobiography").val(),
+            fAutobiography: $("#fAutobiography").val()
         })
         $.ajax({
             url: "@Url.Content("~/StudentResume/Edit")",
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            data: jsondata /*,formData*/
+            data: jsondata ,formData
          }).done(function (data) {
             Swal.fire({
 
