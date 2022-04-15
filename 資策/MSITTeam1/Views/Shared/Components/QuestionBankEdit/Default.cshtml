@@ -32,17 +32,17 @@
                                     </select>
                                 </div>*@
 
-                        <div class="form-group">
-                            <label id="test1" class="control-label">@Html.DisplayNameFor(modelItem => Model[0].FQuestion)</label>
-                            <input class="form-control" /> @Html.EditorFor(modelItem => Model[0].FQuestion)
-                        <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[0].FQuestion)</span>
-                        </div>
+                            <div class="form-group">
+                                <label id="test1" class="control-label">@Html.DisplayNameFor(modelItem => Model[0].FQuestion)</label>
+                                <input class="form-control" /> @Html.EditorFor(modelItem => Model[0].FQuestion)
+                                <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[0].FQuestion)</span>
+                            </div>
 
-                        <div class="form-group">
-                            <label class="control-label">@Html.DisplayNameFor(modelItem => Model[0].FQuestionTypeId)</label>
-                            <input class="form-control" />@Html.EditorFor(modelItem => Model[0].FQuestionTypeId)
-                        <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[0].FQuestionTypeId)</span>
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label">@Html.DisplayNameFor(modelItem => Model[0].FQuestionTypeId)</label>
+                                <input class="form-control" />@Html.EditorFor(modelItem => Model[0].FQuestionTypeId)
+                                <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[0].FQuestionTypeId)</span>
+                            </div>
                             @for (int i = 0; i < Model.Count; i++)
                             {
                                 if (Model[i].FSubjectId == Model[0].FSubjectId && Model[i].FQuestionId == Model[0].FCQuestionId)
@@ -57,12 +57,12 @@
                                     <div class="form-group">
                                         <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FChoice)</label>
                                         <input class="form-control" />@Html.EditorFor(modelItem => Model[i].FChoice)
-                                    <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[i].FChoice)</span>
+                                        <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[i].FChoice)</span>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FCorrectAnswer)</label>
                                         <input class="form-control" />@Html.EditorFor(modelItem => Model[i].FCorrectAnswer)
-                                    <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[i].FCorrectAnswer)</span>
+                                        <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[i].FCorrectAnswer)</span>
                                     </div>
                                 }
                             }

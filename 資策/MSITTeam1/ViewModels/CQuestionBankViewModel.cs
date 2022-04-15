@@ -97,6 +97,23 @@ namespace MSITTeam1.ViewModels
 			set { this.question.FQuestionTypeId = value; }
 		}
 
+		public string FSubmitterId
+		{
+			get { return this.question.FSubmitterId; }
+			set { this.question.FSubmitterId = value; }
+		}
+
+		public int FState
+		{
+			get { return this.question.FState; }
+			set { this.question.FState = value; }
+		}
+
+		public List<string> FChoiceList
+		{
+			get;set;
+		}
+
 		//private TQuestionDetail test { get; set; }
 
 		//public string VTchoice

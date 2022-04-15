@@ -27,7 +27,6 @@ namespace MSITTeam1.ViewComponent
             List<CCompanyBasicViewModel> list = new List<CCompanyBasicViewModel>();
             foreach (TCompanyBasic t in com)
             {
-                list.Add(new CCompanyBasicViewModel() { com = t });
                 if(t.FLogo == null)
                 {
                     ViewBag.picture = "upload.png";
@@ -35,7 +34,8 @@ namespace MSITTeam1.ViewComponent
                 else
                 {
                     ViewBag.picture = t.FLogo;
-                }        
+                }
+                list.Add(new CCompanyBasicViewModel() { com = t });
             }
             ViewBag.Name = CDictionary.username;
             return View(list);

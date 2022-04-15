@@ -56,14 +56,5 @@ namespace MSITTeam1.ViewComponent
             }
             return View(Url.Content("~/CMemberCenter/Index"));
         }
-        [HttpPost]
-        public IViewComponentResult Index(FormCollection form)
-        {
-            string id = "";
-            string id2 = "";
-            ViewBag.City = SetDropDown1(id);
-            ViewBag.District = SetDropDown2(id, id2);
-            return View();
-        }
     }
 }
