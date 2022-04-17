@@ -1,25 +1,30 @@
 ﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+<style>
+    th {
+        white-space: nowrap;
+    }
 
+</style>
 
 <table class="table">
     <thead>
         <tr>
-            <th  style="white-space:nowrap">
-                履歷號:
+            <th>
+                編號:
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CompanyName)
             </th>
-            <th style="white-space:nowrap">
+            <th>
                 @Html.DisplayNameFor(model => model.CompanyDepartment)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.JobTitle)
             </th>
-            <th style="white-space:nowrap">
+            <th>
                 @Html.DisplayNameFor(model => model.EmploymentFrom)
-            </th style="white-space:nowrap">
-            <th style="white-space:nowrap">
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EmploymentTo)
             </th>
             <th>

@@ -14,8 +14,8 @@
     <div class="viewport full-width-container">
         <ul class="slide-container">
             <li class="slide" data-tag="基本資料">
+                <form name="basic">
                 <div class="sized-container">
-                    <form name="picturefile" enctype="multipart/form-data">
                     <div class="row data">
                         <div class="col-4">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -73,8 +73,8 @@
                     <div class="btndiv">
                         <button type="submit" class="savebtn my-3" id="savechanges">儲存</button>
                     </div>
-                    </form>
                 </div>
+            </form>
             </li>
             <li class="slide" data-tag="經歷">
                 <div class="sized-container">
@@ -120,7 +120,7 @@
                     <div class="btndiv2">
                              <button class="saveworkbtn my-3" id="createWork">新增</button>
                     </div>
-                    <div class="card workdata">
+                    <div class="card workdata overflow-auto">
                      <vc:student-work-experience></vc:student-work-experience>
                     </div>
                 </div>
@@ -185,18 +185,34 @@
         });
 
     //// 儲存基本資料
-    $("#savechanges").click(() => {
+    const btn = document.querySelector('#savechanges');
+    btn.addEventListener('click', (evt) => {
+        evt.preventDefault();
+
+        const formdata = new FormData(document.basic);
+
+        fetch('@Url.Content("~/StudentResume/Edit")', {
+            method: 'POST',
+            body:formdata
+        }).then(Swal.fire({
+
+            icon: 'success',
+            title: '修改成功',
+            showConfirmButton: false,
+            timer: 1500
+        }))
+    })
+    @*$("#savechanges").click((e) => {
+        e.preventDefault();
+
         //var file_data = $("#file-input")[0].files[0];
-        var form_data = new FormData(document.picturefile);
+        /*var form_data = new FormData(document.picturefile);*/
         //form_data.append("photo", file_data);
         //var formData = new FormData(document.file);
         //formData.enctype="multipart/form-data";
         //formData.append('photo', $('#file-input')[0].files[0]);
-
-            fetch('@Url.Action("Edit","StudentResume")',{
-                method:'POST',
-                body:form_data
-            })
+        var form = $('form')[0];
+        var formData = new FormData(form);
         //var jsondata = JSON.stringify({
         //    MemberId:$("#MemberId").val(),
         //    fName:$("#fName").val(),
@@ -207,30 +223,26 @@
         //    fAddress: $("#fAddress").val(),
         //    fAutobiography: $("#fAutobiography").val()
         //})
-        //$.ajax({
-        //    url: "@Url.Content("~/StudentResume/Edit")",
-        //    type: "POST",
-        //    processData: false,
-        //    contentType : false,
-        //    data: form_data
-        // })
-        //$.ajax({
-        //    url: "@Url.Content("~/StudentResume/Edit")",
-        //    type: "POST",
-        //    contentType: "application/json; charset=utf-8",
-        //    data: jsondata 
-        // })
-        // .done(function (data) {
-        //    Swal.fire({
 
-        //                icon: 'success',
-        //                title: '修改成功',
-        //                showConfirmButton: false,
-        //                timer: 1500
-        //                })
-        //})
-        //$("row data").load("@Url.Content("~/StudentResume/Create")");
-    })
+        $.ajax({
+            url: "@Url.Content("~/StudentResume/Edit")",
+            type: "POST",
+            contentType: false,
+            cache: false,
+            processData:false,
+            data: formData
+         })
+         .done(function (data) {
+            Swal.fire({
+
+                        icon: 'success',
+                        title: '修改成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+        })
+        $("row data").load("@Url.Content("~/StudentResume/Create")");
+    })*@
     /////儲存工作經歷
     $("#createWork").click(()=>{
         var jsondata = JSON.stringify({
