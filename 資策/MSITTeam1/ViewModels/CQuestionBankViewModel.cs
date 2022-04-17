@@ -111,16 +111,12 @@ namespace MSITTeam1.ViewModels
 
 		public List<string> FChoiceList
 		{
+			get; set;
+		}
+		
+		public List<int> FCorrectAnswerList
+		{
 			get;set;
 		}
-
-		//private TQuestionDetail test { get; set; }
-
-		//public string VTchoice
-		//{
-		//	get { return this.test.FChoice; }
-		//	set { this.test.FChoice = value; }
-		//}
-
 	}
 }

@@ -40,7 +40,6 @@ namespace MSITTeam1.Controllers
 								FChoice = choice.FChoice,
 								FCorrectAnswer = choice.FCorrectAnswer
 							};
-
 			// DropDownList - 課程			
 			List<SelectListItem> subjectItems = new List<SelectListItem>();
 			string temp = "";
@@ -55,7 +54,6 @@ namespace MSITTeam1.Controllers
 				}
 				temp = s.FSubjectId.Trim();
 			}			
-
 			// DropDownList - 題型			
 			List<SelectListItem> typeItems = new List<SelectListItem>();
 			typeItems.Add(new SelectListItem()
@@ -87,7 +85,6 @@ namespace MSITTeam1.Controllers
 				}
 				return View(quesList);
 		}
-
 		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string level)
 		{
 			if (!string.IsNullOrEmpty(level))
@@ -134,36 +131,7 @@ namespace MSITTeam1.Controllers
 		}
 
 		[HttpPost]
-		//public IActionResult Create([Bind("FSn,FSubjectId,FCSubjectId,FQuestionId,FCQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] List<CQuestionBankViewModel> newques)
-		//{
-		//	TQuestionList quesQuery = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(newques[0].FSubjectId));
-		//	if(quesQuery == null)
-		//	{
-		//		newques[0].FQuestionId = 1;
-		//		newques[0].FCQuestionId = 1;
-		//	}
-		//	else
-		//	{
-		//		var searchLastId = from q in _context.TQuestionLists
-		//						   where q.FSubjectId.Equals(newques[0].FSubjectId)
-		//						   orderby q.FQuestionId descending
-		//						   select q;
-
-		//		int lastId = searchLastId.First().FQuestionId;
-		//		newques[0].FQuestionId = lastId + 1;
-		//	}
-		//	_context.TQuestionLists.Add(newques[0].question);
-		//	//foreach (var c in newques)
-		//	//{
-		//	//	newques[i].FCSubjectId = newques[0].FSubjectId;
-		//	//	newques[i].FCQuestionId = newques[0].FQuestionId;
-		//	//	_context.TQuestionDetails.Add(newques[i].choice);
-		//	//}
-		//	_context.SaveChanges();
-		//	return RedirectToAction("List");
-		//}
-
-		public IActionResult Create([Bind("FSn,FSubjectId,FCSubjectId,FQuestionId,FCQuestionId,FQuestion,FChoice,FLevel,FCorrectAnswer,FQuestionTypeId")] CQuestionBankViewModel newques)
+		public IActionResult Create([FromBody] CQuestionBankViewModel newques)
 		{
 			TQuestionList quesQuery = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(newques.FSubjectId));
 			if (quesQuery == null)
@@ -184,11 +152,16 @@ namespace MSITTeam1.Controllers
 			newques.FSubmitterId = "測試";
 			newques.FState = 0;
 			_context.TQuestionLists.Add(newques.question);
-			newques.FCSubjectId = newques.FSubjectId;
-			newques.FCQuestionId = newques.FCQuestionId;
-			_context.TQuestionDetails.Add(newques.choice);
+			foreach (var ans in newques.FChoiceList)
+			{
+				newques.FCSubjectId = newques.FSubjectId;
+				newques.FCQuestionId = newques.FQuestionId;
+				newques.FChoice = ans;
+				newques.FCorrectAnswer = 1;
+				_context.TQuestionDetails.Add(newques.choice);
+			}
 			_context.SaveChanges();
-			return RedirectToAction("List");
+			return Content("新增成功");
 		}
 		public IActionResult Edit(string subjectID, int questionID)
 		{
@@ -249,12 +222,8 @@ namespace MSITTeam1.Controllers
 						_context.SaveChanges();
 					}
 				}
-				return RedirectToAction("List");
 			}
-			else
-			{
-				return Content("HIAHIAHIAHIAHIA");
-			}
+			return RedirectToAction("List");
 		}
 	}
 }

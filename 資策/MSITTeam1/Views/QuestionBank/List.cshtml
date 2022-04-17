@@ -99,8 +99,8 @@
         <form method="post" action="~/QuestionBank/List" enctype="application/x-www-form-urlencoded">
 
             <div class="form-group row justify-content-around py-4">
-                <div>
-                    <div class="col-md-4">
+                <div class="row">
+                    <div class="col">
                         @Html.DropDownList("Subjects", (IEnumerable<SelectListItem>)ViewBag.subjectItems, "請選擇類別", new { @class = "form-control" })
                     </div>
                     @*@{
@@ -122,7 +122,7 @@
                                             </div>
                             }
                         }*@
-                    <div class="col-md-4">
+                    <div class="col">
                         @Html.DropDownList("Type", (IEnumerable<SelectListItem>)ViewBag.typeItems, "請選擇題目類型", new { @class = "form-control" })
                     </div>
                     @*<span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>*@

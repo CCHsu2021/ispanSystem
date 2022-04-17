@@ -3,6 +3,21 @@
 @{
     ViewData["Title"] = "Create";
 }
+
+@section Style{ 
+<style>
+
+    input[type='radio'] {
+        vertical-align: text-bottom;
+        margin-bottom: 1px;
+    }
+
+    #ansList > #choice > #txtAns{
+        display:inline !important;
+        width: 90% !important;
+    }
+</style>
+}
 <div class="container" id="outdiv" style="padding:20px">
     <h1>新增</h1>
 
@@ -15,63 +30,52 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="FSubjectId" class="control-label"></label>
-                    <select asp-for="FSubjectId" class="form-control">
+                    <select id="FSubjectId" asp-for="FSubjectId" class="form-control">
                         <option>其他</option>
                     </select>
                     <span asp-validation-for="FSubjectId" class="text-danger"></span>
                 </div>
-                @*<div class="form-group">
-                    <label asp-for="FQuestionId" class="control-label"></label>
-                    <input asp-for="FQuestionId" class="form-control" />
-                    <span asp-validation-for="FQuestionId" class="text-danger"></span>
-                </div>*@
-                @*<div class="form-group">
-                    <label asp-for="FCSubjectId" class="control-label"></label>
-                    <select asp-for="FCSubjectId" class="form-control">
-                        <option>其他</option>
-                    </select>
-                    <span asp-validation-for="FCSubjectId" class="text-danger"></span>
-                </div>*@
-                @*<div class="form-group">
-                    <label asp-for="FCQuestionId" class="control-label"></label>
-                    <input asp-for="FCQuestionId" class="form-control" />
-                    <span asp-validation-for="FCQuestionId" class="text-danger"></span>
-                </div>*@
-                <div class="form-group">
-                    <label asp-for="FQuestion" class="control-label"></label>
-                    <input asp-for="FQuestion" class="form-control" />
-                    <span asp-validation-for="FQuestion" class="text-danger"></span>
-                </div>
-                @*<div class="form-group">
-                        <label asp-for="FQuestionImage" class="control-label"></label>
-                        <input asp-for="FQuestionImage" class="form-control" />
-                        <span asp-validation-for="FQuestionImage" class="text-danger"></span>
-                    </div>*@
                 <div class="form-group">
                     <label asp-for="FQuestionTypeId" class="control-label"></label>
-                    <input asp-for="FQuestionTypeId" class="form-control" />
+                    <select id="FQuestionTypeId" asp-for="FQuestionTypeId" class="form-control">
+                        <option value="1">單選題</option>
+                        <option value="2">多選題</option>
+                        <option value="3">填空題</option>
+                    </select>
                     <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
                 </div>
-                <div class="form-group" id="choice">
-                    <label asp-for="FChoice" class="control-label"></label>
-                    <input asp-for="FChoice" class="form-control" />
-                    <span asp-validation-for="FChoice" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="FQuestion" class="control-label"></label>
+                    <input id="FQuestion" asp-for="FQuestion" class="form-control" />
+                    <span asp-validation-for="FQuestion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FQuestionTypeId" class="control-label"></label>
+                    <input id="FQuestionTypeId" asp-for="FQuestionTypeId" class="form-control" />
+                    <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
+                </div>
+                <div id="ansList">
+                    <div class="form-group" id="choice">
+                        <label asp-for="FChoice" class="control-label"></label>
+                        <br />
+                            <input type="radio" asp-for="FCorrectAnswer" value="1" />
+                            <input id="txtAns" asp-for="FChoice" class="form-control" />
+                        <span asp-validation-for="FChoice" class="text-danger"></span>
+                    </div>
+                        
                 </div>
                 <div style="padding:10px 0px 30px 30px;">
-                    <btn id="BtnNewChoice" class="btn btn-primary btn-outline small">新增答案選項</btn>
+                    <btn id="BtnNewChoice" class="btn btn-primary btn-outline small" >新增答案選項</btn>
                 </div>
-                @*<div class="form-group">
-                        <label asp-for="FUpdateTime" class="control-label"></label>
-                        <input asp-for="FUpdateTime" class="form-control" />
-                        <span asp-validation-for="FUpdateTime" class="text-danger"></span>
-                    </div>*@
                 <div class="form-group">
                     <label asp-for="FLevel" class="control-label"></label>
-                    <input asp-for="FLevel" class="form-control" />
+                    <input id="FLevel" asp-for="FLevel" class="form-control" />
                     <span asp-validation-for="FLevel" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
-                    <input type="submit" id="createNew" value="Create" class="btn btn-primary" />
+                    @*<input type="submit" id="createNew" value="Create" class="btn btn-primary" />*@
+                    <button class="btn btn-primary" type="button" id="createNew">測試</button>
                 </div>
             </form>
         </div>
@@ -86,24 +90,64 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
+        //題型判斷答案輸入欄位
+        let boxType = `<input type="radio" asp-for="FCorrectAnswer" value="1" />`;
+        $('#FQuestionTypeId').change(function () {
+            if ($(this).val() === "3") {
+                console.log("OK");
+                $('#BtnNewChoice').hide();
+                $('#ansList > #choice > label').html("答案");
+                $('#ansList div:not(:first-child)').remove();
+            } else if ($(this).val() === "2"){
+                $('#BtnNewChoice').show();
+                $('#ansList > #choice > label').html("選項");
+                boxType = `<input type="checkbox" asp-for="FCorrectAnswer" value="1" />`;
+            }
+        })
+
+
         // 新增選項textbox
         var count = 1;
         const btnNewChoice = document.querySelector('#BtnNewChoice');
         btnNewChoice.addEventListener('click', function () {
             count++;
-            var divChoice = "<div class=form-group id=choice><label asp -for= FChoice class= control-label>選項" + count + "</label ><input asp-for=FChoice class=form-control /><span asp-validation-for=FChoice class=text-danger></span><button class=btn id=del-btn type=button><i class=fasfa-trash-alt> </i>Delete</button></div>"
-            $('#choice').append(divChoice);
+            //var divChoice = "<div class=form-group id=choice c><label asp -for= FChoice class= control-label>選項" + count + "</label ><input id=txtAns asp-for=FChoice class=form-control /><span asp-validation-for=FChoice class=text-danger></span><button class=btn id=del-btn type=button><i class=fasfa-trash-alt> </i>Delete</button></div>"
+            var divChoice = `<div class="form-group" id="choice" ><label asp -for="FChoice" class="control-label">選項` + count + `</label ><input id="txtAns" asp-for="FChoice" class="form-control" /><span asp-validation-for="FChoice" class="text-danger"></span><button class="btn" id="del-btn" type="button"><i class="fasfa-trash-alt"> </i>Delete</button></div>`
+            $('#ansList').append(divChoice);
         })
         $("#outdiv").on("click", "#del-btn", function () {
             console.log("delete");
             $(this).closest("#choice").remove();
         });
 
-        //$("#createNew").click(function () {
-        //    if (count > 1) {
-                
-        //    }
-        //})
+        // 將所有選項存入Array
+        $('#createNew').click(function () {
+            var ansArr = [];
+            $('#ansList > #choice').each(function () {
+                var ans = $(this).find('input').val();
+                ansArr.push(ans);
+            })
+            var jsondata = JSON.stringify({
+                FSubjectId: $('#FSubjectId').val(),
+                FQuestion: $('#FQuestion').val(),
+                FQuestionTypeId: $('#FQuestionTypeId').val(),
+                FChoiceList: ansArr,
+                FLevel: $('#FLevel').val()
+            })
+            $.ajax({
+                url: "@Url.Content("~/QuestionBank/Create")",
+                type: "POST",
+                contentType: "application/json",
+                data:jsondata
+            }).done(function (data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '新增成功',
+                    showConfirmButton: true,
+                    timer:1500
+                })
+            })
+        })
 
     </script>
 }
