@@ -22,23 +22,23 @@ namespace MSITTeam1.Controllers
         }
 
         // GET: TJobVacancies
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             IEnumerable<TJobVacanciesViewModel> list = null;
 
-            //LINQ，TNewJobVacancies left join TCompanyBasics
+            //LINQ，TNewJobVacancies left join TCompanyBasics left join TJobDirects
             list = from p in _context.TNewJobVacancies
-                       join t in _context.TCompanyBasics on p.FCompanyTaxid equals t.CompanyTaxid into pt
-                       from combin in pt.DefaultIfEmpty()
-                       join s in _context.TJobDirects on p.FJobListId equals s.JobListId into ps
-                       from combin2 in ps.DefaultIfEmpty()
-                       select new TJobVacanciesViewModel()
-                       {
-                           jobV = p,
-                           FCompanyName = combin.FName,
-                           FCompanyLogo = combin.FLogo,
-                           FJobDirect = combin2.FJobDirect
-                       };
+                   join t in _context.TCompanyBasics on p.FCompanyTaxid equals t.CompanyTaxid into pt
+                   from combin in pt.DefaultIfEmpty()
+                   join s in _context.TJobDirects on p.FJobListId equals s.JobListId into ps
+                   from combin2 in ps.DefaultIfEmpty()
+                   select new TJobVacanciesViewModel()
+                   {
+                       jobV = p,
+                       FCompanyName = combin.FName,
+                       FCompanyLogo = combin.FLogo,
+                       FJobDirect = combin2.FJobDirect
+                   };
             return View(list);
 
             //var helloContext = _context.TJobVacancies.Include(t => t.F).Include(t => t.FAccountNavigation).Include(t => t.FJoblist);
@@ -79,13 +79,29 @@ namespace MSITTeam1.Controllers
         {
             var tJobVacancy = await _context.TJobVacancies.FindAsync(id);
             _context.TJobVacancies.Remove(tJobVacancy);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();           
             return RedirectToAction(nameof(Index));
         }
 
         private bool TJobVacancyExists(long id)
         {
             return _context.TJobVacancies.Any(e => e.FJobId == id);
+        }
+
+        public IActionResult JobDirectDropDownList()
+        {
+            var jobDirects = from p in _context.TJobDirects
+                             select p;
+            return Json(jobDirects);
+        }
+
+        public IActionResult CityDropDownList()
+        {
+            var city = from p in _context.TCityContrasts
+                       select p.FCityName;
+            var citys = city.Distinct();
+                       
+            return Json(citys);
         }
 
         //// GET: TJobVacancies/Create
