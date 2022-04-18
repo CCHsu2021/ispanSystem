@@ -38,7 +38,6 @@
                                 <span asp-validation-for="fBirthDate" class="text-danger"></span>
                             </div>
                         </div>
-
                         <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="fEmail" class="control-label"></label>
@@ -171,6 +170,8 @@
 @section Scripts
 {
 <script>
+import { data } from "jquery";
+
       ////圖片瀏覽
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -194,9 +195,8 @@
         evt.preventDefault();
 
         const formdata = new FormData(document.basic);
-
-        fetch('@Url.Content("~/StudentResume/Edit")', {
-            method: 'POST',
+        fetch('@Url.Content("~/StudentResume/EditBasic")', {
+            method:'POST',
             body:formdata
         }).then(Swal.fire({
 
@@ -204,8 +204,7 @@
             title: '修改成功',
             showConfirmButton: false,
             timer: 1500
-        }))
-        $("row data").load("@Url.Content("~/StudentResume/Create")");
+        })
     })
     @*$("#savechanges").click((e) => {
         e.preventDefault();
@@ -272,7 +271,7 @@
                         showConfirmButton: false,
                         timer: 1500
                         })
-            window.location.reload();
+            
         })
         //$("#card workdata").load("@Url.Content("~/StudentResume/Create")");
     })
