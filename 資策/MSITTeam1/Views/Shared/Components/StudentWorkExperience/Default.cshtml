@@ -61,7 +61,8 @@
                 @Html.DisplayFor(modelItem => item.JobDescription)
             </td>
             <td>
-
+                @Html.ActionLink("修改", "EditWork","StudentResume", new {  id=item.MemberId  }, new{ @class="EditWork"}) | 
+                @Html.ActionLink("刪除", "DeleteWork","StudentResume", new {  id=item.MemberId  })
             </td>
         </tr>
         }
