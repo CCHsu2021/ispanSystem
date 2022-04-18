@@ -13,120 +13,122 @@
     </div>
     <div class="viewport full-width-container">
         <ul class="slide-container">
-            <form name="basic">
             <li class="slide" data-tag="基本資料">
-                <div class="sized-container">
-                    <div class="row data">
-                        <div class="col-4">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <form name="basic" >
+                    <div class="sized-container">
+                        <div class="row data">
+                            <div class="col-4">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                            <input type="hidden" asp-for="MemberId" id="MemberId" name="MemberId"/>
-                            <div class="form-group">
-                                <label asp-for="fName" class="control-label"></label>
-                                <input id="fName" asp-for="fName" class="form-control" name="fName"/>
-                                <span asp-validation-for="fName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="fGender" class="control-label"></label>
-                                <input id="fGender" asp-for="fGender" class="form-control" type="text" name="fGender" />
-                                <span asp-validation-for="fGender" class="text-danger"></span>
+                                <input type="hidden" asp-for="MemberId" id="MemberId" name="MemberId" />
+                                <div class="form-group">
+                                    <label asp-for="fName" class="control-label"></label>
+                                    <input id="fName" asp-for="fName" class="form-control" name="fName" />
+                                    <span asp-validation-for="fName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="fGender" class="control-label"></label>
+                                    <input id="fGender" asp-for="fGender" class="form-control" type="text" name="fGender" />
+                                    <span asp-validation-for="fGender" class="text-danger"></span>
 
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="fBirthDate" class="control-label"></label>
+                                    <input id="fBirthDate" asp-for="fBirthDate" class="form-control" type="text" name="fBirthDate" />
+                                    <span asp-validation-for="fBirthDate" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="fBirthDate" class="control-label"></label>
-                                <input id="fBirthDate" asp-for="fBirthDate" class="form-control" type="text" name="fBirthDate"/>
-                                <span asp-validation-for="fBirthDate" class="text-danger"></span>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label asp-for="fEmail" class="control-label"></label>
+                                    <input id="fEmail" asp-for="fEmail" class="form-control" name="fEmail" />
+                                    <span asp-validation-for="fEmail" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="fPhone" class="control-label"></label>
+                                    <input id="fPhone" asp-for="fPhone" class="form-control" name="fPhone" />
+                                    <span asp-validation-for="fPhone" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="fAddress" class="control-label"></label>
+                                    <input id="fAddress" asp-for="fAddress" class="form-control" name="fAddress" />
+                                    <span asp-validation-for="fAddress" class="text-danger"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label asp-for="fEmail" class="control-label"></label>
-                                <input id="fEmail" asp-for="fEmail" class="form-control" name="fEmail"/>
-                                <span asp-validation-for="fEmail" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="fPhone" class="control-label"></label>
-                                <input id="fPhone" asp-for="fPhone" class="form-control" name="fPhone"/>
-                                <span asp-validation-for="fPhone" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="fAddress" class="control-label"></label>
-                                <input id="fAddress" asp-for="fAddress" class="form-control" name="fAddress"/>
-                                <span asp-validation-for="fAddress" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-4">
+                            <div class="col-4">
                                 <div class="image-upload">
                                     <label for="file-input">
                                         <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
                                     </label>
                                     <input id="file-input" type="file" name="photo" />
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="fAutobiography" class="control-label"></label>
+                            <textarea id="fAutobiography" asp-for="fAutobiography" class="form-control" name="fAutobiography"> </textarea>
+                            <span asp-validation-for="fAutobiography" class="text-danger"></span>
+                        </div>
+                        <div class="btndiv">
+                            <button  class="savebtn my-3" id="savechanges">儲存</button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="fAutobiography" class="control-label"></label>
-                        <textarea id="fAutobiography" asp-for="fAutobiography" class="form-control" name="fAutobiography"> </textarea>
-                        <span asp-validation-for="fAutobiography" class="text-danger"></span>
-                    </div>
-                    <div class="btndiv">
-                        <button type="submit" class="savebtn my-3" id="savechanges">儲存</button>
-                    </div>
-                </div>
-            </form>
+                </form>
             </li>
-            <form asp-action="EditWork">
+            
             <li class="slide" data-tag="經歷">
-                <div class="sized-container">
-                    <div class="row data">
-                        <div class="col-6">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <form asp-action="EditWork">
+                    <div class="sized-container">
+                        <div class="row data">
+                            <div class="col-6">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                            <input type="hidden" asp-for="MemberId" id="MemberId" />
-                            <div class="form-group">
-                                <label asp-for="CompanyName" class="control-label"></label>
-                                <input id="CompanyName" asp-for="CompanyName" class="form-control" />
-                                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                <input type="hidden" asp-for="MemberId" id="MemberId"  />
+                                <div class="form-group">
+                                    <label asp-for="CompanyName" class="control-label"></label>
+                                    <input id="CompanyName" asp-for="CompanyName" class="form-control" />
+                                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CompanyDepartment" class="control-label"></label>
+                                    <input id="CompanyDepartment" asp-for="CompanyDepartment" class="form-control" type="text" />
+                                    <span asp-validation-for="CompanyDepartment" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="JobTitle" class="control-label"></label>
+                                    <input id="JobTitle" asp-for="JobTitle" class="form-control" type="text" />
+                                    <span asp-validation-for="JobTitle" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EmploymentFrom" class="control-label"></label>
+                                    <input id="EmploymentFrom" asp-for="EmploymentFrom" class="form-control" />
+                                    <span asp-validation-for="EmploymentFrom" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="CompanyDepartment" class="control-label"></label>
-                                <input id="CompanyDepartment" asp-for="CompanyDepartment" class="form-control" type="text" />
-                                <span asp-validation-for="CompanyDepartment" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="JobTitle" class="control-label"></label>
-                                <input id="JobTitle" asp-for="JobTitle" class="form-control" type="text" />
-                                <span asp-validation-for="JobTitle" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="EmploymentFrom" class="control-label"></label>
-                                <input id="EmploymentFrom" asp-for="EmploymentFrom" class="form-control" />
-                                <span asp-validation-for="EmploymentFrom" class="text-danger"></span>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label asp-for="EmploymentTo" class="control-label"></label>
+                                    <input id="EmploymentTo" asp-for="EmploymentTo" class="form-control" />
+                                    <span asp-validation-for="EmploymentTo" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="JobDescription" class="control-label"></label>
+                                    <textarea id="JobDescription" asp-for="JobDescription" class="form-control"></textarea>
+                                    <span asp-validation-for="JobDescription" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label asp-for="EmploymentTo" class="control-label"></label>
-                                <input id="EmploymentTo" asp-for="EmploymentTo" class="form-control" />
-                                <span asp-validation-for="EmploymentTo" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="JobDescription" class="control-label"></label>
-                                <textarea id="JobDescription" asp-for="JobDescription" class="form-control" ></textarea>
-                                <span asp-validation-for="JobDescription" class="text-danger"></span>
-                            </div>
+                        <div class="btndiv2">
+                            <button class="saveworkbtn my-3" id="createWork">新增</button>
+                            <button class="saveworkbtn my-3" id="editWork">修改</button>
+                        </div>
+                        <div class="card workdata">
+                            <vc:student-work-experience></vc:student-work-experience>
                         </div>
                     </div>
-                    <div class="btndiv2">
-                             <button class="saveworkbtn my-3" id="createWork">新增</button>
-                             <button class="saveworkbtn my-3" id="editWork">修改</button>
-                    </div>
-                    <div class="card workdata">
-                     <vc:student-work-experience></vc:student-work-experience>
-                    </div>
-                </div>
+                </form>
             </li>
-            </form>
+            
             <li class="slide" data-tag="學歷">
                 <div class="sized-container">
                     <h1>Lets get a little more in depth.</h1>
@@ -169,9 +171,7 @@
 
 @section Scripts
 {
-<script>
-import { data } from "jquery";
-
+    <script>
       ////圖片瀏覽
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -188,23 +188,24 @@ import { data } from "jquery";
             readURL(this);
         });
 
-   
+
     //// 儲存基本資料
     const btn = document.querySelector('#savechanges');
     btn.addEventListener('click', (evt) => {
         evt.preventDefault();
 
         const formdata = new FormData(document.basic);
-        fetch('@Url.Content("~/StudentResume/EditBasic")', {
+        fetch('@Url.Content("~/StudentResume/EditBasic")',{
             method:'POST',
-            body:formdata
+            body:formdata,
         }).then(Swal.fire({
 
             icon: 'success',
             title: '修改成功',
             showConfirmButton: false,
             timer: 1500
-        })
+        }))
+        $("#row data").load("@Url.Content("~/StudentResume/Create")");
     })
     @*$("#savechanges").click((e) => {
         e.preventDefault();
@@ -245,7 +246,7 @@ import { data } from "jquery";
                         timer: 1500
                         })
         })
-        
+
     })*@
     /////工作新增
 
@@ -263,7 +264,7 @@ import { data } from "jquery";
             url: "@Url.Content("~/StudentResume/CreateWork")",
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            data: jsondata 
+            data: jsondata
          }).done(function (data) {
             Swal.fire({
                         icon: 'success',
@@ -271,7 +272,7 @@ import { data } from "jquery";
                         showConfirmButton: false,
                         timer: 1500
                         })
-            
+
         })
         //$("#card workdata").load("@Url.Content("~/StudentResume/Create")");
     })
@@ -285,7 +286,7 @@ import { data } from "jquery";
     //        url:"@Url.Content("~/StudentResume/EditWork")",
     //        type:"POST",
     //        contentType:"application/json; chartset=utf-8",
-    //        data:jsondata   
+    //        data:jsondata
     //    }).done(function (data) {
     //        Swal.fire({
     //                    icon: 'success',
@@ -295,10 +296,10 @@ import { data } from "jquery";
     //                    })
     //        window.location.reload();
     //})
-    
-        
 
-</script>
+
+
+    </script>
 }
 
 

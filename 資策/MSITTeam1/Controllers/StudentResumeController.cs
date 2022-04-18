@@ -25,6 +25,7 @@ namespace MSITTeam1.Controllers
         }
 
         #region 會員基本資料Edit
+        [AllowAnonymous]
         public IActionResult Edit([FromBody] CStudentResumeViewModel p)
         {
 
@@ -53,6 +54,7 @@ namespace MSITTeam1.Controllers
         #endregion
 
         #region 製作履歷主頁
+        [AllowAnonymous]
         public IActionResult Create()
         {
             string account = CDictionary.account;
@@ -69,7 +71,6 @@ namespace MSITTeam1.Controllers
         #endregion
 
         #region 儲存基本資料
-
         [HttpPost]
         public IActionResult EditBasic(CStudentResumeViewModel p)
         {
@@ -97,73 +98,74 @@ namespace MSITTeam1.Controllers
         }
         #endregion
 
-        //public IActionResult Edit(string? id)
-        //{
-        //    if (id != null)
-        //    {
+        [AllowAnonymous]
+        public IActionResult Edit(string? id)
+        {
+            if (id != null)
+            {
 
-        //        StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)id);
-        //        if (sb != null)
-        //            return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
-        //    }
-        //    return RedirectToAction("Create");
-        //}
+                StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)id);
+                if (sb != null)
+                    return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
+            }
+            return RedirectToAction("Create");
+        }
 
 
 
-        //    #region  工作經歷 Edit、Delete未測試
-        //    public IActionResult CreateWork([FromBody]CStudentResumeViewModel p)
-        //    {
+        #region  工作經歷 Edit、Delete未測試
+        public IActionResult CreateWork( CStudentResumeViewModel p)
+        {
 
-        //        hello.StudentWorkExperiences.Add(p.workExperience);
-        //        hello.SaveChanges();
-        //        return Content("新增成功");
-        //    }
+            hello.StudentWorkExperiences.Add(p.workExperience);
+            hello.SaveChanges();
+            return Content("新增成功");
+        }
 
-        //    public IActionResult EditWork(string? id)
-        //    {
-        //        if (id != null)
-        //        {
+        public IActionResult EditWork(long id)
+        {
+            if (id != null)
+            {
 
-        //            StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == (string)id);
-        //            if (sw != null)
-        //                return View(new CStudentResumeViewModel() { workExperience=sw });
-        //        }
-        //        return Content("修改成功");
-        //    }
+                StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId == id);
+                if (sw != null)
+                    return View(new CStudentResumeViewModel() { workExperience = sw });
+            }
+            return Content("修改成功");
+        }
 
-        //    [HttpPost]
-        //    public IActionResult EditWork([FromBody] CStudentResumeViewModel p)
-        //    {
-        //        StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == p.MemberId);
-        //        if (sw != null)
-        //        {
-        //            sw.CompanyName = p.CompanyName;
-        //            sw.CompanyDepartment = p.CompanyDepartment;
-        //            sw.JobTitle = p.JobTitle;
-        //            sw.EmploymentFrom = p.EmploymentFrom;
-        //            sw.EmploymentTo = p.EmploymentTo;
-        //            sw.JobDescription = p.JobDescription;
-        //            hello.SaveChanges();
-        //        }
-        //        return Content("修改成功"); ;
-        //    }
+        [HttpPost]
+        public IActionResult EditWork([FromBody] CStudentResumeViewModel p)
+        {
+            StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == p.MemberId);
+            if (sw != null)
+            {
+                sw.CompanyName = p.CompanyName;
+                sw.CompanyDepartment = p.CompanyDepartment;
+                sw.JobTitle = p.JobTitle;
+                sw.EmploymentFrom = p.EmploymentFrom;
+                sw.EmploymentTo = p.EmploymentTo;
+                sw.JobDescription = p.JobDescription;
+                hello.SaveChanges();
+            }
+            return Content("修改成功"); ;
+        }
 
-        //    public IActionResult DeleteWork(string? id)
-        //    {
-        //        if (id != null)
-        //        {
+        public IActionResult DeleteWork(string? id)
+        {
+            if (id != null)
+            {
 
-        //            StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == (string)id);
-        //            if (sw != null)
-        //            {
-        //                hello.StudentWorkExperiences.Remove(sw);
-        //                hello.SaveChanges();
-        //            }
-        //        }
-        //        return RedirectToAction("Create");
-        //    }
+                StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == (string)id);
+                if (sw != null)
+                {
+                    hello.StudentWorkExperiences.Remove(sw);
+                    hello.SaveChanges();
+                }
+            }
+            return RedirectToAction("Create");
+        }
 
-        //    #endregion
+        #endregion
     }
 }

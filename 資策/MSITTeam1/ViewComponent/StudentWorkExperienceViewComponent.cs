@@ -31,5 +31,17 @@ namespace MSITTeam1.ViewComponent
                 list.Add(new CStudentResumeViewModel() { workExperience = t });
             return View(list);
         }
+
+        public IViewComponentResult EditWork(string id)
+        {
+            if (id != null)
+            {
+
+                StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == (string)id);
+                if (sw != null)
+                    return View(new CStudentResumeViewModel() { workExperience = sw });
+            }
+            return Content("修改成功");
+        }
     }
 }

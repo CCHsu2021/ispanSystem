@@ -13,6 +13,9 @@
                 編號:
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.WorkExperienceId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.CompanyName)
             </th>
             <th>
@@ -43,6 +46,9 @@
                 @count
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.WorkExperienceId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CompanyName)
             </td>
             <td>
@@ -61,7 +67,7 @@
                 @Html.DisplayFor(modelItem => item.JobDescription)
             </td>
             <td>
-                @Html.ActionLink("修改", "EditWork","StudentResume", new {  id=item.MemberId  }, new{ @class="EditWork"}) | 
+                @Html.ActionLink("修改", "EditWork", new {  id=item.WorkExperienceId  }, new{ @class="EditWork"}) | 
                 @Html.ActionLink("刪除", "DeleteWork","StudentResume", new {  id=item.MemberId  })
             </td>
         </tr>
