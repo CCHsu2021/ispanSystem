@@ -156,8 +156,8 @@ namespace MSITTeam1.Controllers
 			{
 				newques.FCSubjectId = newques.FSubjectId;
 				newques.FCQuestionId = newques.FQuestionId;
-				newques.FChoice = ans;
-				newques.FCorrectAnswer = 1;
+				newques.FChoice = ans.Fchoice;
+				newques.FCorrectAnswer = ans.FCorrect;
 				_context.TQuestionDetails.Add(newques.choice);
 			}
 			_context.SaveChanges();

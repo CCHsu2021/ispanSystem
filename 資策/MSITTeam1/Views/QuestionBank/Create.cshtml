@@ -59,7 +59,7 @@
                     <div class="form-group" id="choice">
                         <label asp-for="FChoice" class="control-label"></label>
                         <br />
-                            <input type="checkbox" name="FCorrectAnswer" value=1 onclick="doCheck(this)" />
+                            <input id="checkBox1" type="checkbox" name="FCorrectAnswer"  onclick="doCheck(this)" />
                             <input id="txtAns" asp-for="FChoice" class="form-control" />
                         <span asp-validation-for="FChoice" class="text-danger"></span>
                     </div>
@@ -98,18 +98,18 @@
             obj.checked ? c++ : c--;
             if (c > limit) {
                 obj.checked = false;
-                alert("over");
+                Swal.fire("超過正確答案上限");
                 c--;
             }
         }
-        //題型判斷答案輸入欄位
+        // 根據題型判斷答案輸入欄位及許可正確選項上限
         $('#FQuestionTypeId').change(function () {
             if ($(this).val() === "3") {
                 console.log("OK");
                 $('#BtnNewChoice').hide();
                 $('#ansList > #choice > label').html("答案");
                 $('#ansList div:not(:first-child)').remove();
-                $('#ansList > #choice > checkbox').hide();
+                $('#ansList > #choice > #checkBox1').hide();
             } else if ($(this).val() === "2") {
                 limit = 100;
                 $('#BtnNewChoice').show();
@@ -118,9 +118,9 @@
                 limit = 1;
                 $('#BtnNewChoice').show();
                 $('#ansList > #choice > label').html("選項");
+                $('#ansList > #choice > input').removeAttr("checked");
             }
         })
-
 
         // 新增選項textbox
         var count = 1;
@@ -138,11 +138,16 @@
 
         // 將所有選項存入Array 
         $('#createNew').click(function () {
+           
             var ansArr = [];
-            $('#ansList > #choice').each(function () {
-                var ans = $(this).find('input').val();
-                ansArr.push(ans);
+            $('#ansList > div').each(function (idx, item) {
+                var ans = {}
+                var c = $(item).find(':checkbox').prop('checked');
+                ans.FCorrect = c ? 1 : 2;
+                ans.Fchoice = $(item).find(':text').val();
+                ansArr.push(ans);              
             })
+            console.log(ansArr);
             var jsondata = JSON.stringify({
                 FSubjectId: $('#FSubjectId').val(),
                 FQuestion: $('#FQuestion').val(),
