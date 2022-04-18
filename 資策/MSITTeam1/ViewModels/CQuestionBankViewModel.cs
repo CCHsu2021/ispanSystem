@@ -118,5 +118,15 @@ namespace MSITTeam1.ViewModels
 		{
 			get;set;
 		}
+
+		//public List<AnswerListViewModel> FChoiceList
+		//{
+		//	get;set;
+		//}
 	}
+	//public class AnswerListViewModel
+	//{
+	//	public string Fchoice { get; set; }
+	//	public int FCorrect { get; set; }
+	//}
 }
