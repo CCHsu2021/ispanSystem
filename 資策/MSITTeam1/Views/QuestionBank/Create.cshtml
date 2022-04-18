@@ -7,9 +7,10 @@
 @section Style{ 
 <style>
 
-    input[type='radio'] {
+    input[type='checkbox'] {
         vertical-align: text-bottom;
         margin-bottom: 1px;
+        padding:5px;
     }
 
     #ansList > #choice > #txtAns{
@@ -58,7 +59,7 @@
                     <div class="form-group" id="choice">
                         <label asp-for="FChoice" class="control-label"></label>
                         <br />
-                            <input type="radio" asp-for="FCorrectAnswer" value="1" />
+                            <input id="checkBox1" type="checkbox" name="FCorrectAnswer"  onclick="doCheck(this)" />
                             <input id="txtAns" asp-for="FChoice" class="form-control" />
                         <span asp-validation-for="FChoice" class="text-danger"></span>
                     </div>
@@ -90,21 +91,36 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        //題型判斷答案輸入欄位
-        let boxType = `<input type="radio" asp-for="FCorrectAnswer" value="1" />`;
+        // 判斷Checkbox
+        var c = 0, limit = 1;
+        function doCheck(obj) {
+            console.log(c,limit);
+            obj.checked ? c++ : c--;
+            if (c > limit) {
+                obj.checked = false;
+                Swal.fire("超過正確答案上限");
+                c--;
+            }
+        }
+        // 根據題型判斷答案輸入欄位及許可正確選項上限
         $('#FQuestionTypeId').change(function () {
             if ($(this).val() === "3") {
                 console.log("OK");
                 $('#BtnNewChoice').hide();
                 $('#ansList > #choice > label').html("答案");
                 $('#ansList div:not(:first-child)').remove();
-            } else if ($(this).val() === "2"){
+                $('#ansList > #choice > #checkBox1').hide();
+            } else if ($(this).val() === "2") {
+                limit = 100;
                 $('#BtnNewChoice').show();
                 $('#ansList > #choice > label').html("選項");
-                boxType = `<input type="checkbox" asp-for="FCorrectAnswer" value="1" />`;
+            } else if ($(this).val() === "1") {
+                limit = 1;
+                $('#BtnNewChoice').show();
+                $('#ansList > #choice > label').html("選項");
+                $('#ansList > #choice > input').removeAttr("checked");
             }
         })
-
 
         // 新增選項textbox
         var count = 1;
@@ -112,7 +128,7 @@
         btnNewChoice.addEventListener('click', function () {
             count++;
             //var divChoice = "<div class=form-group id=choice c><label asp -for= FChoice class= control-label>選項" + count + "</label ><input id=txtAns asp-for=FChoice class=form-control /><span asp-validation-for=FChoice class=text-danger></span><button class=btn id=del-btn type=button><i class=fasfa-trash-alt> </i>Delete</button></div>"
-            var divChoice = `<div class="form-group" id="choice" ><label asp -for="FChoice" class="control-label">選項` + count + `</label ><input id="txtAns" asp-for="FChoice" class="form-control" /><span asp-validation-for="FChoice" class="text-danger"></span><button class="btn" id="del-btn" type="button"><i class="fasfa-trash-alt"> </i>Delete</button></div>`
+            var divChoice = `<div class="form-group" id="choice" ><label asp -for="FChoice" class="control-label">選項</label ><br /><input type="checkbox" name="FCorrectAnswer" value=1 onclick="doCheck(this)" style="margin:0 3px 0 0;" /><input id="txtAns" asp-for="FChoice" class="form-control"/><span asp-validation-for="FChoice" class="text-danger"></span><button class="btn" id="del-btn" type="button" style="margin:10px 0 0 25px"><i class="fasfa-trash-alt"> </i>Delete</button></div>`
             $('#ansList').append(divChoice);
         })
         $("#outdiv").on("click", "#del-btn", function () {
@@ -120,13 +136,18 @@
             $(this).closest("#choice").remove();
         });
 
-        // 將所有選項存入Array
+        // 將所有選項存入Array 
         $('#createNew').click(function () {
+           
             var ansArr = [];
-            $('#ansList > #choice').each(function () {
-                var ans = $(this).find('input').val();
-                ansArr.push(ans);
+            $('#ansList > div').each(function (idx, item) {
+                var ans = {}
+                var c = $(item).find(':checkbox').prop('checked');
+                ans.FCorrect = c ? 1 : 2;
+                ans.Fchoice = $(item).find(':text').val();
+                ansArr.push(ans);              
             })
+            console.log(ansArr);
             var jsondata = JSON.stringify({
                 FSubjectId: $('#FSubjectId').val(),
                 FQuestion: $('#FQuestion').val(),

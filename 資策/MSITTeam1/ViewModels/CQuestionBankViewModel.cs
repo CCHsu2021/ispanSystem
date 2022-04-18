@@ -109,14 +109,19 @@ namespace MSITTeam1.ViewModels
 			set { this.question.FState = value; }
 		}
 
-		public List<string> FChoiceList
+		//public List<string> FChoiceList
+		//{
+		//	get; set;
+		//}
+
+		public List<AnswerListViewModel> FChoiceList
 		{
 			get; set;
 		}
-		
-		public List<int> FCorrectAnswerList
-		{
-			get;set;
-		}
+	}
+	public class AnswerListViewModel
+	{
+		public string Fchoice { get; set; }
+		public int FCorrect { get; set; }
 	}
 }
