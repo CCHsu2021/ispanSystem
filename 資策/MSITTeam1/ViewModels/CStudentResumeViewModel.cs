@@ -61,6 +61,17 @@ namespace MSITTeam1.ViewModels
         }
         //public string fCity { get; set; }
         //public string fDistrict { get; set; }
+        
+        public string fCity
+        {
+            get { return this.student.FCity; }
+            set { this.student.FCity = value; }
+        }
+        public string fDistrict
+        {
+            get { return this.student.FDistrict; }
+            set { this.student.FDistrict = value; }
+        }
         [DisplayName("地址:")]
         public string fAddress
         {

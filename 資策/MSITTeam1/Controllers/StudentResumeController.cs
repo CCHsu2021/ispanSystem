@@ -94,6 +94,8 @@ namespace MSITTeam1.Controllers
                 sb.BirthDate = p.fBirthDate;
                 sb.Email = p.fEmail;
                 sb.Phone = p.fPhone;
+                sb.FCity = p.fCity;
+                sb.FDistrict = p.fDistrict;
                 sb.ContactAddress = p.fAddress;
                 sb.Autobiography = p.fAutobiography;
                 hello.SaveChanges();
