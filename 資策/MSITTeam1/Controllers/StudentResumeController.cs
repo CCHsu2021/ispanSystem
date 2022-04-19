@@ -128,13 +128,13 @@ namespace MSITTeam1.Controllers
             return Content("新增成功");
         }
 
-        public IActionResult EditWork(long id)
-        {
-            ViewBag.id = id;
-            //StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId == id);
-            return ViewComponent("StudentWorkExperienceEdit",new { id });
-            //return RedirectToAction();
-        }
+        //public IActionResult EditWork(long id)
+        //{
+        //    ViewBag.id = id;
+        //    //StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId == id);
+        //    return ViewComponent("StudentWorkExperienceEdit",new { id });
+        //    //return RedirectToAction();
+        //}
 
         [HttpPost]
         public IActionResult EditWork([FromBody] CStudentResumeViewModel p)
