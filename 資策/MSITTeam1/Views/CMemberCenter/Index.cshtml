@@ -173,6 +173,9 @@
 @section Scripts
 {
     <script>
+        $("#previewpage").click(() => {
+            window.location = '@Url.Content("~/CCompanyBasic/Index?taxid=")' +'@ViewBag.Account' 
+        })
     $("#savechanges").click(() => {
         var jsondata = JSON.stringify({
             CompanyTaxid: $("#CompanyTaxid").val(),
@@ -211,26 +214,20 @@
             Swal.fire(error.status + ":" + error.statusText);
         })
     })
-        @*$("#City").change(function () {
-        $("#District").empty();
-        $.ajax({
-            type: "POST",
-            url: '@Url.Content("~/CMemberCenter/GetCityByCityGroup")',
-            dataType: "json",
-            data: { selectedCity: $("#City").val() },
-            success: function (mems) {
-                $.each(mems, function (key, val) {
-                    $("#District").append(
-                        '<option value="' + mems[key]["fPostCode"] + '">' + mems[key]["fDistrictName"] + "</option>"
-                     );
-                });
-            },
-            error: function (ex) {
-                alert("Failed to retrieve states : " + ex);
-            },
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {  //reader加載成功
+                    $('#picture').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#picture-file").change(function () {
+            readURL(this);
         });
-        return false;
-    });*@
     </script>
 }
 

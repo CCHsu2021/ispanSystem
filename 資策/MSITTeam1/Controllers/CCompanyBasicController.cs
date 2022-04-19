@@ -18,8 +18,22 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index(string taxid)
         {
-            TCompanyBasic company = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == taxid);           
-            return View(new CCompanyBasicViewModel() { com = company});
+            IEnumerable<TCompanyBasic> com = null;
+            com = hello.TCompanyBasics.Where(t => t.CompanyTaxid == taxid);
+            List<CCompanyBasicViewModel> list = new List<CCompanyBasicViewModel>();
+            foreach (TCompanyBasic t in com)
+            {
+                if (t.FLogo == null)
+                {
+                    ViewBag.picture = "upload.png";
+                }
+                else
+                {
+                    ViewBag.picture = t.FLogo;
+                }
+                list.Add(new CCompanyBasicViewModel() { com = t });
+            }
+            return View(list);
         }
     }
 }

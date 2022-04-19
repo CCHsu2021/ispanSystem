@@ -4,18 +4,157 @@
     ViewData["Title"] = "Index";
 }
 
+@*<h1>Index</h1>*@
 @foreach (var item in Model)
 {
-    <div class="container CompanyBasicheader">
-        <div class="row">
-            <div class="col-12 py-2">@item.FName</div>
-        </div>
-        <div class="row">
-            <div class="col-4">公司介紹</div>
-            <div class="col-4">福利制度</div>
-            <div class="col-4">工作機會</div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">@item.FName</div>
+            </div>
+            <div class="row">
+                <div class="col-4">公司簡介</div>
+                <div class="col-4">福利制度</div>
+                <div class="col-4">工作機會</div>
+            </div>
         </div>
     </div>
-
+    <div>
+        <h3>公司介紹</h3>
+        <div class=""></div>
+    </div>
 }
 
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyTaxid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCapitalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPhoneCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FFaxCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FFax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FContactPerson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDistrictCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FBenefits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FLogo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCustomInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPointState)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDistrict)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyTaxid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FCapitalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FPhoneCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FFaxCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FFax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FContactPerson)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FDistrictCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FBenefits)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FLogo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FCustomInfo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FDueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FPointState)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FDistrict)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>*@
