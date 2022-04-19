@@ -80,7 +80,6 @@
             </li>
             
             <li class="slide" data-tag="經歷">
-                <form asp-action="EditWork">
                     <div class="sized-container">
                         <div class="row data">
                             <div class="col-6">
@@ -129,14 +128,13 @@
                             <vc:student-work-experience></vc:student-work-experience>
                         </div>
                     </div>
-                </form>
             </li>
             
             <li class="slide" data-tag="學歷">
                 <div class="sized-container">
-                   <vc:student-work-experience-edit id=@ViewBag.id></vc:student-work-experience-edit>
+                   @*<vc:student-work-experience-edit id=@ViewBag.id></vc:student-work-experience-edit>*@
                 <div class="card workdata">
-                    <vc:student-work-experience></vc:student-work-experience>
+                    @*<vc:student-work-experience></vc:student-work-experience>*@
                 </div>
                 </div>
 
