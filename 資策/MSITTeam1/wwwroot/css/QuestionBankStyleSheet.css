@@ -1,0 +1,80 @@
+﻿
+/*--------------------------------------List-------------------------------------*/
+td {
+    vertical-align: middle !important;
+}
+/*        .container {
+            max-width: 1500px !important;
+        }*/
+/*-----------------------------Card-----------------------------*/
+.card-body {
+    padding: 0;
+}
+
+.card {
+    background: #ffffff;
+    margin: 7.5px 0;
+    padding: 20px;
+    border: 1px solid #e7e7e7;
+    border-radius: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease-in;
+}
+
+.card-title {
+    font-weight: 400;
+    font-size: 18px;
+    margin: 0;
+    text-align: right;
+    color: darkblue;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.dd {
+    position: relative;
+    display: block;
+    margin: 0 0 12px 0;
+    padding: 0;
+    width: 100% !important;
+    max-width: 100%;
+    list-style: none;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.dd-handle {
+    display: block;
+    height: 35px;
+    margin: 5px 0;
+    padding: 8px 10px;
+    color: black;
+    text-decoration: none;
+    font-weight: normal;
+    border: 0px solid #e5e5e5;
+    background: #ffffff;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: dimgray;
+    -moz-box-sizing: border-box;
+}
+
+    .dd-handle:hover {
+        color: #2ea8e5;
+        background: #fff;
+    }
+
+#title-font {
+    font-size: 15px;
+}
+
+#editBlock {
+    text-align: right;
+}
+
+#container-flex {
+    display: flex;
+}
+/*--------------------------------------List End-------------------------------------*/

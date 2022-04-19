@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 namespace MSITTeam1.ViewComponent
 {
 	[Microsoft.AspNetCore.Mvc.ViewComponent]
-	public class QuestionBankListViewConponent: Microsoft.AspNetCore.Mvc.ViewComponent
+	public class QuestionBankListViewComponent: Microsoft.AspNetCore.Mvc.ViewComponent
 	{
 		private readonly helloContext _context;
 
 		[ActivatorUtilitiesConstructor]
-		public QuestionBankListViewConponent(helloContext context)
+		public QuestionBankListViewComponent(helloContext context)
 		{
 			_context = context;
 		}

@@ -19,6 +19,20 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-6">
+            <label>職缺類型：</label>
+            <select id="selectJobDirect">
+                <option value="none" selected>全選</option>
+            </select>
+        </div>
+        <div class="col-6">
+            <label>地區：</label>
+            <select id="selectCity">
+                <option value="none" selected>全選</option>
+            </select>
+        </div>
+    </div>
 }
 <table class="table">
     <thead>
@@ -147,3 +161,39 @@
         }
     </tbody>
 </table>
+@section Scripts{ 
+    <script>
+        let selectJobDirect = document.querySelector('#selectJobDirect');
+        let selectCity = document.querySelector('#selectCity');
+
+        $.ajax({
+            url: '@Url.Content("~/TJobVacancies/JobDirectDropDownList")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                datas.forEach((item) => {
+                    let opt = new Option(item.fJobDirect, item.jobListId);
+                    selectJobDirect.options.add(opt);
+                });
+            }
+        }).done((data) => {
+            console.log(data)
+        })
+
+        $.ajax({
+            url: '@Url.Content("~/TJobVacancies/CityDropDownList")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                datas.forEach((item) => {
+                    let opt = new Option(item, item);
+                    selectCity.options.add(opt);
+                });
+            }
+        }).done((data) => {
+            console.log(data);
+        })
+    </script>
+
+
+}

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CCompanyBasicViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (var item in Model)
+{
+    <div class="container CompanyBasicheader">
+        <div class="row">
+            <div class="col-12 py-2">@item.FName</div>
+        </div>
+        <div class="row">
+            <div class="col-4">公司介紹</div>
+            <div class="col-4">福利制度</div>
+            <div class="col-4">工作機會</div>
+        </div>
+    </div>
+
+}
+

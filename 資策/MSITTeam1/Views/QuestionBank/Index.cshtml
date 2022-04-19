@@ -3,6 +3,7 @@
     ViewData["Title"] = "Index";
 }
 <link href="~/css/MemberCenter.css" rel="stylesheet">
+<link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
 <div id="cont-about" class="container-fluid py-4">
     <div class="container">
         @*<h4 class="my-3 pl-2">歡迎回來! @ViewBag.Name</h4>*@
@@ -29,7 +30,7 @@
                         <vc:question-bank-edit-view-conponent></vc:question-bank-edit-view-conponent>
                     </div>
                     <div id="menu1" class="container tab-pane fade">
-                        <vc:question-bank-list-view-conponent></vc:question-bank-list-view-conponent>
+                        <vc:question-bank-list></vc:question-bank-list>
                     </div>
                     <div id="menu2" class="container tab-pane fade">
                         <div class="row about-box">

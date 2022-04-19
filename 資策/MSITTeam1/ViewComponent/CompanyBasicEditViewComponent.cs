@@ -44,10 +44,8 @@ namespace MSITTeam1.ViewComponent
             if (!string.IsNullOrEmpty(id))
             {
                 var company = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == id);
-                //var citylist = from c in hello.TCityContrasts group c by c.FCityName into a select a.Key;
-                //var districtlist = from c in hello.TCityContrasts select c.FDistrictName;
-                ViewBag.City = SetDropDown1(company.FCity);
-                ViewBag.District = SetDropDown2(company.FCity,company.FDistrict);
+                ViewBag.City = company.FCity;
+                ViewBag.District = company.FDistrict;
                 if (company != null) 
                 {
                     ViewBag.picture = company.FLogo;
