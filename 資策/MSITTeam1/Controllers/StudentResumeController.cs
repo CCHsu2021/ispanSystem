@@ -57,6 +57,10 @@ namespace MSITTeam1.Controllers
         [AllowAnonymous]
         public IActionResult Create()
         {
+            if (ViewBag.id == null)
+            {
+                ViewBag.id = 72;
+            }
             string account = CDictionary.account;
             if (account != null)
             {
@@ -124,14 +128,10 @@ namespace MSITTeam1.Controllers
 
         public IActionResult EditWork(long id)
         {
-            if (id != null)
-            {
-
-                StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId == id);
-                if (sw != null)
-                    return View(new CStudentResumeViewModel() { workExperience = sw });
-            }
-            return Content("修改成功");
+            ViewBag.id = id;
+            //StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId == id);
+            return ViewComponent("StudentWorkExperienceEdit",new { id });
+            //return RedirectToAction();
         }
 
         [HttpPost]

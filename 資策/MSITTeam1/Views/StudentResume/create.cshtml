@@ -15,7 +15,7 @@
         <ul class="slide-container">
             <li class="slide" data-tag="基本資料">
                 <form name="basic" >
-                    <div class="sized-container">
+                    <div class="sized-container basic">
                         <div class="row data">
                             <div class="col-4">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -131,9 +131,12 @@
             
             <li class="slide" data-tag="學歷">
                 <div class="sized-container">
-                    <h1>Lets get a little more in depth.</h1>
-                    <h2>Information about this section.</h2>
+                   <vc:student-work-experience-edit id=@ViewBag.id></vc:student-work-experience-edit>
+                <div class="card workdata">
+                    <vc:student-work-experience></vc:student-work-experience>
                 </div>
+                </div>
+
             </li>
             <li class="slide" data-tag="語言">
                 <div class="sized-container">

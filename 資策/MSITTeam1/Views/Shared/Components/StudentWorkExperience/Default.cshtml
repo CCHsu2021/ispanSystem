@@ -12,7 +12,7 @@
             <th>
                 編號:
             </th>
-            <th>
+            <th >
                 @Html.DisplayNameFor(model => model.WorkExperienceId)
             </th>
             <th>
@@ -45,7 +45,7 @@
             <td>
                 @count
             </td>
-            <td>
+            <td id="WorkExperienceId">
                 @Html.DisplayFor(modelItem => item.WorkExperienceId)
             </td>
             <td>
@@ -75,3 +75,11 @@
     }
     </tbody>
 </table>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+        
+      var id =$("#WorkExperienceId").val();
+      console.log(id);
+    </script>
+

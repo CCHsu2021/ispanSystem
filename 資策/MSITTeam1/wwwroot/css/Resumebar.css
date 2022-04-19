@@ -50,6 +50,7 @@
 
     .resumebar button.previous {
         background-color: #1e3c84;
+        float:left;
     }
 
         .resumebar button.previous:hover {
@@ -78,10 +79,11 @@
 .sized-container .saveworkbtn {
     background: #ed731a;
 }
-.btndiv {
-    text-align: center;
-    margin-top:15px;
-}
+
+    .btndiv {
+        text-align: center;
+        margin-top: 15px;
+    }
 .btndiv2 {
     text-align: center;
     padding-bottom:15px;
@@ -90,7 +92,7 @@
 .slide-container {
     position: relative;
     left: 0;
-    height:700px;
+    height:600px;
     
 }
 
@@ -187,7 +189,7 @@
 
 .form-group > textarea {
     overflow-y: scroll;
-    height: 180px;
+    height: 280px;
     resize: none;
 }
 
