@@ -78,3 +78,18 @@ td {
     display: flex;
 }
 /*--------------------------------------List End-------------------------------------*/
+
+
+/*--------------------------------------Create End-------------------------------------*/
+input[type='checkbox'] {
+    vertical-align: text-bottom;
+    margin-bottom: 1px;
+    padding: 5px;
+}
+
+#ansList > #choice > #txtAns {
+    display: inline !important;
+    width: 90% !important;
+}
+
+/*--------------------------------------Create End-------------------------------------*/

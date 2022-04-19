@@ -4,20 +4,20 @@
     ViewData["Title"] = "Create";
 }
 
-@section Style{ 
-<style>
+@section Style{
+    <style>
 
-    input[type='checkbox'] {
-        vertical-align: text-bottom;
-        margin-bottom: 1px;
-        padding:5px;
-    }
+        input[type='checkbox'] {
+            vertical-align: text-bottom;
+            margin-bottom: 1px;
+            padding: 5px;
+        }
 
-    #ansList > #choice > #txtAns{
-        display:inline !important;
-        width: 90% !important;
-    }
-</style>
+        #ansList > #choice > #txtAns {
+            display: inline !important;
+            width: 90% !important;
+        }
+    </style>
 }
 <div class="container" id="outdiv" style="padding:20px">
     <h1>新增</h1>
@@ -50,23 +50,18 @@
                     <input id="FQuestion" asp-for="FQuestion" class="form-control" />
                     <span asp-validation-for="FQuestion" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="FQuestionTypeId" class="control-label"></label>
-                    <input id="FQuestionTypeId" asp-for="FQuestionTypeId" class="form-control" />
-                    <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
-                </div>
                 <div id="ansList">
                     <div class="form-group" id="choice">
                         <label asp-for="FChoice" class="control-label"></label>
                         <br />
-                            <input id="checkBox1" type="checkbox" name="FCorrectAnswer"  onclick="doCheck(this)" />
-                            <input id="txtAns" asp-for="FChoice" class="form-control" />
+                        <input id="checkBox1" type="checkbox" name="FCorrectAnswer" onclick="doCheck(this)" />
+                        <input id="txtAns" asp-for="FChoice" class="form-control" />
                         <span asp-validation-for="FChoice" class="text-danger"></span>
                     </div>
-                        
+
                 </div>
                 <div style="padding:10px 0px 30px 30px;">
-                    <btn id="BtnNewChoice" class="btn btn-primary btn-outline small" >新增答案選項</btn>
+                    <btn id="BtnNewChoice" class="btn btn-primary btn-outline small">新增答案選項</btn>
                 </div>
                 <div class="form-group">
                     <label asp-for="FLevel" class="control-label"></label>
@@ -75,8 +70,8 @@
                 </div>
 
                 <div class="form-group">
-                    @*<input type="submit" id="createNew" value="Create" class="btn btn-primary" />*@
                     <button class="btn btn-primary" type="button" id="createNew">測試</button>
+                    @*<button class="btn btn-primary" type="button" id="test">測試</button>*@
                 </div>
             </form>
         </div>
@@ -92,16 +87,16 @@
 
     <script>
         // 判斷Checkbox
-        var c = 0, limit = 1;
+        var currentSelect = 0, limit = 1;
         function doCheck(obj) {
-            console.log(c,limit);
-            obj.checked ? c++ : c--;
-            if (c > limit) {
+            obj.checked ? currentSelect++ : currentSelect--;
+            if (currentSelect > limit) {
                 obj.checked = false;
                 Swal.fire("超過正確答案上限");
-                c--;
+                currentSelect--;
             }
         }
+
         // 根據題型判斷答案輸入欄位及許可正確選項上限
         $('#FQuestionTypeId').change(function () {
             if ($(this).val() === "3") {
@@ -114,11 +109,13 @@
                 limit = 100;
                 $('#BtnNewChoice').show();
                 $('#ansList > #choice > label').html("選項");
+                $('#ansList > #choice > #checkBox1').show();
             } else if ($(this).val() === "1") {
                 limit = 1;
                 $('#BtnNewChoice').show();
                 $('#ansList > #choice > label').html("選項");
                 $('#ansList > #choice > input').removeAttr("checked");
+                $('#ansList > #choice > #checkBox1').show();
             }
         })
 
@@ -136,16 +133,19 @@
             $(this).closest("#choice").remove();
         });
 
-        // 將所有選項存入Array 
+        // 將所有選項存入Array
         $('#createNew').click(function () {
-           
             var ansArr = [];
-            $('#ansList > div').each(function (idx, item) {
+            var selectAns = $('#ansList input[type=checkbox]:checked').length;
+            if (selectAns < 1) {
+                Swal.fire("請選擇此題正確答案");
+            } else {
+                 $('#ansList > div').each(function (idx, item) {
                 var ans = {}
                 var c = $(item).find(':checkbox').prop('checked');
                 ans.FCorrect = c ? 1 : 2;
                 ans.Fchoice = $(item).find(':text').val();
-                ansArr.push(ans);              
+                ansArr.push(ans);
             })
             console.log(ansArr);
             var jsondata = JSON.stringify({
@@ -168,6 +168,7 @@
                     timer:1500
                 })
             })
+            }
         })
 
     </script>

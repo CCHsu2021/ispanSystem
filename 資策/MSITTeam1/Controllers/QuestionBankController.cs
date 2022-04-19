@@ -20,7 +20,7 @@ namespace MSITTeam1.Controllers
 		{
 			return View();
 		}
-		public IActionResult List(string keyword,string subject,string level)
+		public IActionResult List(string keyword,string Subjects,string Type)
 		{
 			// 從資料庫讀取題目
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
@@ -75,9 +75,9 @@ namespace MSITTeam1.Controllers
 			ViewBag.Type = typeItems;
 
 			// 篩選題目
-			quesQuery = this.FilterByClass(quesQuery, subject);
+			quesQuery = this.FilterByClass(quesQuery, Subjects);
 			quesQuery = this.FilterByKeyWork(quesQuery, keyword);
-			quesQuery = this.FilterByLevel(quesQuery, level);
+			quesQuery = this.FilterByLevel(quesQuery, Type);
 			
 			foreach (var q in quesQuery)
 				{
@@ -158,7 +158,9 @@ namespace MSITTeam1.Controllers
 				newques.FCQuestionId = newques.FQuestionId;
 				newques.FChoice = ans.Fchoice;
 				newques.FCorrectAnswer = ans.FCorrect;
+				newques.FSn = 0;
 				_context.TQuestionDetails.Add(newques.choice);
+				_context.SaveChanges();
 			}
 			_context.SaveChanges();
 			return Content("新增成功");

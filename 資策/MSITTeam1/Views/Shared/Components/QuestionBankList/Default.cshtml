@@ -5,93 +5,10 @@
 @{
     ViewData["Title"] = "List";
 }
-
-@section Style{
-    @*<link href="~/css/SearchBar.css" rel="stylesheet" />*@
-    <style>
-        td {
-            vertical-align: middle !important;
-        }
-        /*        .container {
-            max-width: 1500px !important;
-        }*/
-        /*-----------------------------Card-----------------------------*/
-        .card-body {
-            padding: 0;
-        }
-
-        .card {
-            background: #ffffff;
-            margin: 7.5px 0;
-            padding: 20px;
-            border: 1px solid #e7e7e7;
-            border-radius: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.5s ease-in;
-        }
-
-        .card-title {
-            font-weight: 400;
-            font-size: 18px;
-            margin: 0;
-            text-align: right;
-            color: darkblue;
-        }
-
-        .p-10 {
-            padding: 10px;
-        }
-
-        .dd {
-            position: relative;
-            display: block;
-            margin: 0 0 12px 0;
-            padding: 0;
-            width: 100% !important;
-            max-width: 100%;
-            list-style: none;
-            font-size: 13px;
-            line-height: 20px;
-        }
-
-        .dd-handle {
-            display: block;
-            height: 35px;
-            margin: 5px 0;
-            padding: 8px 10px;
-            color: black;
-            text-decoration: none;
-            font-weight: normal;
-            border: 0px solid #e5e5e5;
-            background: #ffffff;
-            box-sizing: border-box;
-            font-size: 15px;
-            color: dimgray;
-            -moz-box-sizing: border-box;
-        }
-
-            .dd-handle:hover {
-                color: #2ea8e5;
-                background: #fff;
-            }
-
-        #title-font {
-            font-size: 15px;
-        }
-
-        #editBlock {
-            text-align: right;
-        }
-
-        #container-flex {
-            display: flex;
-        }
-    </style>
-}
 <div class="container" style="padding:40px;">
     <h1>題目列表</h1>
     <p>
-        <a asp-action="Create">新增題目</a>
+        <a asp-action="Create" data-toggle="modal" data-target="#questionCreate">新增題目</a>
     </p>
 
     <div style="margin:20px">
@@ -202,9 +119,19 @@
     </div>
 </div>
 
-@section Scripts{
-    <script>
-
-
-    </script>
-}
+<!-- Modal -->
+<div class="modal fade" id="questionCreate" tabindex="-1" aria-labelledby="questionCreate" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">新增題目</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <vc:question-bank-create></vc:question-bank-create>
+            </div>
+        </div>
+    </div>
+</div>
