@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace MSITTeam1.ViewComponent
 {
 	[Microsoft.AspNetCore.Mvc.ViewComponent]
-	public class QuestionBankEditViewConponent : Microsoft.AspNetCore.Mvc.ViewComponent
+	public class QuestionBankEditViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
 	{
 		private readonly helloContext _context;
 
 		[ActivatorUtilitiesConstructor]
-		public QuestionBankEditViewConponent(helloContext context)
+		public QuestionBankEditViewComponent(helloContext context)
 		{
 			_context = context;
 		}
