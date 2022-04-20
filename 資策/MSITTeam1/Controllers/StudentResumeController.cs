@@ -120,7 +120,8 @@ namespace MSITTeam1.Controllers
 
 
         #region  工作經歷 Edit、Delete未測試
-        public IActionResult CreateWork( CStudentResumeViewModel p)
+        [HttpPost]
+        public IActionResult CreateWork( [FromBody]CStudentResumeViewModel p)
         {
 
             hello.StudentWorkExperiences.Add(p.workExperience);
@@ -139,7 +140,7 @@ namespace MSITTeam1.Controllers
         [HttpPost]
         public IActionResult EditWork([FromBody] CStudentResumeViewModel p)
         {
-            StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == p.MemberId);
+            StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId == p.WorkExperienceId);
             if (sw != null)
             {
                 sw.CompanyName = p.CompanyName;
