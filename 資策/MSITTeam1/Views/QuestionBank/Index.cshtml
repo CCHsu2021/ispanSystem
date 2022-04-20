@@ -1,4 +1,5 @@
-﻿@addTagHelper *, MSITTeam1
+﻿@*@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>*@
+@addTagHelper *, MSITTeam1
 @{
     ViewData["Title"] = "Index";
 }
@@ -27,7 +28,6 @@
             <div class="col-sm-9">
                 <div class="tab-content shadow-sm">
                     <div id="home" class="container tab-pane active">
-                        <vc:question-bank-create></vc:question-bank-create>
                     </div>
                     <div id="menu1" class="container tab-pane fade">
                         <vc:question-bank-list></vc:question-bank-list>
@@ -80,6 +80,5 @@
 
 @section Scripts
 {
-    <script src="~/js/QuestionBankSystem.js"></script>
 }
 
