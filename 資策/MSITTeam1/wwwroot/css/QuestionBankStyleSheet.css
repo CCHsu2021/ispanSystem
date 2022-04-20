@@ -47,9 +47,9 @@ td {
 
 .dd-handle {
     display: block;
-    height: 35px;
+    height: 22px;
     margin: 5px 0;
-    padding: 8px 10px;
+    padding: 3px 10px;
     color: black;
     text-decoration: none;
     font-weight: normal;
