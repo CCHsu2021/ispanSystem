@@ -68,7 +68,7 @@ $('#createNew').click(function () {
             FQuestion: $('#FQuestion').val(),
             FQuestionTypeId: $('#FQuestionTypeId').val(),
             FChoiceList: ansArr,
-            FLevel: $('#FLevel').val()
+            FLevel: $('.questionBarRate').val()
         })
         $.ajax({
             url: "/QuestionBank/Create",
