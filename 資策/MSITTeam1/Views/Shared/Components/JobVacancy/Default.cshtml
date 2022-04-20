@@ -1,0 +1,151 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CJobVacancyViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>職缺管理</h1>
+
+<p>
+    <a asp-action="CreateJobVacancy">新增職缺</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FCompanyTaxid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FJobName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FJobSkill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FWorkAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FSalaryMode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FSalary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEmployeeType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FWorkHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FLeaveSystem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FWorkExp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEducation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FOther)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FJobStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FJobListId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FContactPerson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FContactPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FContactFax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FContactEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCreatTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FModifyTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FCompanyTaxid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FJobName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FJobSkill)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FWorkAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FSalaryMode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FSalary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FEmployeeType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FWorkHours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FLeaveSystem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FWorkExp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FEducation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FOther)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FJobStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FJobListId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FContactPerson)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FContactPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FContactFax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FContactEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FCreatTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FModifyTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
