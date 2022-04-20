@@ -101,4 +101,20 @@ textarea {
     word-wrap: break-word;
     /* word-break: break-all; */
 }
+.image-upload {
+    overflow: hidden;
+    text-align: center
+}
+    .image-upload img {
+        margin-top: 25px;
+        border-radius: 15px;
+        height: 220px;
+        object-fit: contain;
+        transform: scale(1,1);
+        transition: all 0.2s ease-out
+    }
+
+        .image-upload img:hover {
+            transform: scale(1.3,1.3);
+        }
 

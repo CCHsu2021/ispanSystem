@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace MSITTeam1.Controllers
 {
-    public class Method : Controller
+    public class MethodController : Controller
     {
         private readonly helloContext hello;
         IWebHostEnvironment _enviroment;
 
-        public Method(helloContext _hello, IWebHostEnvironment p)
+        public MethodController(helloContext _hello, IWebHostEnvironment p)
         {
             hello = _hello;
             _enviroment = p;
