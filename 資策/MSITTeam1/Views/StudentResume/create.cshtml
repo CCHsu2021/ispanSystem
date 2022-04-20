@@ -52,7 +52,8 @@
                                 <div class="form-group">
                                     <label asp-for="fAddress" class="control-label"></label>
                                     <div>
-                                        <vc:selector city="fCity" district="fDistrict"></vc:selector>
+                                        
+                                        <vc:selector city="@Model.fCity" district="@Model.fDistrict"></vc:selector>
                                     </div>
                                     <input id="fAddress" asp-for="fAddress" class="form-control" name="fAddress" />
                                     <span asp-validation-for="fAddress" class="text-danger"></span>

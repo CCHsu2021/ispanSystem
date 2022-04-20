@@ -19,6 +19,7 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke(string city,string district)
         {
             ViewBag.City = SetDropDown1(city);
+            ViewBag.Cityname = city;
             ViewBag.District = SetDropDown2(city, district);        
             return View();
         }
