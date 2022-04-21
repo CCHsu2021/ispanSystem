@@ -104,20 +104,20 @@ namespace MSITTeam1.Controllers
         }
         #endregion
 
-        [AllowAnonymous]
-        public IActionResult Edit(string? id)
-        {
-            if (id != null)
-            {
+        //[AllowAnonymous]
+        //public IActionResult Edit(string? id)
+        //{
+        //    if (id != null)
+        //    {
 
-                StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)id);
-                if (sb != null)
-                    return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
-            }
-            return RedirectToAction("Create");
-        }
+        //        StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)id);
+        //        if (sb != null)
+        //            return View(new CStudentResumeViewModel() { student = sb, fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
+        //    }
+        //    return RedirectToAction("Create");
+        //}
 
-        #region  工作經歷 Delete未測試
+        #region  工作經歷 Create Edit Delete
         [HttpPost]
         public IActionResult CreateWork( [FromBody]CStudentResumeViewModel p)
         {
@@ -144,13 +144,14 @@ namespace MSITTeam1.Controllers
             return Content("修改成功"); 
         }
 
-        public IActionResult DeleteWork([FromBody] CStudentResumeViewModel p)
+
+        public IActionResult DeleteWork(String WorkExperienceId)
         {
 
-                StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId == p.WorkExperienceId);
+                StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId.ToString() == WorkExperienceId);
                 if (sw != null)
                 {
-                    hello.StudentWorkExperiences.Remove(p.workExperience);
+                    hello.StudentWorkExperiences.Remove(sw);
                     hello.SaveChanges();
                 }
             
