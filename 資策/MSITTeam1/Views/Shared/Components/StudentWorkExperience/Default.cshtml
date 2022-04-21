@@ -5,7 +5,7 @@
     }
 </style>
 
-<table class="table">
+<table class="table" id="workPage">
     <thead>
         <tr>
             <th>
@@ -107,6 +107,8 @@
         $('#EmploymentTo').val(col6);
         $('#JobDescription').val(col7);
 
+        $("#editWork").show();
+        $("#createWork").hide();
         
     }
 
@@ -128,7 +130,7 @@
                         showConfirmButton: false,
                         timer: 1500
                         })
-            window.location.reload();})
+            $("#workPage").load(location.href + " #workPage");})
         }
 </script>
 
