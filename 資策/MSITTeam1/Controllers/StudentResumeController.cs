@@ -117,9 +117,7 @@ namespace MSITTeam1.Controllers
             return RedirectToAction("Create");
         }
 
-
-
-        #region  工作經歷 Edit、Delete未測試
+        #region  工作經歷 Delete未測試
         [HttpPost]
         public IActionResult CreateWork( [FromBody]CStudentResumeViewModel p)
         {
@@ -128,14 +126,6 @@ namespace MSITTeam1.Controllers
             hello.SaveChanges();
             return Content("新增成功");
         }
-
-        //public IActionResult EditWork(long id)
-        //{
-        //    ViewBag.id = id;
-        //    //StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId == id);
-        //    return ViewComponent("StudentWorkExperienceEdit",new { id });
-        //    //return RedirectToAction();
-        //}
 
         [HttpPost]
         public IActionResult EditWork([FromBody] CStudentResumeViewModel p)
@@ -151,22 +141,20 @@ namespace MSITTeam1.Controllers
                 sw.JobDescription = p.JobDescription;
                 hello.SaveChanges();
             }
-            return Content("修改成功"); ;
+            return Content("修改成功"); 
         }
 
-        public IActionResult DeleteWork(string? id)
+        public IActionResult DeleteWork([FromBody] CStudentResumeViewModel p)
         {
-            if (id != null)
-            {
 
-                StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.MemberId == (string)id);
+                StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId == p.WorkExperienceId);
                 if (sw != null)
                 {
-                    hello.StudentWorkExperiences.Remove(sw);
+                    hello.StudentWorkExperiences.Remove(p.workExperience);
                     hello.SaveChanges();
                 }
-            }
-            return RedirectToAction("Create");
+            
+            return Content("刪除成功");
         }
 
         #endregion
