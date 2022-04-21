@@ -3,7 +3,14 @@
 @{
     ViewData["Title"] = "Edit";
 }
+@section Style{
 
+    <style>
+        #checkBox1{
+            margin:5px;
+        }
+    </style>
+}
 <div class="container" style="padding:20px;">
     <div>
         <h1>題目編輯</h1>
@@ -26,23 +33,27 @@
                                         <span asp-validation-for="FQuestionImage" class="text-danger"></span>
                                     <input type="file" name="photo" class="form-control" />
                                 </div>*@
-                            @*<div>
-                                    <select id="selector" name="selector">
-                                        <option value="1"></option>
-                                    </select>
-                                </div>*@
+                            <div class="form-group">
+                                <label class="control-label" asp-for="@Model[0].FSubjectId"></label>
+                                @Html.DropDownList("Subjects", (IEnumerable<SelectListItem>)ViewBag.subjectItems, "請選擇類別", new { @class = "form-control" })
+                                <span asp-validation-for="@Model[0].FSubjectId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label id="test1" class="control-label" asp-for="@Model[0].FQuestion"></label>
+                                <input asp-for="@Model[0].FQuestion" class="form-control">
+                                <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
+                            </div>
 
-                        <div class="form-group">
-                            <label id="test1" class="control-label">@Html.DisplayNameFor(modelItem => Model[0].FQuestion)</label>
-                            <input class="form-control" /> @Html.EditorFor(modelItem => Model[0].FQuestion)
-                        <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[0].FQuestion)</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label">@Html.DisplayNameFor(modelItem => Model[0].FQuestionTypeId)</label>
-                            <input class="form-control" />@Html.EditorFor(modelItem => Model[0].FQuestionTypeId)
-                        <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[0].FQuestionTypeId)</span>
-                        </div>
+                            <div class="form-group">
+                                <label asp-for="@Model[0].FQuestionTypeId" class="control-label"></label>
+                                @*<input asp-for="@Model[0].FQuestionTypeId" class="form-control" />*@
+                                <select id="FQuestionTypeId" asp-for="@Model[0].FQuestionTypeId" class="form-control">
+                                    <option value="1">單選題</option>
+                                    <option value="2">多選題</option>
+                                    <option value="3">填空題</option>
+                                </select>
+                                <span asp-validation-for="@Model[0].FQuestionTypeId" class="text-danger"></span>
+                            </div>
                             @for (int i = 0; i < Model.Count; i++)
                             {
                                 if (Model[i].FSubjectId == Model[0].FSubjectId && Model[i].FQuestionId == Model[0].FCQuestionId)
@@ -55,15 +66,16 @@
                                         @Html.HiddenFor(modelItem => Model[0].FCQuestionId)
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FChoice)</label>
-                                        <input class="form-control" />@Html.EditorFor(modelItem => Model[i].FChoice)
-                                    <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[i].FChoice)</span>
+                                        <input type="hidden" class="correctAns" asp-for="@Model[i].FCorrectAnswer" />
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(modelItem => Model[i].FCorrectAnswer)</label>
-                                        <input class="form-control" />@Html.EditorFor(modelItem => Model[i].FCorrectAnswer)
-                                    <span class="text-danger">@Html.ValidationMessageFor(modelItem => Model[i].FCorrectAnswer)</span>
+                                        <label asp-for="@Model[i].FChoice" class="control-label"></label>
+                                        <br />
+                                        <input id="checkBox1" type="checkbox" name="FCorrectAnswer" onclick="doCheck(this)" />
+                                        <input asp-for="@Model[i].FChoice" class="form-control" />
+                                        <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
                                     </div>
+
                                 }
                             }
 
@@ -84,4 +96,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        var a = $('.correctAns').val();
+        console.log(a);
+    </script>
 }
