@@ -234,21 +234,21 @@ namespace MSITTeam1.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Edit(List<CQuestionBankViewModel> quesList)
+		public IActionResult Edit([FromBody] CQuestionBankViewModel quesList)
 		{
 			if (quesList.Count != 0)
 			{
-				string subject = quesList[0].FSubjectId;
-				int questionId = quesList[0].FQuestionId;
+				string subject = quesList.FSubjectId;
+				int questionId = quesList.FQuestionId;
 
 				TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subject) && q.FQuestionId == questionId);
 				TQuestionDetail choSel = null;
 				if (quesSel != null)
 				{
-					quesSel.FQuestion = quesList[0].FQuestion;
-					quesSel.FQuestionTypeId = Convert.ToInt32(quesList[0].FQuestionTypeId);
+					quesSel.FQuestion = quesList.FQuestion;
+					quesSel.FQuestionTypeId = Convert.ToInt32(quesList.FQuestionTypeId);
 					_context.SaveChanges();
-					foreach (var ans in quesList)
+					foreach (var ans in quesList.FChoiceList)
 					{
 						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSn);
 						choSel.FChoice = ans.FChoice;
