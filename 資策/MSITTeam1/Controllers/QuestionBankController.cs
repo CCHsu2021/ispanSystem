@@ -188,6 +188,39 @@ namespace MSITTeam1.Controllers
 									FChoice = choice.FChoice,
 									FCorrectAnswer = choice.FCorrectAnswer
 								};
+
+				List<SelectListItem> subjectItems = new List<SelectListItem>();
+				var subjectQuery = from s in _context.TStudioInformations
+								   select s;
+				foreach(var s in subjectQuery)
+				{
+					subjectItems.Add(new SelectListItem()
+					{
+						Text = s.FClassSkill,
+						Value = s.FClassSkill
+					}) ;
+				}
+
+				List<SelectListItem> typeItems = new List<SelectListItem>();
+				typeItems.Add(new SelectListItem()
+				{
+					Text = "單選題",
+					Value = "1"
+				});
+				typeItems.Add(new SelectListItem()
+				{
+					Text = "多選題",
+					Value = "2"
+				});
+				typeItems.Add(new SelectListItem()
+				{
+					Text = "填空題",
+					Value = "3"
+				});
+
+				ViewBag.Subjects = subjectItems;
+				ViewBag.Type = typeItems;
+
 				foreach (var q in quesQuery)
 				{
 					quesList.Add(q);

@@ -133,18 +133,8 @@
                     </div>
                     <div id="menu6" class="container tab-pane fade">
                         <div class="row about-box">
-                            <h3 class="text-center">職缺搜尋</h3>
                             <p>
-                                AntenaGames is small indie game studio based in Croatia. Founded in 2020,
-                                on a mission to make beautiful, fun and popular mobile games. The first game released
-                                was BallBoy, which belongs to franchise also called BallBoy, with game titles such as
-                                "BallBoy", "BallBoy Plus" and "BallBoy (...)". Building strong and loyal community with
-                                happy players that will come back to play our games is something that we really enjoy
-                                doing.
-                            </p>
-                            <p>
-                                Founder & CEO<br />
-                                A.K.
+                               <vc:job-vacancy></vc:job-vacancy>
                             </p>
                         </div>
                     </div>
@@ -174,8 +164,9 @@
 {
     <script>
         $("#previewpage").click(() => {
-            window.location = '@Url.Content("~/CCompanyBasic/Index?taxid=")' +'@ViewBag.Account' 
+            window.location = '@Url.Content("~/CCompanyBasic/Index?taxid=")' +'@ViewBag.Account'
         })
+        //基本資料變更儲存
     $("#savechanges").click(() => {
         var jsondata = JSON.stringify({
             CompanyTaxid: $("#CompanyTaxid").val(),
@@ -214,12 +205,19 @@
             Swal.fire(error.status + ":" + error.statusText);
         })
     })
+        //圖片預覽變更+儲存照片
         function readURL(input) {
+            var formdata = new FormData(document.LogoUpload);
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {  //reader加載成功
+                    fetch('@Url.Content("~/CMemberCenter/SaveLogoPicture")',{
+                        method:"Post",
+                        body: formdata,
+                    });
                     $('#picture').attr('src', e.target.result);
+
                 }
                 reader.readAsDataURL(input.files[0]);
             }

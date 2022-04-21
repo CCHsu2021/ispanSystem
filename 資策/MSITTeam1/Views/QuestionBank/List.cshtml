@@ -1,5 +1,6 @@
-﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
-@using MSITTeam1.ViewModels;
+﻿@*@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>*@
+@model MSITTeam1.ViewModels.CQuestionBankViewModel
+@addTagHelper *, MSITTeam1
 @using System.Collections.Generic;
 
 @{
@@ -8,6 +9,8 @@
 
 @section Style{
     @*<link href="~/css/SearchBar.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="~/css/fontawesome-all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         td {
             vertical-align: middle !important;
@@ -86,13 +89,12 @@
         #container-flex {
             display: flex;
         }
-
     </style>
 }
 <div class="container" style="padding:40px;">
     <h1>題目列表</h1>
     <p>
-        <a asp-action="Create">新增題目</a>
+        <a asp-action="Create" data-toggle="modal" data-target="#questionCreate">新增</a>
     </p>
 
     <div style="margin:20px">
@@ -118,73 +120,29 @@
     </div>
 
     <div>
-        @{
-            if (Model != null)
-            {
-                //List<string> subjectInTable = new List<string>();
-                string subject = "";
-                int quesId = 0;
-                foreach (var item in Model)
-                {
-                    //subjectInTable.Add(item.FSubjectId);
-                    if (item.FSubjectId != subject || item.FQuestionId != quesId)
-                    {
-                        subject = item.FSubjectId;
-                        quesId = item.FQuestionId;
-                        <div class="card" id="quesCard">
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    @Html.DisplayFor(modelItem => item.FSubjectId)
-                                </h4>
-                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="home2" role="tabpanel">
-                                        <div class="p-10">
-                                            <h5>
-                                                @Html.DisplayFor(modelItem => item.FQuestion)
-                                            </h5>
-                                        </div>
-                                        <div class="nestable">
-                                            <div class="dd" id="nestable">
-                                                <ol class="dd-list">
-                                                    <li class="dd-item" data-id="2">
-                                                        <ol class="dd-list" id="title-font">
-                                                            @foreach (var choice in Model)
-                                                            {
-                                                                if (choice.FSubjectId == subject && choice.FQuestionId == quesId)
-                                                                {
-                                                                    <li class="dd-item" data-id="2">
-                                                                        <div class="dd-handle">
-                                                                            @Html.DisplayFor(modelItem => choice.FChoice)
-                                                                        </div>
-                                                                    </li>
-                                                                }
-                                                            }
-                                                        </ol>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                        </div>
-                                        <div id="editBlock">
-                                            @Html.ActionLink("編輯", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }) |
-                                            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                                            @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                    }
-                }
-            }
-        }
+        <vc:question-bank-list></vc:question-bank-list>
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="questionCreate" tabindex="-1" aria-labelledby="questionCreate" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">資料修改</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <vc:question-bank-create></vc:question-bank-create>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts{
-    <script>
-
-
-    </script>
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
 }

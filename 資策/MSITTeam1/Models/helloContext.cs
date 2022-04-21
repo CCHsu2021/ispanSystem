@@ -69,14 +69,6 @@ namespace MSITTeam1.Models
         public virtual DbSet<TTestResult> TTestResults { get; set; }
         public virtual DbSet<VGetDate> VGetDates { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;Persist Security Info=False;User ID=MSIT40;Password=Ispan40team1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1004,6 +996,10 @@ namespace MSITTeam1.Models
                     .HasMaxLength(50)
                     .HasColumnName("fJobName");
 
+                entity.Property(e => e.FCity)
+                    .HasMaxLength(50)
+                    .HasColumnName("fCity");
+
                 entity.Property(e => e.FContactEmail)
                     .HasMaxLength(50)
                     .HasColumnName("fContactEmail");
@@ -1024,6 +1020,10 @@ namespace MSITTeam1.Models
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("fCreatTime");
+
+                entity.Property(e => e.FDistrict)
+                    .HasMaxLength(50)
+                    .HasColumnName("fDistrict");
 
                 entity.Property(e => e.FEducation)
                     .HasMaxLength(50)
@@ -1049,9 +1049,9 @@ namespace MSITTeam1.Models
                     .HasColumnName("fLeaveSystem");
 
                 entity.Property(e => e.FModifyTime)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fModifyTime");
+                    .HasColumnType("datetime")
+                    .HasColumnName("fModifyTime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.FOther).HasColumnName("fOther");
 
@@ -1196,7 +1196,8 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.FUpdateTime)
                     .HasColumnType("datetime")
-                    .HasColumnName("fUpdateTime");
+                    .HasColumnName("fUpdateTime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<TReceipt>(entity =>

@@ -46,10 +46,15 @@
             </div>
         </div>
         <div class="col-md-4 text-center">
-            <input type="file" id="picture-file" class="p-0" style="visibility:hidden;width:0;height:0;" />
-            <label for="picture-file">
-                <img id="picture" src="../images/company/@ViewBag.picture" style="border:1px solid black;float:right;width:200px;height:200px" />
-            </label>
+            <form name="LogoUpload">
+                <div class="image-upload">
+                    <input type="hidden" name="id" value="@ViewBag.Account" />
+                    <input type="file" accept="image/*" id="picture-file" name="img" class="p-0" style="visibility: hidden; width: 0; height: 0; margin: auto;" />
+                    <label for="picture-file">
+                        <img id="picture" src="../images/company/@ViewBag.picture" style="border: 1px solid #dee2e6; float: right; width: 200px; height: 200px" title="上傳LOGO圖片" alt="點擊上傳LOGO" />
+                    </label>
+                </div>
+            </form>
         </div>
     </div>
     <div class="row">

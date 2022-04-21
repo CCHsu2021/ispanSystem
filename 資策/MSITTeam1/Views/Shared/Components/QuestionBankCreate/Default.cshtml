@@ -1,67 +1,74 @@
-﻿@*@model MSITTeam1.ViewModels.CQuestionBankViewModel*@
-@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
+﻿@model MSITTeam1.ViewModels.CQuestionBankViewModel
+@*@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>*@
 
 @{
     ViewData["Title"] = "Create";
 }
 
-    <div class="container" id="outdiv" style="padding:20px">
-        <div class="row" style="padding:20px;">
-            <div class="col-md-12">
-                <form asp-action="Create">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="@Model[0].FSubjectId" class="control-label"></label>
-                        <select id="FSubjectId" asp-for="@Model[0].FSubjectId" class="form-control">
-                            <option>其他</option>
-                        </select>
-                        <span asp-validation-for="@Model[0].FSubjectId" class="text-danger"></span>
+<div class="container" id="outdiv" style="padding:20px">
+    <div class="row" style="padding:20px;">
+        <div class="col-md-12">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label name="FSubjectId" id="FSubjectId" class="control-label"></label>
+                    <select id="FSubjectId" name="FSubjectId" id="FSubjectId" class="form-control">
+                        <option>其他</option>
+                    </select>
+                    <span asp-validation-for="FSubjectId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FQuestionTypeId" class="control-label"></label>
+                    <select id="FQuestionTypeId" asp-for="FQuestionTypeId" class="form-control">
+                        <option value="1">單選題</option>
+                        <option value="2">多選題</option>
+                        <option value="3">填空題</option>
+                    </select>
+                    <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FQuestion" class="control-label"></label>
+                    <input id="FQuestion" name="FQuestion" class="form-control" />
+                    <span asp-validation-for="FQuestion" class="text-danger"></span>
+                </div>
+                <div id="ansList">
+                    <div class="form-group" id="choice">
+                        <label asp-for="FChoice" class="control-label"></label>
+                        <br />
+                        <input id="checkBox1" type="checkbox" name="FCorrectAnswer" onclick="doCheck(this)" />
+                        <input id="txtAns" asp-for="FChoice" class="form-control" />
+                        <span asp-validation-for="FChoice" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model[0].FQuestionTypeId" class="control-label"></label>
-                        <select id="FQuestionTypeId" asp-for="@Model[0].FQuestionTypeId" class="form-control">
-                            <option value="1">單選題</option>
-                            <option value="2">多選題</option>
-                            <option value="3">填空題</option>
-                        </select>
-                        <span asp-validation-for="@Model[0].FQuestionTypeId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model[0].FQuestion" class="control-label"></label>
-                        <input id="FQuestion" asp-for="@Model[0].FQuestion" class="form-control" />
-                        <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
-                    </div>
-                    <div id="ansList">
-                        <div class="form-group" id="choice">
-                            <label asp-for="@Model[0].FChoice" class="control-label"></label>
-                            <br />
-                            <input id="checkBox1" type="checkbox" name="FCorrectAnswer" onclick="doCheck(this)" />
-                            <input id="txtAns" asp-for="@Model[0].FChoice" class="form-control" />
-                            <span asp-validation-for="@Model[0].FChoice" class="text-danger"></span>
+
+                </div>
+                <div style="padding:10px 0px 30px 30px;">
+                    <btn id="BtnNewChoice" class="btn btn-primary btn-outline small">新增答案選項</btn>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FLevel" class="control-label"></label>
+                    <div>
+                        <div class="rating2">
+                            <select class="questionBarRate" id="example-fontawesome" name="rating" autocomplete="off">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
                         </div>
-
                     </div>
-                    <div style="padding:10px 0px 30px 30px;">
-                        <btn id="BtnNewChoice" class="btn btn-primary btn-outline small">新增答案選項</btn>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model[0].FLevel" class="control-label"></label>
-                        <input id="FLevel" asp-for="@Model[0].FLevel" class="form-control" />
-                        <span asp-validation-for="@Model[0].FLevel" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="button" id="createNew">測試</button>
-                        @*<button class="btn btn-primary" type="button" id="test">測試</button>*@
-                    </div>
-                </form>
-            </div>
-        </div>
-        
-        <div>
-            <a asp-action="List">返回列表</a>
+                    <span asp-validation-for="FLevel" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="button" id="createNew">測試</button>
+                    @*<button class="btn btn-primary" type="button" id="test">測試</button>*@
+                </div>
+            </form>
         </div>
     </div>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="~/js/QuestionBankSystem.js"></script>
+    <div>
+        <a asp-action="List">返回列表</a>
+    </div>
+</div>
+

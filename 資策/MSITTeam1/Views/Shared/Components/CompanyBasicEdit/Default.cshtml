@@ -46,10 +46,13 @@
                 <span asp-validation-for="FContactPerson" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="FCapitalAmount" class="control-label"></label>
+                <input id="FCapitalAmount" asp-for="FCapitalAmount" class="form-control" />
+                <span asp-validation-for="FCapitalAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="FAddress" class="control-label"></label>
                 <div class="d-flex">
-                    @*@Html.DropDownList("City", null, new { @class = "form-control mr-1" })
-                        @Html.DropDownList("District", null, new { @class = "form-control ml-1" })*@
                     <vc:selector city="@ViewBag.City" district="@ViewBag.District"></vc:selector>
                 </div>
                 <input id="FAddress" asp-for="FAddress" class="form-control mt-2" />
