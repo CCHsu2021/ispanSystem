@@ -161,5 +161,39 @@ namespace MSITTeam1.Controllers
         }
 
         #endregion
+
+        public IActionResult CreateEdu([FromBody] CStudentResumeViewModel p)
+        {
+            hello.StudentEducations.Add(p.education);
+            hello.SaveChanges();
+            return Content("新增成功");
+        }
+
+        public IActionResult EditEdu([FromBody] CStudentResumeViewModel p)
+        {
+            StudentEducation sw = hello.StudentEducations.FirstOrDefault(c => c.EducationId == p.EducationId);
+            if (sw != null)
+            {
+                sw.GraduateSchool = p.GraduateSchool;
+                sw.GraduateDepartment = p.GraduateDepartment;
+                sw.StudyFrom = p.StudyFrom;
+                sw.StudyTo = p.StudyTo;
+                hello.SaveChanges();
+            }
+            return Content("修改成功");
+        }
+
+        public IActionResult DeleteEdu(String EducationId)
+        {
+
+            StudentEducation sw = hello.StudentEducations.FirstOrDefault(c => c.EducationId.ToString() == EducationId);
+            if (sw != null)
+            {
+                hello.StudentEducations.Remove(sw);
+                hello.SaveChanges();
+            }
+
+            return Content("刪除成功");
+        }
     }
 }
