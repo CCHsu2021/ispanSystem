@@ -97,13 +97,32 @@ namespace MSITTeam1.ViewModels
 			set { this.question.FQuestionTypeId = value; }
 		}
 
-		//private TQuestionDetail test { get; set; }
+		public string FSubmitterId
+		{
+			get { return this.question.FSubmitterId; }
+			set { this.question.FSubmitterId = value; }
+		}
 
-		//public string VTchoice
+		public int FState
+		{
+			get { return this.question.FState; }
+			set { this.question.FState = value; }
+		}
+
+		//public List<string> FChoiceList
 		//{
-		//	get { return this.test.FChoice; }
-		//	set { this.test.FChoice = value; }
+		//	get; set;
 		//}
 
+		public List<AnswerListViewModel> FChoiceList
+		{
+			get; set;
+		}
+	}
+	public class AnswerListViewModel
+	{
+		public int FSN { get; set; }
+		public string Fchoice { get; set; }
+		public int FCorrect { get; set; }
 	}
 }

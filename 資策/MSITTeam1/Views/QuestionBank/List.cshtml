@@ -1,5 +1,5 @@
 ﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
-@using MSITTeam1.ViewModels;
+@addTagHelper *, MSITTeam1
 @using System.Collections.Generic;
 
 @{
@@ -8,176 +8,26 @@
 
 @section Style{
     @*<link href="~/css/SearchBar.css" rel="stylesheet" />*@
-    <style>
-        td {
-            vertical-align: middle !important;
-        }
-        /*        .container {
-            max-width: 1500px !important;
-        }*/
-        /*-----------------------------Card-----------------------------*/
-        .card-body {
-            padding: 0;
-        }
-
-        .card {
-            background: #ffffff;
-            margin: 7.5px 0;
-            padding: 20px;
-            border: 1px solid #e7e7e7;
-            border-radius: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.5s ease-in;
-        }
-
-        .card-title {
-            font-weight: 400;
-            font-size: 18px;
-            margin: 0;
-            text-align: right;
-            color: darkblue;
-        }
-
-        .p-10 {
-            padding: 10px;
-        }
-
-        .dd {
-            position: relative;
-            display: block;
-            margin: 0 0 12px 0;
-            padding: 0;
-            width: 100% !important;
-            max-width: 100%;
-            list-style: none;
-            font-size: 13px;
-            line-height: 20px;
-        }
-
-        .dd-handle {
-            display: block;
-            height: 35px;
-            margin: 5px 0;
-            padding: 8px 10px;
-            color: black;
-            text-decoration: none;
-            font-weight: normal;
-            border: 0px solid #e5e5e5;
-            background: #ffffff;
-            box-sizing: border-box;
-            font-size: 15px;
-            color: dimgray;
-            -moz-box-sizing: border-box;
-        }
-
-            .dd-handle:hover {
-                color: #2ea8e5;
-                background: #fff;
-            }
-
-        #title-font {
-            font-size: 15px;
-        }
-
-        #editBlock {
-            text-align: right;
-        }
-
-        #container-flex {
-            display: flex;
-        }
-
-
-        /*searchbar----------------------Start*/
-        /*        input {
-            border: 1px solid #ccc;
-            font-size: 12px;
-            height: 30px;
-            padding: 4px 8px;
-            position: absolute;
-            width: 50%;
-        }
-
-            input:focus {
-                outline: none;
-            }
-
-        button {
-            text-align: center;
-        }
-
-            button:focus {
-                outline: none;
-            }
-
-            button.btn-search, button.btn-reset {
-                background: orange;
-                border: none;
-                height: 30px;
-                font-size: 12px;
-                padding: 4px;
-                position: absolute;
-                width: 30px;
-            }
-
-        .sample {
-            float: left;
-            height: 50px;
-            margin: 0 8px;
-            position: relative;
-            width: 100%;
-        }*/
-        /*searchbar----------------------End*/
-
-    </style>
+    <link rel="stylesheet" href="~/css/fontawesome-all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/QuestionBankStyleSheet.css" />
 }
 <div class="container" style="padding:40px;">
     <h1>題目列表</h1>
     <p>
-        <a asp-action="Create">新增題目</a>
+        <a asp-action="Create" data-toggle="modal" data-target="#questionEdit">新增</a>
     </p>
 
     <div style="margin:20px">
         <form method="post" action="~/QuestionBank/List" enctype="application/x-www-form-urlencoded">
-
-            @*<div class="sample ten">
-                    <input type="text" name="keyword" placeholder="search" id="keyword">
-                    <button type="submit" class="btn btn-search">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <button type="reset" class="btn btn-reset fa fa-times"></button>
-                </div>*@
-
             <div class="form-group row justify-content-around py-4">
-                <div>
-                    @*<div class="col-md-4">
-            @Html.DropDownList("Subjects", (IEnumerable<SelectListItem>)ViewBag.subjectItems, "請選擇類別", new { @class = "form-control" })
-        </div>*@
-                    @{
-                        if (Model != null)
-                        {
-                            string subject = "";
-                                        <div class="col-md-4">
-                                            <select class="form-select" aria-label="Default select example" name="subject">
-                                                <option selected>Open this select menu</option>
-                                                @foreach (var item in Model)
-                                                {
-                                                    if (item.FSubjectId != subject)
-                                                    {
-                                                        <option value="@Html.DisplayFor(modelItem => item.FSubjectId)">@Html.DisplayFor(modelItem => item.FSubjectId)</option>
-                                                        subject = item.FSubjectId;
-                                                    }
-                                                }
-
-                                            </select>
-                                            <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>
-                                        </div>
-                        }
-                    }
-                    <div class="col-md-4">
+                <div class="row">
+                    <div class="col">
+                        @Html.DropDownList("Subjects", (IEnumerable<SelectListItem>)ViewBag.subjectItems, "請選擇類別", new { @class = "form-control" })
+                    </div>
+                    <div class="col">
                         @Html.DropDownList("Type", (IEnumerable<SelectListItem>)ViewBag.typeItems, "請選擇題目類型", new { @class = "form-control" })
                     </div>
-                    <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-rounded">
@@ -186,79 +36,33 @@
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
 
     <div>
-        @{
-            if (Model != null)
-            {
-                //List<string> subjectInTable = new List<string>();
-                string subject = "";
-                int quesId = 0;
-                foreach (var item in Model)
-                {
-                    //subjectInTable.Add(item.FSubjectId);
-                    if (item.FSubjectId != subject || item.FQuestionId != quesId)
-                    {
-                        subject = item.FSubjectId;
-                        quesId = item.FQuestionId;
-                        <div class="card" id="quesCard">
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    @Html.DisplayFor(modelItem => item.FSubjectId)
-                                </h4>
-                                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="home2" role="tabpanel">
-                                        <div class="p-10">
-                                            <h5>
-                                                @Html.DisplayFor(modelItem => item.FQuestion)
-                                            </h5>
-                                        </div>
-                                        <div class="nestable">
-                                            <div class="dd" id="nestable">
-                                                <ol class="dd-list">
-                                                    <li class="dd-item" data-id="2">
-                                                        @*<div class="dd-handle" id="title-font">選項</div>*@
-                                                        <ol class="dd-list" id="title-font">
-                                                            @foreach (var choice in Model)
-                                                            {
-                                                                if (choice.FSubjectId == subject && choice.FQuestionId == quesId)
-                                                                {
-                                                                    <li class="dd-item" data-id="2">
-                                                                        <div class="dd-handle">
-                                                                            @Html.DisplayFor(modelItem => choice.FChoice)
-                                                                        </div>
-                                                                    </li>
-                                                                }
-                                                            }
-                                                        </ol>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                        </div>
-                                        <div id="editBlock">
-                                            @Html.ActionLink("編輯", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }) |
-                                            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                                            @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                    }
-                }
-            }
-        }
+        <vc:question-bank-list></vc:question-bank-list>
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">題目修改</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<vc:question-bank-create></vc:question-bank-create>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts{
-    <script>
-
-
-    </script>
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
 }

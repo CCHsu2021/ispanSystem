@@ -1,0 +1,33 @@
+﻿
+<div class="d-flex mb-2">
+    @Html.DropDownList("City", null,ViewBag.Cityname, new { @class = "form-control mr-1" })
+    @Html.DropDownList("District", null, new { @class = "form-control ml-1"})
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        $("#City").change(function () {
+        $("#District").empty();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Content("~/Method/GetCityByCityGroup")',
+            dataType: "json",
+            data: { selectedCity: $("#City").val() },
+            success: function (mems) {
+                $.each(mems, function (key, val) {
+                    $("#District").append(
+                        '<option value="' + mems[key]["fPostCode"] + '">' + mems[key]["fDistrictName"] + "</option>"
+                     );
+                });
+            },
+            error: function (ex) {
+                alert("Failed to retrieve states : " + ex);
+            },
+        });
+        return false;
+    });
+    })
+
+</script>

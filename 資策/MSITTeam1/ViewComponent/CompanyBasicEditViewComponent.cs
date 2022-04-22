@@ -44,10 +44,8 @@ namespace MSITTeam1.ViewComponent
             if (!string.IsNullOrEmpty(id))
             {
                 var company = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == id);
-                //var citylist = from c in hello.TCityContrasts group c by c.FCityName into a select a.Key;
-                //var districtlist = from c in hello.TCityContrasts select c.FDistrictName;
-                ViewBag.City = SetDropDown1(company.FCity);
-                ViewBag.District = SetDropDown2(company.FCity,company.FDistrict);
+                ViewBag.City = company.FCity;
+                ViewBag.District = company.FDistrict;
                 if (company != null) 
                 {
                     ViewBag.picture = company.FLogo;
@@ -55,15 +53,6 @@ namespace MSITTeam1.ViewComponent
                 }
             }
             return View(Url.Content("~/CMemberCenter/Index"));
-        }
-        [HttpPost]
-        public IViewComponentResult Index(FormCollection form)
-        {
-            string id = "";
-            string id2 = "";
-            ViewBag.City = SetDropDown1(id);
-            ViewBag.District = SetDropDown2(id, id2);
-            return View();
         }
     }
 }

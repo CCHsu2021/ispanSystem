@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MSITTeam1.Models;
 using MSITTeam1.ViewModels;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MSITTeam1.Controllers
 {
@@ -46,12 +48,6 @@ namespace MSITTeam1.Controllers
             TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == company.CompanyTaxid);
             if (c != null)
             {
-                if (company.FLogo != null)
-                {
-                    string photoName = Guid.NewGuid().ToString() + ".jpg";
-                    c.FLogo = photoName;
-                    company.photo.CopyTo(new FileStream(_enviroment.WebRootPath + @"\UploadImage\" + photoName,FileMode.Create));
-                }
                 c.FAddress = company.FAddress;
                 c.FCity = company.FCity;
                 c.FDistrict = company.FDistrict;
@@ -63,9 +59,31 @@ namespace MSITTeam1.Controllers
                 c.FContactPerson = company.FContactPerson;
                 c.FBenefits = company.FBenefits;
                 c.FCustomInfo = company.FCustomInfo;
+                c.FCapitalAmount = company.FCapitalAmount;
                 hello.SaveChanges();
             }
             return Content("success");
+        }
+        [HttpPost]
+        public JsonResult GetCityByCityGroup(string selectedCity)
+        {
+            var districtlist = from c in hello.TCityContrasts where c.FCityName == selectedCity select c;
+            return Json(districtlist);
+        }
+        [HttpPost]
+        public IActionResult SaveLogoPicture(IFormFile img,string id)
+        {
+            TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == id);
+            string photoName = Guid.NewGuid().ToString() + ".jpg";
+            c.FLogo = photoName;
+            img.CopyTo(new FileStream(
+                _enviroment.WebRootPath + @"\images\company\" + photoName, FileMode.Create));
+            hello.SaveChanges();
+            return Json(new { suc="ok"});
+        }
+        public IActionResult CreateJobVacancy()
+        {
+            return View();
         }
     }
 }

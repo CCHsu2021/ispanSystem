@@ -61,6 +61,17 @@ namespace MSITTeam1.ViewModels
         }
         //public string fCity { get; set; }
         //public string fDistrict { get; set; }
+        
+        public string fCity
+        {
+            get { return this.student.FCity; }
+            set { this.student.FCity = value; }
+        }
+        public string fDistrict
+        {
+            get { return this.student.FDistrict; }
+            set { this.student.FDistrict = value; }
+        }
         [DisplayName("地址:")]
         public string fAddress
         {
@@ -81,6 +92,12 @@ namespace MSITTeam1.ViewModels
         }
 
         /// 工作經歷
+        [DisplayName("")]
+        public long WorkExperienceId
+        {
+            get { return this.workExperience.WorkExperienceId; }
+            set { this.workExperience.WorkExperienceId = value; }
+        }
         public string WorkMemberId
         {
             get { return this.workExperience.MemberId; }

@@ -57,7 +57,7 @@ namespace MSITTeam1.Controllers
             {
                 TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
                 if (mem != null)
-                {
+                { 
                     string act = mem.CompanyTaxid;
                     HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
                     string name = getUserName();

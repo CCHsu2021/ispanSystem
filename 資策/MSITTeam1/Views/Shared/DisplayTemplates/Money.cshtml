@@ -1,0 +1,11 @@
+﻿
+@model int?
+
+@if (Model == null)
+{
+    <span class="text-danger">No Price Data</span>
+}
+else
+{
+    <span>@(((int)Model).ToString("###,###,##0"))</span>
+}

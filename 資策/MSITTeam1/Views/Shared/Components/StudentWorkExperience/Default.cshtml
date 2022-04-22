@@ -1,25 +1,32 @@
 ﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+<style>
+    th {
+        white-space: nowrap;
+    }
+</style>
 
-
-<table class="table">
+<table class="table" id="workPage">
     <thead>
         <tr>
-            <th  style="white-space:nowrap">
-                履歷號:
+            <th>
+                經歷:
+            </th>
+            <th style="visibility:hidden">
+                @Html.DisplayNameFor(model => model.WorkExperienceId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CompanyName)
             </th>
-            <th style="white-space:nowrap">
+            <th>
                 @Html.DisplayNameFor(model => model.CompanyDepartment)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.JobTitle)
             </th>
-            <th style="white-space:nowrap">
+            <th>
                 @Html.DisplayNameFor(model => model.EmploymentFrom)
-            </th style="white-space:nowrap">
-            <th style="white-space:nowrap">
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EmploymentTo)
             </th>
             <th>
@@ -28,38 +35,96 @@
         </tr>
     </thead>
     <tbody>
-@{
-    int count = 0;
-    foreach (var item in Model)
-    {
-        count++;
-        <tr>
-            <td>
-                @count
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyDepartment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmploymentFrom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmploymentTo)
-            </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.JobDescription)
-            </td>
-            <td>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td style="visibility:hidden">
+                        @Html.DisplayFor(modelItem => item.WorkExperienceId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyDepartment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmploymentFrom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmploymentTo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobDescription)
+                    </td>
+                    <td>
+                        <div class="d-flex">
+                            <button class="tableBtn fas fa-pencil-alt " id="@item.WorkExperienceId" onclick="showinfo('@item.WorkExperienceId')">
 
-            </td>
-        </tr>
+                            </button>
+                            <button class="tableBtn fas fa-trash-alt " name="WorkExperienceId" onclick="deleteInfo('@item.WorkExperienceId')">
+                                
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
         }
-    }
     </tbody>
 </table>
+
+<script>
+    ///顯示經歷 、hid create btn
+    function showinfo(id){
+        var currow = $('#'+id).closest('tr');
+        var col1 = currow.find('td:eq(1)').text().trim();
+        var col2 = currow.find('td:eq(2)').text().trim();
+        var col3 = currow.find('td:eq(3)').text().trim();
+        var col4 = currow.find('td:eq(4)').text().trim();
+        var col5 = currow.find('td:eq(5)').text().trim();
+        var col6 = currow.find('td:eq(6)').text().trim();
+        var col7 = currow.find('td:eq(7)').text().trim();
+
+        $('#WorkExperienceId').val(col1);
+        $('#CompanyName').val(col2);
+        $('#CompanyDepartment').val(col3);
+        $('#JobTitle').val(col4);
+        $('#EmploymentFrom').val(col5);
+        $('#EmploymentTo').val(col6);
+        $('#JobDescription').val(col7);
+
+        $("#editWork").show();
+        $("#createWork").hide();
+        
+    }
+
+
+
+    ///工作刪除
+    function deleteInfo(dd)
+     {    
+         var num = dd;
+        $.ajax({
+            url:"@Url.Content("~/StudentResume/DeleteWork")",
+            type:"POST",
+            data:{'WorkExperienceId':num},
+
+        }).done(function (data) {
+            Swal.fire({
+                        icon: 'success',
+                        title: '刪除成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+            $("#workPage").load(location.href + " #workPage");})
+        }
+</script>
+

@@ -30,7 +30,7 @@
                     </a>
                     <figcaption>
                         <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
-                        <div class="price h5">NT$@Html.DisplayFor(modelItem => item.Price)</div>
+                        <div class="price h5">NT$@Html.DisplayFor(modelItem => item.Price, "Money")</div>
                     </figcaption>
                 </figure>
             </div>

@@ -10,9 +10,11 @@ namespace MSITTeam1Admin.Models
         public string FCompanyTaxid { get; set; }
         public string FJobName { get; set; }
         public string FJobSkill { get; set; }
+        public string FCity { get; set; }
+        public string FDistrict { get; set; }
         public string FWorkAddress { get; set; }
         public string FSalaryMode { get; set; }
-        public int? FSalary { get; set; }
+        public string FSalary { get; set; }
         public string FEmployeeType { get; set; }
         public string FWorkHours { get; set; }
         public string FLeaveSystem { get; set; }
@@ -26,6 +28,7 @@ namespace MSITTeam1Admin.Models
         public string FContactFax { get; set; }
         public string FContactEmail { get; set; }
         public string FCreatTime { get; set; }
-        public string FModifyTime { get; set; }
+        public DateTime FModifyTime { get; set; }
+        public string FNeedPerson { get; set; }
     }
 }

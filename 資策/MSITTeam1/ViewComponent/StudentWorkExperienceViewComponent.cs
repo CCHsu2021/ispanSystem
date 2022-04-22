@@ -22,7 +22,6 @@ namespace MSITTeam1.ViewComponent
         {
             string account = CDictionary.account;
             ViewBag.fAccount = account;
-
             CStudentResumeViewModel SBvModel = new CStudentResumeViewModel();
             List<CStudentResumeViewModel> list = new List<CStudentResumeViewModel>();
             var datas = from b in hello.StudentWorkExperiences.Where(p => p.MemberId == account) select b;
@@ -31,5 +30,6 @@ namespace MSITTeam1.ViewComponent
                 list.Add(new CStudentResumeViewModel() { workExperience = t });
             return View(list);
         }
+
     }
 }
