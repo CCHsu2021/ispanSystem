@@ -236,7 +236,7 @@ namespace MSITTeam1.Controllers
 		[HttpPost]
 		public IActionResult Edit([FromBody] CQuestionBankViewModel quesList)
 		{
-			if (quesList != null)
+			 if (quesList != null)
 			{
 				string subject = quesList.FSubjectId;
 				int questionId = quesList.FQuestionId;
@@ -250,11 +250,23 @@ namespace MSITTeam1.Controllers
 					_context.SaveChanges();
 					foreach (var ans in quesList.FChoiceList)
 					{
-						//choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSn);
-						//choSel.FChoice = ans.FChoice;
-						//choSel.FCorrectAnswer = ans.FCorrectAnswer;
-						//TODO3:savechange不要放在迴圈
+						if(ans.FSN != 0)
+						{
+						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSN);
+						choSel.FChoice = ans.Fchoice;
+						choSel.FCorrectAnswer = ans.FCorrect;
 						_context.SaveChanges();
+						}
+						else
+						{
+							quesList.FCSubjectId = quesList.FSubjectId;
+							quesList.FCQuestionId = quesList.FQuestionId;
+							quesList.FChoice = ans.Fchoice;
+							quesList.FCorrectAnswer = ans.FCorrect;
+							quesList.FSn = 0;
+							_context.TQuestionDetails.Add(quesList.choice);
+							_context.SaveChanges();
+						}
 					}
 				}
 			}

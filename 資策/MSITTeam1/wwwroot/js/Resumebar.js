@@ -82,8 +82,3 @@ function setActiveIndicator() {
   }
 }
 
-setSlideDimensions();
-generatePagination();
-$(window).resize(postitionSlides);
-$(".next").on("click", goToNextSlide);
-$(".previous").on("click", goToPreviousSlide);
