@@ -1067,7 +1067,9 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.FOther).HasColumnName("fOther");
 
-                entity.Property(e => e.FSalary).HasColumnName("fSalary");
+                entity.Property(e => e.FSalary)
+                    .HasMaxLength(50)
+                    .HasColumnName("fSalary");
 
                 entity.Property(e => e.FSalaryMode)
                     .HasMaxLength(50)
