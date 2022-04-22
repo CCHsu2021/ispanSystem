@@ -89,7 +89,7 @@
 
     @*btn.addEventListener('click', (evt) => {
         evt.preventDefault();
-        @{ 
+        @{
             if()
         }
     })*@
@@ -120,8 +120,15 @@
                  @:if (1 == a) { anscount++; }
                  @:count++
                  id = item.fQuestionID;
-                     }
+
+
+                  @:{ var b = $('input[name=@item.fQuestionID]:checked').html();  }
+                  //逐筆寫入?
+
+
                  }
+             }
+
              }
           }
                  divAlert.innerHTML = Math.round((anscount / count) * 100)

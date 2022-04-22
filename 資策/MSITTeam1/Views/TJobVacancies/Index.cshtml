@@ -69,7 +69,51 @@
                 @foreach (var item in Model)
                 {
                     var lastModifyTime = (DateTime.Now - item.FModifyTime).Days.ToString();
-                    <li class="job-card new featured">
+                    <li class="job-card new featured" style="align-items:stretch">
+                        <div class="job-card__info">
+                            <div class="d-md-flex">
+                                <div class="img-c">
+                                    <img src="@item.FCompanyLogo" />
+                                </div>
+                                <div style="width:85%">
+                                    <a href="javascript:void(0)">
+                                        <h6>@item.FJobName</h6>
+                                    </a>
+                                    <div class="d-flex align-items-center">
+                                        <p>@item.FCompanyName</p>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <p>@item.FJobDirect</p>
+                                    </div>
+                                    <div>
+                                        <p class="ellipsis">@item.FOther</p>
+                                    </div>
+                                    <ul>
+                                        <li>@(lastModifyTime)天前更新</li>
+                                        <li>@item.FEmployeeType</li>
+                                        <li>@item.FWorkExp</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-section col-4">
+                            <div>
+                                <div class="location-section">
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <span class="middot">
+                                        <abbr title="@(item.FCity + item.FDistrict + item.FWorkAddress)">@(item.FCity + item.FDistrict + item.FWorkAddress)</abbr>
+                                    </span>
+                                </div>
+                                <div class="number-for-hire-section">
+                                    <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
+                                </div>
+                            </div>
+                            <div class="job-salary-section">
+                                <i class="fas fa-dollar-sign"></i><span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
+                            </div>
+                        </div>
+                    </li>
+                    <!--<li class="job-card new featured">
                         <div class="job-card__info">
                             <div class="d-md-flex row">
                                 <div class="img-c col-2">
@@ -88,7 +132,7 @@
                                     <ul>
                                         <li>@(lastModifyTime)天前更新</li>
                                         <li>@item.FEmployeeType</li>
-                                        <li>USA Only</li>
+                                        <li></li>
                                     </ul>
                                 </div>
                                 <div class="info-section col-4">
@@ -103,7 +147,7 @@
                                             </span>
                                         </div>
                                         <div class="number-for-hire-section">
-                                            <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
+                                            <i class="fa fa-user"></i><abbr title="需求人數">@item.FNeedPerson</abbr>
                                         </div>
                                     </div>
                                     <div class="job-salary-section">
@@ -111,33 +155,33 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         @*<ul class="job-card__tags">
-                            <li>Frontened</li>
-                            <li>Senior</li>
-                            <li>HTML</li>
-                            <li>CSS</li>
-                            <li>JavaScript</li>
-                        </ul>*@
-                    </li>
+                    <li>Frontened</li>
+                    <li>Senior</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                </ul>*@
+                    <!--</li>-->
                 }
-                <li class="job-card new featured">
+                <li class="job-card new featured" style="align-items:stretch">
                     <div class="job-card__info">
                         <div class="d-md-flex">
                             <div class="img-c">
                                 <img src="@*http://projects.lollypop.design/job-listing/photosnap.svg*@" />
                             </div>
-                            <div>
+                            <div style="width:85%">
                                 <a href="javascript:void(0)">
                                     <h6>Senior Frontend Developer</h6>
                                 </a>
                                 <div class="d-flex align-items-center">
                                     <p>台北吳先生有限公司</p>
-                                    @*<p>Photosnap</p>
-                                        <p class="tag-new">New!</p>
-                                        <p class="tag-featured">Featured</p>*@
                                 </div>
-                                <div class="box">
+                                <div class="d-flex align-items-center">
+                                    <p>.Net工程師</p>
+                                </div>
+                                <div>
                                     <p class="ellipsis">無所不架JA.anything是設計相關小型工作室，製作項目包含網頁設計、app製作、網路遊戲、影音特效剪輯等。</p>
                                 </div>
                                 <ul>
@@ -155,9 +199,9 @@
                                 <span class="middot">
                                     <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=404%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%8C%97%E5%8D%80"><abbr>404台灣台中市北區</abbr></a>
                                 </span>
-                                <span class="middot">
-                                    <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=221%E5%8F%B0%E7%81%A3%E6%96%B0%E5%8C%97%E5%B8%82%E6%B1%90%E6%AD%A2%E5%8D%80"><abbr>221台灣新北市汐止區</abbr></a>
-                                </span>
+                                @*<span class="middot">
+                            <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=221%E5%8F%B0%E7%81%A3%E6%96%B0%E5%8C%97%E5%B8%82%E6%B1%90%E6%AD%A2%E5%8D%80"><abbr>221台灣新北市汐止區</abbr></a>
+                        </span>*@
                             </div>
                             <div class="number-for-hire-section">
                                 <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>

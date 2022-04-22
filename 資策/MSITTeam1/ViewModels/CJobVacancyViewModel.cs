@@ -26,7 +26,7 @@ namespace MSITTeam1.ViewModels
         [DisplayName("薪水制度")]
         public string FSalaryMode { get { return this._job.FSalaryMode; } set { _job.FSalaryMode = value; } }
         [DisplayName("薪水")]
-        public int? FSalary { get { return this._job.FSalary; } set { _job.FSalary = value; } }
+        public string FSalary { get { return this._job.FSalary; } set { _job.FSalary = value; } }
         [DisplayName("工作性質")]
         public string FEmployeeType { get { return this._job.FEmployeeType; } set { _job.FEmployeeType = value; } }
         [DisplayName("時數")]

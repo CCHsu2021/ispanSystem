@@ -1,0 +1,32 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CTestPaperViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+    <div id="div1">
+        <h1>Index</h1>
+    </div>
+    <button class="btn-style-two mt-3" type="button" id="button1">下一題</button>
+    <form name="member" method="post">
+        <div id="div2" style="display:block" class="alert alert-info"></div>
+    </form>
+
+    <script>
+    const btn = document.querySelector("#button1");
+    const divAlert = document.querySelector("#div1");
+
+
+    btn.addEventListener('click', (evt) => {
+            evt.preventDefault();
+        const formData = new FormData(document.member);
+
+        fetch('@Url.Action("Topic","SkillGrade")', {
+            method: 'POST',
+            body: FormData
+        }).then(Response => Response.text())
+                .then(data => divAlert.innerHTML = data)
+        })
+
+    </script>
+
+
+

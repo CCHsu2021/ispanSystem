@@ -14,7 +14,7 @@ namespace MSITTeam1Admin.Models
         public string FDistrict { get; set; }
         public string FWorkAddress { get; set; }
         public string FSalaryMode { get; set; }
-        public int? FSalary { get; set; }
+        public string FSalary { get; set; }
         public string FEmployeeType { get; set; }
         public string FWorkHours { get; set; }
         public string FLeaveSystem { get; set; }
