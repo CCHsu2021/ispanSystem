@@ -904,7 +904,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    window.open('@Url.Content("~/SMemberCenter/Index")')
+                    window.location='@Url.Content("~/SMemberCenter/Index")'
                 })}
             
             if ("@ViewBag.Name" == "親愛的用戶" && "@ViewBag.Type" == "2") {
@@ -914,7 +914,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    window.open('@Url.Content("~/CMemberCenter/Index")')
+                    window.location='@Url.Content("~/CMemberCenter/Index")'
                 })
             }
         })
