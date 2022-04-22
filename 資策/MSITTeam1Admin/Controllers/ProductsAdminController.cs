@@ -138,20 +138,20 @@ namespace MSITTeam1Admin.Controllers
                         ImageUploadResult uploadResult = await cloudinary.UploadAsync(uploadParams);
                         var url = uploadResult.SecureUrl.ToString();
                         p.ImgPath = url;
+                        prod.ImgPath = p.ImgPath;
                     }
                     //else
                     //{
                     //    prod.ImgPath = "noImg.jpg";
                     //}
-                    prod.ImgPath = p.ImgPath;
-                    prod.ProductId = p.ProductId;
-                    prod.Name = p.Name;
-                    prod.Price = p.Price;
-                    prod.Cost = p.Cost;
-                    prod.Barcode = p.Barcode;
-                    prod.Description = p.Description;
-                    hello.SaveChanges();
                 }
+                prod.ProductId = p.ProductId;
+                prod.Name = p.Name;
+                prod.Price = p.Price;
+                prod.Cost = p.Cost;
+                prod.Barcode = p.Barcode;
+                prod.Description = p.Description;
+                hello.SaveChanges();
             }
             return RedirectToAction("Index");
         }
