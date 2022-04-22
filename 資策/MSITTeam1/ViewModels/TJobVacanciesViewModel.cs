@@ -65,6 +65,8 @@ namespace MSITTeam1.ViewModels
         public string FCreatTime { get { return this.jobV.FCreatTime; } set { jobV.FCreatTime = value; } }
         [DisplayName("最後修改時間")]
         public DateTime FModifyTime { get { return this.jobV.FModifyTime; } set { jobV.FModifyTime = value; } }
+        [DisplayName("需求人數")]
+        public string FNeedPerson { get { return this.jobV.FNeedPerson; } set { jobV.FNeedPerson = value; } }
         [DisplayName("公司名稱")]
         public string FCompanyName { get { return this.comB.FName; } set { this.comB.FName = value; } }
         [DisplayName("公司照片")]

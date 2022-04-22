@@ -29,5 +29,6 @@ namespace MSITTeam1Admin.Models
         public string FContactEmail { get; set; }
         public string FCreatTime { get; set; }
         public DateTime FModifyTime { get; set; }
+        public string FNeedPerson { get; set; }
     }
 }

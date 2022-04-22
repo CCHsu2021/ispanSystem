@@ -1061,6 +1061,10 @@ namespace MSITTeam1Admin.Models
                     .HasColumnName("fModifyTime")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.FNeedPerson)
+                    .HasMaxLength(10)
+                    .HasColumnName("fNeedPerson");
+
                 entity.Property(e => e.FOther).HasColumnName("fOther");
 
                 entity.Property(e => e.FSalary).HasColumnName("fSalary");
