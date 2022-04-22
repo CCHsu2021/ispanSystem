@@ -116,7 +116,7 @@ namespace MSITTeam1Admin.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public IActionResult Edit(CProductAdminViewModel p)
+        public async Task<IActionResult> Edit(CProductAdminViewModel p)
         {
             TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == p.ProductId);
             if (prod != null)
@@ -124,14 +124,27 @@ namespace MSITTeam1Admin.Controllers
                 if (p.photo != null)
                 {
                     string photoName = Guid.NewGuid().ToString() + ".jpg";
-                    prod.ImgPath = photoName;
-                    ViewBag.imgPath = photoName;
-                    p.photo.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\products\" + photoName, FileMode.Create));
+                    var myAccount = new Account { ApiKey = "756611421435346", ApiSecret = "q9LV4-S7fbX7leQjNUZjfEDcjMs", Cloud = "ispansystem" };
+                    Cloudinary cloudinary = new Cloudinary(myAccount);
+
+                    using (var memory = new MemoryStream())
+                    {
+
+                        await p.photo.CopyToAsync(memory);
+                        memory.Position = 0;// set cursor to the beginning of the stream.
+
+                        ImageUploadParams uploadParams = new ImageUploadParams();
+                        uploadParams.File = new FileDescription(photoName, memory);
+                        ImageUploadResult uploadResult = await cloudinary.UploadAsync(uploadParams);
+                        var url = uploadResult.SecureUrl.ToString();
+                        p.ImgPath = url;
+                        prod.ImgPath = p.ImgPath;
+                    }
+                    //else
+                    //{
+                    //    prod.ImgPath = "noImg.jpg";
+                    //}
                 }
-                //else
-                //{
-                //    prod.ImgPath = "noImg.jpg";
-                //}
                 prod.ProductId = p.ProductId;
                 prod.Name = p.Name;
                 prod.Price = p.Price;
@@ -142,7 +155,6 @@ namespace MSITTeam1Admin.Controllers
             }
             return RedirectToAction("Index");
         }
-
 
         // GET: Products/Delete/5
         public ActionResult Delete(string id)
