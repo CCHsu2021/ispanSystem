@@ -92,12 +92,12 @@ namespace MSITTeam1.ViewModels
         }
 
         /// 工作經歷
+        [DisplayName("")]
         public long WorkExperienceId
         {
             get { return this.workExperience.WorkExperienceId; }
             set { this.workExperience.WorkExperienceId = value; }
         }
-
         public string WorkMemberId
         {
             get { return this.workExperience.MemberId; }

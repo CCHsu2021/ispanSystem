@@ -1,9 +1,12 @@
-﻿@addTagHelper *, MSITTeam1
+﻿@*@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>*@
+@addTagHelper *, MSITTeam1
 @{
     ViewData["Title"] = "Index";
 }
 <link href="~/css/MemberCenter.css" rel="stylesheet">
 <link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
+<link href="~/css/barRating.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div id="cont-about" class="container-fluid py-4">
     <div class="container">
         @*<h4 class="my-3 pl-2">歡迎回來! @ViewBag.Name</h4>*@
@@ -27,7 +30,6 @@
             <div class="col-sm-9">
                 <div class="tab-content shadow-sm">
                     <div id="home" class="container tab-pane active">
-                        <vc:question-bank-create></vc:question-bank-create>
                     </div>
                     <div id="menu1" class="container tab-pane fade">
                         <vc:question-bank-list></vc:question-bank-list>
@@ -73,13 +75,12 @@
 </div>
 
 
-
-
-
-
-
 @section Scripts
 {
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="~/js/jquery.barrating.js"></script>
+    <script src="~/js/barRating.init.js"></script>
     <script src="~/js/QuestionBankSystem.js"></script>
 }
 

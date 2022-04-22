@@ -188,6 +188,39 @@ namespace MSITTeam1.Controllers
 									FChoice = choice.FChoice,
 									FCorrectAnswer = choice.FCorrectAnswer
 								};
+
+				List<SelectListItem> subjectItems = new List<SelectListItem>();
+				var subjectQuery = from s in _context.TStudioInformations
+								   select s;
+				foreach(var s in subjectQuery)
+				{
+					subjectItems.Add(new SelectListItem()
+					{
+						Text = s.FClassSkill,
+						Value = s.FClassSkill
+					}) ;
+				}
+
+				List<SelectListItem> typeItems = new List<SelectListItem>();
+				typeItems.Add(new SelectListItem()
+				{
+					Text = "單選題",
+					Value = "1"
+				});
+				typeItems.Add(new SelectListItem()
+				{
+					Text = "多選題",
+					Value = "2"
+				});
+				typeItems.Add(new SelectListItem()
+				{
+					Text = "填空題",
+					Value = "3"
+				});
+
+				ViewBag.Subjects = subjectItems;
+				ViewBag.Type = typeItems;
+
 				foreach (var q in quesQuery)
 				{
 					quesList.Add(q);
@@ -201,26 +234,26 @@ namespace MSITTeam1.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Edit(List<CQuestionBankViewModel> quesList)
+		public IActionResult Edit([FromBody] CQuestionBankViewModel quesList)
 		{
-			if (quesList.Count != 0)
+			if (quesList != null)
 			{
-				string subject = quesList[0].FSubjectId;
-				int questionId = quesList[0].FQuestionId;
+				string subject = quesList.FSubjectId;
+				int questionId = quesList.FQuestionId;
 
 				TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subject) && q.FQuestionId == questionId);
 				TQuestionDetail choSel = null;
 				if (quesSel != null)
 				{
-					quesSel.FQuestion = quesList[0].FQuestion;
-					quesSel.FQuestionTypeId = Convert.ToInt32(quesList[0].FQuestionTypeId);
+					quesSel.FQuestion = quesList.FQuestion;
+					quesSel.FQuestionTypeId = Convert.ToInt32(quesList.FQuestionTypeId);
 					_context.SaveChanges();
-					foreach (var ans in quesList)
+					foreach (var ans in quesList.FChoiceList)
 					{
-						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSn);
-						choSel.FChoice = ans.FChoice;
-						choSel.FCorrectAnswer = ans.FCorrectAnswer;
-						// TODO3:savechange不要放在迴圈
+						//choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSn);
+						//choSel.FChoice = ans.FChoice;
+						//choSel.FCorrectAnswer = ans.FCorrectAnswer;
+						//TODO3:savechange不要放在迴圈
 						_context.SaveChanges();
 					}
 				}

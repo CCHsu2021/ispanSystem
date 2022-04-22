@@ -1,69 +1,14 @@
 ﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
-@using MSITTeam1.ViewModels;
+@*@addTagHelper *, MSITTeam1*@
 @using System.Collections.Generic;
 
-@{
-    ViewData["Title"] = "List";
-}
-<div class="container" style="padding:40px;">
-    <h1>題目列表</h1>
-    <p>
-        <a asp-action="Create" data-toggle="modal" data-target="#questionCreate">新增題目</a>
-    </p>
-
-    <div style="margin:20px">
-        <form method="post" action="~/QuestionBank/List" enctype="application/x-www-form-urlencoded">
-
-            <div class="form-group row justify-content-around py-4">
-                <div class="row">
-                    <div class="col">
-                        @Html.DropDownList("Subjects", (IEnumerable<SelectListItem>)ViewBag.subjectItems, "請選擇類別", new { @class = "form-control" })
-                    </div>
-                    @*@{
-                            if (Model != null)
-                            {
-                                string subject = "";
-                                            <div class="col-md-4">
-                                                <select class="form-select form-control" aria-label="Default select example" name="subject">
-                                                    @foreach (var item in Model)
-                                                    {
-                                                        if (item.FSubjectId != subject)
-                                                        {
-                                                            <option value="@Html.DisplayFor(modelItem => item.FSubjectId)">@Html.DisplayFor(modelItem => item.FSubjectId)</option>
-                                                            subject = item.FSubjectId;
-                                                        }
-                                                    }
-
-                                                </select>
-                                            </div>
-                            }
-                        }*@
-                    <div class="col">
-                        @Html.DropDownList("Type", (IEnumerable<SelectListItem>)ViewBag.typeItems, "請選擇題目類型", new { @class = "form-control" })
-                    </div>
-                    @*<span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>*@
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group input-group-rounded">
-                        <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="searchBarSim">
-                        <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>
-                    </div>
-                </div>
-            </div>
-
-        </form>
-    </div>
-
-    <div>
         @{
             if (Model != null)
             {
-                //List<string> subjectInTable = new List<string>();
                 string subject = "";
                 int quesId = 0;
                 foreach (var item in Model)
                 {
-                    //subjectInTable.Add(item.FSubjectId);
                     if (item.FSubjectId != subject || item.FQuestionId != quesId)
                     {
                         subject = item.FSubjectId;
@@ -116,22 +61,3 @@
                 }
             }
         }
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="questionCreate" tabindex="-1" aria-labelledby="questionCreate" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">新增題目</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <vc:question-bank-create></vc:question-bank-create>
-            </div>
-        </div>
-    </div>
-</div>

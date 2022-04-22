@@ -1,4 +1,5 @@
 ﻿@model MSITTeam1.ViewModels.CQuestionBankViewModel
+@*@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>*@
 
 @{
     ViewData["Title"] = "Create";
@@ -6,12 +7,12 @@
 
 <div class="container" id="outdiv" style="padding:20px">
     <div class="row" style="padding:20px;">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="FSubjectId" class="control-label"></label>
-                    <select id="FSubjectId" asp-for="FSubjectId" class="form-control">
+                    <label name="FSubjectId" id="FSubjectId" class="control-label"></label>
+                    <select id="FSubjectId" name="FSubjectId" id="FSubjectId" class="form-control">
                         <option>其他</option>
                     </select>
                     <span asp-validation-for="FSubjectId" class="text-danger"></span>
@@ -27,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="FQuestion" class="control-label"></label>
-                    <input id="FQuestion" asp-for="FQuestion" class="form-control" />
+                    <input id="FQuestion" name="FQuestion" class="form-control" />
                     <span asp-validation-for="FQuestion" class="text-danger"></span>
                 </div>
                 <div id="ansList">
@@ -45,10 +46,19 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="FLevel" class="control-label"></label>
-                    <input id="FLevel" asp-for="FLevel" class="form-control" />
+                    <div>
+                        <div class="rating2">
+                            <select class="questionBarRate" id="example-fontawesome" name="rating" autocomplete="off">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
                     <span asp-validation-for="FLevel" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
                     <button class="btn btn-primary" type="button" id="createNew">測試</button>
                     @*<button class="btn btn-primary" type="button" id="test">測試</button>*@
@@ -61,3 +71,4 @@
         <a asp-action="List">返回列表</a>
     </div>
 </div>
+
