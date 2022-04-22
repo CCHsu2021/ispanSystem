@@ -53,6 +53,9 @@ namespace MSITTeam1.ViewModels
         [DisplayName("新增時間")]
         public string FCreatTime { get { return this._job.FCreatTime; } set { _job.FCreatTime = value; } }
         [DisplayName("最後編輯時間")]
-        public DateTime FModifyTime { get { return this.FModifyTime; } set { _job.FModifyTime = value; } }
+        public DateTime FModifyTime { get { return this._job.FModifyTime; } set { _job.FModifyTime = value; } }
+        public string FCity { get { return this._job.FCity; } set { _job.FCity = value; } }
+        public string FDistrict { get { return this._job.FDistrict; } set { _job.FDistrict = value; } }
+        public string FNeedPerson { get { return this._job.FNeedPerson; } set { _job.FNeedPerson = value; } }
     }
 }

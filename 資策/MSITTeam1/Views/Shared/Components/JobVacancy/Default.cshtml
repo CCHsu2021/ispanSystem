@@ -4,148 +4,83 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>職缺管理</h1>
-
-<p>
+<style>
+    .job-card {
+        border: lightgray solid 1px;
+        border-left: 5px #ed731a solid;
+    }
+    .joblistbtn {
+        border: 0;
+        padding: 0px 5px;
+        background-color: #1e3c84;
+        color: #FFFFFF;
+        text-transform: capitalize;
+        font-size: 18px;
+        line-height: 22px;
+        width: 50px;
+        height: 50px;
+        margin-right: 3px;
+        text-align:center;
+        line-height:50px;
+    }
+    .joblistbtn:hover{
+        background:#FFFFFF;
+        color:#1e3c84;
+    }
+</style>
+<div>
+    <div class="form-group row justify-content-center py-4">
+        <div class="col-md-10">
+            <div class="input-group input-group-rounded">
+                <input type="text" placeholder="請輸入關鍵字" name="txtKeyword" class="form-control">
+                <span class="input-group-btn" style="position:relative"><button class="btn bg-blue btn-group-right" type="submit"><i class="fas fa-search text-light"></i></button></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
     <a asp-action="CreateJobVacancy">新增職缺</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FCompanyTaxid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FJobName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FJobSkill)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FWorkAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FSalaryMode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FSalary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FEmployeeType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FWorkHours)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FLeaveSystem)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FWorkExp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FEducation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FOther)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FJobStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FJobListId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FContactPerson)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FContactPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FContactFax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FContactEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FCreatTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FModifyTime)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FCompanyTaxid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FJobName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FJobSkill)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FWorkAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FSalaryMode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FSalary)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FEmployeeType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FWorkHours)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FLeaveSystem)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FWorkExp)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FEducation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FOther)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FJobStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FJobListId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FContactPerson)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FContactPhone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FContactFax)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FContactEmail)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FCreatTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FModifyTime)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+</div>
+@foreach(var item in Model)
+{
+<div class="job-card mb-4" id="quesCard">
+        <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCompanyTaxid)" />
+        <div class="tab-content">
+            <div class="tab-pane active" id="home2" role="tabpanel">
+                <div class="p-10">
+                    <h5 class="font-weight-bold">
+                        @Html.DisplayFor(modelItem => item.FJobName)
+                    </h5>
+                    <hr />
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-7 col-lg-8" style="line-height:2rem">
+                        <div>薪資：@item.FSalaryMode@item.FSalary</div>
+                        <div>工作地址：@item.FCity@item.FDistrict@item.FWorkAddress</div>
+                        <div>工作時數：@item.FWorkHours</div>
+                        <div>排休制度：@item.FLeaveSystem</div>
+                        <div>需求技能：@item.FJobSkill</div>
+                        <div>需求學歷：@item.FEducation</div>
+                        <div>需求人數：@item.FNeedPerson</div>
+                    </div>
+                    <div class="col-md-5 col-lg-4" style="line-height:2rem">
+                        <div>聯繫人：@item.FContactPerson</div>
+                        <div>聯繫人：@item.FContactPhone</div>
+                        <div>聯繫人：@item.FContactFax</div>
+                        <div>聯繫人：@item.FContactEmail</div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <div>備註：@item.FOther</div>
+                    </div>
+                </div>
+                <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0">
+                    @Html.ActionLink("", "Edit", new { CompanyTaxID = item.FCompanyTaxid, JobName = item.FJobName },new { @class= "fas fa-pencil-alt fa-2x joblistbtn" }) 
+                    @Html.ActionLink("", "Delete", new { /* id=item.PrimaryKey */ },new { @class= "fas fa-trash-alt fa-2x joblistbtn" })
+                </div>
+            </div>
+        </div>
+</div>
+}
 
