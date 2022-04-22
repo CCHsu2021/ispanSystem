@@ -17,7 +17,7 @@ namespace MSITTeam1.Models
         public int FCompanyId { get; set; }
         public string FAccount { get; set; }
         public string FSalaryMode { get; set; }
-        public int? FSalary { get; set; }
+        public string FSalary { get; set; }
         public string FEmployeesType { get; set; }
         public string FWorkAddress { get; set; }
         public int? FPostCode { get; set; }
