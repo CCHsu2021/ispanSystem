@@ -3,37 +3,455 @@
 @{
     ViewData["Title"] = "Index";
 }
+@section Style{
+    <link rel="stylesheet" href="~/css/JobSearchList.css" />
+    <style>
+        .box {
+            width: 300px;
+            /*padding: 10px;*/
+            /*border: #4caf50 2px solid;*/
+        }
+
+        .ellipsis {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 5; /*多少行數之後才開始省略*/
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
+    </style>
+}
 
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-@using (Html.BeginForm())
-{
-    <div class="form-group row justify-content-center py-4">
-        <div class="col-md-4">
-            <div class="input-group input-group-rounded">
-                <input type="text" placeholder="Java, C#, BigData..." name="Search" class="form-control">
-                <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>
+<main>
+    <div class="container">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group row justify-content-center py-4">
+                <div class="col-md-4">
+                    <div class="input-group input-group-rounded">
+                        <input type="text" placeholder="Java, C#, BigData..." name="Search" class="form-control">
+                        <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label>職缺類型：</label>
+                    <select class="form-control" id="selectJobDirect">
+                        <option value="none" selected>全選</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label>地區：</label>
+                    <select class="form-control" id="selectCity">
+                        <option value="none" selected>全選</option>
+                    </select>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-12">
+                <div class="filter-tags-c">
+                    <ul id="filter-tags-list"></ul>
+                    <p class="clear-tags" id="js-clear-tags"> Clear</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <label>職缺類型：</label>
-            <select id="selectJobDirect">
-                <option value="none" selected>全選</option>
-            </select>
+        <div class="row">
+            <ul class="col-12" id="job-list">
+                @foreach (var item in Model)
+                {
+                    var lastModifyTime = (DateTime.Now - item.FModifyTime).Days.ToString();
+                    <li class="job-card new featured">
+                        <div class="job-card__info">
+                            <div class="d-md-flex row">
+                                <div class="img-c col-2">
+                                    <img src="" />
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0)">
+                                        <h6>@item.FJobName</h6>
+                                    </a>
+                                    <div class="d-flex align-items-center">
+                                        <p>@item.FCompanyName</p>
+                                    </div>
+                                    <div class="box">
+                                        <p class="ellipsis">@item.FOther</p>
+                                    </div>
+                                    <ul>
+                                        <li>@(lastModifyTime)天前更新</li>
+                                        <li>@item.FEmployeeType</li>
+                                        <li>USA Only</li>
+                                    </ul>
+                                </div>
+                                <div class="info-section col-4">
+                                    <div>
+                                        <div class="location-section">
+                                            <i class="fa fa-map-marker-alt"></i>
+                                            <span class="middot">
+                                                <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=404%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%8C%97%E5%8D%80"><abbr>404台灣台中市北區</abbr></a>
+                                            </span>
+                                            <span class="middot">
+                                                <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=221%E5%8F%B0%E7%81%A3%E6%96%B0%E5%8C%97%E5%B8%82%E6%B1%90%E6%AD%A2%E5%8D%80"><abbr>221台灣新北市汐止區</abbr></a>
+                                            </span>
+                                        </div>
+                                        <div class="number-for-hire-section">
+                                            <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
+                                        </div>
+                                    </div>
+                                    <div class="job-salary-section">
+                                        <i class="fas fa-dollar-sign"></i><span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<ul class="job-card__tags">
+                            <li>Frontened</li>
+                            <li>Senior</li>
+                            <li>HTML</li>
+                            <li>CSS</li>
+                            <li>JavaScript</li>
+                        </ul>*@
+                    </li>
+                }
+                <li class="job-card new featured">
+                    <div class="job-card__info">
+                        <div class="d-md-flex">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/photosnap.svg*@" />
+                            </div>
+                            <div>
+                                <a href="javascript:void(0)">
+                                    <h6>Senior Frontend Developer</h6>
+                                </a>
+                                <div class="d-flex align-items-center">
+                                    <p>台北吳先生有限公司</p>
+                                    @*<p>Photosnap</p>
+                                        <p class="tag-new">New!</p>
+                                        <p class="tag-featured">Featured</p>*@
+                                </div>
+                                <div class="box">
+                                    <p class="ellipsis">無所不架JA.anything是設計相關小型工作室，製作項目包含網頁設計、app製作、網路遊戲、影音特效剪輯等。</p>
+                                </div>
+                                <ul>
+                                    <li>1d ago</li>
+                                    <li>Full Time</li>
+                                    <li>USA Only</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-section col-4">
+                        <div>
+                            <div class="location-section">
+                                <i class="fa fa-map-marker-alt"></i>
+                                <span class="middot">
+                                    <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=404%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%8C%97%E5%8D%80"><abbr>404台灣台中市北區</abbr></a>
+                                </span>
+                                <span class="middot">
+                                    <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=221%E5%8F%B0%E7%81%A3%E6%96%B0%E5%8C%97%E5%B8%82%E6%B1%90%E6%AD%A2%E5%8D%80"><abbr>221台灣新北市汐止區</abbr></a>
+                                </span>
+                            </div>
+                            <div class="number-for-hire-section">
+                                <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
+                            </div>
+                        </div>
+                        <div class="job-salary-section">
+                            <i class="fas fa-dollar-sign"></i><span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="job-card new featured">
+                    <div class="job-card__info">
+                        <div class="d-md-flex align-items-center">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/manage.svg*@" />
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>Manage</p>
+                                    <p class="tag-new">New!</p>
+                                    <p class="tag-featured">Featured</p>
+                                </div><a href="javascript:void(0)">
+                                    <h6>Fullstack Developer</h6>
+                                </a>
+                                <ul>
+                                    <li>1d ago</li>
+                                    <li>Part Time</li>
+                                    <li>Remote</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-section col-4">
+                        <div>
+                            <div class="location-section">
+                                <i class="fa fa-map-marker-alt"></i>
+                                <span class="middot">
+                                    <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=404%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%8C%97%E5%8D%80"><abbr>404台灣台中市北區</abbr></a>
+                                </span>
+                                <span class="middot">
+                                    <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=221%E5%8F%B0%E7%81%A3%E6%96%B0%E5%8C%97%E5%B8%82%E6%B1%90%E6%AD%A2%E5%8D%80"><abbr>221台灣新北市汐止區</abbr></a>
+                                </span>
+                            </div>
+                            <div class="number-for-hire-section">
+                                <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
+                            </div>
+                        </div>
+                        <div class="job-salary-section">
+                            <i class="fas fa-dollar-sign"></i><span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="job-card new">
+                    <div class="job-card__info">
+                        <div class="d-md-flex align-items-center">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/account.svg*@" />
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>Account</p>
+                                    <p class="tag-new">New!</p>
+                                    <p class="tag-featured">Featured</p>
+                                </div><a href="javascript:void(0)">
+                                    <h6>Junior Frontend Developer</h6>
+                                </a>
+                                <ul>
+                                    <li>2d ago</li>
+                                    <li>Part Time</li>
+                                    <li>USA Only</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="job-card__tags">
+                        <li>Frontened</li>
+                        <li>Junior</li>
+                        <li>React</li>
+                        <li>Sass</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </li>
+                <li class="job-card">
+                    <div class="job-card__info">
+                        <div class="d-md-flex align-items-center">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/myhome.svg*@" />
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>MyHome</p>
+                                    <p class="tag-new">New!</p>
+                                    <p class="tag-featured">Featured</p>
+                                </div><a href="javascript:void(0)">
+                                    <h6>Junior Frontend Developer</h6>
+                                </a>
+                                <ul>
+                                    <li>5d ago</li>
+                                    <li>Contract</li>
+                                    <li>USA Only</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="job-card__tags">
+                        <li>Frontened</li>
+                        <li>Junior</li>
+                        <li>CSS</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </li>
+                <li class="job-card">
+                    <div class="job-card__info">
+                        <div class="d-md-flex align-items-center">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/loop-studios.svg*@" />
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>Loop Studios</p>
+                                    <p class="tag-new">New!</p>
+                                    <p class="tag-featured">Featured</p>
+                                </div><a href="javascript:void(0)">
+                                    <h6>Software Engineer</h6>
+                                </a>
+                                <ul>
+                                    <li>1w ago</li>
+                                    <li>Full Time</li>
+                                    <li>Worldwide</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="job-card__tags">
+                        <li>FullStack</li>
+                        <li>Midweight</li>
+                        <li>JavaScript</li>
+                        <li>Sass</li>
+                        <li>Ruby</li>
+                    </ul>
+                </li>
+                <li class="job-card">
+                    <div class="job-card__info">
+                        <div class="d-md-flex align-items-center">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/faceit.svg*@" />
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>FaceIt</p>
+                                    <p class="tag-new">New!</p>
+                                    <p class="tag-featured">Featured</p>
+                                </div><a href="javascript:void(0)">
+                                    <h6>Senior Frontend Developer</h6>
+                                </a>
+                                <ul>
+                                    <li>2w ago</li>
+                                    <li>Full Time</li>
+                                    <li>UK only</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="job-card__tags">
+                        <li>Backend</li>
+                        <li>Junior</li>
+                        <li>Ruby</li>
+                        <li>RoR</li>
+                    </ul>
+                </li>
+                <li class="job-card">
+                    <div class="job-card__info">
+                        <div class="d-md-flex align-items-center">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/shortly.svg*@" />
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>Shotly</p>
+                                    <p class="tag-new">New!</p>
+                                    <p class="tag-featured">Featured</p>
+                                </div><a href="javascript:void(0)">
+                                    <h6>Junior Developer</h6>
+                                </a>
+                                <ul>
+                                    <li>1w ago</li>
+                                    <li>Full Time</li>
+                                    <li>Worldwide</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="job-card__tags">
+                        <li>Frontened</li>
+                        <li>Junior</li>
+                        <li>HTML</li>
+                        <li>Sass</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </li>
+                <li class="job-card">
+                    <div class="job-card__info">
+                        <div class="d-md-flex align-items-center">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/insure.svg*@" />
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>Insure</p>
+                                    <p class="tag-new">New!</p>
+                                    <p class="tag-featured">Featured</p>
+                                </div><a href="javascript:void(0)">
+                                    <h6>Junior Frontend Developer</h6>
+                                </a>
+                                <ul>
+                                    <li>1w ago</li>
+                                    <li>Full Time</li>
+                                    <li>USA Only</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="job-card__tags">
+                        <li>Frontened</li>
+                        <li>Junior</li>
+                        <li>Vue</li>
+                        <li>Javascript</li>
+                        <li>Sass</li>
+                    </ul>
+                </li>
+                <li class="job-card">
+                    <div class="job-card__info">
+                        <div class="d-md-flex align-items-center">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/eyecam-co.svg*@" />
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>Eyecam Co.</p>
+                                    <p class="tag-new">New!</p>
+                                    <p class="tag-featured">Featured</p>
+                                </div><a href="javascript:void(0)">
+                                    <h6>Senior Frontend Developer</h6>
+                                </a>
+                                <ul>
+                                    <li>1w ago</li>
+                                    <li>Full Time</li>
+                                    <li>Worldwide</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="job-card__tags">
+                        <li>Fullstack</li>
+                        <li>Midweight</li>
+                        <li>Javascipt</li>
+                        <li>Django</li>
+                        <li>Python</li>
+                    </ul>
+                </li>
+                <li class="job-card">
+                    <div class="job-card__info">
+                        <div class="d-md-flex align-items-center">
+                            <div class="img-c">
+                                <img src="@*http://projects.lollypop.design/job-listing/the-air-filter-company.svg*@" />
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>The Air Filter Company</p>
+                                    <p class="tag-new">New!</p>
+                                    <p class="tag-featured">Featured</p>
+                                </div><a href="javascript:void(0)">
+                                    <h6>Frontend Developer</h6>
+                                </a>
+                                <ul>
+                                    <li>1mo ago</li>
+                                    <li>Part Time</li>
+                                    <li>Worldwide</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="job-card__tags">
+                        <li>Frontened</li>
+                        <li>Junior</li>
+                        <li>React</li>
+                        <li>Sass</li>
+                        <li>Javascript</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-        <div class="col-6">
-            <label>地區：</label>
-            <select id="selectCity">
-                <option value="none" selected>全選</option>
-            </select>
-        </div>
     </div>
-}
+</main>
 <table class="table">
     <thead>
         <tr>
@@ -161,7 +579,16 @@
         }
     </tbody>
 </table>
-@section Scripts{ 
+@section Scripts{
+    <script src="~/js/JobSearchList.js"></script>
+
+    <script>
+        //todo 頁面標籤
+        $(function () {
+            initPagination('.product-item', 10, '#ProductPagination')
+        });
+    </script>
+
     <script>
         let selectJobDirect = document.querySelector('#selectJobDirect');
         let selectCity = document.querySelector('#selectCity');
@@ -194,6 +621,4 @@
             console.log(data);
         })
     </script>
-
-
 }

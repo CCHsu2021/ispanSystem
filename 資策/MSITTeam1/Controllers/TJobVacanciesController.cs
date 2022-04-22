@@ -40,9 +40,6 @@ namespace MSITTeam1.Controllers
                        FJobDirect = combin2.FJobDirect
                    };
             return View(list);
-
-            //var helloContext = _context.TJobVacancies.Include(t => t.F).Include(t => t.FAccountNavigation).Include(t => t.FJoblist);
-            //return View(await helloContext.ToListAsync());
         }
         [HttpPost]
         public IActionResult Index(FormCollection post) //todo 接收搜尋欄等post過來的資料，是否可以另建ViewModel來用偷雞摸狗法。

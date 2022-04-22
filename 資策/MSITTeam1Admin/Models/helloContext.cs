@@ -1004,6 +1004,10 @@ namespace MSITTeam1Admin.Models
                     .HasMaxLength(50)
                     .HasColumnName("fJobName");
 
+                entity.Property(e => e.FCity)
+                    .HasMaxLength(50)
+                    .HasColumnName("fCity");
+
                 entity.Property(e => e.FContactEmail)
                     .HasMaxLength(50)
                     .HasColumnName("fContactEmail");
@@ -1024,6 +1028,10 @@ namespace MSITTeam1Admin.Models
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("fCreatTime");
+
+                entity.Property(e => e.FDistrict)
+                    .HasMaxLength(50)
+                    .HasColumnName("fDistrict");
 
                 entity.Property(e => e.FEducation)
                     .HasMaxLength(50)
@@ -1049,9 +1057,9 @@ namespace MSITTeam1Admin.Models
                     .HasColumnName("fLeaveSystem");
 
                 entity.Property(e => e.FModifyTime)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fModifyTime");
+                    .HasColumnType("datetime")
+                    .HasColumnName("fModifyTime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.FOther).HasColumnName("fOther");
 
@@ -1196,7 +1204,8 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.FUpdateTime)
                     .HasColumnType("datetime")
-                    .HasColumnName("fUpdateTime");
+                    .HasColumnName("fUpdateTime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<TReceipt>(entity =>
