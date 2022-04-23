@@ -937,9 +937,9 @@
     <script src="~/js/sweetalert2.all.min.js"></script>
     <script src="~/js/Resumebar.js"></script>
     <script src="~/js/Pagination.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
     <script>
         //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
+        $(document).ready(function () {
         var onResize = function () {
             $("body").css("padding-top", $(".main-header").height());
             $(".cart-wrapper").css("top", $(".main-header").height());
@@ -948,6 +948,7 @@
         $(function () {
             onResize();
         });
+        })
 
 
             //$(function () {
@@ -1038,5 +1039,6 @@
 
    
     </script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
