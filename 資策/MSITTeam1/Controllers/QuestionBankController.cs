@@ -26,6 +26,8 @@ namespace MSITTeam1.Controllers
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails
 							join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
+							where ques.FState == 2
+							orderby ques.FSubjectId
 							select new CQuestionBankViewModel
 							{
 								FSn = choice.FSn,
@@ -271,6 +273,29 @@ namespace MSITTeam1.Controllers
 				}
 			}
 			return RedirectToAction("List");
+		}
+
+		public IActionResult Delete(string subjectID, int questionID)
+		{
+			if (subjectID != null && questionID > 0)
+			{
+				var ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
+				if (ques != null)
+				{
+					ques.FState = 0;
+					_context.SaveChanges();
+				}
+			}
+			return RedirectToAction("List");
+		}
+
+		public IActionResult Subject()
+		{
+			var subjects = _context.TStudioInformations.Select(s => new
+			{
+				s.FClassCategory
+			}).Distinct().OrderBy(s => s.FClassCategory);
+			return Json(subjects);
 		}
 	}
 }
