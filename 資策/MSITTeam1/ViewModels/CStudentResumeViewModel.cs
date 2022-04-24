@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MSITTeam1.Models;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace MSITTeam1.ViewModels
 {
@@ -8,13 +9,17 @@ namespace MSITTeam1.ViewModels
     {
         private StudentBasic _student = null;
         private StudentWorkExperience _workExperience = null;
-        private StudentEducation _education= null;
+        private StudentEducation _education = null;
+        private StudentLanguage _language = null;
+        private StudentSkill _skill = null;
         public IFormFile photo { get; set; }
         public CStudentResumeViewModel()
         {
             _student = new StudentBasic();
             _workExperience = new StudentWorkExperience();
             _education = new StudentEducation();
+            _language = new StudentLanguage();
+            _skill = new StudentSkill();
         }
         public StudentBasic student
         {
@@ -30,6 +35,16 @@ namespace MSITTeam1.ViewModels
         {
             get { return _education; }
             set { _education = value; }
+        }
+        public StudentLanguage language
+        {
+            get { return _language; }
+            set { _language = value; }
+        }
+        public StudentSkill skill
+        {
+            get { return _skill; }
+            set { _skill = value; }
         }
         public string MemberId
         {
@@ -47,6 +62,12 @@ namespace MSITTeam1.ViewModels
         {
             get { return this.student.Gender; }
             set { this.student.Gender = value; }
+        }
+        public enum Gender
+        {
+            男生,
+            女生,
+            未指定
         }
         [DisplayName("生日:")]
         public string fBirthDate
@@ -163,6 +184,7 @@ namespace MSITTeam1.ViewModels
             get { return this.education.GraduateSchool; }
             set { this.education.GraduateSchool = value; }
         }
+
         [DisplayName("畢業系所:")]
         public string GraduateDepartment
         {
@@ -180,6 +202,49 @@ namespace MSITTeam1.ViewModels
         {
             get { return this.education.StudyTo; }
             set { this.education.StudyTo = value; }
+        }
+
+        //語言
+        [DisplayName("")]
+        public long LanguageId
+        {
+            get { return this.language.LanguageId; }
+            set { this.language.LanguageId = value; }
+        }
+        public string LanMemberId
+        {
+            get { return this.language.MemberId; }
+            set { this.language.MemberId = value; }
+        }
+        [DisplayName("語言名稱:")]
+        public string LanguageName
+        {
+            get { return this.language.LanguageName; }
+            set { this.language.LanguageName = value; }
+        }
+        [DisplayName("聽力程度:")]
+        public string Listening
+        {
+            get { return this.language.Listening; }
+            set { this.language.Listening = value; }
+        }
+        [DisplayName("口說程度:")]
+        public string Speaking
+        {
+            get { return this.language.Speaking; }
+            set { this.language.Speaking = value; }
+        }
+        [DisplayName("閱讀程度:")]
+        public string Reading
+        {
+            get { return this.language.Reading; }
+            set { this.language.Reading= value; }
+        }
+        [DisplayName("寫作程度:")]
+        public string Writing
+        {
+            get { return this.language.Writing; }
+            set { this.language.Writing = value; }
         }
     }
 }
