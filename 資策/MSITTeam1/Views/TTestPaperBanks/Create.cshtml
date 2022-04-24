@@ -1,0 +1,48 @@
+﻿@model MSITTeam1.Models.TTestPaperBank
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>TTestPaperBank</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FDesignerAccount" class="control-label"></label>
+                <input asp-for="FDesignerAccount" class="form-control" />
+                <span asp-validation-for="FDesignerAccount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FTestPaperName" class="control-label"></label>
+                <input asp-for="FTestPaperName" class="form-control" />
+                <span asp-validation-for="FTestPaperName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FSubjectId" class="control-label"></label>
+                <input asp-for="FSubjectId" class="form-control" />
+                <span asp-validation-for="FSubjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FNote" class="control-label"></label>
+                <input asp-for="FNote" class="form-control" />
+                <span asp-validation-for="FNote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

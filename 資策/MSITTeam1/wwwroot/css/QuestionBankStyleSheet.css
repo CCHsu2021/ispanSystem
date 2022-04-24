@@ -74,6 +74,10 @@ td {
     text-align: right;
 }
 
+.editBlock {
+    text-align: right;
+}
+
 #container-flex {
     display: flex;
 }
