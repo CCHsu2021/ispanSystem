@@ -35,10 +35,16 @@ namespace MSITTeam1.Controllers
         {
             if (topic.Grade < 70)
             {
-                var TOPIC = (from p in hello.TQuestionLists
-                            where p.FLevel == 1
+                var TOPIC = (from d in hello.TQuestionDetails
+                             join l in hello.TQuestionLists on new { d.FSubjectId, d.FQuestionId } equals new { l.FSubjectId, l.FQuestionId }
+                             where l.FLevel == 1
                             orderby Guid.NewGuid()
-                            select p).Take(1);
+                             select new CTestPaperViewModel
+                             {
+                                 fQuestion = l.FQuestion,
+                                 fChoice = d.FChoice,
+                                 fCorrectAnswer = d.FCorrectAnswer
+                             });
                 return Json(TOPIC);
             }
             else if (topic.Grade >= 70 && topic.Grade < 90)

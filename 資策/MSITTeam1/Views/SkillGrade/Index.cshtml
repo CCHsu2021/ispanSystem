@@ -7,7 +7,7 @@
     </div>
     <button class="btn-style-two mt-3" type="button" id="button1">下一題</button>
     <form name="member" method="post">
-        <div id="div2" style="display:block" class="alert alert-info"></div>
+        <div id="div2" style="display:block" class="alert alert-info">0</div>
     </form>
 
     <script>
@@ -22,8 +22,8 @@
         fetch('@Url.Action("Topic","SkillGrade")', {
             method: 'POST',
             body: FormData
-        }).then(Response => Response.text())
-                .then(data => divAlert.innerHTML = data)
+        }).then(Response => Response.json())
+            .then(jsondata => console.log(jsondata))
         })
 
     </script>
