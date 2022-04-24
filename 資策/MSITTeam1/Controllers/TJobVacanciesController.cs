@@ -24,7 +24,6 @@ namespace MSITTeam1.Controllers
         // GET: TJobVacancies
         public async Task<IActionResult> Index(JobVacanciesSearchBarViewModel vModel)
         {
-
             IEnumerable<TJobVacanciesViewModel> list = null;
             //LINQ，TNewJobVacancies left join TCompanyBasics left join TJobDirects
             list = from p in _context.TNewJobVacancies
@@ -40,64 +39,27 @@ namespace MSITTeam1.Controllers
                        FJobDirect = combin2.FJobDirect
                    };
 
-            if (vModel.txtSearchText == null && vModel.ddlJobListId == 0 && vModel.ddlCity == null)
+            if (vModel.txtSearchText != null)
             {
-                return View(list);
-            }
-            else if (vModel.ddlJobListId == 0 && vModel.ddlCity == null)
-            {
-                var searchList = list.Where(p => p.FJobName.Contains(vModel.txtSearchText)
-                    || p.FJobDirect.Contains(vModel.txtSearchText)
-                    || p.FCompanyName.Contains(vModel.txtSearchText)
-                    || p.FOther.Contains(vModel.txtSearchText));
-                return View(searchList);
-            }
-            else if (vModel.txtSearchText == null && vModel.ddlCity == null)
-            {
-                var searchList = list.Where(p =>
-                    p.FJobListId.Equals(vModel.ddlJobListId));
-                return View(searchList);
-            }
-            else if (vModel.txtSearchText == null && vModel.ddlJobListId == 0)
-            {
-                var searchList = list.Where(p => p.FCity.Contains(vModel.ddlCity));
-                return View(searchList);
-            }
-            else if (vModel.txtSearchText == null)
-            {
-                var searchList = list.Where(p => p.FJobListId.Equals(vModel.ddlJobListId)
-                    && p.FCity.Contains(vModel.ddlCity));
-                return View(searchList);
+                string lowerSearchText = vModel.txtSearchText.ToLower();
+                list = list.Where(p => p.FJobName.ToLower().Contains(lowerSearchText)
+                    || p.FJobDirect.ToLower().Contains(lowerSearchText)
+                    || p.FCompanyName.ToLower().Contains(lowerSearchText)
+                    || p.FOther.ToLower().Contains(lowerSearchText));
             }
 
-            else if (vModel.ddlJobListId == 0)
+            if(vModel.ddlJobListId != null)
             {
-                var searchList = list.Where(p => (p.FJobName.Contains(vModel.txtSearchText)
-                    || p.FJobDirect.Contains(vModel.txtSearchText)
-                    || p.FCompanyName.Contains(vModel.txtSearchText)
-                    || p.FOther.Contains(vModel.txtSearchText))
-                    && p.FCity.Contains(vModel.ddlCity));
-                return View(searchList);
+                list = list.Where(p => p.FJobListId.Equals(vModel.ddlJobListId));
             }
-            else if (vModel.ddlCity == null)
+
+            if(vModel.ddlCity != null)
             {
-                var searchList = list.Where(p => (p.FJobName.Contains(vModel.txtSearchText)
-                    || p.FJobDirect.Contains(vModel.txtSearchText)
-                    || p.FCompanyName.Contains(vModel.txtSearchText)
-                    || p.FOther.Contains(vModel.txtSearchText))
-                    && p.FJobListId.Equals(vModel.ddlJobListId));
-                return View(searchList);
+                list = list.Where(p => p.FCity.Contains(vModel.ddlCity));
             }
-            else
-            {
-                var searchList = list.Where(p => (p.FJobName.Contains(vModel.txtSearchText)
-                    || p.FJobDirect.Contains(vModel.txtSearchText)
-                    || p.FCompanyName.Contains(vModel.txtSearchText)
-                    || p.FOther.Contains(vModel.txtSearchText))
-                    && p.FJobListId.Equals(vModel.ddlJobListId)
-                    && p.FCity.Contains(vModel.ddlCity));
-                return View(searchList); 
-            }
+
+            return View(list);
+
         }
         //[HttpPost]
         //public IActionResult Index(JobVacanciesSearchBarViewModel vModel) //todo 接收搜尋欄等post過來的資料，是否可以另建ViewModel來用偷雞摸狗法。
