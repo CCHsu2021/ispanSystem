@@ -57,6 +57,7 @@ namespace MSITTeam1.Controllers
         [AllowAnonymous]
         public IActionResult Create()
         {
+
             if (ViewBag.id == null)
             {
                 ViewBag.id = 72;
@@ -68,6 +69,7 @@ namespace MSITTeam1.Controllers
                 StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)account);
                 if (sb != null)
                     return View(new CStudentResumeViewModel() { student = sb,  fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
+
             }
             
             return View();

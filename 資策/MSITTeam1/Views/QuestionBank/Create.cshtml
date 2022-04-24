@@ -5,6 +5,9 @@
 }
 
 @section Style{
+    <link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
+    <link href="~/css/barRating.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
 
         input[type='checkbox'] {
@@ -31,10 +34,9 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mb-3">
                     <label asp-for="FSubjectId" class="control-label"></label>
-                    <select id="FSubjectId" asp-for="FSubjectId" class="form-control">
-                        <option>其他</option>
-                    </select>
+                    <select id="FSubjectId" name="FSubjectId" class="form-control"></select>
                     <span asp-validation-for="FSubjectId" class="text-danger"></span>
+
                 </div>
                 <div class="form-group">
                     <label asp-for="FQuestionTypeId" class="control-label"></label>
@@ -65,7 +67,17 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="FLevel" class="control-label"></label>
-                    <input id="FLevel" asp-for="FLevel" class="form-control" />
+                    <div>
+                        <div class="rating2">
+                            <select class="questionBarRate" id="example-fontawesome" name="rating" autocomplete="off">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
                     <span asp-validation-for="FLevel" class="text-danger"></span>
                 </div>
 
@@ -86,6 +98,23 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
+        // 取得所有課程名稱
+        const selSubject = document.querySelector('#FSubjectId');
+
+        async function LoadSubject() {
+            const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
+            renderSubject(await responseSubject.json());
+        }
+
+        LoadSubject();
+
+        function renderSubject(datas) {
+            datas.forEach((item) => {
+                const opt = new Option(item.fClassCategory, item.fClassCategory);
+                selSubject.options.add(opt);
+            })
+        }
+
         // 判斷Checkbox
         var currentSelect = 0, limit = 1;
         function doCheck(obj) {
@@ -172,4 +201,10 @@
         })
 
     </script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="~/js/jquery.barrating.js"></script>
+    <script src="~/js/barRating.init.js"></script>
+    <script src="~/js/QuestionBankSystem.js"></script>
 }

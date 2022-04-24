@@ -50,7 +50,7 @@
                                         <div id="editBlock">
                                             @Html.ActionLink("編輯", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }) |
                                             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                                            @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
+                                            @Html.ActionLink("刪除", "Delete", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId },new { onclick = "return confirm('確定要刪除嗎？')" })
                                         </div>
                                     </div>
                                 </div>

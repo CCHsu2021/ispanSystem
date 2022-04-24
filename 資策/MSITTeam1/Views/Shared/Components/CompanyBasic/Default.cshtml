@@ -1,8 +1,14 @@
 ﻿@addTagHelper *, MSITTeam1
 @model IEnumerable<MSITTeam1.ViewModels.CCompanyBasicViewModel>
 
-<link href="~/css/Edit.css" rel="stylesheet">
-
+@*<link href="~/css/Edit.css" rel="stylesheet">*@
+<style>
+    .click-upload-text {
+        position: absolute;
+        bottom: -10px;
+        left: calc(50% - 54px);
+    }
+</style>
 @foreach (var item in Model)
 {
 
@@ -45,14 +51,15 @@
                 }
             </div>
         </div>
-        <div class="col-md-4 text-center">
+        <div class="col-md-4 text-center" style="position:relative;">
             <form name="LogoUpload">
                 <div class="image-upload">
                     <input type="hidden" name="id" value="@ViewBag.Account" />
                     <input type="file" accept="image/*" id="picture-file" name="img" class="p-0" style="visibility: hidden; width: 0; height: 0; margin: auto;" />
-                    <label for="picture-file">
-                        <img id="picture" src="../images/company/@ViewBag.picture" style="border: 1px solid #dee2e6; float: right; width: 200px; height: 200px" title="上傳LOGO圖片" alt="點擊上傳LOGO" />
+                    <label for="picture-file" style="border: 1px solid #dee2e6; overflow: hidden; ">
+                        <img class="mt-0" id="picture" src="../images/company/@ViewBag.picture" style=" float: right; width: 200px; height: 200px" title="上傳LOGO圖片" alt="點擊上傳LOGO" />
                     </label>
+                    <small class="click-upload-text text-danger">請點擊上方上傳圖片</small>
                 </div>
             </form>
         </div>
@@ -88,7 +95,7 @@
         </div>
     </div>
 
-    <div class="btnflex">
+    <div class="d-flex">
         <button class="btn-style-two " type="button" data-toggle="modal" data-target="#staticBackdrop">修改資料</button>
         <button class="btn-style-two " type="button" id="previewpage">預覽資料</button>
     </div>

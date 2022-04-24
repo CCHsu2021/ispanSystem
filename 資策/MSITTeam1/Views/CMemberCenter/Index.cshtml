@@ -132,11 +132,8 @@
                         </div>
                     </div>
                     <div id="menu6" class="container tab-pane fade">
-                        <div class="row about-box">
-                            <p>
-                               <vc:job-vacancy></vc:job-vacancy>
-                            </p>
-                        </div>
+                                <vc:job-vacancy></vc:job-vacancy>
+                        <div id="JoblistPagination" class="row my-4"></div>
                     </div>
                     <div id="menu7" class="container tab-pane fade">
                         <div class="row about-box">
@@ -162,7 +159,16 @@
 </div>
 @section Scripts
 {
+
     <script>
+            var onResize = function () {
+                $("body").css("padding-top", $(".main-header").height());
+            };
+            $(window).resize(onResize);
+            $(function () {
+                onResize();
+            });
+
         $("#previewpage").click(() => {
             window.location = '@Url.Content("~/CCompanyBasic/Index?taxid=")' +'@ViewBag.Account'
         })
@@ -225,6 +231,9 @@
 
         $("#picture-file").change(function () {
             readURL(this);
+        });
+        $(function () {
+            initPagination('.job-card', 2, '#JoblistPagination')
         });
     </script>
 }

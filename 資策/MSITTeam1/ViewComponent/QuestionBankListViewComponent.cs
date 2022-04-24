@@ -21,7 +21,7 @@ namespace MSITTeam1.ViewComponent
 		{
 			_context = context;
 		}
-		public IViewComponentResult Invoke()
+		public IViewComponentResult Invoke(string keyword, string Subjects, string Type)
 		{
 
 			// 從資料庫讀取題目
@@ -77,9 +77,9 @@ namespace MSITTeam1.ViewComponent
 			ViewBag.Type = typeItems;
 
 			// 篩選題目
-			//quesQuery = this.FilterByClass(quesQuery, subject);
-			//quesQuery = this.FilterByKeyWork(quesQuery, keyword);
-			//quesQuery = this.FilterByLevel(quesQuery, level);
+			quesQuery = this.FilterByClass(quesQuery, Subjects);
+			quesQuery = this.FilterByKeyWork(quesQuery, keyword);
+			quesQuery = this.FilterByLevel(quesQuery, Type);
 
 			foreach (var q in quesQuery)
 			{
@@ -87,7 +87,6 @@ namespace MSITTeam1.ViewComponent
 			}
 			return View(quesList);
 		}
-
 		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string level)
 		{
 			if (!string.IsNullOrEmpty(level))

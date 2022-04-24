@@ -17,18 +17,13 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 5; /*多少行數之後才開始省略*/
+            -webkit-line-clamp: 3; /*多少行數之後才開始省略*/
             -webkit-box-orient: vertical;
             white-space: normal;
         }
     </style>
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <main>
     <div class="container">
         @using (Html.BeginForm())
@@ -64,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row job-all-list">
             <ul class="col-12" id="job-list">
                 @foreach (var item in Model)
                 {
@@ -96,7 +91,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="info-section col-4">
+                        <div class="info-section col-4 d-flex flex-column justify-content-between">
                             <div>
                                 <div class="location-section">
                                     <i class="fa fa-map-marker-alt"></i>
@@ -107,63 +102,16 @@
                                 <div class="number-for-hire-section">
                                     <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
                                 </div>
+                                <div class="job-salary-section">
+                                    <i class="fas fa-dollar-sign"></i> <span class="job-salary">@(item.FSalary) TWD/月</span>
+                                </div>
                             </div>
-                            <div class="job-salary-section">
-                                <i class="fas fa-dollar-sign"></i><span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
+                            <div class="justify-content-end">
+                                <button type="button" asp-action="" asp-controller="" class="btn btn-info m-b-10 m-l-5">檢視職缺</button>
+                                <button type="button" asp-action="" asp-controller="" class="btn btn-info m-b-10 m-l-5">我要應徵</button>
                             </div>
                         </div>
                     </li>
-                    <!--<li class="job-card new featured">
-                        <div class="job-card__info">
-                            <div class="d-md-flex row">
-                                <div class="img-c col-2">
-                                    <img src="" />
-                                </div>
-                                <div class="col-6">
-                                    <a href="javascript:void(0)">
-                                        <h6>@item.FJobName</h6>
-                                    </a>
-                                    <div class="d-flex align-items-center">
-                                        <p>@item.FCompanyName</p>
-                                    </div>
-                                    <div class="box">
-                                        <p class="ellipsis">@item.FOther</p>
-                                    </div>
-                                    <ul>
-                                        <li>@(lastModifyTime)天前更新</li>
-                                        <li>@item.FEmployeeType</li>
-                                        <li></li>
-                                    </ul>
-                                </div>
-                                <div class="info-section col-4">
-                                    <div>
-                                        <div class="location-section">
-                                            <i class="fa fa-map-marker-alt"></i>
-                                            <span class="middot">
-                                                <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=404%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%8C%97%E5%8D%80"><abbr>404台灣台中市北區</abbr></a>
-                                            </span>
-                                            <span class="middot">
-                                                <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=221%E5%8F%B0%E7%81%A3%E6%96%B0%E5%8C%97%E5%B8%82%E6%B1%90%E6%AD%A2%E5%8D%80"><abbr>221台灣新北市汐止區</abbr></a>
-                                            </span>
-                                        </div>
-                                        <div class="number-for-hire-section">
-                                            <i class="fa fa-user"></i><abbr title="需求人數">@item.FNeedPerson</abbr>
-                                        </div>
-                                    </div>
-                                    <div class="job-salary-section">
-                                        <i class="fas fa-dollar-sign"></i><span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
-                        @*<ul class="job-card__tags">
-                    <li>Frontened</li>
-                    <li>Senior</li>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JavaScript</li>
-                </ul>*@
-                    <!--</li>-->
                 }
                 <li class="job-card new featured" style="align-items:stretch">
                     <div class="job-card__info">
@@ -199,9 +147,6 @@
                                 <span class="middot">
                                     <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=404%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%8C%97%E5%8D%80"><abbr>404台灣台中市北區</abbr></a>
                                 </span>
-                                @*<span class="middot">
-                            <a href="/jobs?refinementList%5Border%5D=&amp;refinementList%5Blocation_list%5D%5B0%5D=221%E5%8F%B0%E7%81%A3%E6%96%B0%E5%8C%97%E5%B8%82%E6%B1%90%E6%AD%A2%E5%8D%80"><abbr>221台灣新北市汐止區</abbr></a>
-                        </span>*@
                             </div>
                             <div class="number-for-hire-section">
                                 <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
@@ -494,9 +439,10 @@
                 </li>
             </ul>
         </div>
+        <div id="ProductPagination" class="row my-4"></div>
     </div>
 </main>
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -622,14 +568,13 @@
             </tr>
         }
     </tbody>
-</table>
+</table>*@
 @section Scripts{
     <script src="~/js/JobSearchList.js"></script>
 
     <script>
-        //todo 頁面標籤
         $(function () {
-            initPagination('.product-item', 10, '#ProductPagination')
+            initPagination('.job-all-list', 10, '#ProductPagination')
         });
     </script>
 

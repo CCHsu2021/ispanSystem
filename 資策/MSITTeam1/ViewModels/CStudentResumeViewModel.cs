@@ -8,11 +8,13 @@ namespace MSITTeam1.ViewModels
     {
         private StudentBasic _student = null;
         private StudentWorkExperience _workExperience = null;
+        private StudentEducation _education= null;
         public IFormFile photo { get; set; }
         public CStudentResumeViewModel()
         {
             _student = new StudentBasic();
             _workExperience = new StudentWorkExperience();
+            _education = new StudentEducation();
         }
         public StudentBasic student
         {
@@ -23,6 +25,11 @@ namespace MSITTeam1.ViewModels
         {
             get { return _workExperience; }
             set { _workExperience = value; }
+        }
+        public StudentEducation education
+        {
+            get { return _education; }
+            set { _education = value; }
         }
         public string MemberId
         {
@@ -59,9 +66,7 @@ namespace MSITTeam1.ViewModels
             get { return this.student.Phone; }
             set { this.student.Phone = value; }
         }
-        //public string fCity { get; set; }
-        //public string fDistrict { get; set; }
-        
+
         public string fCity
         {
             get { return this.student.FCity; }
@@ -91,7 +96,7 @@ namespace MSITTeam1.ViewModels
             set { this.student.Portrait = value; }
         }
 
-        /// 工作經歷
+        // 工作經歷
         [DisplayName("")]
         public long WorkExperienceId
         {
@@ -138,6 +143,42 @@ namespace MSITTeam1.ViewModels
         {
             get { return this.workExperience.JobDescription; }
             set { this.workExperience.JobDescription = value; }
+        }
+
+        //學歷
+        public long EducationId
+        {
+            get { return this.education.EducationId; }
+            set { this.education.EducationId = value; }
+        }
+        public string EduMemberId
+        {
+            get { return this.education.MemberId; }
+            set { this.education.MemberId = value; }
+        }
+        [DisplayName("畢業學校:")]
+        public string GraduateSchool
+        {
+            get { return this.education.GraduateSchool; }
+            set { this.education.GraduateSchool = value; }
+        }
+        [DisplayName("畢業系所:")]
+        public string GraduateDepartment
+        {
+            get { return this.education.GraduateDepartment; }
+            set { this.education.GraduateDepartment = value; }
+        }
+        [DisplayName("就讀時間:")]
+        public string StudyFrom
+        {
+            get { return this.education.StudyFrom; }
+            set { this.education.StudyFrom = value; }
+        }
+        [DisplayName("畢業時間:")]
+        public string StudyTo
+        {
+            get { return this.education.StudyTo; }
+            set { this.education.StudyTo = value; }
         }
     }
 }
