@@ -26,12 +26,11 @@
 
 <main>
     <div class="container">
-        @using (Html.BeginForm())
-        {
+        <form name="searchBar">
             <div class="form-group row justify-content-center py-4">
                 <div class="col-md-4">
                     <div class="input-group input-group-rounded">
-                        <input type="text" placeholder="Java, C#, BigData..." name="Search" class="form-control">
+                        <input type="text" placeholder="Java, C#, BigData..." name="txtSearchText" class="form-control">
                         <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit"><i class="fas fa-search"></i></button></span>
                     </div>
                 </div>
@@ -39,18 +38,18 @@
             <div class="row">
                 <div class="col-6">
                     <label>職缺類型：</label>
-                    <select class="form-control" id="selectJobDirect">
+                    <select class="form-control" id="selectJobDirect" name="ddlJobListId">
                         <option value="none" selected>全選</option>
                     </select>
                 </div>
                 <div class="col-6">
                     <label>地區：</label>
-                    <select class="form-control" id="selectCity">
+                    <select class="form-control" id="selectCity" name="ddlCity">
                         <option value="none" selected>全選</option>
                     </select>
                 </div>
             </div>
-        }
+        </form>
         <div class="row">
             <div class="col-12">
                 <div class="filter-tags-c">
@@ -442,142 +441,19 @@
         <div id="ProductPagination" class="row my-4"></div>
     </div>
 </main>
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FJobName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FJobSkill)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FWorkAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FSalaryMode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FSalary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FEmployeeType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FWorkHours)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FLeaveSystem)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FWorkExp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FEducation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FOther)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FContactPerson)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FContactPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FContactFax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FContactEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FCompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FCompanyLogo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FJobDirect)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FJobName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FJobSkill)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FWorkAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FSalaryMode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FSalary)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FEmployeeType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FWorkHours)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FLeaveSystem)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FWorkExp)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FEducation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FOther)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FContactPerson)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FContactPhone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FContactFax)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FContactEmail)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FCompanyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FCompanyLogo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FJobDirect)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>*@
 @section Scripts{
+
+    @*套用版面的原生js*@
     <script src="~/js/JobSearchList.js"></script>
 
+    @*頁面底部換頁*@
     <script>
         $(function () {
             initPagination('.job-all-list', 10, '#ProductPagination')
         });
     </script>
 
+    @*透過ajax載入DropDownList*@
     <script>
         let selectJobDirect = document.querySelector('#selectJobDirect');
         let selectCity = document.querySelector('#selectCity');
@@ -609,5 +485,8 @@
         }).done((data) => {
             console.log(data);
         })
+    </script>
+    <script>
+        
     </script>
 }

@@ -50,6 +50,7 @@ namespace MSITTeam1Admin.Models
         public virtual DbSet<TMemberResumeSend> TMemberResumeSends { get; set; }
         public virtual DbSet<TNewJobVacancy> TNewJobVacancies { get; set; }
         public virtual DbSet<TPhoto> TPhotos { get; set; }
+        public virtual DbSet<TPointOrder> TPointOrders { get; set; }
         public virtual DbSet<TProduct> TProducts { get; set; }
         public virtual DbSet<TProductOrder> TProductOrders { get; set; }
         public virtual DbSet<TProductOrderDetail> TProductOrderDetails { get; set; }
@@ -1111,6 +1112,23 @@ namespace MSITTeam1Admin.Models
                     .HasColumnName("fType");
             });
 
+            modelBuilder.Entity<TPointOrder>(entity =>
+            {
+                entity.HasKey(e => new { e.CompanyTaxid, e.OrderId });
+
+                entity.ToTable("tPointOrder");
+
+                entity.Property(e => e.CompanyTaxid)
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyTAXID");
+
+                entity.Property(e => e.OrderId).HasMaxLength(50);
+
+                entity.Property(e => e.OrderDate)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(getdate())");
+            });
+
             modelBuilder.Entity<TProduct>(entity =>
             {
                 entity.HasKey(e => e.ProductId)
@@ -1358,7 +1376,7 @@ namespace MSITTeam1Admin.Models
 
             modelBuilder.Entity<TStudentPoint>(entity =>
             {
-                entity.HasKey(e => new { e.PointUsageId, e.FAccount })
+                entity.HasKey(e => new { e.PointUsageId, e.MemberId })
                     .HasName("PK_StudentPoint");
 
                 entity.ToTable("tStudentPoint");
@@ -1367,13 +1385,13 @@ namespace MSITTeam1Admin.Models
                     .ValueGeneratedOnAdd()
                     .HasColumnName("PointUsageID");
 
-                entity.Property(e => e.FAccount)
-                    .HasMaxLength(50)
-                    .HasColumnName("fAccount");
+                entity.Property(e => e.MemberId).HasMaxLength(50);
 
                 entity.Property(e => e.OrderId).HasMaxLength(50);
 
-                entity.Property(e => e.PointDate).HasMaxLength(50);
+                entity.Property(e => e.PointDate)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.PointDescription).HasMaxLength(50);
 
