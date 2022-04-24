@@ -25,6 +25,10 @@ namespace MSITTeam1.Controllers
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
 			ViewBag.account = CDictionary.account;
+
+			ViewBag.keyword = keyword;
+			ViewBag.subjects = Subjects;
+			ViewBag.type = Type;
 			// 從資料庫讀取題目
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails

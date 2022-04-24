@@ -1,14 +1,20 @@
 ﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
-@*@addTagHelper *, MSITTeam1*@
 @using System.Collections.Generic;
 
+@{
+    ViewData["Title"] = "List";
+}
+<div class="container" style="padding:40px;">
+    <div>
         @{
             if (Model != null)
             {
+                //List<string> subjectInTable = new List<string>();
                 string subject = "";
                 int quesId = 0;
                 foreach (var item in Model)
                 {
+                    //subjectInTable.Add(item.FSubjectId);
                     if (item.FSubjectId != subject || item.FQuestionId != quesId)
                     {
                         subject = item.FSubjectId;
@@ -50,7 +56,7 @@
                                         <div id="editBlock">
                                             @Html.ActionLink("編輯", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }) |
                                             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                                            @Html.ActionLink("刪除", "Delete", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId },new { onclick = "return confirm('確定要刪除嗎？')" })
+                                            @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
                                         </div>
                                     </div>
                                 </div>
@@ -61,3 +67,5 @@
                 }
             }
         }
+    </div>
+</div>

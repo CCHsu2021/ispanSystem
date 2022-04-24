@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MSITTeam1.Models;
+using MSITTeam1.ViewModels;
 
 namespace MSITTeam1.Controllers
 {
@@ -19,9 +20,28 @@ namespace MSITTeam1.Controllers
         }
 
         // GET: TTestPaperBanks
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.TTestPaperBanks.ToListAsync());
+            ViewBag.Name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
+
+            List<CTestPaperBankViewModel> paperList = new List<CTestPaperBankViewModel>();
+            var paperQuery = from t in _context.TTestPaperBanks
+                             select new CTestPaperBankViewModel
+                             {
+                                 FTestPaperName = t.FTestPaperName,
+                                 FTestPaperId = t.FTestPaperId,
+                                 FDesignerAccount = t.FDesignerAccount,
+                                 FBSubjectId = t.FSubjectId,
+                                 FNote = t.FNote
+                             };
+            foreach(var t in paperQuery)
+			{
+                paperList.Add(t);
+			}
+
+            return View(paperList);
         }
 
         // GET: TTestPaperBanks/Details/5
