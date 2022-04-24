@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MSITTeam1.Models;
 using MSITTeam1.ViewModels;
+using System.Text.Json;
 
 namespace MSITTeam1.Controllers
 {
@@ -66,5 +68,83 @@ namespace MSITTeam1.Controllers
             return NotFound();
         }
         #endregion
+
+        public IActionResult AddToCart(string id)
+        {
+            if (id != null)
+            {
+                TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId ==id);
+                if (prod != null)
+                {
+                    string json = "";
+                    List<CAddToCartViewModel> cart = new List<CAddToCartViewModel>();
+                    CAddToCartViewModel item = new CAddToCartViewModel()
+                    {
+                        count = 1,
+                        price = (int)(prod.Price),
+                        productId = prod.ProductId,
+                        product = prod,
+                        name = prod.Name,
+                        imgPath = prod.ImgPath,
+                    };
+                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST))
+                    {
+                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST);
+                        cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
+                        int index = cart.FindIndex(m => m.productId.Equals(id));
+                        if (index != -1)
+                        {
+                            cart[index].count += item.count;
+                        }
+                        else
+                        {
+                            cart.Add(item);
+                        }
+                        json = JsonSerializer.Serialize(cart);
+                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST, json);
+                    }
+                    else
+                    {
+                        cart = new List<CAddToCartViewModel>();
+                        cart.Add(item);
+                        json = JsonSerializer.Serialize(cart);
+                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST, json);
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        //[HttpPost]
+        //public IActionResult AddToCart(CAddToCartViewModel vModel)
+        //{
+        //    string json = "";
+        //    TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == vModel.productId);
+        //    if (prod != null)
+        //    {
+        //        List<CAddToCartViewModel> cart = null;
+        //        if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST))
+        //        {
+        //            json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST);
+        //            cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
+        //        }
+        //        else
+        //        {
+        //            cart = new List<CAddToCartViewModel>();
+        //        }
+        //        CAddToCartViewModel item = new CAddToCartViewModel()
+        //        {
+        //            count =1,
+        //            price = (int)(prod.Price),
+        //            productId = prod.ProductId,
+        //            product = prod,
+        //            name = prod.Name,
+        //            imgPath = prod.ImgPath,
+        //        };
+        //        cart.Add(item);
+        //        json = JsonSerializer.Serialize(cart);
+        //        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST, json);
+        //    }
+        //    return RedirectToAction("CartView");
+        //}
     }
 }
