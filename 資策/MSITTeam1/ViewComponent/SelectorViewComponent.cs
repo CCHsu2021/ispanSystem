@@ -19,7 +19,6 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke(string city,string district)
         {
             ViewBag.City = SetDropDown1(city);
-            ViewBag.Cityname = city;
             ViewBag.District = SetDropDown2(city, district);        
             return View();
         }
@@ -34,13 +33,15 @@ namespace MSITTeam1.ViewComponent
             var citylist = from c in hello.TCityContrasts group c by c.FCityName into a select a.Key;
             if (cityname == "")
             {
-                List<SelectListItem> items = GetSelectItem(true);
+                List<SelectListItem> items = GetSelectItem(false);
+                ViewBag.Cityname = "--請選擇--";
                 items.AddRange(new SelectList(citylist));
                 return items;
             }
             if (cityname != "")
             {
                 List<SelectListItem> items = GetSelectItem(false);
+                ViewBag.Cityname = cityname;
                 items.AddRange(new SelectList(citylist));
                 return items;
             }
