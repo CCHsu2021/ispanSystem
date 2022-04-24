@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 using MSITTeam1.Models;
 using MSITTeam1.ViewModels;
@@ -58,22 +59,20 @@ namespace MSITTeam1.Controllers
         public IActionResult Create()
         {
 
-            if (ViewBag.id == null)
-            {
-                ViewBag.id = 72;
-            }
             string account = CDictionary.account;
             if (account != null)
             {
 
                 StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)account);
                 if (sb != null)
-                    return View(new CStudentResumeViewModel() { student = sb,  fGender = sb.Gender.Equals("0") ? "男" : sb.Gender.Equals("1") ? "女" : "未指定" });
+                    return View(new CStudentResumeViewModel() { student = sb});
 
             }
-            
+
             return View();
         }
+
+
         #endregion
 
         #region 儲存基本資料
@@ -92,7 +91,7 @@ namespace MSITTeam1.Controllers
                         _enviroment.WebRootPath + @"\images\student\" + photoName, FileMode.Create));
                 }
                 sb.Name = p.fName;
-                sb.Gender = p.fGender.Equals("男") ? "0" : p.fGender.Equals("女") ? "1" : "2";
+                sb.Gender = p.fGender;
                 sb.BirthDate = p.fBirthDate;
                 sb.Email = p.fEmail;
                 sb.Phone = p.fPhone;
@@ -161,5 +160,39 @@ namespace MSITTeam1.Controllers
         }
 
         #endregion
+
+        public IActionResult CreateEdu([FromBody] CStudentResumeViewModel p)
+        {
+            hello.StudentEducations.Add(p.education);
+            hello.SaveChanges();
+            return Content("新增成功");
+        }
+
+        public IActionResult EditEdu([FromBody] CStudentResumeViewModel p)
+        {
+            StudentEducation sw = hello.StudentEducations.FirstOrDefault(c => c.EducationId == p.EducationId);
+            if (sw != null)
+            {
+                sw.GraduateSchool = p.GraduateSchool;
+                sw.GraduateDepartment = p.GraduateDepartment;
+                sw.StudyFrom = p.StudyFrom;
+                sw.StudyTo = p.StudyTo;
+                hello.SaveChanges();
+            }
+            return Content("修改成功");
+        }
+
+        public IActionResult DeleteEdu(String EducationId)
+        {
+
+            StudentEducation sw = hello.StudentEducations.FirstOrDefault(c => c.EducationId.ToString() == EducationId);
+            if (sw != null)
+            {
+                hello.StudentEducations.Remove(sw);
+                hello.SaveChanges();
+            }
+
+            return Content("刪除成功");
+        }
     }
 }

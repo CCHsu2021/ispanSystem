@@ -1,0 +1,115 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+<style>
+    th {
+        white-space: nowrap;
+    }
+</style>
+
+<table class="table" id="eduPage">
+    <thead>
+        <tr>
+            <th>
+                學歷:
+            </th>
+            <th style="visibility:hidden">
+                @Html.DisplayNameFor(model => model.EducationId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GraduateSchool)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GraduateDepartment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudyFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudyTo)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td style="visibility:hidden">
+                        @Html.DisplayFor(modelItem => item.EducationId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GraduateSchool)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GraduateDepartment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudyFrom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudyTo)
+                    </td>
+
+                    <td>
+                        <div class="d-flex">
+                            <button class="tableBtn fas fa-pencil-alt " id="@item.EducationId" onclick="showEdu('@item.EducationId')">
+
+                            </button>
+                            <button class="tableBtn fas fa-trash-alt " name="EducationId" onclick="deleteEdu('@item.EducationId')">
+                                
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script>
+    ///顯示經歷 、hid create btn
+    function showEdu(id){
+        var currow = $('#'+id).closest('tr');
+        var col0 = currow.find('td:eq(1)').text().trim();
+        var col1 = currow.find('td:eq(2)').text().trim();
+        var col2 = currow.find('td:eq(3)').text().trim();
+        var col3 = currow.find('td:eq(4)').text().trim();
+        var col4 = currow.find('td:eq(5)').text().trim();
+
+        $('#EducationId').val(col0);
+        $('#GraduateSchool').val(col1);
+        $('#GraduateDepartment').val(col2);
+        $('#StudyFrom').val(col3);
+        $('#StudyTo').val(col4);
+
+
+        $("#editEdu").show();
+        $("#createEdu").hide();
+        
+    }
+
+
+
+    ///工作刪除
+    function deleteEdu(dd)
+     {    
+         var num = dd;
+        $.ajax({
+            url:"@Url.Content("~/StudentResume/DeleteEdu")",
+            type:"POST",
+            data:{'EducationId':num},
+
+        }).done(function (data) {
+            Swal.fire({
+                        icon: 'success',
+                        title: '刪除成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+            $("#eduPage").load(location.href + " #eduPage");})
+        }
+</script>
