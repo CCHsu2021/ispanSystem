@@ -84,9 +84,10 @@
         float: right;
     }
 
+
     .sized-container .creatworkbtn {
         background: #ed731a;
-        float:left;
+        float: left;
     }
 
 .btndiv {
@@ -232,7 +233,9 @@
 
 .image-upload {
     overflow: hidden;
-    text-align: center
+    text-align: center;
+    margin-top:20px;
+    
 }
 
     .image-upload img {
@@ -252,3 +255,10 @@
     height: 300px;
     overflow: auto;
 }
+
+.edudata{
+    height:450px;
+    overflow:auto;
+}
+
+
