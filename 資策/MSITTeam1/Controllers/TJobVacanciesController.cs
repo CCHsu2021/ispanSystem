@@ -22,10 +22,10 @@ namespace MSITTeam1.Controllers
         }
 
         // GET: TJobVacancies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(JobVacanciesSearchBarViewModel vModel)
         {
-            IEnumerable<TJobVacanciesViewModel> list = null;
 
+            IEnumerable<TJobVacanciesViewModel> list = null;
             //LINQ，TNewJobVacancies left join TCompanyBasics left join TJobDirects
             list = from p in _context.TNewJobVacancies
                    join t in _context.TCompanyBasics on p.FCompanyTaxid equals t.CompanyTaxid into pt
@@ -39,13 +39,76 @@ namespace MSITTeam1.Controllers
                        FCompanyLogo = combin.FLogo,
                        FJobDirect = combin2.FJobDirect
                    };
-            return View(list);
+
+            if (vModel.txtSearchText == null && vModel.ddlJobListId == 0 && vModel.ddlCity == null)
+            {
+                return View(list);
+            }
+            else if (vModel.ddlJobListId == 0 && vModel.ddlCity == null)
+            {
+                var searchList = list.Where(p => p.FJobName.Contains(vModel.txtSearchText)
+                    || p.FJobDirect.Contains(vModel.txtSearchText)
+                    || p.FCompanyName.Contains(vModel.txtSearchText)
+                    || p.FOther.Contains(vModel.txtSearchText));
+                return View(searchList);
+            }
+            else if (vModel.txtSearchText == null && vModel.ddlCity == null)
+            {
+                var searchList = list.Where(p =>
+                    p.FJobListId.Equals(vModel.ddlJobListId));
+                return View(searchList);
+            }
+            else if (vModel.txtSearchText == null && vModel.ddlJobListId == 0)
+            {
+                var searchList = list.Where(p => p.FCity.Contains(vModel.ddlCity));
+                return View(searchList);
+            }
+            else if (vModel.txtSearchText == null)
+            {
+                var searchList = list.Where(p => p.FJobListId.Equals(vModel.ddlJobListId)
+                    && p.FCity.Contains(vModel.ddlCity));
+                return View(searchList);
+            }
+
+            else if (vModel.ddlJobListId == 0)
+            {
+                var searchList = list.Where(p => (p.FJobName.Contains(vModel.txtSearchText)
+                    || p.FJobDirect.Contains(vModel.txtSearchText)
+                    || p.FCompanyName.Contains(vModel.txtSearchText)
+                    || p.FOther.Contains(vModel.txtSearchText))
+                    && p.FCity.Contains(vModel.ddlCity));
+                return View(searchList);
+            }
+            else if (vModel.ddlCity == null)
+            {
+                var searchList = list.Where(p => (p.FJobName.Contains(vModel.txtSearchText)
+                    || p.FJobDirect.Contains(vModel.txtSearchText)
+                    || p.FCompanyName.Contains(vModel.txtSearchText)
+                    || p.FOther.Contains(vModel.txtSearchText))
+                    && p.FJobListId.Equals(vModel.ddlJobListId));
+                return View(searchList);
+            }
+            else
+            {
+                var searchList = list.Where(p => (p.FJobName.Contains(vModel.txtSearchText)
+                    || p.FJobDirect.Contains(vModel.txtSearchText)
+                    || p.FCompanyName.Contains(vModel.txtSearchText)
+                    || p.FOther.Contains(vModel.txtSearchText))
+                    && p.FJobListId.Equals(vModel.ddlJobListId)
+                    && p.FCity.Contains(vModel.ddlCity));
+                return View(searchList); 
+            }
         }
-        [HttpPost]
-        public IActionResult Index(FormCollection post) //todo 接收搜尋欄等post過來的資料，是否可以另建ViewModel來用偷雞摸狗法。
-        {
-            return View();
-        }
+        //[HttpPost]
+        //public IActionResult Index(JobVacanciesSearchBarViewModel vModel) //todo 接收搜尋欄等post過來的資料，是否可以另建ViewModel來用偷雞摸狗法。
+        //{
+        //    if (vModel.txtSearchText == null && vModel.ddlJobListId == 0 && vModel.ddlCity == null)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View();
+        //}
 
         // GET: TJobVacancies/Details/5
         public async Task<IActionResult> Details(long? id)
