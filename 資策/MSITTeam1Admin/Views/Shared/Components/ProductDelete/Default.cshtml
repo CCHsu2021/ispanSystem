@@ -45,16 +45,7 @@
         @Html.DisplayNameFor(model => model.ImgPath)
     </div>
     <div class="col-sm-9 text-left">
-        <img src="~/images/products/@Html.DisplayFor(model => model.ImgPath)" width="80" height="80" />
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-3 text-left text-sm-center">
-        @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="col-sm-9 text-left">
-        @Html.DisplayFor(model => model.Description)
+        <img src="@Html.DisplayFor(model => model.ImgPath)" width="80" height="80" />
     </div>
 </div>
 
