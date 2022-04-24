@@ -146,6 +146,7 @@ namespace MSITTeam1.ViewModels
         }
 
         //學歷
+        [DisplayName("")]
         public long EducationId
         {
             get { return this.education.EducationId; }
