@@ -21,7 +21,7 @@ namespace MSITTeam1.ViewComponent
 		{
 			_context = context;
 		}
-		public IViewComponentResult Invoke(/*string keyword = null, string Subjects = null, string Type = null*/)
+		public async Task<IViewComponentResult> InvokeAsync(string keyword = null, string Subjects = null, string Type = null)
 		{
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
@@ -81,9 +81,9 @@ namespace MSITTeam1.ViewComponent
 			ViewBag.Type = typeItems;
 
 			// 篩選題目
-			//quesQuery = this.FilterByClass(quesQuery, Subjects);
-			//quesQuery = this.FilterByKeyWork(quesQuery, keyword);
-			//quesQuery = this.FilterByLevel(quesQuery, Type);
+			quesQuery = this.FilterByClass(quesQuery, Subjects);
+			quesQuery = this.FilterByKeyWork(quesQuery, keyword);
+			quesQuery = this.FilterByLevel(quesQuery, Type);
 
 			foreach (var q in quesQuery)
 			{

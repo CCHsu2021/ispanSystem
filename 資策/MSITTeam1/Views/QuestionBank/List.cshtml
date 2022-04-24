@@ -38,10 +38,34 @@
             </div>
         </form>
     </div>
+    @{
+        string k = null;
+        string s = null;
+        string t = null;
 
-    <div>
-        <vc:question-bank-list></vc:question-bank-list>
-    </div>
+        if (!string.IsNullOrEmpty((ViewBag.keyword).ToString()) &&
+           !string.IsNullOrEmpty((ViewBag.Subjects).ToString()) &&
+           !string.IsNullOrEmpty((ViewBag.Type).ToString()))
+        {
+            k = (ViewBag.keyword).ToString();
+            s = (ViewBag.Subjects).ToString();
+            t = (ViewBag.Type).ToString();
+        }
+
+        <div>
+            @*@await Component.InvokeAsync("QuestionBankList",
+                 new
+                 {
+                     keyword = (ViewBag.keyword).ToString(),
+                     subjects = (ViewBag.Subjects).ToString(),
+                     type = (ViewBag.Type).ToString()
+                 }
+                 )*@
+            <vc:question-bank-list keyword=k subjects=s type=t></vc:question-bank-list>
+        </div>
+    }
+
+
 </div>
 
 
@@ -79,5 +103,7 @@
                 data:jsondata
             })
         })*@
+        function getkey() {
+        }
     </script>
 }
