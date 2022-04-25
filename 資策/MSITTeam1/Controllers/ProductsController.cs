@@ -60,7 +60,7 @@ namespace MSITTeam1.Controllers
             if (id != null)
             {
                 TProduct prod = hello.TProducts.FirstOrDefault(t => t.ProductId == id);
-                if(prod != null)
+                if (prod != null)
                 {
                     return View(new CProductViewModel() { prodcut = prod });
                 }
@@ -69,11 +69,12 @@ namespace MSITTeam1.Controllers
         }
         #endregion
 
+        #region 加入購物車
         public IActionResult AddToCart(string id)
         {
             if (id != null)
             {
-                TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId ==id);
+                TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == id);
                 if (prod != null)
                 {
                     string json = "";
@@ -114,7 +115,9 @@ namespace MSITTeam1.Controllers
             }
             return RedirectToAction("Index");
         }
+        #endregion 
 
+        #region 移出購物車
         public IActionResult DeleteFromCart(string id)
         {
             if (id != null)
@@ -144,37 +147,7 @@ namespace MSITTeam1.Controllers
             }
             return RedirectToAction("Index");
         }
-        //[HttpPost]
-        //public IActionResult AddToCart(CAddToCartViewModel vModel)
-        //{
-        //    string json = "";
-        //    TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == vModel.productId);
-        //    if (prod != null)
-        //    {
-        //        List<CAddToCartViewModel> cart = null;
-        //        if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST))
-        //        {
-        //            json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST);
-        //            cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
-        //        }
-        //        else
-        //        {
-        //            cart = new List<CAddToCartViewModel>();
-        //        }
-        //        CAddToCartViewModel item = new CAddToCartViewModel()
-        //        {
-        //            count =1,
-        //            price = (int)(prod.Price),
-        //            productId = prod.ProductId,
-        //            product = prod,
-        //            name = prod.Name,
-        //            imgPath = prod.ImgPath,
-        //        };
-        //        cart.Add(item);
-        //        json = JsonSerializer.Serialize(cart);
-        //        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST, json);
-        //    }
-        //    return RedirectToAction("CartView");
-        //}
+        #endregion
+
     }
 }
