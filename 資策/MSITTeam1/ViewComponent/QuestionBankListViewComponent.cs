@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace MSITTeam1.ViewComponent
 {
 	[Microsoft.AspNetCore.Mvc.ViewComponent]
-	public class QuestionBankListViewComponent: Microsoft.AspNetCore.Mvc.ViewComponent
+	public class QuestionBankListViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
 	{
 		private readonly helloContext _context;
 
@@ -21,13 +21,17 @@ namespace MSITTeam1.ViewComponent
 		{
 			_context = context;
 		}
-		public IViewComponentResult Invoke(string keyword, string Subjects, string Type)
+		public async Task<IViewComponentResult> InvokeAsync(string keyword = null, string Subjects = null, string Type = null)
 		{
-
+			ViewBag.Name = CDictionary.username;
+			ViewBag.Type = CDictionary.memtype;
+			ViewBag.account = CDictionary.account;
 			// 從資料庫讀取題目
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails
 														   join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
+														   where ques.FState == 2
+														   orderby ques.FSubjectId
 														   select new CQuestionBankViewModel
 														   {
 															   FSn = choice.FSn,
