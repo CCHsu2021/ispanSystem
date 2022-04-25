@@ -24,8 +24,9 @@
             body: formData
         }).then(Response => Response.json())
             .then(function (j) {
+                //j[0].fQuestion;
                 for (var row in j) {
-                    console.log(j[row]);
+                    console.log(j[row].fChoice);
                     }
             });
         })
