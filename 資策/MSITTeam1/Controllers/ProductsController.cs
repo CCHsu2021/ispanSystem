@@ -88,9 +88,9 @@ namespace MSITTeam1.Controllers
                         name = prod.Name,
                         imgPath = prod.ImgPath,
                     };
-                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST))
+                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account))
                     {
-                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST);
+                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
                         cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
                         int index = cart.FindIndex(m => m.productId.Equals(id));
                         if (index != -1)
@@ -102,14 +102,14 @@ namespace MSITTeam1.Controllers
                             cart.Add(item);
                         }
                         json = JsonSerializer.Serialize(cart);
-                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST, json);
+                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
                     }
                     else
                     {
                         cart = new List<CAddToCartViewModel>();
                         cart.Add(item);
                         json = JsonSerializer.Serialize(cart);
-                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST, json);
+                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
                     }
                 }
             }
