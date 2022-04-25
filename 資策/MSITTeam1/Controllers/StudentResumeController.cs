@@ -65,7 +65,7 @@ namespace MSITTeam1.Controllers
 
                 StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == (string)account);
                 if (sb != null)
-                    return View(new CStudentResumeViewModel() { student = sb});
+                    return View(new CStudentResumeViewModel() { student = sb });
 
             }
 
@@ -120,7 +120,7 @@ namespace MSITTeam1.Controllers
 
         #region  工作經歷 Create Edit Delete
         [HttpPost]
-        public IActionResult CreateWork( [FromBody]CStudentResumeViewModel p)
+        public IActionResult CreateWork([FromBody] CStudentResumeViewModel p)
         {
 
             hello.StudentWorkExperiences.Add(p.workExperience);
@@ -142,20 +142,20 @@ namespace MSITTeam1.Controllers
                 sw.JobDescription = p.JobDescription;
                 hello.SaveChanges();
             }
-            return Content("修改成功"); 
+            return Content("修改成功");
         }
 
 
         public IActionResult DeleteWork(String WorkExperienceId)
         {
 
-                StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId.ToString() == WorkExperienceId);
-                if (sw != null)
-                {
-                    hello.StudentWorkExperiences.Remove(sw);
-                    hello.SaveChanges();
-                }
-            
+            StudentWorkExperience sw = hello.StudentWorkExperiences.FirstOrDefault(c => c.WorkExperienceId.ToString() == WorkExperienceId);
+            if (sw != null)
+            {
+                hello.StudentWorkExperiences.Remove(sw);
+                hello.SaveChanges();
+            }
+
             return Content("刪除成功");
         }
 
@@ -194,5 +194,56 @@ namespace MSITTeam1.Controllers
 
             return Content("刪除成功");
         }
+
+        public IActionResult CreateLan([FromBody] CStudentResumeViewModel p)
+        {
+            hello.StudentLanguages.Add(p.language);
+            hello.SaveChanges();
+            return Content("新增成功");
+        }
+
+        public IActionResult EditLan([FromBody] CStudentResumeViewModel p)
+        {
+            StudentLanguage sw = hello.StudentLanguages.FirstOrDefault(c => c.LanguageId == p.LanguageId);
+            if (sw != null)
+
+
+            sw.LanguageName = p.LanguageName;
+            sw.Listening = determine(p.Listening);
+            sw.Speaking = determine( p.Speaking);
+            sw.Reading =  determine(p.Reading);
+            sw.Writing =  determine(p.Writing);
+            hello.SaveChanges();
+
+            return Content("修改成功");
+        }
+
+        public string determine(string a)
+        {
+            if (a == "初階")
+                return "0";
+            if (a == "中等")
+                return "1";
+            if (a == "高階")
+                return "2";
+            if (a == "母語")
+                return "3";
+            return "4";
+        }
+
+        public IActionResult DeleteLan(String LanguageId)
+        {
+
+            StudentLanguage sw = hello.StudentLanguages.FirstOrDefault(c => c.LanguageId.ToString() == LanguageId);
+            if (sw != null)
+            {
+                hello.StudentLanguages.Remove(sw);
+                hello.SaveChanges();
+            }
+
+            return Content("刪除成功");
+        }
+
+
     }
 }
