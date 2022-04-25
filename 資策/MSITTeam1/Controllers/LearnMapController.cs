@@ -17,9 +17,8 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index()
         {
-            var list = from c in hello.TStudioInformations
-                   select c;
-            
+            var ClassName = from c in hello.TStudioInformations group c by new { c.FClassName, c.FClassCategory, c.FClassSkill } into g select g.Key;
+            var list = from c in hello.TStudioInformations select c;   
             return View(list);
         }
     }

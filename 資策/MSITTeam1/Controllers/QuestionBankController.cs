@@ -20,37 +20,43 @@ namespace MSITTeam1.Controllers
 		{
 			return View();
 		}
-		public IActionResult List(string keyword,string Subjects,string Type)
+		IQueryable<CQuestionBankViewModel> quesQuery = null;
+		public IActionResult List(string keyword,string Subjects, string Type)
 		{
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
 			ViewBag.account = CDictionary.account;
+
+			ViewBag.k = keyword;
+			ViewBag.s = Subjects;
+			ViewBag.t = Type;
+
 			// 從資料庫讀取題目
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
-			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails
-							join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
-							where ques.FState == 2
-							orderby ques.FSubjectId
-							select new CQuestionBankViewModel
-							{
-								FSn = choice.FSn,
-								FCSubjectId = choice.FSubjectId,
-								FSubjectId = ques.FSubjectId,
-								FCQuestionId = choice.FQuestionId,
-								FQuestionId = ques.FQuestionId,
-								FQuestion = ques.FQuestion,
-								FLevel = ques.FLevel,
-								//updateTime = ques.FUpdateTime.ToString('YYMMDD'),
-								FQuestionTypeId = ques.FQuestionTypeId,
-								FChoice = choice.FChoice,
-								FCorrectAnswer = choice.FCorrectAnswer
-							};
+			quesQuery = from choice in _context.TQuestionDetails
+						join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
+						where ques.FState == 2
+						orderby ques.FSubjectId
+						select new CQuestionBankViewModel
+						{
+							FSn = choice.FSn,
+							FCSubjectId = choice.FSubjectId,
+							FSubjectId = ques.FSubjectId,
+							FCQuestionId = choice.FQuestionId,
+							FQuestionId = ques.FQuestionId,
+							FQuestion = ques.FQuestion,
+							FLevel = ques.FLevel,
+							//updateTime = ques.FUpdateTime.ToString('YYMMDD'),
+							FQuestionTypeId = ques.FQuestionTypeId,
+							FChoice = choice.FChoice,
+							FCorrectAnswer = choice.FCorrectAnswer
+						};
 			// DropDownList - 課程			
 			List<SelectListItem> subjectItems = new List<SelectListItem>();
 			string temp = "";
-			foreach(var s in quesQuery)
+			foreach (var s in quesQuery)
 			{
-				if(s.FSubjectId.Trim() != temp)
+				if (s.FSubjectId.Trim() != temp)
 				{
 					subjectItems.Add(new SelectListItem()
 					{
@@ -58,19 +64,19 @@ namespace MSITTeam1.Controllers
 					});
 				}
 				temp = s.FSubjectId.Trim();
-			}			
+			}
 			// DropDownList - 題型			
 			List<SelectListItem> typeItems = new List<SelectListItem>();
 			typeItems.Add(new SelectListItem()
 			{
 				Text = "單選題",
 				Value = "1"
-			}); 
+			});
 			typeItems.Add(new SelectListItem()
 			{
 				Text = "多選題",
 				Value = "2"
-			}); 
+			});
 			typeItems.Add(new SelectListItem()
 			{
 				Text = "填空題",
@@ -79,17 +85,30 @@ namespace MSITTeam1.Controllers
 			ViewBag.Subjects = subjectItems;
 			ViewBag.Type = typeItems;
 
-			// 篩選題目
-			quesQuery = this.FilterByClass(quesQuery, Subjects);
-			quesQuery = this.FilterByKeyWork(quesQuery, keyword);
-			quesQuery = this.FilterByLevel(quesQuery, Type);
-			
 			foreach (var q in quesQuery)
-				{
-					quesList.Add(q);
-				}
-				return View(quesList);
+			{
+				quesList.Add(q);
+			}
+
+			return View(quesList);
 		}
+		[HttpPost]
+		public ActionResult Search(string keyword/*, string Subjects, string Type*/)
+		{
+			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
+			// 篩選題目
+			//quesQuery = this.FilterByClass(quesQuery, Subjects);
+			quesQuery = this.FilterByKeyWork(quesQuery, keyword);
+			//quesQuery = this.FilterByLevel(quesQuery, Type);
+
+			foreach (var q in quesQuery)
+			{
+				quesList.Add(q);
+			}
+
+			return this.View(quesList);
+		}
+
 		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string level)
 		{
 			if (!string.IsNullOrEmpty(level))
@@ -300,5 +319,6 @@ namespace MSITTeam1.Controllers
 			}).Distinct().OrderBy(s => s.FClassCategory);
 			return Json(subjects);
 		}
+
 	}
 }

@@ -1,0 +1,304 @@
+﻿@model MSITTeam1.ViewModels.CTestPaperBankViewModel
+@addTagHelper *,MSITTeam1
+
+@section Style{
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+<link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
+    <style>
+        .indicator {
+            width: 25px !important;
+        }
+        .form-group > textarea{
+            overflow-y:auto !important;
+            height:200px !important;
+        }
+    </style>
+}
+
+
+
+<div class="resumebar">
+    <div class="pagination-container full-width-container">
+        <div class="sized-container">
+            <div class="pagination"></div>
+        </div>
+    </div>
+
+    @*<div class="viewport full-width-container">
+            <ul class="slide-container">
+                <li class="slide" data-tag="基本資料">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-action="Create">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="FDesignerAccount" value="@ViewBag.account" />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FTestPaperName" class="control-label"></label>
+                                    <input asp-for="FTestPaperName" class="form-control" />
+                                    <span asp-validation-for="FTestPaperName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FSubjectId" class="control-label"></label>
+                                    <input asp-for="FSubjectId" class="form-control" />
+                                    <span asp-validation-for="FSubjectId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FNote" class="control-label"></label>
+                                    <input asp-for="FNote" class="form-control" />
+                                    <span asp-validation-for="FNote" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>*@
+
+    <div class="viewport full-width-container">
+        <ul class="slide-container">
+            <li class="slide" data-tag="建立考卷資料">
+                <form name="basic">
+                    <div class="sized-container basic">
+                        <h1>歡迎使用資展題庫系統 這是新增考卷的頁面</h1>
+                        <h2>您可以依照喜好從題庫挑選想要的題目，題目已經依照排序顯示推薦，請先填寫考卷名稱及考卷介紹，然後從題庫挑選題目，這是胡亂填寫的資料。後面會更換成使用簡介</h2>
+                        <hr />
+                        <div class="row data justify-content-center">
+                            <div class="col-5">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="FDesignerAccount" value="@ViewBag.account" />
+                                <div class="form-group">
+                                    <label asp-for="FTestPaperName" class="control-label"></label>
+                                    <input asp-for="FTestPaperName" class="form-control" />
+                                    <span asp-validation-for="FTestPaperName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <label asp-for="FSubjectId" class="control-label"></label>
+                                    <select id="FSubjectId" name="FSubjectId" class="form-control"></select>
+                                    <span asp-validation-for="FSubjectId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                @*<div class="image-upload">
+                                        <label for="file-input">
+                                            <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
+                                        </label>
+                                        <input id="file-input" type="file" name="photo" />
+                                    </div>*@
+                                <div class="form-group">
+                                    <label asp-for="FNote" class="control-label"></label>
+                                    <textarea asp-for="FNote" class="form-control"></textarea>
+                                    <span asp-validation-for="FNote" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="btndiv">
+                                <button class="savebtn my-3" id="savechanges">儲存</button>
+                            </div>*@
+                    </div>
+                </form>
+            </li>
+
+            <li class="slide" data-tag="選擇題目">
+                <div class="sized-container">
+                    <div class="row data" id="workExpPage">
+                        <div class="col-6">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            @*add hidden here*@
+                            <button class="creatworkbtn my-3" id="createWork">新增</button>
+
+                        </div>
+                        <div class="col-6">
+                            @*add here*@
+                            <button class="saveworkbtn my-3" id="editWork" onclick="editWork()">儲存修改</button>
+                        </div>
+                    </div>
+
+                    <div class="card workdata">
+                        <vc:question-bank-list keyword="" subjects="" type=""></vc:question-bank-list>
+                    </div>
+                </div>
+            </li>
+
+            <li class="slide" data-tag="學歷">
+                <div class="sized-container edu">
+                    <div class="row data" id="EduPage">
+                        <div class="col-6">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            @*add hidden here*@
+                            <button class="creatworkbtn my-3" id="createEdu">新增</button>
+                        </div>
+                        <div class="col-6">
+                            @*add here*@
+                            <button class="saveworkbtn my-3" id="editEdu" onclick="editEud()">儲存修改</button>
+                        </div>
+                    </div>
+                    <div class="card workdata">
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+
+    </div>
+    <div class="full-width-container ">
+        <div class="button-container sized-container">
+            <button class="next">下一步</button>
+            <button class="previous">上一步</button>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // 取得所有課程名稱
+        const selSubject = document.querySelector('#FSubjectId');
+
+        async function LoadSubject() {
+            const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
+            renderSubject(await responseSubject.json());
+        }
+
+        LoadSubject();
+
+        function renderSubject(datas) {
+            datas.forEach((item) => {
+                const opt = new Option(item.fClassCategory, item.fClassCategory);
+                selSubject.options.add(opt);
+            })
+        }
+
+        // 刪除不需要的jquery程式
+    var currentSlide = 0,
+        $slideContainer = $('.slide-container'),
+        $slide = $('.slide'),
+        slideCount = $slide.length,
+        animationTime = 300;
+
+    function setSlideDimensions() {
+        var windowWidth = $(window).width();
+        $slideContainer.width(windowWidth * slideCount);
+        $slide.width(windowWidth);
+    }
+
+    function generatePagination() {
+        var $pagination = $('.pagination');
+        for (var i = 0; i < slideCount; i++) {
+            var $indicator = $('<div>').addClass('indicator'),
+                $progressBarContainer = $('<div>').addClass('progress-bar-container'),
+                $progressBar = $('<div>').addClass('progress-bar'),
+                indicatorTagText = $slide.eq(i).attr('data-tag'),
+                $tag = $('<div>').addClass('tag').text(indicatorTagText);
+            $indicator.append($tag);
+            $progressBarContainer.append($progressBar);
+            $pagination.append($indicator).append($progressBarContainer);
+        }
+        $pagination.find('.indicator').eq(0).addClass('active');
+    }
+
+    function goToNextSlide() {
+        if (currentSlide >= slideCount - 1) return;
+        var windowWidth = $(window).width();
+        currentSlide++;
+        $slideContainer.animate({
+            left: -(windowWidth * currentSlide)
+        });
+        setActiveIndicator();
+        $('.progress-bar').eq(currentSlide - 1).animate({
+            width: '100%'
+        }, animationTime);
+    }
+
+    function goToPreviousSlide() {
+        if (currentSlide <= 0) return;
+        var windowWidth = $(window).width();
+        currentSlide--;
+        $slideContainer.animate({
+            left: -(windowWidth * currentSlide)
+        }, animationTime);
+        setActiveIndicator();
+        $('.progress-bar').eq(currentSlide).animate({
+            width: '0%'
+        }, animationTime);
+    }
+
+    function postitionSlides() {
+        var windowWidth = $(window).width();
+        setSlideDimensions();
+        $slideContainer.css({
+            left: -(windowWidth * currentSlide)
+        }, animationTime);
+    }
+
+    function setActiveIndicator() {
+        var $indicator = $('.indicator');
+        $indicator.removeClass('active').removeClass('complete');
+        $indicator.eq(currentSlide).addClass('active');
+        for (var i = 0; i < currentSlide; i++) {
+            $indicator.eq(i).addClass('complete');
+        }
+    }
+
+    setSlideDimensions();
+    generatePagination();
+    $(window).resize(postitionSlides);
+    $('.next').on('click', goToNextSlide);
+    $('.previous').on('click', goToPreviousSlide);
+
+    //圖片瀏覽
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {  //reader加載成功
+                    $('#blah').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#file-input").change(function () {
+            readURL(this);
+        });
+
+
+    // 儲存基本資料
+    const btn = document.querySelector('#savechanges');
+    btn.addEventListener('click', (evt) => {
+        evt.preventDefault();
+
+        const formdata = new FormData(document.basic);
+        var   CityChoice = $("#City option:selected").text();
+        var   DistrictChoice = $("#District option:selected").text();
+        formdata.append('fCity', CityChoice);
+        formdata.append('fDistrict', DistrictChoice);
+
+        fetch('@Url.Content("~/StudentResume/EditBasic")',{
+            method:'POST',
+            body:formdata,
+        }).then(Swal.fire({
+
+            icon: 'success',
+            title: '修改成功',
+            showConfirmButton: false,
+            timer: 1500
+        }))
+        $("#row data").load("@Url.Content("~/StudentResume/Create")");
+    })
+
+    </script>
+}

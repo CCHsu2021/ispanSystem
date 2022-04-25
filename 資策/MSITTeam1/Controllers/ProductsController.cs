@@ -114,6 +114,36 @@ namespace MSITTeam1.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public IActionResult DeleteFromCart(string id)
+        {
+            if (id != null)
+            {
+                TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == id);
+                if (prod != null)
+                {
+                    string json = "";
+                    List<CAddToCartViewModel> cart = new List<CAddToCartViewModel>();
+                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST))
+                    {
+                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST);
+                        cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
+                        int index = cart.FindIndex(m => m.productId.Equals(id));
+                        cart.RemoveAt(index);
+                        if (cart.Count < 1)
+                        {
+                            HttpContext.Session.Remove(CDictionary.SK_PRODUCTS_PURCHASED_LIST);
+                        }
+                        else
+                        {
+                            json = JsonSerializer.Serialize(cart);
+                            HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST, json);
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
         //[HttpPost]
         //public IActionResult AddToCart(CAddToCartViewModel vModel)
         //{

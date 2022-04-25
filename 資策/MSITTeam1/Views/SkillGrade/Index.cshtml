@@ -3,11 +3,19 @@
     ViewData["Title"] = "Index";
 }
     <div id="div1">
-        <h1>Index</h1>
+        <div class="row">
+            <div class="container">
+                <h1 id="skill_grade_question"></h1>
+            </div>
+            <div class="container">
+                <div class="row" id="skill_grad_choices">
+                </div>
+            </div>
+        </div>
     </div>
     <button class="btn-style-two mt-3" type="button" id="button1">下一題</button>
     <form name="member" method="post">
-        <div id="div2" style="display:block" class="alert alert-info">0</div>
+        <input type="text" class="form-control" id="Grade" name="Grade" value="80">
     </form>
 
     <script>
@@ -18,12 +26,22 @@
     btn.addEventListener('click', (evt) => {
             evt.preventDefault();
         const formData = new FormData(document.member);
-
+        var choice = "";
+        var number = 1;
         fetch('@Url.Action("Topic","SkillGrade")', {
             method: 'POST',
-            body: FormData
+            body: formData
         }).then(Response => Response.json())
-            .then(jsondata => console.log(jsondata))
+            .then(function (j) {
+                $("#skill_grade_question").text(j[0].fQuestion);
+                //j[0].fQuestion;
+                for (var row in j) {
+                    var answer = j[row].fChoice;
+                    choice += "<div class=\"col-12\"><input type=\"radio\" id=" + number + "  name=\"answer\" value=" + j[row].fCorrectAnswer+"><label for=" + number + ">" + answer + "</label></div>";
+                    number += 1;
+                }
+                $("#skill_grad_choices").html(choice)
+            });
         })
 
     </script>
