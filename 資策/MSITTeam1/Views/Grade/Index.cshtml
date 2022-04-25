@@ -77,8 +77,9 @@
             </div>
         }
     }
+    <div div style="display:none" id="div1" class="alert alert-info"></div>
     <form method="post" name="grade">
-        <div id="div1" class="alert alert-info"></div>
+        <input type="hidden" class="form-control" id="Grade" name="Grade" value="0">
     </form>
 </div>
 
@@ -86,22 +87,6 @@
     const btn = document.querySelector("#button1");
     const createpaper = document.querySelector("#createpaper");
     const divAlert = document.querySelector("#div1");
-
-    @*btn.addEventListener('click', (evt) => {
-        evt.preventDefault();
-        @{
-            if()
-        }
-    })*@
-
-
-
-
-
-
-
-
-
 
 
              btn.addEventListener('click', (evt) => {
@@ -111,11 +96,11 @@
          @{
              if (Model != null)
              {
-             int id = 0;
-             foreach (var item in Model)
-             {
-                 if (id != item.fQuestionID)
+                 int id = 0;
+                 foreach (var item in Model)
                  {
+                     if (id != item.fQuestionID)
+                     {
                  @:var a = $('input[name=@item.fQuestionID]:checked').val();
                  @:if (1 == a) { anscount++; }
                  @:count++
@@ -131,9 +116,18 @@
 
              }
           }
+                 divAlert.style.display = "block"
                  divAlert.innerHTML = Math.round((anscount / count) * 100)
+                 document.querySelector("#Grade").value = Math.round((anscount / count) * 100)
                  $('input').attr('disabled', 'true')
-                 btn.style.display='none';
+                 btn.style.display = 'none';
+
+
+                 const formData = new FormData(document.grade);
+
+            fetch('@Url.Action("Grade", "Grade")', {
+            method: 'POST',
+            body: formData
     })
 
     @*btn.addEventListener('click', (evt) => {

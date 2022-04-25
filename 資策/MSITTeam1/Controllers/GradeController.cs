@@ -41,7 +41,7 @@ namespace MSITTeam1.Controllers
                 return View(list);
 
         }
-        public IActionResult Grade(TTestPaper z)
+        public IActionResult Grade(string z)
         {
             return Content(z.ToString());
         }
