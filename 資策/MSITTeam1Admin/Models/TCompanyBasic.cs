@@ -33,6 +33,8 @@ namespace MSITTeam1Admin.Models
         public string FDistrict { get; set; }
         public byte[] FPassword { get; set; }
         public byte[] FSalt { get; set; }
+        public string FWebsite { get; set; }
+        public string FRelatedLink { get; set; }
 
         public virtual ICollection<TJobVacancy> TJobVacancies { get; set; }
     }
