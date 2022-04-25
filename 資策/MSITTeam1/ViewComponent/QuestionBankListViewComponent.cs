@@ -21,7 +21,7 @@ namespace MSITTeam1.ViewComponent
 		{
 			_context = context;
 		}
-		public IViewComponentResult Invoke(string keyword, string Subjects, string Type)
+		public async Task<IViewComponentResult> InvokeAsync(string keyword, string Subjects, string Type)
 		{
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
@@ -42,45 +42,11 @@ namespace MSITTeam1.ViewComponent
 															   FQuestionId = ques.FQuestionId,
 															   FQuestion = ques.FQuestion,
 															   FLevel = ques.FLevel,
-															   //updateTime = ques.FUpdateTime.ToString('YYMMDD'),
 															   FQuestionTypeId = ques.FQuestionTypeId,
 															   FChoice = choice.FChoice,
 															   FCorrectAnswer = choice.FCorrectAnswer
 														   };
-			// DropDownList - 課程			
-			List<SelectListItem> subjectItems = new List<SelectListItem>();
-			string temp = "";
-			foreach (var s in quesQuery)
-			{
-				if (s.FSubjectId.Trim() != temp)
-				{
-					subjectItems.Add(new SelectListItem()
-					{
-						Text = s.FCSubjectId
-					});
-				}
-				temp = s.FSubjectId.Trim();
-			}
-			// DropDownList - 題型			
-			List<SelectListItem> typeItems = new List<SelectListItem>();
-			typeItems.Add(new SelectListItem()
-			{
-				Text = "單選題",
-				Value = "1"
-			});
-			typeItems.Add(new SelectListItem()
-			{
-				Text = "多選題",
-				Value = "2"
-			});
-			typeItems.Add(new SelectListItem()
-			{
-				Text = "填空題",
-				Value = "3"
-			});
-			ViewBag.Subjects = subjectItems;
-			ViewBag.Type = typeItems;
-
+		
 			// 篩選題目
 			quesQuery = this.FilterByClass(quesQuery, Subjects);
 			quesQuery = this.FilterByKeyWord(quesQuery, keyword);
