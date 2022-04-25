@@ -29,9 +29,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="fGender" class="control-label"></label>
-                                    <select id="fGender" asp-for="fGender"asp-items="@Html.GetEnumSelectList(typeof(Gender))" class="form-control"></select>
+                                    <select id="fGender" asp-for="fGender" asp-items="@Html.GetEnumSelectList(typeof(Gender))" class="form-control"></select>
                                     <span asp-validation-for="fGender" class="text-danger"></span>
-                                   
+
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="fBirthDate" class="control-label"></label>
@@ -188,12 +188,12 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Listening" class="control-label"></label>
-                                <input id="Listening" asp-for="Listening" class="form-control" type="text" />
+                                <select id="Listening" asp-for="Listening" asp-items="@Html.GetEnumSelectList(typeof(lanLevel))" class="form-control"><option>請選擇</option></select>
                                 <span asp-validation-for="Listening" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Speaking" class="control-label"></label>
-                                <input id="Speaking" asp-for="Speaking" class="form-control" type="text" />
+                                <select id="Speaking" asp-for="Speaking" asp-items="@Html.GetEnumSelectList(typeof(lanLevel))" class="form-control"><option>請選擇</option></select>
                                 <span asp-validation-for="Speaking" class="text-danger"></span>
                             </div>
 
@@ -203,12 +203,12 @@
 
                             <div class="form-group">
                                 <label asp-for="Reading" class="control-label"></label>
-                                <input id="Reading" asp-for="Reading" class="form-control" />
+                                <select id="Reading" asp-for="Reading" asp-items="@Html.GetEnumSelectList(typeof(lanLevel))" class="form-control"><option>請選擇</option></select>
                                 <span asp-validation-for="Reading" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Writing" class="control-label"></label>
-                                <input id="Writing" asp-for="Writing" class="form-control">
+                                <select id="Writing" asp-for="Writing" asp-items="@Html.GetEnumSelectList(typeof(lanLevel))" class="form-control"><option>請選擇</option></select>
                                 <span asp-validation-for="Writing" class="text-danger"></span>
                             </div>
                             <button class="saveworkbtn my-3" id="editLan" onclick="editLan()">儲存修改</button>
@@ -216,7 +216,7 @@
                     </div>
 
                     <div class="card Landata">
-                        
+                        <vc:student-language></vc:student-language>
                     </div>
                 </div>
             </li>
@@ -485,7 +485,65 @@
             $("#eduPage").load(location.href + " #eduPage");
         })}
 
+    //語言新增
+    $("#createLan").click(()=>{
+       var jsondata = JSON.stringify({
+        LanMemberId:$("#MemberId").val(),
+        LanguageName:$("#LanguageName").val(),
+        Listening:$("#Listening").val(),
+        Speaking:$("#Speaking").val(),
+        Reading:$("#Reading").val(),
+        Writing:$("#Writing").val()
+        })
 
+            $.ajax({
+            url: "@Url.Content("~/StudentResume/CreateLan")",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: jsondata
+         }).done(function (data) {
+            Swal.fire({
+                        icon: 'success',
+                        title: '新增成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+            $("#lanPage").load(location.href + " #lanPage");
+
+        })
+    })
+
+    $("#editLan").hide();
+    //語言儲存編輯
+     function editLan()
+     {
+        var jsondata = JSON.stringify({
+        LanguageId:$("#LanguageId").val(),
+        LanguageName:$("#LanguageName").val(),
+        Listening:$("#Listening").find(':selected').text(),
+        Speaking:$("#Speaking").find(':selected').text(),
+        Reading:$("#Reading").find(':selected').text(),
+        Writing:$("#Writing").find(':selected').text()
+        })
+        $.ajax({
+            url:"@Url.Content("~/StudentResume/EditLan")",
+            type:"POST",
+            contentType:"application/json; chartset=utf-8",
+            data:jsondata
+        }).done(function (data) {
+            Swal.fire({
+                        icon: 'success',
+                        title: '修改成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+            $("#editLan").hide();
+            $("#createLan").show();
+            $("#lanPage").load(location.href + " #lanPage");
+            
+        })
+        
+    }
 
 </script>
 }

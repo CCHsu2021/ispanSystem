@@ -1,0 +1,131 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+<style>
+    th {
+        white-space: nowrap;
+    }
+</style>
+
+<table class="table" id="lanPage">
+    <thead>
+        <tr>
+            <th>
+                語言:
+            </th>
+            <th style="visibility:hidden">
+                @Html.DisplayNameFor(model => model.LanguageId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LanguageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Listening)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Speaking)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reading)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Writing)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td style="visibility:hidden">
+                        @Html.DisplayFor(modelItem => item.LanguageId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LanguageName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Listening)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Speaking)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reading)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Writing)
+                    </td>
+
+                    <td>
+                        <div class="d-flex">
+                            <button class="tableBtn fas fa-pencil-alt " id="@item.LanguageId" onclick="showLan('@item.LanguageId')">
+
+                            </button>
+                            <button class="tableBtn fas fa-trash-alt " name="LanguageId" onclick="deleteLan('@item.LanguageId')">
+                                
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script>
+    //顯示 、hid create btn
+    function showLan(id){
+        var currow = $('#'+id).closest('tr');
+        var col1 = currow.find('td:eq(1)').text().trim();
+        var col2 = currow.find('td:eq(2)').text().trim();
+        var col3 = currow.find('td:eq(3)').text().trim();
+        var col4 = currow.find('td:eq(4)').text().trim();
+        var col5 = currow.find('td:eq(5)').text().trim();
+        var col6 = currow.find('td:eq(6)').text().trim();
+
+        
+        $('#LanguageId').val(col1);
+        $('#LanguageName').val(col2);
+        $('#Listening :selected').text(col3);
+        $('#Speaking :selected').text(col4);
+        $('#Reading :selected').text(col5);
+        $('#Writing :selected').text(col6);
+
+        $('#Listening').children('option').first().hide();
+        $('#Speaking').children('option').first().hide();
+        $('#Reading').children('option').first().hide();
+        $('#Writing').children('option').first().hide();
+        
+
+
+        $("#editLan").show();
+        $("#createLan").hide();
+        
+    }
+
+
+
+    //刪除
+    function deleteLan(dd)
+     {    
+         var num = dd;
+        $.ajax({
+            url:"@Url.Content("~/StudentResume/DeleteLan")",
+            type:"POST",
+            data:{'LanguageId':num},
+
+        }).done(function (data) {
+
+            Swal.fire({
+                        icon: 'success',
+                        title: '刪除成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+            $("#lanPage").load(location.href + " #lanPage");})
+        }
+</script>
