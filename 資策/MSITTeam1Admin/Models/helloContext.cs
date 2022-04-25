@@ -595,9 +595,13 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.FPointState).HasColumnName("fPointState");
 
+                entity.Property(e => e.FRelatedLink).HasColumnName("fRelatedLink");
+
                 entity.Property(e => e.FSalt)
                     .HasMaxLength(20)
                     .HasColumnName("fSalt");
+
+                entity.Property(e => e.FWebsite).HasColumnName("fWebsite");
             });
 
             modelBuilder.Entity<TCompanyContactPerson>(entity =>
