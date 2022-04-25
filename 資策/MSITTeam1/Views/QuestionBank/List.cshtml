@@ -1,4 +1,4 @@
-﻿@*@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>*@
+﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
 @addTagHelper *, MSITTeam1
 
 @{
@@ -15,11 +15,11 @@
     <h1>題目列表</h1>
     <p>
         @*<a asp-action="Edit" data-toggle="modal" data-target="#questionEdit">新增</a>*@
-        <a asp-action="Create">新增</a>
+        <a asp-action="Create" onclick="openwindow()">新增</a>
     </p>
 
     <div style="margin:20px">
-        <form method="post" action="~/QuestionBank/List" enctype="application/x-www-form-urlencoded">
+        <form>
             <div class="form-group row justify-content-around py-4">
                 <div class="row">
                     <div class="col">
@@ -31,8 +31,9 @@
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-rounded">
-                        <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="searchBarSim">
-                        <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit" @*id="search"*@><i class="fas fa-search"></i></button></span>
+                        <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="keyword">
+                        @*<span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="search"><i class="fas fa-search"></i></button></span>*@
+                        <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit" id="search"><i class="fas fa-search"></i></button></span>
                     </div>
                 </div>
             </div>
@@ -43,29 +44,30 @@
         string s = null;
         string t = null;
 
-        if (!string.IsNullOrEmpty((ViewBag.keyword).ToString()) &&
-           !string.IsNullOrEmpty((ViewBag.Subjects).ToString()) &&
-           !string.IsNullOrEmpty((ViewBag.Type).ToString()))
+        if (ViewBag.k != null)
         {
-            k = (ViewBag.keyword).ToString();
-            s = (ViewBag.Subjects).ToString();
-            t = (ViewBag.Type).ToString();
+            k = (ViewBag.k).ToString();
         }
 
-        <div>
-            @*@await Component.InvokeAsync("QuestionBankList",
-                 new
-                 {
-                     keyword = (ViewBag.keyword).ToString(),
-                     subjects = (ViewBag.Subjects).ToString(),
-                     type = (ViewBag.Type).ToString()
-                 }
-                 )*@
-            <vc:question-bank-list keyword=k subjects=s type=t></vc:question-bank-list>
+        if (ViewBag.s != null)
+        {
+            s = (ViewBag.s).ToString();
+        }
+        if (
+        ViewBag.t != null)
+        {
+
+            t = (ViewBag.t).ToString();
+        }
+
+        <div id="testView">
+            <vc:question-bank-list keyword=@k Subjects=@s Type=@t></vc:question-bank-list>
         </div>
     }
-
-
+@*<div>
+    @Html.PartialAsync("Search", Model)
+</div>
+    <span id="loading" style="display:none;">loading</span>*@
 </div>
 
 
@@ -80,7 +82,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @*<vc:question-bank-create></vc:question-bank-create>*@
+                @*<vc:question-bank-edit subjectID=@Model.></vc:question-bank-edit>*@
             </div>
         </div>
     </div>
@@ -91,11 +93,27 @@
     <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
     <script>
         @*$('#search').click(function () {
-                var jsondata = JSON.stringify({
+            $('#partialTest').empty().html($('#loading').html());
+
+            let postData = {
+                keyword: $('#keyword').val()
+            };
+
+            $.post('@Url.Action("Search","QuestionBank")', postData, (html) => $('#partialTest').html(html));
+        });*@
+
+        var jsondata = null;
+        var k, s, t = null;
+        @*$('#search').click(function () {
+             k = $('#searchBarSim').val()
+             s = $('#Subjects').val()
+             t = $('#Type').val()
+                jsondata = JSON.stringify({
                 Subjects: $('#Subjects').val(),
-                    keyword: $('#searchBarSim').val(),
-                    Type: $('#Type').val()
-            })
+                    keyword: $('#keyword').val(),
+                    Type: $('#Type').val()            
+                })
+            console.log(k, s, t);
             $.ajax({
                 url: "@Url.Content("~/QuestionBank/List")",
                 type: "POST",
@@ -103,7 +121,10 @@
                 data:jsondata
             })
         })*@
-        function getkey() {
+        function openwindow() {
+            window.open(@Url.Action("Create", "QuestionBank", null)innerWidth)
         }
+
+        $('.collapse').collapse()
     </script>
 }

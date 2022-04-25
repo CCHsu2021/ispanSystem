@@ -21,11 +21,12 @@ namespace MSITTeam1.ViewComponent
 		{
 			_context = context;
 		}
-		public async Task<IViewComponentResult> InvokeAsync(string keyword = null, string Subjects = null, string Type = null)
+		public IViewComponentResult Invoke(string keyword, string Subjects, string Type)
 		{
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
 			ViewBag.account = CDictionary.account;
+
 			// 從資料庫讀取題目
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails
@@ -82,7 +83,7 @@ namespace MSITTeam1.ViewComponent
 
 			// 篩選題目
 			quesQuery = this.FilterByClass(quesQuery, Subjects);
-			quesQuery = this.FilterByKeyWork(quesQuery, keyword);
+			quesQuery = this.FilterByKeyWord(quesQuery, keyword);
 			quesQuery = this.FilterByLevel(quesQuery, Type);
 
 			foreach (var q in quesQuery)
@@ -91,12 +92,12 @@ namespace MSITTeam1.ViewComponent
 			}
 			return View(quesList);
 		}
-		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string level)
+		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string questype)
 		{
-			if (!string.IsNullOrEmpty(level))
+			if (!string.IsNullOrEmpty(questype))
 			{
-				int tempLevel = int.Parse(level);
-				return table.Where(q => q.FLevel == tempLevel);
+				int tempType = int.Parse(questype);
+				return table.Where(q => q.FQuestionTypeId == tempType);
 			}
 			else
 			{
@@ -104,7 +105,7 @@ namespace MSITTeam1.ViewComponent
 			}
 		}
 
-		private IQueryable<CQuestionBankViewModel> FilterByKeyWork(IQueryable<CQuestionBankViewModel> table, string keyword)
+		private IQueryable<CQuestionBankViewModel> FilterByKeyWord(IQueryable<CQuestionBankViewModel> table, string keyword)
 		{
 			if (!string.IsNullOrEmpty(keyword))
 			{
