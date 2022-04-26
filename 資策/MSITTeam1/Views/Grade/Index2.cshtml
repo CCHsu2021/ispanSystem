@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewData["Title"] = "Index2";
+}
+
+<h1>Index2</h1>
+<form name="member" method="post">
+    <input type="text" class="form-control" id="Grade" name="Grade" value="80">
+</form>
+
+<script>
+    const formData = new FormData(document.member);
+    fetch('@Url.Action("Topic","SkillGrade")', {
+        method: 'POST',
+        body: formData
+    }).then(Response => Response.json()).then(data => console.log(data));
+</script>
