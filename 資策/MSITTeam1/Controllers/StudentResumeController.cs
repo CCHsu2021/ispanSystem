@@ -161,6 +161,12 @@ namespace MSITTeam1.Controllers
 
         #endregion
 
+        public IActionResult DropListEdu()
+        {
+            var Schools = from s in hello.StudentSchools
+                          select s;
+            return Json(Schools);
+        }
         public IActionResult CreateEdu([FromBody] CStudentResumeViewModel p)
         {
             hello.StudentEducations.Add(p.education);
@@ -181,6 +187,8 @@ namespace MSITTeam1.Controllers
             }
             return Content("修改成功");
         }
+
+
 
         public IActionResult DeleteEdu(String EducationId)
         {

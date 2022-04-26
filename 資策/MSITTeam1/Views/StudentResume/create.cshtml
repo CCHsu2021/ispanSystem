@@ -141,8 +141,8 @@
                             <input type="hidden" asp-for="EducationId" id="EducationId" />
                             <div class="form-group">
                                 <label asp-for="GraduateSchool" class="control-label"></label>
-                                <input id="GraduateSchool" asp-for="GraduateSchool" class="form-control" />
-                                <span asp-validation-for="GraduateSchool" class="text-danger"></span>
+                                <select class="form-control" id="droplistSchools" name="droplistSchools"><option>請選擇</option></select>
+                                
                             </div>
                             <div class="form-group">
                                 <label asp-for="GraduateDepartment" class="control-label"></label>
@@ -480,15 +480,29 @@
             $("#workPage").load(location.href + " #workPage");
         })}
 
+    //匯入學校
+        var Schoollist = document.querySelector('#droplistSchools');
+
+        $.ajax({
+            url: '@Url.Content("~/StudentResume/DropListEdu")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                datas.forEach((a) => {
+                let option = new Option(a.schoolName, a.schooolId);
+                    Schoollist.options.add(option);
+                });
+            }
+        })
     //學歷新增
     $("#createEdu").click(()=>{
          var jsondata = JSON.stringify({
-       EduMemberId:$("#MemberId").val(),
-        GraduateSchool:$("#GraduateSchool").val(),
+        EduMemberId:$("#MemberId").val(),
+        GraduateSchool:$("#droplistSchools").find(':selected').text(),
         GraduateDepartment:$("#GraduateDepartment").val(),
         StudyFrom:$("#StudyFrom").val(),
         StudyTo:$("#StudyTo").val()
-        })
+        })  
 
             $.ajax({
             url: "@Url.Content("~/StudentResume/CreateEdu")",
@@ -513,7 +527,7 @@
      {
         var jsondata = JSON.stringify({
         EducationId:$("#EducationId").val(),
-        GraduateSchool:$("#GraduateSchool").val(),
+        GraduateSchool:$("#GraduateSchool").find(':selected').text(),
         GraduateDepartment:$("#GraduateDepartment").val(),
         StudyFrom:$("#StudyFrom").val(),
         StudyTo:$("#StudyTo").val()

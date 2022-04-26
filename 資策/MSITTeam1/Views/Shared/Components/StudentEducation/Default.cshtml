@@ -81,11 +81,12 @@
         var col4 = currow.find('td:eq(5)').text().trim();
 
         $('#EducationId').val(col0);
-        $('#GraduateSchool').val(col1);
+        $('#droplistSchools :selected').text(col1);
         $('#GraduateDepartment').val(col2);
         $('#StudyFrom').val(col3);
         $('#StudyTo').val(col4);
 
+        $('#droplistSchools').children('option').first().hide();
 
         $("#editEdu").show();
         $("#createEdu").hide();
