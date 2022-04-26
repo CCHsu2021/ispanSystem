@@ -55,3 +55,44 @@
         }
     </tbody>
 </table>
+
+<script>
+  //顯示 、hide create btn
+    function showSkill(id){
+        var currow = $('#'+id).closest('tr');
+        var col1 = currow.find('td:eq(1)').text().trim();
+        var col2 = currow.find('td:eq(2)').text().trim();
+        var col3 = currow.find('td:eq(3)').text().trim();
+        var col4 = currow.find('td:eq(4)').text().trim();
+        var col5 = currow.find('td:eq(5)').text().trim();
+        var col6 = currow.find('td:eq(6)').text().trim();
+        var col7 = currow.find('td:eq(7)').text().trim();
+
+        $('#SkillId').val(col1);
+        $('#SkillName').val(col2);
+        $('#SkillDescription').val(col3);
+
+        $("#editSkill").show();
+        $("#createSkill").hide();
+        
+    }
+
+    //工作刪除
+    function deleteSkill(dd)
+     {    
+         var num = dd;
+        $.ajax({
+            url:"@Url.Content("~/StudentResume/DeleteSkill")",
+            type:"POST",
+            data:{'skillId':num},
+
+        }).done(function (data) {
+            Swal.fire({
+                        icon: 'success',
+                        title: '刪除成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+            $("#skillPage").load(location.href + " #skillPage");})
+        }
+</script>

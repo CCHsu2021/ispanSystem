@@ -269,8 +269,8 @@
                                 <input id="PortfolioURL" asp-for="PortfolioURL" class="form-control">
                                 <span asp-validation-for="PortfolioURL" class="text-danger"></span>
                             </div>
-                              <button class="creatworkbtn my-3" id="createPortfolio">新增</button>
-                             <button class="saveworkbtn my-3" id="editPortfolio" onclick="editPortfolio()">儲存修改</button>
+                              <button class="creatworkbtn my-3" id="createPort">新增</button>
+                             <button class="saveworkbtn my-3" id="editPort" onclick="editPort()">儲存修改</button>
                         </div>
                     </div>
                      <div class="card portdata"><vc:student-portfolio></vc:student-portfolio></div>
@@ -621,7 +621,7 @@
 
     $("#editSkill").hide();
     //技能儲存編輯
-     function editLan()
+     function editSkill()
      {
         var jsondata = JSON.stringify({
         SkillId:$("#SkillId").val(),
@@ -648,7 +648,7 @@
      }
 
       //作品新增
-    $("#createPortfolio").click(()=>{
+    $("#createPort").click(()=>{
        var jsondata = JSON.stringify({
         PortMemberId:$("#MemberId").val(),
         PortfolioTitle:$("#PortfolioTitle").val(),
@@ -673,9 +673,9 @@
         })
     })
 
-    $("#editPortfolio").hide();
+    $("#editPort").hide();
     //作品儲存編輯
-     function editLan()
+     function editPort()
      {
         var jsondata = JSON.stringify({
         PortId:$("#PortId").val(),
@@ -695,8 +695,8 @@
                         showConfirmButton: false,
                         timer: 1500
                         })
-            $("#editPortfolio").hide();
-            $("#createPortfolio").show();
+            $("#editPort").hide();
+            $("#createPort").show();
             $("#PortPage").load(location.href + " #PortPage");
             
         })

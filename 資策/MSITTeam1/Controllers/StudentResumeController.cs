@@ -255,16 +255,54 @@ namespace MSITTeam1.Controllers
 
         public IActionResult EditSkill([FromBody] CStudentResumeViewModel p)
         {
-            StudentEducation sw = hello.StudentEducations.FirstOrDefault(c => c.EducationId == p.EducationId);
+            StudentSkill sw = hello.StudentSkills.FirstOrDefault(c => c.SkillId == p.SkillId);
             if (sw != null)
             {
-                sw.GraduateSchool = p.GraduateSchool;
-                sw.GraduateDepartment = p.GraduateDepartment;
-                sw.StudyFrom = p.StudyFrom;
-                sw.StudyTo = p.StudyTo;
+                sw.SkillName = p.SkillName;
+                sw.SkillDescription = p.SkillDescription;
+
                 hello.SaveChanges();
             }
             return Content("修改成功");
+        }
+
+        public IActionResult DeleteSkill(String skillId)
+        {
+
+            StudentSkill sw = hello.StudentSkills.FirstOrDefault(c => c.SkillId.ToString() == skillId);
+            if (sw != null)
+            {
+                hello.StudentSkills.Remove(sw);
+                hello.SaveChanges();
+            }
+
+            return Content("刪除成功");
+        }
+
+        public IActionResult EditPort([FromBody] CStudentResumeViewModel p)
+        {
+            StudentPortfolio sw = hello.StudentPortfolios.FirstOrDefault(c => c.PortfolioId == p.PortId);
+            if (sw != null)
+            {
+                sw.PortfolioTitle = p.PortfolioTitle;
+                sw.PortfolioDescription = p.PortfolioTitle;
+                sw.PortfolioUrl = p.PortfolioURL;
+                hello.SaveChanges();
+            }
+            return Content("修改成功");
+        }
+
+        public IActionResult DeletePort(String PortId)
+        {
+
+            StudentPortfolio sw = hello.StudentPortfolios.FirstOrDefault(c => c.PortfolioId.ToString() == PortId);
+            if (sw != null)
+            {
+                hello.StudentPortfolios.Remove(sw);
+                hello.SaveChanges();
+            }
+
+            return Content("刪除成功");
         }
     }
 }
