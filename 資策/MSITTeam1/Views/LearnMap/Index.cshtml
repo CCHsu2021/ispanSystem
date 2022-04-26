@@ -7,18 +7,9 @@
     <link href='https://fonts.googleapis.com/css?family=News+Cycle:400,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-size: 100%;
-        }
 
         .accordion {
-            width: 380px;
-            margin: 20px auto;
+            margin: 2rem auto;
         }
 
             .accordion h1, h2, h3, h4 {
@@ -105,27 +96,30 @@
             }
     </style>
 }
-@foreach (var item in Model)
-{
+@{ var ClassName = "";
+    var ClassCate = "";}
+<div class="container">
     <aside class="accordion">
-        <h1></h1>
-        <div>
-            <h2></h2>
-            <p></p>
 
-            <h2>Update #2</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        @foreach (var item in Model)
+        {
+            @if (ClassName != item.FClassName)
+            {
+                <h1>@item.FClassName</h1>
+                ClassName = item.FClassName;
+            }
+            <div>
+                @if (ClassCate != item.FClassCategory)
+                {
+                    <h2>@item.FClassCategory</h2>
+                    ClassCate = item.FClassCategory;
 
-            <h2>Update #3</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-            <h2>Update #4</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
+                }
+                <a>@item.FClassSkill</a>
+            </div>
+        }
     </aside>
-}
-
-
+</div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 @section Scripts {

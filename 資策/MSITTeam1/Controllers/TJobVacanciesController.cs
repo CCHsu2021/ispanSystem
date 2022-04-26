@@ -24,6 +24,33 @@ namespace MSITTeam1.Controllers
         // GET: TJobVacancies
         public async Task<IActionResult> Index(JobVacanciesSearchBarViewModel vModel)
         {
+            IEnumerable<TJobVacanciesViewModel> list = GetLeftJoinJobVacancies();
+
+            if (vModel.txtSearchText != null)
+            {
+                string lowerSearchText = vModel.txtSearchText.ToLower();
+                list = list.Where(p => p.FJobName.ToLower().Contains(lowerSearchText)
+                    || p.FJobDirect.ToLower().Contains(lowerSearchText)
+                    || p.FCompanyName.ToLower().Contains(lowerSearchText)
+                    || p.FOther.ToLower().Contains(lowerSearchText));
+            }
+
+            if (vModel.ddlJobListId != null)
+            {
+                list = list.Where(p => p.FJobListId.Equals(vModel.ddlJobListId));
+            }
+
+            if (vModel.ddlCity != null)
+            {
+                list = list.Where(p => p.FCity.Contains(vModel.ddlCity));
+            }
+
+            return View(list);
+
+        }
+
+        private IEnumerable<TJobVacanciesViewModel> GetLeftJoinJobVacancies()
+        {
             IEnumerable<TJobVacanciesViewModel> list = null;
             //LINQ，TNewJobVacancies left join TCompanyBasics left join TJobDirects
             list = from p in _context.TNewJobVacancies
@@ -38,40 +65,16 @@ namespace MSITTeam1.Controllers
                        FCompanyLogo = combin.FLogo,
                        FJobDirect = combin2.FJobDirect
                    };
-
-            if (vModel.txtSearchText != null)
-            {
-                string lowerSearchText = vModel.txtSearchText.ToLower();
-                list = list.Where(p => p.FJobName.ToLower().Contains(lowerSearchText)
-                    || p.FJobDirect.ToLower().Contains(lowerSearchText)
-                    || p.FCompanyName.ToLower().Contains(lowerSearchText)
-                    || p.FOther.ToLower().Contains(lowerSearchText));
-            }
-
-            if(vModel.ddlJobListId != null)
-            {
-                list = list.Where(p => p.FJobListId.Equals(vModel.ddlJobListId));
-            }
-
-            if(vModel.ddlCity != null)
-            {
-                list = list.Where(p => p.FCity.Contains(vModel.ddlCity));
-            }
-
-            return View(list);
-
+            return list;
         }
-        //[HttpPost]
-        //public IActionResult Index(JobVacanciesSearchBarViewModel vModel) //todo 接收搜尋欄等post過來的資料，是否可以另建ViewModel來用偷雞摸狗法。
-        //{
-        //    if (vModel.txtSearchText == null && vModel.ddlJobListId == 0 && vModel.ddlCity == null)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
 
-        //    return View();
-        //}
-
+        public async Task<IActionResult> Detail(JobInfoViewModel vModel)
+        {
+            var chooseOne = GetLeftJoinJobVacancies().FirstOrDefault(p=>
+            p.FJobName.Equals(vModel.txtJobName) && p.FCompanyTaxid.Equals(vModel.txtCompanyTaxid));
+            
+            return View(chooseOne);
+        }
         // GET: TJobVacancies/Details/5
         public async Task<IActionResult> Details(long? id)
         {

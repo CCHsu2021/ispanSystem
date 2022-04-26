@@ -15,7 +15,7 @@
     <h1>題目列表</h1>
     <p>
         @*<a asp-action="Edit" data-toggle="modal" data-target="#questionEdit">新增</a>*@
-        <a asp-action="Create" onclick="openwindow()">新增</a>
+        <a asp-action="Create">新增</a>
     </p>
 
     <div style="margin:20px">
@@ -23,51 +23,31 @@
             <div class="form-group row justify-content-around py-4">
                 <div class="row">
                     <div class="col">
-                        @Html.DropDownList("Subjects", (IEnumerable<SelectListItem>)ViewBag.subjectItems, "請選擇類別", new { @class = "form-control" })
+                        <select id="FSubjectId" name="FSubjectId" class="form-control">
+                            @*<option value="null">請選擇課程名稱</option>*@
+                        </select>
                     </div>
                     <div class="col">
-                        @Html.DropDownList("Type", (IEnumerable<SelectListItem>)ViewBag.typeItems, "請選擇題目類型", new { @class = "form-control" })
+                        <select id="FQuestionTypeId" class="form-control">
+                            @*<option value="null">請選擇題型</option>*@
+                            <option value="1">單選題</option>
+                            <option value="2">多選題</option>
+                            <option value="3">填空題</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-rounded">
                         <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="keyword">
-                        @*<span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="search"><i class="fas fa-search"></i></button></span>*@
-                        <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="submit" id="search"><i class="fas fa-search"></i></button></span>
+                        <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="search"><i class="fas fa-search"></i></button></span>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    @{
-        string k = null;
-        string s = null;
-        string t = null;
+        <div id="testView" class="card">
 
-        if (ViewBag.k != null)
-        {
-            k = (ViewBag.k).ToString();
-        }
-
-        if (ViewBag.s != null)
-        {
-            s = (ViewBag.s).ToString();
-        }
-        if (
-        ViewBag.t != null)
-        {
-
-            t = (ViewBag.t).ToString();
-        }
-
-        <div id="testView">
-            <vc:question-bank-list keyword=@k Subjects=@s Type=@t></vc:question-bank-list>
         </div>
-    }
-@*<div>
-    @Html.PartialAsync("Search", Model)
-</div>
-    <span id="loading" style="display:none;">loading</span>*@
 </div>
 
 
@@ -91,40 +71,43 @@
 
 @section Scripts{
     <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
-    <script>
-        @*$('#search').click(function () {
-            $('#partialTest').empty().html($('#loading').html());
-
-            let postData = {
-                keyword: $('#keyword').val()
-            };
-
-            $.post('@Url.Action("Search","QuestionBank")', postData, (html) => $('#partialTest').html(html));
-        });*@
-
+    <script>        
         var jsondata = null;
-        var k, s, t = null;
-        @*$('#search').click(function () {
-             k = $('#searchBarSim').val()
-             s = $('#Subjects').val()
-             t = $('#Type').val()
+        $(document).ready(function () {        
+        $('#search').click(function () {
                 jsondata = JSON.stringify({
-                Subjects: $('#Subjects').val(),
+                    Subjects: $('#FSubjectId').val(),
                     keyword: $('#keyword').val(),
-                    Type: $('#Type').val()            
+                    Type: $('#FQuestionTypeId').val()
                 })
-            console.log(k, s, t);
+            console.log(jsondata);
             $.ajax({
                 url: "@Url.Content("~/QuestionBank/List")",
                 type: "POST",
                 contentType: "application/json",
-                data:jsondata
+                data: jsondata,
+                success: function (result) {
+                    $('#testView').html(result);
+                }
             })
-        })*@
-        function openwindow() {
-            window.open(@Url.Action("Create", "QuestionBank", null)innerWidth)
+        })
+        })
+        $('.collapse').collapse()
+
+        const selSubject = document.querySelector('#FSubjectId');
+
+        async function LoadSubject() {
+            const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
+            renderSubject(await responseSubject.json());
         }
 
-        $('.collapse').collapse()
+        LoadSubject();
+
+        function renderSubject(datas) {
+            datas.forEach((item) => {
+                const opt = new Option(item.fClassCategory, item.fClassCategory);
+                selSubject.options.add(opt);
+            })
+        }
     </script>
 }
