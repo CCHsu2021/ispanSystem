@@ -52,5 +52,9 @@ namespace MSITTeam1.ViewModels
         public string FCity { get { return this._com.FCity; } set { this._com.FCity = value; } }
         [DisplayName("區")]
         public string FDistrict { get { return this._com.FDistrict; } set { this._com.FDistrict = value; } }
+        [DisplayName("公司網站")]
+        public string FWebsite { get { return this._com.FWebsite; } set { this._com.FWebsite = value; } }
+        [DisplayName("相關連結")]
+        public string FRelatedLink { get { return this._com.FRelatedLink; } set { this._com.FRelatedLink = value; } }
     }
 }

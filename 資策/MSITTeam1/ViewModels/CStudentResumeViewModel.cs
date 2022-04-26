@@ -246,5 +246,12 @@ namespace MSITTeam1.ViewModels
             get { return this.language.Writing; }
             set { this.language.Writing = value; }
         }
+        public enum lanLevel
+        {
+            初階,
+            中等,
+            高階,
+            母語
+        }
     }
 }

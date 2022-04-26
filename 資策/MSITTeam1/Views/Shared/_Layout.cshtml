@@ -281,6 +281,8 @@
                 .cart-list-item .cart-item .cart-item-favorites,
                 .cart-list-item .cart-item .cart-item-trash {
                     width: 2em;
+                    line-height:70px;
+                    text-align:center;
                 }
 
                     .cart-list-item .cart-item .cart-item-favorites > span,
@@ -579,7 +581,7 @@
                             <div class="link-box" id="usernamebox">
                                 <a href="~/Student_Login" id="username"><i class="fas fa-user-graduate text-light"></i> &nbsp;學員登入</a>&nbsp;&nbsp;&nbsp;
                                 <a href="~/Company_Login" id="username1"><i class="fas fa-briefcase text-light"></i> &nbsp;企業登入</a>&nbsp;&nbsp;&nbsp;
-                                <a href="#" id="add-to-cart-icon"><i class="fas fa-shopping-bag text-light"></i>&nbsp;</a>
+                                <a href="#" id="add-to-cart-icon"><i class="fas fa-shopping-cart text-light"></i>&nbsp;</a>
                             </div>
                         </div>
                     </div>
@@ -593,14 +595,14 @@
                             <ul class="cart-tab-table">
                                 <li class="cart-tab-cell selected">
                                     <span class="cart-tab">
-                                        <span class="tab-ic tab-cart-ic"></span>
-                                        <span class="tab-label">$1 200 364.89</span>
+                                        <i class="fas fa-shopping-bag"></i>
+                                        <span class="tab-label">商品購物車</span>
                                     </span>
                                 </li>
                                 <li class="cart-tab-cell">
                                     <span class="cart-tab">
-                                        <span class="tab-ic tab-heart-line-ic"></span>
-                                        <span class="tab-label">162</span>
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                        <span class="tab-label">課程購物車</span>
                                     </span>
                                 </li>
                             </ul>
@@ -610,7 +612,7 @@
                     <div class="cart-content" style="position:relative;">
                         <div class="cart-sections">
                             <section class="cart-section nano">
-                                <ul class="cart-list overthrow nano-content">
+                                <ul class="cart-list overthrow nano-content" id="shoppingCartReload">
                                     <vc:add-to-cart></vc:add-to-cart>
                                     <li class="cart-footer mt-3">
                                         <div class="cart-checkout-btn">
@@ -1041,6 +1043,19 @@
 
 
 
+    </script>
+    <script>
+        function DeleteProduct(id) {
+    $.ajax({
+    url: "@Url.Content("~/Products/DeleteFromCart")",
+    type: "POST",
+    dataType: "text",
+    data: { id: id },
+    success: function () {
+    $("#shoppingCartReload").load(location.href + " #shoppingCartReload");
+    }
+    })
+    }
     </script>
 </body>
 </html>

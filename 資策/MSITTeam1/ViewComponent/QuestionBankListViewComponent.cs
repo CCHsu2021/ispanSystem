@@ -21,11 +21,12 @@ namespace MSITTeam1.ViewComponent
 		{
 			_context = context;
 		}
-		public async Task<IViewComponentResult> InvokeAsync(string keyword = null, string Subjects = null, string Type = null)
+		public async Task<IViewComponentResult> InvokeAsync(string keyword, string Subjects, string Type)
 		{
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
 			ViewBag.account = CDictionary.account;
+
 			// 從資料庫讀取題目
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails
@@ -41,48 +42,14 @@ namespace MSITTeam1.ViewComponent
 															   FQuestionId = ques.FQuestionId,
 															   FQuestion = ques.FQuestion,
 															   FLevel = ques.FLevel,
-															   //updateTime = ques.FUpdateTime.ToString('YYMMDD'),
 															   FQuestionTypeId = ques.FQuestionTypeId,
 															   FChoice = choice.FChoice,
 															   FCorrectAnswer = choice.FCorrectAnswer
 														   };
-			// DropDownList - 課程			
-			List<SelectListItem> subjectItems = new List<SelectListItem>();
-			string temp = "";
-			foreach (var s in quesQuery)
-			{
-				if (s.FSubjectId.Trim() != temp)
-				{
-					subjectItems.Add(new SelectListItem()
-					{
-						Text = s.FCSubjectId
-					});
-				}
-				temp = s.FSubjectId.Trim();
-			}
-			// DropDownList - 題型			
-			List<SelectListItem> typeItems = new List<SelectListItem>();
-			typeItems.Add(new SelectListItem()
-			{
-				Text = "單選題",
-				Value = "1"
-			});
-			typeItems.Add(new SelectListItem()
-			{
-				Text = "多選題",
-				Value = "2"
-			});
-			typeItems.Add(new SelectListItem()
-			{
-				Text = "填空題",
-				Value = "3"
-			});
-			ViewBag.Subjects = subjectItems;
-			ViewBag.Type = typeItems;
-
+		
 			// 篩選題目
 			quesQuery = this.FilterByClass(quesQuery, Subjects);
-			quesQuery = this.FilterByKeyWork(quesQuery, keyword);
+			quesQuery = this.FilterByKeyWord(quesQuery, keyword);
 			quesQuery = this.FilterByLevel(quesQuery, Type);
 
 			foreach (var q in quesQuery)
@@ -91,12 +58,12 @@ namespace MSITTeam1.ViewComponent
 			}
 			return View(quesList);
 		}
-		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string level)
+		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string questype)
 		{
-			if (!string.IsNullOrEmpty(level))
+			if (!string.IsNullOrEmpty(questype))
 			{
-				int tempLevel = int.Parse(level);
-				return table.Where(q => q.FLevel == tempLevel);
+				int tempType = int.Parse(questype);
+				return table.Where(q => q.FQuestionTypeId == tempType);
 			}
 			else
 			{
@@ -104,7 +71,7 @@ namespace MSITTeam1.ViewComponent
 			}
 		}
 
-		private IQueryable<CQuestionBankViewModel> FilterByKeyWork(IQueryable<CQuestionBankViewModel> table, string keyword)
+		private IQueryable<CQuestionBankViewModel> FilterByKeyWord(IQueryable<CQuestionBankViewModel> table, string keyword)
 		{
 			if (!string.IsNullOrEmpty(keyword))
 			{

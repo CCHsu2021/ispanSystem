@@ -17,9 +17,7 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index()
         {
-            var list = from c in hello.TStudioInformations
-                   select c;
-            
+            var list = from c in hello.TStudioInformations orderby  c.FClassName,c.FClassCategory select c;   
             return View(list);
         }
     }

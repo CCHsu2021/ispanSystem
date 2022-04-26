@@ -21,11 +21,11 @@ namespace MSITTeam1.ViewComponent
         }
         public IViewComponentResult Invoke()
         {
-            if (!HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST))
+            if (!HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST+CDictionary.account))
             {
                 return Content("暫無商品");
             }
-            string json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST);
+            string json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
             List<CAddToCartViewModel> cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
             return View(cart);
         }

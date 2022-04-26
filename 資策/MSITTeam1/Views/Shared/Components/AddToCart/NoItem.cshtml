@@ -1,27 +1,23 @@
 ﻿@addTagHelper *, MSITTeam1
 @model IEnumerable<MSITTeam1.ViewModels.CAddToCartViewModel>
 
-@foreach (var item in Model)
-{
-    <li class="cart-list-item my-2">
+@foreach(var item in Model) {
+    <li class="cart-list-item">
         <div class="cart-item-img" style="background-image: url('@item.imgPath');"></div>
         <div class="cart-item">
             <div class="cart-item-description">
                 <span>
                     <p class="cart-item-label">@item.name</p>
-                    <p class="cart-item-price">NT$@Html.DisplayFor(modelItem => item.price, "Money") x @item.count  </p>
+                    <p class="cart-item-price">NT$@item.price x @item.count   小記:NT$@item.subTotal</p>
                 </span>
             </div>
             <div class="cart-item-favorites">
                 <span class="item-heart-ic"></span>
             </div>
             <div class="cart-item-trash">
-                <a onclick="DeleteProduct('@item.productId')"><i class="fas fa-times-circle fa-lg"></i></a>
+                <span class="item-trash-ic"></span>
             </div>
         </div>
     </li>
 }
-@section Scripts{
    
-}
-
