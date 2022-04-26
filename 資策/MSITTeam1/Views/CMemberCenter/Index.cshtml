@@ -181,6 +181,8 @@
             FPhone: $("#FPhone").val(),
             FFaxCode: $("#FFaxCode").val(),
             FFax: $("#FFax").val(),
+            FWebsite: $("#FWebsite").val(),
+            FRelatedLink: $("#FRelatedLink").val(),
             FContactPerson: $("#FContactPerson").val(),
             FCity: $("#FCity").val(),
             FDistrict: $("#FDistrict").val(),
@@ -188,10 +190,12 @@
             FEmail: $("#FEmail").val(),
             FBenefits: $("#FBenefits").val(),
             FCustomInfo: $("#FCustomInfo").val(),
-            FCity: $("#City").val(),
+            FCity: $("#City option:selected").text(),
             FDistrictCode: $("#District").val(),
             FDistrict: $("#District option:selected").text(),
+            FCapitalAmount: $("#FCapitalAmount").val()
         })
+        var picturedata = new FormData(document.fileupload)
         $.ajax({
             url: "@Url.Content("~/CMemberCenter/CompanyInformationEdit")",
             type: "POST",
@@ -210,6 +214,10 @@
         }).fail(function (error) {
             Swal.fire(error.status + ":" + error.statusText);
         })
+        fetch('@Url.Content("~/CMemberCenter/Savefile")', {
+            method: "Post",
+            body: picturedata,
+        });
     })
         //圖片預覽變更+儲存照片
         function readURL(input) {
