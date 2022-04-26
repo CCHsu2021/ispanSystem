@@ -17,7 +17,7 @@
             <th class="text-center">編輯</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="questionTable">
 
         @{
             if (Model != null)
@@ -59,6 +59,7 @@
 
     </tbody>
 </table>
+<div id="ProductPagination" class="row my-4"></div>
 
 <script>
     // 難度StarBar
@@ -83,5 +84,55 @@
                     $('#EditModal').html(result);
                 }
             })
-        })
+    })
+
+    $(document).ready(function () {
+        $(function () {
+            initPagination('.questionTable', 12, '#ProductPagination')
+        });
+    })
+
+    function initPagination(pageEle, showItem, paginationTarget) {
+        let pageLength = $(pageEle).length
+        let showItemLength = showItem
+        let showPage = Math.ceil(pageLength / showItemLength)
+
+        $(paginationTarget).twbsPagination({
+            totalPages: showPage,
+            visiblePages: 5,
+            first: "第一頁",
+            prev: "前一頁",
+            next: "下一頁",
+            last: "最後一頁",
+            nextClass: "page-item pageColor",
+            prevClass: "page-item pageColor",
+            lastClass: "page-item pageColor last",
+            firstClass: "page-item pageColor first",
+            pageClass: "page-item pageColor",
+            activeClass: "page-item pageBG",
+            onPageClick: function (event, page) {
+            }
+        }).on('page', function (event, page) {
+            $(pageEle).fadeOut(200)
+            let start = (page - 1) * showItemLength
+            let end = (page - 1) * showItemLength + showItemLength - 1
+            $(pageEle).each((index, item) => {
+                if (index >= start && index <= end) {
+                    $(item).fadeIn(600)
+                }
+            })
+        });
+
+        $(pageEle).hide()
+
+        pageLength <= showItemLength && $(pageEle).fadeIn(600)
+        if (pageLength > showItemLength) {
+            $(pageEle).each((index, item) => {
+                if (index < showItemLength) {
+                    $(item).fadeIn(600)
+                }
+            })
+        }
+    }
+
 </script>
