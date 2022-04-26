@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using MSITTeam1.Models;
 using MSITTeam1.ViewModels;
 using System;
@@ -23,11 +25,14 @@ namespace MSITTeam1.ViewComponent
         {
             if (!HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST+CDictionary.account))
             {
-                return Content("暫無商品");
+                return new HtmlContentViewComponentResult(new HtmlString("<div class='text-center py-3 font-weight-bold h5 text-secondary'>暫無商品</div>"));
             }
-            string json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
-            List<CAddToCartViewModel> cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
-            return View(cart);
+            else
+            {
+                string json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
+                List<CAddToCartViewModel> cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
+                return View(cart);
+            }
         }
     }
 }
