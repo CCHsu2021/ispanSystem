@@ -10,46 +10,65 @@
     <link rel="stylesheet" href="~/css/fontawesome-all.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/QuestionBankStyleSheet.css" />
-}
-<div class="container" style="padding:40px;">
-    <h1>題目列表</h1>
-    <p>
-        @*<a asp-action="Edit" data-toggle="modal" data-target="#questionEdit">新增</a>*@
-        <a asp-action="Create">新增</a>
-    </p>
+<link rel="stylesheet" href="~/css/StarBar.css" />
+    <style>
+        #testView {
+            width: 1600px;
+        }
 
-    <div style="margin:20px">
-        <form>
-            <div class="form-group row justify-content-around py-4">
-                <div class="row">
-                    <div class="col">
-                        <select id="FSubjectId" name="FSubjectId" class="form-control">
-                            @*<option value="null">請選擇課程名稱</option>*@
-                        </select>
+        .outerBox {
+            align-items: center;
+            float: none;
+        }
+
+        .containerForQL {
+            padding: 65px;
+        }
+
+        #testView {
+            width: 100%;
+        }
+
+        thead {
+            text-align: center;
+        }
+
+    </style>
+}
+<div class="outerBox col-lg-12">
+    <div class="containerForQL" style="padding:40px;">
+        <div style="margin:20px">
+            <form>
+                <div class="form-group row justify-content-around py-4">
+                    <div class="row">
+                        <div class="col">
+                            <select id="FSubjectId" name="FSubjectId" class="form-control">
+                                <option value="">請選擇課程名稱</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select id="FQuestionTypeId" class="form-control">
+                                <option value="">請選擇題型</option>
+                                <option value="1">單選題</option>
+                                <option value="2">多選題</option>
+                                <option value="3">填空題</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col">
-                        <select id="FQuestionTypeId" class="form-control">
-                            @*<option value="null">請選擇題型</option>*@
-                            <option value="1">單選題</option>
-                            <option value="2">多選題</option>
-                            <option value="3">填空題</option>
-                        </select>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-rounded">
+                            <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="keyword">
+                            <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="search"><i class="fas fa-search"></i></button></span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="input-group input-group-rounded">
-                        <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="keyword">
-                        <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="search"><i class="fas fa-search"></i></button></span>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-        <div id="testView" class="card">
+            </form>
+        </div>
+        <div id="testView">
 
         </div>
+    </div>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true">
@@ -71,9 +90,10 @@
 
 @section Scripts{
     <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
-    <script>        
+    <script>
+
         var jsondata = null;
-        $(document).ready(function () {        
+        $(document).ready(function () {
         $('#search').click(function () {
                 jsondata = JSON.stringify({
                     Subjects: $('#FSubjectId').val(),
@@ -92,7 +112,6 @@
             })
         })
         })
-        $('.collapse').collapse()
 
         const selSubject = document.querySelector('#FSubjectId');
 
@@ -109,5 +128,17 @@
                 selSubject.options.add(opt);
             })
         }
+    </script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="~/js/jquery.barrating.js"></script>
+    <script src="~/js/barRating.init.js"></script>
+    @*<script src="~/js/QuestionBankSystem.js"></script>*@
+    <script>
+        $('.example-fontawesome').barrating({
+            theme: 'fontawesome-stars',
+            showSelectedRating: false
+        });
     </script>
 }
