@@ -11,7 +11,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="FName" class="control-label"></label>
-                <input id="FName" asp-for="FName" class="form-control" />
+                <input id="FName" asp-for="FName" class="form-control" required />
                 <span asp-validation-for="FName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -51,6 +51,16 @@
                 <span asp-validation-for="FCapitalAmount" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="FWebsite" class="control-label"></label>
+                <input id="FWebsite" asp-for="FWebsite" class="form-control" />
+                <span asp-validation-for="FWebsite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FRelatedLink" class="control-label"></label>
+                <input id="FRelatedLink" asp-for="FRelatedLink" class="form-control" />
+                <span asp-validation-for="FRelatedLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="FAddress" class="control-label"></label>
                 <div class="d-flex">
                     <vc:selector city="@ViewBag.City" district="@ViewBag.District"></vc:selector>
@@ -73,11 +83,16 @@
                 <textarea id="FCustomInfo" asp-for="FCustomInfo" class="form-control" style="overflow-y:scroll;resize:none"></textarea>
                 <span asp-validation-for="FCustomInfo" class="text-danger"></span>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉視窗</button>
-                <button id="savechanges" type="button" class="btn btn-primary" @*data-dismiss="modal"*@>儲存變更</button>
-            </div>
         </form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉視窗</button>
+            <button id="savechanges" type="button" class="btn btn-primary">儲存變更</button>
+        </div>
+        <div class="form-group">
+            <label class="control-label">公司照片上傳</label>
+            <vc:c-company-photo-upload></vc:c-company-photo-upload>
+        </div>
+
     </div>
 </div>
 

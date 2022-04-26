@@ -1,78 +1,87 @@
 ﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
 @using System.Collections.Generic;
+@addTagHelper *, MSITTeam1
 
 @{
     ViewData["Title"] = "List";
 }
-<div class="container" style="padding:40px;">
-    <div>
+
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="text-center">選擇</th>
+            <th>@Html.DisplayNameFor(model => model[0].FSubjectId)</th>
+            <th>@Html.DisplayNameFor(model => model[0].FQuestion)</th>
+            <th class="text-center">@Html.DisplayNameFor(model => model[0].FLevel)</th>
+            <th class="text-center">編輯</th>
+        </tr>
+    </thead>
+    <tbody>
+
         @{
             if (Model != null)
             {
-                //List<string> subjectInTable = new List<string>();
                 string subject = "";
                 int quesId = 0;
                 foreach (var item in Model)
                 {
-                    //subjectInTable.Add(item.FSubjectId);
                     if (item.FSubjectId != subject || item.FQuestionId != quesId)
                     {
                         subject = item.FSubjectId;
                         quesId = item.FQuestionId;
-                        <div class="card" id="quesCard">
-                                    <div class="card-body">
-
-                                                <h4 class="card-title">
-                                                    <span>
-                                                        <a class="btn btn-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                            -
-                                                        </a>
-                                                    </span>
-                                                    @Html.DisplayFor(modelItem => item.FSubjectId)
-                                                </h4>
-
-                                        <input type="hidden" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
-                                        <div class="tab-content">
-                                            <div class="tab-pane active" id="home2" role="tabpanel">
-                                                <div class="p-10">
-                                                    <h5>
-                                                        @Html.DisplayFor(modelItem => item.FQuestion)
-                                                    </h5>
-                                                </div>
-                                                <div class="nestable collapse" @*id="collapseExample"*@>
-                                                    <div class="dd" id="nestable">
-                                                        <ol class="dd-list">
-                                                            <li class="dd-item" data-id="2">
-                                                                <ol class="dd-list" id="title-font">
-                                                                    @foreach (var choice in Model)
-                                                                    {
-                                                                        if (choice.FSubjectId == subject && choice.FQuestionId == quesId)
-                                                                        {
-                                                                            <li class="dd-item" data-id="2">
-                                                                                <div class="dd-handle">
-                                                                                    @Html.DisplayFor(modelItem => choice.FChoice)
-                                                                                </div>
-                                                                            </li>
-                                                                        }
-                                                                    }
-                                                                </ol>
-                                                            </li>
-                                                        </ol>
-                                                    </div>
-                                                </div>
-                                                <div id="editBlock">
-                                                    @Html.ActionLink("編輯", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }) |
-                                                    @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                                                    @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                        </div>
-                        <br />
+                        <tr>
+                            <td class="text-center">
+                                <input type="checkbox" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FSubjectId)
+                                <input type="hidden" class="subjectId" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
+                                <input type="hidden" class="questionId" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FQuestion)
+                            </td>
+                            <td class="text-center">
+                                <input type="hidden" class="quesLevel" value="@Html.DisplayFor(modelItem => item.FLevel)" />
+                                <div class="show_rated_3_5"></div>
+                            </td>
+                            <td class="text-center">
+                                @Html.ActionLink("編輯", "Edit", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }) |
+                                @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                                @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
+                            </td>
+                        </tr>
                     }
                 }
             }
         }
-    </div>
-</div>
+
+    </tbody>
+</table>
+
+<script>
+    // 難度StarBar
+    $('.quesLevel').each(function () {
+        var i = $(this).val();
+        var temp = "show_rated_" + i;
+        $(this).next().attr("class", temp);
+    })
+
+    $('.editQuestion').click(function () {
+                jsondata = JSON.stringify({
+                    Subjects: $(this).parents("tr").find('.subjectId').val(),
+                    questionID: $(this).parents("tr").find('.questionId').val()
+                })
+            //console.log(jsondata);
+            $.ajax({
+                url: "@Url.Content("~/QuestionBank/Edit")",
+                type: "POST",
+                contentType: "application/json",
+                data: jsondata,
+                success: function (result) {
+                    $('#EditModal').html(result);
+                }
+            })
+        })
+</script>

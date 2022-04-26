@@ -54,7 +54,7 @@
         <div class="col-md-4 text-center" style="position:relative;">
             <form name="LogoUpload">
                 <div class="image-upload mt-0">
-                    <input type="hidden" name="id" value="@ViewBag.Account" />
+                    <input type="hidden" name="id" value="@ViewBag.account" />
                     <input type="file" accept="image/*" id="picture-file" name="img" class="p-0" style="visibility: hidden; width: 0; height: 0; margin: auto;" />
                     <label for="picture-file" style="border: 1px solid #dee2e6; overflow: hidden; ">
                         <img class="mt-0" id="picture" src="../images/company/@ViewBag.picture" style=" float: right; width: 200px; height: 200px" title="上傳LOGO圖片" alt="點擊上傳LOGO" />
@@ -80,6 +80,16 @@
             <div class="inputstyle">
                 <label for="FBan"> @Html.DisplayNameFor(model => model.FCapitalAmount)：</label>
                 <span>@Html.DisplayFor(modelItem => item.FCapitalAmount)</span>
+            </div>
+            <hr />
+            <div class="inputstyle">
+                <label for="FBan"> @Html.DisplayNameFor(model => model.FWebsite)：</label>
+                <span>@Html.DisplayFor(modelItem => item.FWebsite)</span>
+            </div>
+            <hr />
+            <div class="inputstyle">
+                <label for="FBan"> @Html.DisplayNameFor(model => model.FRelatedLink)：</label>
+                <span>@Html.DisplayFor(modelItem => item.FRelatedLink)</span>
             </div>
             <hr />
             <div class="inputstyle">
@@ -111,7 +121,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <vc:company-basic-edit id="@ViewBag.Account"></vc:company-basic-edit>
+                <vc:company-basic-edit id="@ViewBag.account"></vc:company-basic-edit>
             </div>
         </div>
     </div>

@@ -18,27 +18,6 @@ namespace MSITTeam1.ViewComponent
         {
             hello = _hello;
         }
-
-        List<SelectListItem> GetSelectItem(bool dvalue = true)
-        {
-            List <SelectListItem> items = new List<SelectListItem> ();
-            if (dvalue) { items.Insert(0, new SelectListItem { Text = "--請選擇--", Value = "0" }); }
-            return items;
-        }
-        private List<SelectListItem> SetDropDown1(string cityname)
-        {
-            List <SelectListItem> items = GetSelectItem(false);
-            var citylist = from c in hello.TCityContrasts group c by c.FCityName into a select a.Key;
-            items.AddRange(new SelectList(citylist,cityname));
-            return items;
-        }
-        private List<SelectListItem> SetDropDown2(string cityname,string districtname)
-        {
-            List <SelectListItem> items = GetSelectItem(false);
-            var districtlist = from c in hello.TCityContrasts where c.FCityName == cityname select c.FDistrictName;
-            items.AddRange(new SelectList(districtlist,districtname));
-            return items;
-        }
         public IViewComponentResult Invoke(string id) 
         {
             if (!string.IsNullOrEmpty(id))
