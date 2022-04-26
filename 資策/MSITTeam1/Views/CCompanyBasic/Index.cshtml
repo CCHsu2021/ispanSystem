@@ -22,6 +22,11 @@
                 border-bottom: 4px solid #ed731a;
                 color: #ed731a !important;
             }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size:1em;
+        }
     </style>
 }
 <div class="container-fluid p-3" style="background: #f3f3f3; position: static;">
@@ -75,12 +80,12 @@
                     <div class="w-100">
                         <hr class="w-100" />
                     </div>
-                    <div class="col-12  py-2" style="line-height:1.5rem;">@item.combasic.FCustomInfo</div>
+                    <pre class="col-12  py-2" style="line-height:1.5rem;">@item.combasic.FCustomInfo</pre>
                 </div>
                 <div id="company-welfare-content" class="row p-3 my-3 shadow-sm border rounded bg-white">
                     <h3 class="w-100 col-12 font-weight-bold">公司福利</h3>
                     <br />
-                    <div class="col-12  py-2" style="line-height:1.5rem;">@item.combasic.FBenefits</div>
+                    <pre class="col-12  py-2" style="line-height:1.5rem;">@item.combasic.FBenefits</pre>
                 </div>
                 <div id="company-photo-content" class="row p-3 my-3 shadow-sm border rounded bg-white">
                     <h3 class="w-100 col-12 font-weight-bold">公司圖片</h3>
