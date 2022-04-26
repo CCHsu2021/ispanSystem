@@ -20,10 +20,8 @@ namespace MSITTeam1.ViewComponent
 			_context = context;
 		}
 
-		public IViewComponentResult Invoke(string subjectID,int questionID)
+		public async Task<IViewComponentResult> InvokeAsync(string subjectID,int questionID)
 		{
-			// TODO-2:加入題型判斷
-
 			if (subjectID != null && questionID > 0)
 			{
 				List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
@@ -39,11 +37,11 @@ namespace MSITTeam1.ViewComponent
 									FQuestionId = ques.FQuestionId,
 									FQuestion = ques.FQuestion,
 									FLevel = ques.FLevel,
-									//updateTime = ques.FUpdateTime.ToString('YYMMDD'),
 									FQuestionTypeId = ques.FQuestionTypeId,
 									FChoice = choice.FChoice,
 									FCorrectAnswer = choice.FCorrectAnswer
 								};
+
 				foreach (var q in quesQuery)
 				{
 					quesList.Add(q);
@@ -53,7 +51,7 @@ namespace MSITTeam1.ViewComponent
 					return View(quesList);
 				}
 			}
-			return View("List");
+			return Content("查無資料");
 		}
 	}
 }

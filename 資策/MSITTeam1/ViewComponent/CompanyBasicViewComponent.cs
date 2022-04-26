@@ -21,7 +21,6 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke()
         {
             string account = CDictionary.account;
-            ViewBag.Account = account;
             IEnumerable<TCompanyBasic> com = null;
             com = hello.TCompanyBasics.Where(t => t.CompanyTaxid == account);
             List<CCompanyBasicViewModel> list = new List<CCompanyBasicViewModel>();

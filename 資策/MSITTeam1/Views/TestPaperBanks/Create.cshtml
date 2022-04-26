@@ -14,6 +14,22 @@
             overflow-y:auto !important;
             height:200px !important;
         }
+        #search {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            padding: 0.5rem 0.75rem;
+            background-color: #1e3c84;
+            color: #FFFFFF;
+            text-transform: capitalize;
+            font-size: 18px;
+            line-height: 22px;
+            outline: none;
+            cursor: pointer;
+            transition: all .3s linear;
+            width: 50px;
+        }
     </style>
 }
 
@@ -108,14 +124,39 @@
             </li>
 
             <li class="slide" data-tag="選擇題目">
-                <div class="sized-container">
+                <div class="sized-container col-lg-10">
+                    <div class="row row justify-content-around">
+                        <div class="col-3">
+                            <select id="FSubjectId" name="FSubjectId" class="form-control">
+                                <option value="">請選擇課程名稱</option>
+                                <option value="" selected="selected">其他</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <select id="FQuestionTypeId" class="form-control">
+                                <option value="">請選擇題型</option>
+                                <option value="1">單選題</option>
+                                <option value="2">多選題</option>
+                                <option value="3">填空題</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group input-group-rounded">
+                                <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="keyword">
+                                <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="search"><i class="fas fa-search"></i></button></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="card workdata">
+                        <div id="testView"></div>
+                    </div>
                     <div class="row data" id="workExpPage">
                         <div class="col-6">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             @*add hidden here*@
                             <button class="creatworkbtn my-3" id="createWork">新增</button>
-
                         </div>
                         <div class="col-6">
                             @*add here*@
@@ -123,13 +164,11 @@
                         </div>
                     </div>
 
-                    <div class="card workdata">
-                        <vc:question-bank-list keyword="" subjects="" type=""></vc:question-bank-list>
-                    </div>
+
                 </div>
             </li>
 
-            <li class="slide" data-tag="學歷">
+            <li class="slide" data-tag="試卷預覽">
                 <div class="sized-container edu">
                     <div class="row data" id="EduPage">
                         <div class="col-6">
@@ -164,23 +203,44 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
+<script>
         // 取得所有課程名稱
-        const selSubject = document.querySelector('#FSubjectId');
-
+        @*const selSubject = document.querySelector('#FSubjectId');
         async function LoadSubject() {
             const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
             renderSubject(await responseSubject.json());
         }
-
         LoadSubject();
-
         function renderSubject(datas) {
             datas.forEach((item) => {
                 const opt = new Option(item.fClassCategory, item.fClassCategory);
                 selSubject.options.add(opt);
             })
-        }
+        }*@
+
+        // 題目查詢
+        var jsondata = null;
+        $(document).ready(function () {
+        $('#search').click(function () {
+                jsondata = JSON.stringify({
+                    Subjects: $('#FSubjectId').val(),
+                    keyword: $('#keyword').val(),
+                    Type: $('#FQuestionTypeId').val()
+                })
+            console.log(jsondata);
+            $.ajax({
+                url: "@Url.Content("~/QuestionBank/List")",
+                type: "POST",
+                contentType: "application/json",
+                data: jsondata,
+                success: function (result) {
+                    $('#testView').html(result);
+                }
+            })
+        })
+        })
+
+
 
         // 刪除不需要的jquery程式
     var currentSlide = 0,
@@ -259,46 +319,6 @@
     $('.next').on('click', goToNextSlide);
     $('.previous').on('click', goToPreviousSlide);
 
-    //圖片瀏覽
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
 
-                reader.onload = function (e) {  //reader加載成功
-                    $('#blah').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $("#file-input").change(function () {
-            readURL(this);
-        });
-
-
-    // 儲存基本資料
-    const btn = document.querySelector('#savechanges');
-    btn.addEventListener('click', (evt) => {
-        evt.preventDefault();
-
-        const formdata = new FormData(document.basic);
-        var   CityChoice = $("#City option:selected").text();
-        var   DistrictChoice = $("#District option:selected").text();
-        formdata.append('fCity', CityChoice);
-        formdata.append('fDistrict', DistrictChoice);
-
-        fetch('@Url.Content("~/StudentResume/EditBasic")',{
-            method:'POST',
-            body:formdata,
-        }).then(Swal.fire({
-
-            icon: 'success',
-            title: '修改成功',
-            showConfirmButton: false,
-            timer: 1500
-        }))
-        $("#row data").load("@Url.Content("~/StudentResume/Create")");
-    })
-
-    </script>
+</script>
 }

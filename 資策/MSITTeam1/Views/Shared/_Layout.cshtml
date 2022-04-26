@@ -10,7 +10,7 @@
     <title>@ViewData["Title"] - MSITTeam1</title>
     <link href="~/css/nestable.css?@date" rel="stylesheet">
     <link href="~/css/barRating.css?@date" rel="stylesheet">
-    <link href="~/css/bootstrap.css?@date" rel="stylesheet"> 
+    <link href="~/css/bootstrap.css?@date" rel="stylesheet">
     <link href="~/plugins/revolution/css/settings.css?@date" rel="stylesheet" type="text/css">
     <!-- REVOLUTION SETTINGS STYLES -->
     <link href="~/plugins/revolution/css/layers.css?@date" rel="stylesheet" type="text/css"><!-- REVOLUTION LAYERS STYLES -->
@@ -281,8 +281,8 @@
                 .cart-list-item .cart-item .cart-item-favorites,
                 .cart-list-item .cart-item .cart-item-trash {
                     width: 2em;
-                    line-height:70px;
-                    text-align:center;
+                    line-height: 70px;
+                    text-align: center;
                 }
 
                     .cart-list-item .cart-item .cart-item-favorites > span,
@@ -966,20 +966,6 @@
 
         $(function()
         {
-            @*console.log("@ViewBag.account");
-            if ("@ViewBag.Name"=="未填寫" && "@ViewBag.Type" == "1") {
-                Swal.fire("即將跳轉頁面", "請先填寫基本資料", "info",);
-                setTimeout("location.href='../SMemberCenter/Index'", 2000);
-            }
-            if ("@ViewBag.Name" == "親愛的用戶" && "@ViewBag.Type" == "2") {
-                Swal.fire({
-                    icon: 'info',
-                    title: '請先填寫基本資料',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    window.open('@Url.Content("~/CMemberCenter/CompanyInformationEdit/")@ViewBag.account')
-                })}*@
             $("#add-to-cart-icon").hide();
             if ("@ViewBag.account" != "")
             {
