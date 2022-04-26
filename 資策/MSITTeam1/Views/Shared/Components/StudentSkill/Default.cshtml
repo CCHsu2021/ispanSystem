@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+<style>
+    th {
+        white-space: nowrap;
+        
+    }
+</style>
+
+<table class="table" id="skillPage">
+    <thead>
+        <tr>
+            <th>
+                技能:
+            </th>
+            <th style="visibility:hidden">
+                @Html.DisplayNameFor(model => model.SkillId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SkillName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SkillDescription)
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td style="visibility:hidden">
+                        @Html.DisplayFor(modelItem => item.SkillId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SkillName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SkillDescription)
+                    </td>
+                   
+                    <td>
+                        <div class="d-flex">
+                            <button class="tableBtn fas fa-pencil-alt " id="@item.SkillId" onclick="showSkill('@item.SkillId')"></button>
+                            <button class="tableBtn fas fa-trash-alt " name="SkillId" onclick="deleteSkill('@item.SkillId')"></button
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

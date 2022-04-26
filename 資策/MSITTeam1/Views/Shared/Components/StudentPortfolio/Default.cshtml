@@ -1,0 +1,65 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+<style>
+    th {
+        white-space: nowrap;
+    }
+</style>
+
+<table class="table" id="PortPage">
+    <thead>
+        <tr>
+            <th>
+                作品:
+            </th>
+            <th style="visibility:hidden">
+                @Html.DisplayNameFor(model => model.PortId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PortfolioTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PortfolioDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PortfolioURL)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td style="visibility:hidden">
+                        @Html.DisplayFor(modelItem => item.PortId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PortfolioTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PortfolioDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PortfolioURL)
+                    </td>
+
+                    <td>
+                        <div class="d-flex">
+                            <button class="tableBtn fas fa-pencil-alt " id="@item.PortId" onclick="showLan('@item.PortId')">
+
+                            </button>
+                            <button class="tableBtn fas fa-trash-alt " name="PortId" onclick="deleteLan('@item.PortId')">
+                                
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
