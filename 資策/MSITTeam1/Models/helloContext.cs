@@ -72,11 +72,11 @@ namespace MSITTeam1.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=tcp:msit40team1.database.windows.net,1433;Initial Catalog=hello;Persist Security Info=False;User ID=MSIT40;Password=Ispan40team1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            }
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseSqlServer("Data Source=msit40team1.database.windows.net;Initial Catalog=hello;User ID=MSIT40;Password=Ispan40team1");
+//            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -439,9 +439,18 @@ namespace MSITTeam1.Models
                     .HasMaxLength(50)
                     .HasColumnName("fClassOpenDate");
 
+                entity.Property(e => e.FClassPhotoPath)
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassPhotoPath");
+
                 entity.Property(e => e.FClassTestpaper)
                     .HasMaxLength(50)
                     .HasColumnName("fClassTestpaper");
+
+                entity.Property(e => e.FClassmoney)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassmoney");
 
                 entity.Property(e => e.FClassname)
                     .IsRequired()
@@ -664,8 +673,8 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.OrderId).HasMaxLength(50);
 
                 entity.Property(e => e.PointDate)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.PointDescription)
                     .IsRequired()
@@ -711,7 +720,10 @@ namespace MSITTeam1.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.ResumeSendId).HasColumnName("ResumeSendID");
+                entity.Property(e => e.ResumeSendId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("ResumeSendID");
 
                 entity.Property(e => e.StudentRespondTime)
                     .HasMaxLength(2)
@@ -957,7 +969,9 @@ namespace MSITTeam1.Models
 
                 entity.ToTable("tMemberResumeSend");
 
-                entity.Property(e => e.ResumeSendId).HasColumnName("ResumeSendID");
+                entity.Property(e => e.ResumeSendId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ResumeSendID");
 
                 entity.Property(e => e.ComReadOrNot).HasMaxLength(10);
 
@@ -1398,8 +1412,6 @@ namespace MSITTeam1.Models
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.PointDescription).HasMaxLength(50);
-
-                entity.Property(e => e.PointRecord).HasMaxLength(50);
 
                 entity.Property(e => e.PointType).HasMaxLength(50);
             });

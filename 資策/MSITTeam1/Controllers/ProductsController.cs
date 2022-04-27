@@ -195,6 +195,29 @@ namespace MSITTeam1.Controllers
             }
             return RedirectToAction("Index");
         }
-        #endregion 
+        #endregion
+
+        #region 課程商品列表
+        public IActionResult classIndex(CQueryKeywordForProductViewModel vModel)
+        {
+            ViewBag.Name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
+            IEnumerable<TClassInfo> datas = null;
+            string keyword = vModel.txtKeyword;
+            if (string.IsNullOrEmpty(keyword))
+            {
+                datas = from t in hello.TClassInfos
+                        select t;
+            }
+            else
+            {
+                datas = hello.TClassInfos.Where(t => t.FClassname.Contains(keyword) || t.FClassAdress.Contains(keyword));
+            }
+
+            return View(datas);
+        }
+        #endregion
+
     }
 }
