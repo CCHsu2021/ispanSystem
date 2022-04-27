@@ -219,7 +219,22 @@ namespace MSITTeam1.Controllers
         }
         #endregion
 
-        #region 加入購物車
+        #region 課程商品詳情
+        public IActionResult classDetails(string id)
+        {
+            ViewBag.Name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
+            if (id != null)
+            {
+                ViewBag.Id = id;
+              return View();
+            }
+            return NotFound();
+        }
+        #endregion
+
+        #region 課程加入購物車
         public IActionResult ClassAddToCart(string id)
         {
             if (id != null)
@@ -228,6 +243,7 @@ namespace MSITTeam1.Controllers
                 if (prod != null)
                 {
                     string json = "";
+                    var key = CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account;
                     List<CClassAddToCartViewModel> cart = new List<CClassAddToCartViewModel>();
                     CClassAddToCartViewModel item = new CClassAddToCartViewModel()
                     {
@@ -238,9 +254,9 @@ namespace MSITTeam1.Controllers
                         name = prod.FClassname,
                         imgPath = prod.FClassPhotoPath,
                     };
-                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account))
+                    if (HttpContext.Session.Keys.Contains(key))
                     {
-                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
+                        json = HttpContext.Session.GetString(key);
                         cart = JsonSerializer.Deserialize<List<CClassAddToCartViewModel>>(json);
                         int index = cart.FindIndex(m => m.productId.Equals(id));
                         if (index != -1)
@@ -252,14 +268,14 @@ namespace MSITTeam1.Controllers
                             cart.Add(item);
                         }
                         json = JsonSerializer.Serialize(cart);
-                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
+                        HttpContext.Session.SetString(key, json);
                     }
                     else
                     {
                         cart = new List<CClassAddToCartViewModel>();
                         cart.Add(item);
                         json = JsonSerializer.Serialize(cart);
-                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
+                        HttpContext.Session.SetString(key, json);
                     }
                 }
             }
@@ -267,7 +283,7 @@ namespace MSITTeam1.Controllers
         }
         #endregion
 
-        #region 移出購物車
+        #region 課程移出購物車
         public IActionResult classDeleteFromCart(string id)
         {
             if (id != null)
@@ -296,6 +312,55 @@ namespace MSITTeam1.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region 課程加入購物車Detail版
+        public IActionResult classDetailAddToCart(string id, int count)
+        {
+            if (id != null)
+            {
+                TClassInfo prod = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == id);
+                if (prod != null)
+                {
+                    string json = "";
+                    var key = CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account;
+                    List<CClassAddToCartViewModel> cart = new List<CClassAddToCartViewModel>();
+                    CClassAddToCartViewModel item = new CClassAddToCartViewModel()
+                    {
+                        count = count,
+                        price = int.Parse(prod.FClassmoney),
+                        productId = prod.FClassExponent,
+                        TClassInfo = prod,
+                        name = prod.FClassname,
+                        imgPath = prod.FClassPhotoPath
+                    };
+                    if (HttpContext.Session.Keys.Contains(key))
+                    {
+                        json = HttpContext.Session.GetString(key);
+                        cart = JsonSerializer.Deserialize<List<CClassAddToCartViewModel>>(json);
+                        int index = cart.FindIndex(m => m.productId.Equals(id));
+                        if (index != -1)
+                        {
+                            cart[index].count += item.count;
+                        }
+                        else
+                        {
+                            cart.Add(item);
+                        }
+                        json = JsonSerializer.Serialize(cart);
+                        HttpContext.Session.SetString(key, json);
+                    }
+                    else
+                    {
+                        cart = new List<CClassAddToCartViewModel>();
+                        cart.Add(item);
+                        json = JsonSerializer.Serialize(cart);
+                        HttpContext.Session.SetString(key, json);
+                    }
+                }
+            }
+            return RedirectToAction("classIndex");
         }
         #endregion
     }

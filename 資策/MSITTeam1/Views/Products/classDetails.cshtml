@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+}
+@section Style{
+    <style>
+        .value-button {
+            display: inline-block;
+            border: 1px solid #ddd;
+            margin: 0px;
+            min-width: 40px;
+            height: 40px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 40px;
+            background: #eee;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            .value-button:hover {
+                cursor: pointer;
+            }
+
+        #decrease {
+            margin-right: -4px;
+            border-radius: 8px 0 0 8px;
+        }
+
+        #increase {
+            margin-left: -4px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        #input-wrap {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        input#number {
+            text-align: center;
+            border: none;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            margin: 0px;
+            width: 100%;
+            height: 40px;
+            vertical-align: middle;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+}
+
+<div class="container my-5">
+    <div class="custom-container"><div class="onJob-class_inner lesson-ditailed_content"><h3 class="lesson-content_head"><span class="black">課程介紹</span></h3><div class="lesson-ditailed_inner"><div class="lesson-ditailed_header is-opened"><div class="lesson-header_content"><div class="lesson-header_a"><div class="lesson-header_title">跨域Java軟體工程師</div><div class="lesson-header_icon"><span class="lesson-header_allow"></span><span class="lesson-header_line"></span><span class="lesson-header_line"></span></div></div></div><div class="lesson-body_content_auto"><div class="lesson-body_inner"><div class="employmentClassification-instruction_img"><img src="/img/employment/Java_head.png" alt=""></div><div class="employmentClassification-instruction_txt"><div class="employmentClassification-instruction_p"><p>您是否畢業後尋尋覓覓，一直沒找到合適的工作？在萎靡不振的就業市場中，究竟何去何從？</p><br><p>不是您能力不足，只是沒找到正確的管道幫助自己而已。請您來參加我們的課程說明會， 讓業界的前輩們幫您開創自己的一片蔚藍大海，遨遊到一個您從未想過的新天地！</p></div><h4 class="employmentClassification-instruction_h4 employmentClassification-instruction_mb">您給我們兩個小時，我們給您一個機會！歡迎參加說明會！</h4><p class="employmentClassification-instruction_p">在這個不景氣的年代，您知道有許多的關鍵(Mission-Critical)系統，都是使用Java技術完成、大量使用Struts、SpringFramework、Hibernate這些應用程式框架嗎？您知道程式設計師不能只會寫程式而已，系統管理、網頁開發、資料庫設計，都已經變成程式設計師的外掛了嗎？您知道有越來越多的企業，都在評估行動應用與雲端運算的機會與可能性，提供客戶手機介面、或是把各種服務放在雲端嗎？</p><h4 class="employmentClassification-instruction_h4 employmentClassification-instruction_mb">不怕您學，就怕您不學</h4><p class="employmentClassification-instruction_p">我們會從最基礎的Java語法開始教起，一直到業界目前最常使用的JavaServlet、JSP、JSTL、Struts、等動態網頁開發技術，以及業界目前最熱門的Hibernate與SpringFramework等應用程式框架，我們有超過兩百小時的Java課程，搭配資策會講師精心調製的教材內容，即使您是個程式設計領域的新手，只要您肯學，願意投入時間與心力，成為有水準的Java程式設計師絕對不是一件難事！</p><h4 class="employmentClassification-instruction_h4 employmentClassification-instruction_mb">符合用人需求，增加就業籌碼</h4><p class="employmentClassification-instruction_p">以現在的職場工作而言，有哪一個程式設計師可以完全不碰資料庫？有哪一個程式設計師可以完全不碰網頁製作？所以囉，整個課程的設計，雖然是以Java為主軸，但是我們的終極目標，是要培養一個能夠參與業界專案開發的優秀程式設計師！所以，不管是基本的作業系統管理、網頁開發、資料庫設計、軟體工程等，這一切的一切，都是一個程式設計師該會的基本馬步功夫！</p><h4 class="employmentClassification-instruction_h4 employmentClassification-instruction_mb">立足雲端運算，提早卡位</h4><p class="employmentClassification-instruction_p">雲端運算不只是這兩年全世界IT產業的趨勢，政府也已經將雲端運算列為政策執行的重點，程式設計師當然也不能夠不知道這股IT潮流。我們的課程當中，也加入了雲端運算的介紹，以及Java與雲端運算的整合方式，讓您到企業工作之後，可以協助企業，不管是公司內部營運管理系統，或是公司外部入口網站，都可以逐步地搬移到雲端之上！</p><h4 class="employmentClassification-instruction_h4 employmentClassification-instruction_mb">提供就業輔導，工作免煩惱</h4><p class="employmentClassification-instruction_p">在您認真學習，取得優秀成績，做出夠水準的專題之後，空有一身好本領，可是找不到知人善任的伯樂老闆，怎麼辦？沒關係，資策會有專門的人員幫您進行就業輔導。您可以專心於學習之中，由我們為您打點相關的就業輔導事宜。</p></div><div><div class="employmentClassification-instruction_title"><h5>課程介紹</h5></div><div class="employmentClassification-sub_content"><div class="employmentClassification-sub_subTitle">【課程目標】</div><ul class="class-info_list"><li>培養學員具備轉換跑道、從事IT相關行業的工作能力</li><li>培養學員具備企業網站規劃、建置、開發、與管理的能力</li><li>培養學員具備資料庫規劃、建置、開發、與管理的能力</li><li>培養學員具備網際企業應用、行動應用、與雲端應用的程式開發能力</li></ul></div><div class="employmentClassification-sub_content"><div class="employmentClassification-sub_subTitle">【班級特色】</div><ul class="class-info_list"><li>本班課程設計以業界迫切需求的Java技術為主，強調由淺入深，實務操作，目的在培養有能力獨當一面的Java跨平台應用程式設計師</li><li>從Java/JSP/Servlet/Java EE 等程式設計，到Hibernate、Spring、Spring MVC 應用程式框架以及 SQL Server資料庫的設計與應用等，俾使學員橫跨程式設計、網頁開發、企業級資料庫運用等電腦主流技術</li><li>依據政府軟體核心關鍵技術人才培訓計劃之精神，因應政府推廣行動應用與雲端運算的政策方針，為企業培訓Java程式設計人才，以軟體搭硬體，為台灣再造另一個經濟奇蹟</li><li>從完全不具程式設計基礎開始，逐步將學員引導到現今企業最熱門的行動平台雲端運算平台，讓學員具備跨平台的Java程式設計基本功夫</li><li>學員結訓後，由本中心提供就業輔導</li></ul></div></div><div><div class="employmentClassification-instruction_title"><h5>課程內容</h5></div><div class="employmentClassification-instruction_img employmentClassification-img_only"><img src="/img/employment/Java_class.png" alt=""></div></div><div><div class="employmentClassification-instruction_title"><h5>相關資訊</h5></div><div class="employmentClassification-sub_content"><div class="employmentClassification-sub_lastTitle">招生對象</div><ul class="employmentClassification-list_cube_ul"><li>經教育部核准立案之國內外公私立大專院校畢業青年</li><li>對於網際網路應用、企業應用、與資料庫設計管理等程式設計領域有興趣</li><li>具備基本英文閱讀能力</li><li>有耐力與毅力，願意接受本班考驗</li></ul></div><div class="employmentClassification-sub_content"><div class="employmentClassification-sub_lastTitle">學習工具</div><ul class="employmentClassification-list_cube_ul"><li>切合業界潮流，商業軟體與自由軟體並重</li><li>作業系統：Microsoft Windows</li><li>開發工具：Eclipse</li><li>應用程式伺服器：Tomcat</li><li>資料庫：Microsoft SQL Server</li><li>Java應用程式框架：Spring、Hibernate、Spring MVC</li></ul></div><div class="employmentClassification-sub_content"><div class="employmentClassification-sub_lastTitle">就業方向</div><ul class="employmentClassification-list_cube_ul"><li>Java跨平台應用程式設計師</li><li>Java動態網頁程式設計師</li><li>ISP網站程式設計師</li><li>Microsoft SQL Server資料庫程式設計師</li><li>企業內部應用系統開發人員</li><li>雲端運算程式程式設計師</li><li>Outsourcing專案委外程式設計師</li></ul></div><div class="employmentClassification-sub_content"><div class="employmentClassification-sub_lastTitle">上課時段</div><ul class="employmentClassification-list_cube_ul"><li>星期一到五白天、晚上皆會排課，因配合講師安排，部份課程會於週末假日上課</li></ul></div><div class="employmentClassification-sub_content"><div class="employmentClassification-sub_lastTitle">Q&amp;A</div></div></div><div class="employmentClassification-info_message"><h6>※主辦單位保有開課與否及課程內容調整之權利。所有訊息以官網公布為準</h6></div></div></div></div></div></div></div>
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            @*<img class="w-100" src="@Html.DisplayFor(model => model.ImgPath)" />*@
+        </div>
+        <div class="d-flex mb-3 align-items-center">
+            <div style="min-width:3rem">數量：</div>
+            <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+            <input type="number" id="number" value="1" />
+            <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button class="btn-style-two d-inline-block" onclick="DetailAddToCart('@ViewBag.Id')">加入購物車</button>
+        </div>
+    </div>
+</div>
+</div>
+@section Scripts{
+
+    <script>
+          //判斷是否已登入
+        function DetailAddToCart(id) {
+                          if ("@ViewBag.account" == "") {
+                Swal.fire({
+                    icon: 'info',
+                    title: '請先登入會員',
+                    showConfirmButton: false,
+                    timer: 1300
+                })
+            } else {
+                        $.ajax({
+                            url: "@Url.Content("~/Products/classDetailAddToCart")",
+                            type: "POST",
+                            dataType: "text",
+                            data: { id: id, count: $("#number").val() },
+                            success: function () {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '已加入購物車',
+                                    showConfirmButton: false,
+                                    timer: 1200
+                                })
+                                    $("#classshoppingCartReload").load(location.href + " #classshoppingCartReload");
+                            }
+                        })
+                    }
+                }
+
+        //+-按鈕
+        function increaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById('number').value = value;
+        }
+
+        function decreaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value < 1 ? value = 1 : '';
+            value--;
+            document.getElementById('number').value = value;
+        }
+    </script>
+
+    <script>
+        //購買數量驗證
+        $("#detail-add-to-cart").click(function () {
+            var parchaseQty = $("#number").val();
+            if (parchaseQty <= 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '購賣數量不可為0或負值',
+                    showConfirmButton: false,
+                    timer: 1400
+                })
+            }
+        })
+    </script>
+}
