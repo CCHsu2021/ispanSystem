@@ -102,41 +102,8 @@
                                 </ul>
                             </section>
                             <section class="cart-section nano">
-                                <ul class="cart-list overthrow nano-content">
-                                    <li class="cart-list-item">
-                                        <div class="cart-item-img" style="background-image: url('https://res.cloudinary.com/ispansystem/image/upload/v1649915739/qszbo4ayobmbs44yrbuk.jpg');"></div>
-                                        <div class="cart-item">
-                                            <div class="cart-item-description">
-                                                <span>
-                                                    <p class="cart-item-label">Grand Prix Play Set</p>
-                                                    <p class="cart-item-price">$90.00</p>
-                                                </span>
-                                            </div>
-                                            <div class="cart-item-favorites">
-                                                <span class="item-heart-ic"></span>
-                                            </div>
-                                            <div class="cart-item-trash">
-                                                <span class="item-trash-ic"></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="cart-list-item">
-                                        <div class="cart-item-img" style="background-image: url('https://res.cloudinary.com/ispansystem/image/upload/v1649915739/qszbo4ayobmbs44yrbuk.jpg');"></div>
-                                        <div class="cart-item">
-                                            <div class="cart-item-description">
-                                                <span>
-                                                    <p class="cart-item-label">Robot Nightlight</p>
-                                                    <p class="cart-item-price">$44.00</p>
-                                                </span>
-                                            </div>
-                                            <div class="cart-item-favorites">
-                                                <span class="item-heart-ic"></span>
-                                            </div>
-                                            <div class="cart-item-trash">
-                                                <span class="item-trash-ic"></span>
-                                            </div>
-                                        </div>
-                                    </li>
+                                <ul class="cart-list overthrow nano-content" id="classshoppingCartReload">
+                                    <vc:class-add-to-cart></vc:class-add-to-cart>                             
                                     <li class="cart-list-footer"></li>
                                 </ul>
                             </section>
@@ -182,10 +149,10 @@
                                                 <a href="events.html">就業養成班</a>
                                             </li>
                                             <li>
-                                                <a href="events.html">近期說明會</a>
+                                                <a href="https://www.ispan.com.tw/informationmeeting">近期說明會</a>
                                             </li>
                                             <li>
-                                                <a href="events.html">學員須知</a>
+                                                <a href="https://www.ispan.com.tw/studentnotice">學員須知</a>
                                             </li>
                                             <li>
                                                 <a href="@Url.Content("~/StudentResume/create")">履歷製作</a>
@@ -211,16 +178,16 @@
                                                 <a href="events.html">在職進修班</a>
                                             </li>
                                             <li>
-                                                <a href="events.html">企業會員專案</a>
+                                                <a href="https://www.ispan.com.tw/enterprise">企業會員專案</a>
                                             </li>
                                             <li>
-                                                <a href="events.html">企業包班</a>
+                                                <a href="https://www.ispan.com.tw/corporate-training">企業包班</a>
                                             </li>
                                             <li>
-                                                <a href="events.html">場地租借</a>
+                                                <a href="https://www.ispan.com.tw/lease">場地租借</a>
                                             </li>
                                             <li>
-                                                <a href="event-detail.html">媒合活動</a>
+                                                <a href="https://www.ispan.com.tw/job">徵才活動</a>
                                             </li>
                                             <li>
                                                 <a href="event-detail.html">人才搜尋</a>
@@ -258,7 +225,7 @@
                                                 @Html.ActionLink("技能綜合測試", "Index", "SkillGrade")
                                             </li>
                                             <li>
-                                                @Html.ActionLink("前後側檢視", "Index", "ShowClassGrade")
+                                                @Html.ActionLink("前後測驗檢視", "Index", "ShowClassGrade")
                                             </li>
                                             <li>
                                                 <a href="event-detail.html">入職測驗</a>
@@ -275,7 +242,7 @@
                                         <a href="@Url.Action("Index","Products")">資展小物</a>
                                     </li>
                                     <li>
-                                        <a href="about.html">服務據點</a>
+                                        <a href="https://www.ispan.com.tw/serviceplace">服務據點</a>
                                     </li>
                                     <li>
                                         <a href="about.html">學習地圖</a>

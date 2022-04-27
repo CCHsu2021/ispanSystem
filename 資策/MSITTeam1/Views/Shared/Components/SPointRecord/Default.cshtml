@@ -145,10 +145,11 @@
 }
 
 </style>
+<h3>我的點數</h3>
 @{
     int totalPoint = 0;
     <div class="w-100">
-        <h4 class="my-3">目前擁有點數:<span id="showPoint"></span></h4>
+        <h4 class="my-3">剩餘點數:<span id="showPoint"></span></h4>
     </div>
         @*<div class="row pointRecordContent">
             <div class="col">
@@ -168,7 +169,7 @@
                                 </thead>
                                 @foreach (var item in Model)
                                 {
-                                    totalPoint += int.Parse(@item.PointRecord);
+                                    totalPoint += (int)item.PointRecord;
                                     <tbody>
                                         <tr><th>紀錄日期</th><td>@Html.DisplayFor(modelItem => item.PointDate, "DateTime")</td></tr>
                                         <tr><th>點數類別</th><td>@item.PointType</td></tr>
