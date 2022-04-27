@@ -1,0 +1,617 @@
+﻿
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://rawgit.com/bevacqua/angular-dragula/master/dist/dragula.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <style>
+
+        #addsection {
+            color: white;
+            background-color: #ed731a;
+        }
+        .md-toolbar-tools {
+            background-color: #ed731a;
+        }
+        
+        .body-container {
+            margin-top: 2em;
+            min-width: 70%;
+            
+        }
+
+        .question-item.ng-enter {
+            animation: 300ms fadeInRight;
+        }
+
+        .question-item.ng-leave {
+            animation: 300ms fadeOutRight;
+        }
+
+        .question-item {
+            padding: 0.5em;
+            margin: 0.5em;
+            cursor: grab;
+            cursor: -webkit-grab;
+        }
+
+        .question-container.question-drag {
+            background-color: white;
+        }
+
+        .icon-button.md-button {
+            min-width: 0;
+            min-height: 0;
+            padding: 0;
+            margin: 0;
+            align-self: center;
+            width: 4em;
+            height: 2em;
+            line-height: 1em;
+            background-color: #ed731a;
+            color: white;
+        }
+
+            .icon-button.md-button.small {
+                width: 2em;
+                height: 2em;
+                color: white;
+            }
+
+        .survey-question {
+            padding: .5em;
+        }
+
+        .survey-follow-up-container {
+            padding: 0.5em;
+            border: #607D8B;
+            border-width: 2px;
+            border-style: dashed;
+        }
+
+        md-input-container.survey-name-input {
+            margin-bottom: 0;
+            height: 2em;
+        }
+
+        .section-body {
+            border-width: 2px;
+            border-color: #607D8B;
+            border-style: dashed;
+            min-height: 2em;
+        }
+
+        div.section-container.ng-enter {
+            animation: 300ms zoomIn;
+        }
+
+        div.section-container.ng-leave {
+            animation: 300ms zoomOut;
+        }
+
+        [survey-question].ng-enter {
+            animation: 300ms zoomIn;
+        }
+
+        [survey-question].ng-leave {
+            animation: 300ms zoomOut;
+        }
+    </style>
+</head>
+
+<div ng-app="DragAndDrop" class="body-container" layout="column">
+    <div layout="row" layout-align="space-around start" layout-margin ng-controller="DragController" flex>
+        <div flex>
+            <md-toolbar class="md-display-1">
+                <div class="md-toolbar-tools">
+                    <div>產生履歷</div>
+                    <span flex></span>
+                    <md-button class="md-button icon-button animated fadeInRight" ng-click="openPreview($event)" aria-label="edit question">
+                        瀏覽
+                    </md-button>
+                    <md-button class="md-button icon-button animated fadeInRight" ng-click="newSurvey()" aria-label="edit question">
+                        新增
+                    </md-button>
+                    <md-button class="md-button icon-button animated fadeInRight" ng-click="openSurvey($event)" aria-label="edit question">
+                        我的履歷
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-whiteframe class="md-whiteframe-2dp" layout="column" layout-padding layout-align="space-around stretch" flex>
+                <md-input-container>
+                    <label>履歷名稱</label>
+                    <input ng-model="survey.name">
+                </md-input-container>
+                <md-button id="addsection" class="md-button md-primary " ng-click="addSection()">加入區塊</md-button>
+                <div class="section-drop-container" dragula-model="survey.sections" dragula="'bag-sections'">
+                        <div ng-repeat="section in survey.sections" class="section-container">
+                            <div layout="row">
+                                <md-button class="md-button md-primary icon-button section-drag-handle" ng-click="section.open = !section.open" aria-label="edit question">
+                                    移動
+                                </md-button>
+
+                                <md-input-container class="survey-name-input" flex>
+
+                                    <input ng-model="section.name">
+                                </md-input-container>
+                                <md-button class="md-button md-primary icon-button" ng-click="removeSection(section)" aria-label="edit question">
+                                    刪除
+                                </md-button>
+                            </div>
+                            <div ng-show="section.open" dragula-model="section.questions" dragula="'bag-questions'" layout="column" class="drop-question-container section-body">
+                                <div survey-question ng-repeat="item in section.questions"></div>
+                            </div>
+                        </div>
+                    </div>
+            </md-whiteframe>
+        </div>
+
+        <md-whiteframe class="md-whiteframe-2dp" layout="column" layout-align="space-around stretch" flex="30">
+            <md-toolbar class="md-display-1">
+                <div class="md-toolbar-tools">
+                    <div>資料</div>
+                    <span flex></span>
+                    <md-button class="md-button icon-button animated fadeInRight" aria-label="edit question" ng-click="addQuestion()">
+                        <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div class="question-search" layout="row" style="padding-top:0.5em">
+                <md-input-container flex style="margin-bottom: 0;">
+                    <label style="margin-left: 0.5em;">Filter</label>
+                    <input ng-model="searchText">
+                </md-input-container>
+            </div>
+            <md-content dragula-model="surveyQuestions" dragula="'bag-questions'" layout-align="space-around stretch" class="questions-container" style="height: 50vh;">
+                <div ng-repeat="item in surveyQuestions | filter:searchText" drag-item class="copy-item question-item" layout="row" layout-align="space-between center">
+                    <div>{{item.question}}</div>
+                </div>
+            </md-content>
+        </md-whiteframe>
+
+        <script type="text/ng-template" id="surveyQuestion.html">
+            <div class="survey-question">
+                <div layout="row" layout-wrap>
+                    <md-input-container flex>
+                        <label> {{item.question}}</label>
+                        <input ng-model="user.email">
+                    </md-input-container>
+                    <md-button class="md-button md-primary icon-button" ng-click="removeQuestion(item, section)" aria-label="remove question">
+                        刪除
+                    </md-button>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="edit-question.html">
+            <md-dialog layout="column" style="min-width: 70%; overflow-x:hidden;min-height:70vh;border-radius: 0;width:800px;">
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <h2>Edit: {{question.name}}</h2>
+                        <span flex></span>
+                        <md-button class="md-button" style="min-width: 32px" ng-click="done()">X</md-button>
+                    </div>
+                </md-toolbar>
+                <div layout="column" layout-padding>
+                    <md-content flex style="overflow-x: hidden">
+                        <div layout="row" layout-align="center center" layout-margin>
+                            <md-input-container flex>
+                                <label> Question Name</label>
+                                <input ng-model="question.name">
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label> Question Text</label>
+                                <input ng-model="question.question">
+                            </md-input-container>
+                            <md-checkbox ng-model="question.hasFollowUp" aria-label="follow up">
+                                Has Follow Up Question/s
+                            </md-checkbox>
+                            <md-checkbox ng-model="question.required" aria-label="follow up">
+                                Required
+                            </md-checkbox>
+                        </div>
+                        <div class="md-headline" layout-margin> Answers </div>
+                        <div layout="row" layout-padding layout-align="start center">
+                            <md-input-container flex class="md-subhead animated fadeInDown">
+                                <label> New Answer Name</label>
+                                <input ng-model="newAnswer.answer">
+                            </md-input-container>
+                            <md-input-container flex class="md-subhead animated fadeInDown">
+                                <label> New Answer Text</label>
+                                <input ng-model="newAnswer.answerText">
+                            </md-input-container>
+                            <md-button class="md-button md-primary icon-button animated fadeInRight" ng-click="addAnswer()" aria-label="edit question">
+                                <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+                            </md-button>
+                        </div>
+                        <div layout="row" layout-padding style="background-color: rgba(0,0,0,.1)">
+                            <div class="md-subhead animated fadeInDown" flex>Answer Name</div>
+                            <div class="md-subhead animated fadeInDown" flex>Answer Text</div>
+                            <div class="md-subhead animated fadeInDown" flex="5"></div>
+                        </div>
+                        <md-content style="overflow-x:hidden; border-color: rgba(0,0,0,.1); border-width: 1px; border-style: solid; max-height: 400px" layout-padding>
+                            <div class="animated fadeInDown" ng-repeat="answer in question.answers" layout="row">
+                                <md-input-container flex>
+                                    <label>Answer Name</label>
+                                    <input ng-model="answer.answer">
+                                </md-input-container>
+                                <md-input-container flex>
+                                    <label>Answer Text</label>
+                                    <input ng-model="answer.answerText">
+                                </md-input-container>
+                                <md-button class="md-button md-primary icon-button animated fadeInRight" ng-click="removeAnswer(answer)" aria-label="remove question">
+                                    <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+                                </md-button>
+                            </div>
+                        </md-content>
+
+                        <div class="md-headline animated fadeInDown" ng-show="question.hasFollowUp" layout-margin> Follow Up Questions </div>
+                        <div class="questions" ng-show="question.hasFollowUp">
+                            <div layout="row" layout-padding style="background-color: rgba(0,0,0,.1)">
+                                <div class="md-subhead animated fadeInDown" flex="20">Question Name</div>
+                                <div class="md-subhead animated fadeInDown" flex>Question Text</div>
+                                <div class="md-subhead animated fadeInDown" flex>Required Answer</div>
+                            </div>
+                            <md-content class="drop-question-container" style="border-color: rgba(0,0,0,.1); border-width: 1px; border-style: solid; max-height: 400px; min-height: 100px" layout-padding dragula-model="question.followUpQuestions" dragula="'bag-questions'">
+                                <div layout="row" layout-padding ng-repeat="childQuestion in question.followUpQuestions" layout-align="start center">
+                                    <div flex="20">{{childQuestion.name}}</div>
+                                    <div flex>{{childQuestion.question}}</div>
+                                    <md-input-container flex>
+                                        <label>Required Answer</label>
+                                        <md-select ng-model="childQuestion.requiredParentAnswer" flex>
+                                            <md-option ng-repeat="answer in question.answers" value="{{answer.answer}}">
+                                                {{answer.answerText}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </md-content>
+                            <md-toolbar style="margin-top: 1em;">
+                                <div class="md-toolbar-tools">
+                                    Available Questions
+                                </div>
+                            </md-toolbar>
+                            <md-content dragula-model="surveyQuestions" dragula="'bag-questions'" style="border-color: rgba(0,0,0,.1); border-width: 1px; border-style: solid; max-height: 400px;">
+                                <div class="copy-item question-item md-subhead" layout="row" layout-padding ng-repeat="question in surveyQuestions">
+                                    {{question.question}}
+                                </div>
+                            </md-content>
+                        </div>
+
+                    </md-content>
+                </div>
+            </md-dialog>
+        </script>
+
+        <script type="text/ng-template" id="survey-preview.html">
+            <md-dialog layout="column" style="overflow-x:hidden;min-height:70vh;border-radius: 0;width:800px;">
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <h2>Preview: {{survey.name}}</h2>
+                        <span flex></span>
+                        <md-button class="md-button" style="min-width: 32px" ng-click="done()">X</md-button>
+                    </div>
+                </md-toolbar>
+                <div layout="column" layout-padding>
+                    <md-content flex style="overflow-x: hidden">
+                        <div ng-repeat="section in survey.sections" style="margin-top: 1em;">
+                            <div class='md-headline'>{{section.name}}</div>
+                            <md-divider></md-divider>
+                            <div ng-repeat="question in section.questions" flex style="padding-left:1em;">
+                                <md-input-container flex ng-required="question.required" layout="row">
+                                    <label> {{question.question}}</label>
+                                    <md-select ng-model="question.surveyAnswer" ng-required="question.required" flex>
+                                        <md-option ng-repeat="answer in question.answers" value="{{answer.answer}}">
+                                            {{answer.answerText}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <div ng-show="question.hasFollowUp && question.followUpQuestions">
+                                    <div class="animated fadeInUp" ng-show="question.surveyAnswer === childQuestion.requiredParentAnswer" ng-repeat="childQuestion in question.followUpQuestions" flex layout="row" style="padding-left: 1.5em;">
+                                        <md-input-container flex required="childQuestion.required">
+                                            <label> {{childQuestion.question}}</label>
+                                            <md-select ng-model="childQuestion.surveyAnswer" required="childQuestion.required" flex>
+                                                <md-option ng-repeat="answer in childQuestion.answers" value="{{answer.answer}}">
+                                                    {{answer.answerText}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </md-content>
+                </div>
+            </md-dialog>
+        </script>
+
+        <script type="text/ng-template" id="survey-open.html">
+            <md-dialog layout="column" style="overflow-x:hidden;min-height:70vh;border-radius: 0;width:800px;">
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <h2>Open Inspection</h2>
+                        <span flex></span>
+                        <md-button class="md-button" style="min-width: 32px" ng-click="done()">X</md-button>
+                    </div>
+                </md-toolbar>
+                <div layout="column" layout-padding>
+                    <md-content flex style="overflow-x: hidden">
+                        <div class="md-headline">Inspections</div>
+                        <div ng-repeat="survey in surveys" layout="row">
+                            <md-button class="md-button md-primary" ng-click="open(survey)" flex>{{survey.name}}</md-button>
+                        </div>
+                    </md-content>
+                </div>
+            </md-dialog>
+        </script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+        <script src="https://cdn.rawgit.com/bevacqua/angularjs-dragula/daa3ef94/dist/angularjs-dragula.min.js"></script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+        <script>
+            angular.module('DragAndDrop', ['ngMaterial', angularDragula(angular)])
+                .config(function ($mdThemingProvider) {
+                    $mdThemingProvider.theme('default')
+                        .primaryPalette('blue-grey');
+                }).directive('surveyQuestion', function () {
+                    return {
+                        templateUrl: 'surveyQuestion.html',
+                        link: function (scope) {
+
+                        }
+                    }
+                }).controller('DragController', function ($scope, $mdDialog, dragulaService) {
+                    dragulaService.options($scope, 'bag-sections', {
+                        removeOnSpill: true,
+                        moves: function (el, target, handle) {
+                            return handle.classList.contains('section-drag-handle');
+                        }
+                    });
+                    dragulaService.options($scope, 'bag-questions', {
+                        removeOnSpill: true,
+                        copy: function (el) {
+                            return el.classList.contains('copy-item');
+                        },
+                        accepts: function (el, target, source, sibling) {
+                            return target.classList.contains('drop-question-container') && !el.contains(target);
+                        }
+                    });
+                    $scope.addQuestion = function () {
+                        var newQuestion = {
+                            name: 'Example',
+                            question: 'Is this an example?',
+                            hasFollowUp: false,
+                            followUpQuestions: [],
+                            answerType: 'picklist',
+                            answers: [{
+                                answer: 'First',
+                                answerText: 'The answer'
+                            }]
+                        };
+                        this.surveyQuestions.push(newQuestion);
+                        this.editQuestion(newQuestion, this.$event);
+                    };
+                    $scope.removeQuestion = function (question, section) {
+                        if (section.questions.indexOf(question) < 0)
+                            return;
+                        section.questions.splice(section.questions.indexOf(question), 1);
+                    };
+                    $scope.addSection = function () {
+                        this.survey.sections.push({
+                            open: true,
+                            name: 'Section ' + this.survey.sections.length,
+                            questions: []
+                        })
+                    };
+                    $scope.removeSection = function (section) {
+                        if (this.survey.sections.indexOf(section) < 0)
+                            return;
+                        this.survey.sections.splice(this.survey.sections.indexOf(section), 1);
+                    };
+                    $scope.surveyQuestions = getQuestions();
+                    $scope.surveys = [{
+                        name: 'Example house inspection',
+                        sections: [{
+                            open: true,
+                            name: 'Example',
+                            questions: []
+                        }]
+                    }];
+                    $scope.survey = $scope.surveys[0];
+                    $scope.newSurvey = function () {
+                        $scope.survey = {
+                            name: 'New Inspection',
+                            sections: [{
+                                open: true,
+                                name: 'Example',
+                                questions: []
+                            }]
+                        };
+                        $scope.surveys.push($scope.survey);
+                    }
+                    $scope.openPreview = function (ev) {
+                        $mdDialog.show({
+                            controller: 'SurveyPreviewController',
+                            templateUrl: 'survey-preview.html',
+                            parent: angular.element(document.body),
+                            targetEvent: ev,
+                            clickOutsideToClose: true,
+                            locals: {
+                                survey: this.survey
+                            }
+                        });
+                    };
+                    $scope.editQuestion = function (question, ev) {
+                        $mdDialog.show({
+                            controller: 'EditQuestionController',
+                            templateUrl: 'edit-question.html',
+                            parent: angular.element(document.body),
+                            targetEvent: ev,
+                            locals: {
+                                question: question,
+                                surveyQuestions: $scope.surveyQuestions
+                            }
+                        }).then(function () {
+                            //yes
+                        }, function () {
+                            //no
+                        });
+                    };
+                    $scope.openSurvey = function (ev) {
+                        $mdDialog.show({
+                            controller: 'SurveyOpenController',
+                            templateUrl: 'survey-open.html',
+                            parent: angular.element(document.body),
+                            targetEvent: ev,
+                            clickOutsideToClose: true,
+                            locals: {
+                                surveys: this.surveys
+                            }
+                        }).then(function (openedSurvey) {
+                            if (openedSurvey)
+                                $scope.survey = openedSurvey;
+                        });
+                    };
+                }).controller('EditQuestionController', function ($scope, $mdDialog, dragulaService, question, surveyQuestions) {
+                    $scope.question = question;
+                    $scope.surveyQuestions = surveyQuestions;
+                    $scope.done = function () {
+                        $mdDialog.hide();
+                    };
+                    $scope.addAnswer = function () {
+                        if (!this.newAnswer || !this.newAnswer.answer || !this.newAnswer.answerText)
+                            return;
+                        this.question.answers.unshift(this.newAnswer);
+                        this.newAnswer = {};
+                    };
+                    $scope.removeAnswer = function (answer) {
+                        var index = this.question.answers.indexOf(answer);
+                        if (index === -1)
+                            return;
+                        this.question.answers.splice(index, 1);
+                    };
+
+                    dragulaService.options($scope, 'bag-questions', {
+                        removeOnSpill: true,
+                        copy: function (el) {
+                            return el.classList.contains('copy-item');
+                        },
+                        accepts: function (el, target, source, sibling) {
+                            return target.classList.contains('drop-question-container') && !el.contains(target);
+                        }
+                    });
+                }).controller('SurveyPreviewController', function ($scope, $mdDialog, survey) {
+                    $scope.survey = survey;
+                    $scope.done = function () {
+                        $mdDialog.hide();
+                    };
+                }).controller('SurveyOpenController', function ($scope, $mdDialog, surveys) {
+                    $scope.surveys = surveys;
+                    $scope.done = function () {
+                        $mdDialog.hide();
+                    };
+                    $scope.open = function (survey) {
+                        $mdDialog.hide(survey);
+                    }
+                });
+
+
+            function getQuestions() {
+                return [{
+                    question: 'Do the electrical outlets work?',
+                    name: 'Do the electrical outlets work',
+                    hasFollowUp: false,
+                    followUpQuestions: [],
+                    answerType: 'picklist',
+                    answers: [{
+                        answer: 'Yes',
+                        answerText: 'Yes'
+                    }, {
+                        answer: 'No',
+                        answerText: 'No'
+                    }]
+                }, {
+                    question: 'What is the flooring type?',
+                    name: 'What is the flooring type',
+                    hasFollowUp: false,
+                    followUpQuestions: [],
+                    answerType: 'picklist',
+                    answers: [{
+                        answer: 'Yes',
+                        answerText: 'Yes'
+                    }, {
+                        answer: 'No',
+                        answerText: 'No'
+                    }]
+                }, {
+                    question: 'Does flooring need to be replaced?',
+                    name: 'Does flooring need to be replaced',
+                    hasFollowUp: false,
+                    followUpQuestions: [],
+                    answerType: 'picklist',
+                    answers: [{
+                        answer: 'Yes',
+                        answerText: 'Yes'
+                    }, {
+                        answer: 'No',
+                        answerText: 'No'
+                    }]
+                }, {
+                    question: 'Does the kitchen need to be painted?',
+                    name: 'Does the kitchen need to be painted',
+                    hasFollowUp: false,
+                    followUpQuestions: [],
+                    answerType: 'picklist',
+                    answers: [{
+                        answer: 'Yes',
+                        answerText: 'Yes'
+                    }, {
+                        answer: 'No',
+                        answerText: 'No'
+                    }]
+                }, {
+                    question: 'Is the lighting functional and serviceable for 1 year minimum?',
+                    name: 'Is the lighting functional and serviceable for 1 year minimum',
+                    hasFollowUp: false,
+                    followUpQuestions: [],
+                    answerType: 'picklist',
+                    answers: [{
+                        answer: 'Yes',
+                        answerText: 'Yes'
+                    }, {
+                        answer: 'No',
+                        answerText: 'No'
+                    }]
+                }, {
+                    question: 'Do the light switch and cover plates match?',
+                    name: 'Do the light switch and cover plates match',
+                    hasFollowUp: false,
+                    followUpQuestions: [],
+                    answerType: 'picklist',
+                    answers: [{
+                        answer: 'Yes',
+                        answerText: 'Yes'
+                    }, {
+                        answer: 'No',
+                        answerText: 'No'
+                    }]
+                }, {
+                    question: 'Are the window converings functional?',
+                    name: 'Are the window converings functional',
+                    hasFollowUp: false,
+                    followUpQuestions: [],
+                    answerType: 'picklist',
+                    answers: [{
+                        answer: 'Yes',
+                        answerText: 'Yes'
+                    }, {
+                        answer: 'No',
+                        answerText: 'No'
+                    }]
+                }];
+            }
+        </script>
+    </div>
