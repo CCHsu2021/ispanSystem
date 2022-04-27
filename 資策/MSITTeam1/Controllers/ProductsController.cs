@@ -149,5 +149,52 @@ namespace MSITTeam1.Controllers
         }
         #endregion
 
+        #region 加入購物車Detail版
+        public IActionResult DetailAddToCart(string id, int count)
+        {
+            if (id != null)
+            {
+                TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == id);
+                if (prod != null)
+                {
+                    string json = "";
+                    List<CAddToCartViewModel> cart = new List<CAddToCartViewModel>();
+                    CAddToCartViewModel item = new CAddToCartViewModel()
+                    {
+                        count = count,
+                        price = (int)(prod.Price),
+                        productId = prod.ProductId,
+                        product = prod,
+                        name = prod.Name,
+                        imgPath = prod.ImgPath,
+                    };
+                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account))
+                    {
+                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
+                        cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
+                        int index = cart.FindIndex(m => m.productId.Equals(id));
+                        if (index != -1)
+                        {
+                            cart[index].count += item.count;
+                        }
+                        else
+                        {
+                            cart.Add(item);
+                        }
+                        json = JsonSerializer.Serialize(cart);
+                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
+                    }
+                    else
+                    {
+                        cart = new List<CAddToCartViewModel>();
+                        cart.Add(item);
+                        json = JsonSerializer.Serialize(cart);
+                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion 
     }
 }

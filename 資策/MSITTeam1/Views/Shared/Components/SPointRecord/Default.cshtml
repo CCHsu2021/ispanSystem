@@ -1,75 +1,189 @@
 ﻿@addTagHelper *, MSITTeam1
-@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+@model IEnumerable<MSITTeam1.ViewModels.SPointRecordViewModel>
 
-    @foreach (var item in Model)
-{   
-    
-         <div class="col-md-6">
-            <h3>基本資料</h3>
-            <hr/>
-            <div class="inputstyle">
-                <label>@Html.DisplayNameFor(model => model.fName)</label>
-                <span>@Html.DisplayFor(modelItem => item.fName)</span>
-            </div>
-            <hr />
-            <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fGender)</label>
-                <span>@Html.DisplayFor(modelItem => item.fGender)</span>
-            </div>
-            <hr />
-            <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fBirthDate)</label>
-                <span>@Html.DisplayFor(modelItem => item.fBirthDate)</span>
-            </div>
-            <hr />
-            <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fEmail)</label>
-                <span>@Html.DisplayFor(modelItem => item.fEmail)</span>
-            </div>
-            <hr />
-            <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fPhone)</label>
-                <span>@Html.DisplayFor(modelItem => item.fPhone)</span>
-            </div>
-            <hr />
-            <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fAddress)</label>
-                <span>@Html.DisplayFor(modelItem => item.fAddress)</span>
-            </div>
-        </div>
+<style>
 
-        <div class="col-md-6">
-            <div class="inputstyle">
-                <img class="mt-5 mb-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
-            </div>
-            <div class="inputstyle">
-                <label> @Html.DisplayNameFor(model => model.fAutobiography)</label>
-                <br/>
-                <span>@Html.DisplayFor(modelItem => item.fAutobiography)</span>
-            </div>
-        </div>
+    .pointRecordContent input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
 
-        <div class="btnflex w-100">
-        <button class="btn-style-two" type="button" data-toggle="modal" data-target="#staticBackdrop">資料修改</button>
-        </div>
+    /* Accordion styles */
+    .pointRecordContent .tabs {
+        overflow: hidden;
+        box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
+        border-top: 5px solid orange;
+    }
 
+    .pointRecordContent .tab {
+        width: 100%;
+        color: white;
+        overflow: hidden;
+    }
+
+    .pointRecordContent .tab-label {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em;
+        background: #ffffff;
+        color:#555;
+        font-weight: bold;
+        cursor: pointer;
+        /* Icon */
+    }
+
+
+        .pointRecordContent .tab-label::after {
+            content: "❯";
+            width: 1em;
+            height: 1em;
+            text-align: center;
+            transition: all 0.35s;
+        }
+
+    .pointRecordContent .tab-content {
+        max-height: 0;
+        padding: 0 1em;
+        color: #2c3e50;
+        background: white;
+        transition: all 0.35s;
+    }
+
+    .pointRecordContent .tab-close {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1em;
+        font-size: 0.75em;
+        background: #2c3e50;
+        cursor: pointer;
+    }
+
+        .pointRecordContent .tab-close:hover {
+            background: #1a252f;
+        }
+
+    .pointRecordContent input:checked + .tab-label {
+        background: #ffffff;
+        color: #555;
+        border-bottom: 1px solid #999;
+    }
+
+        .pointRecordContent input:checked + .tab-label::after {
+            transform: rotate(90deg);
+        }
+
+    .pointRecordContent input:checked ~ .tab-content {
+        max-height: 100vh;
+        padding: 1em;
+    }
+
+    .table {
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: #fefefe;
+  display: inline-block;
+}
+.table thead {
+  display: none;
+}
+.table tbody {
+  display: table;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.table tbody:last-child {
+  margin-bottom: 0;
+}
+        .table th,
+        .table td {
+            padding: 5px 10px;
+            border: solid 1px #999;
+        }
+.table th {
+  color: #555;
+  background-color: #EEE;
+  min-width:5rem;
+}
+.table tr {
+  background-color: #fefefe;
 }
 
+@@media screen and (min-width: 700px) {
+  .table:not(.table-mobile) {
+    display: table;
+  }
+  .table:not(.table-mobile) thead {
+    display: table-header-group;
+  }
+  .table:not(.table-mobile) thead tr {
+    display: table-row;
+  }
+  .table:not(.table-mobile) thead th {
+    display: table-cell;
+  }
+  .table:not(.table-mobile) tbody {
+    display: table-row;
+  }
 
+  .table:not(.table-mobile) th {
+    display: none;
+  }
+  .table:not(.table-mobile) tr {
+    border: solid 1px #999;
+    display: table-cell;
+  }
+  .table:not(.table-mobile) td {
+    border: 0;
+    display: inline-block;
+  }
+}
+.table .btn-s {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  vertical-align: baseline;
+}
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">資料修改</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <vc:student-basic-edit id="@ViewBag.fAccount"></vc:student-basic-edit>
+</style>
+@{
+    int totalPoint = 0;
+    <div class="w-100">
+        <h4 class="my-3">目前擁有點數:<span id="showPoint"></span></h4>
+    </div>
+        @*<div class="row pointRecordContent">
+            <div class="col">
+                <div class="tabs">
+                    <div class="tab">
+                        <input type="checkbox" id="chck1">
+                        <label class="tab-label" for="chck1">點數使用紀錄</label>
+                        <div class="tab-content">*@
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>紀錄日期</th>
+                                        <th>點數類別</th>
+                                        <th>紀錄描述</th>
+                                        <th>點數紀錄</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model)
+                                {
+                                    totalPoint += int.Parse(@item.PointRecord);
+                                    <tbody>
+                                        <tr><th>紀錄日期</th><td>@Html.DisplayFor(modelItem => item.PointDate, "DateTime")</td></tr>
+                                        <tr><th>點數類別</th><td>@item.PointType</td></tr>
+                                        <tr><th>紀錄描述</th><td>@item.PointDes</td></tr>
+                                        <tr><th>點數紀錄</th><td>@item.PointRecord</td></tr>
+                                    </tbody>
+                                }
+                                    @{var total = @totalPoint;
+                                    }
+                            </table>
+                            <input id="totalPoint" value="@total" type="hidden"/>
+                    @*</div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@
+}
+

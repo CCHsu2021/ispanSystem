@@ -11,11 +11,14 @@ namespace MSITTeam1.ViewModels
     public class CCompanyBasicViewModel
     {
         private TCompanyBasic _com = null;
-        public IFormFile photo { get; set; }
         public CCompanyBasicViewModel()
         {
             _com = new TCompanyBasic();
         }
+
+
+       
+        public IFormFile photo { get; set; }
         public TCompanyBasic com { get { return _com; } set { _com = value; } }
         [DisplayName("統編")]
         public string CompanyTaxid { get { return this._com.CompanyTaxid; } set { this._com.CompanyTaxid = value; } }
