@@ -85,10 +85,10 @@
     }
 
 
-    .sized-container .creatworkbtn {
-        background: #ed731a;
-        float: left;
-    }
+.sized-container .creatworkbtn {
+    background: #ed731a;
+    float: left;
+}
 
 .btndiv {
     text-align: center;
@@ -252,7 +252,7 @@
         }
 
 .workdata {
-    height: 300px;
+    height: 280px;
     overflow: auto;
 }
 
@@ -261,4 +261,23 @@
     overflow:auto;
 }
 
+.skilldata  {
+    height: 200px;
+    overflow: auto;
+    margin-bottom:30px;
+}
 
+.portdata {
+    height: 200px;
+    overflow: auto;
+}
+
+.Landata {
+    height: 365px;
+    overflow: auto;
+}
+
+.form-control {
+    border: 1.5px solid #ced4da;
+}
+    

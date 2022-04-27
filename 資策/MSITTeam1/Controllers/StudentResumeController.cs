@@ -161,6 +161,12 @@ namespace MSITTeam1.Controllers
 
         #endregion
 
+        public IActionResult DropListEdu()
+        {
+            var Schools = from s in hello.StudentSchools
+                          select s;
+            return Json(Schools);
+        }
         public IActionResult CreateEdu([FromBody] CStudentResumeViewModel p)
         {
             hello.StudentEducations.Add(p.education);
@@ -181,6 +187,8 @@ namespace MSITTeam1.Controllers
             }
             return Content("修改成功");
         }
+
+
 
         public IActionResult DeleteEdu(String EducationId)
         {
@@ -245,5 +253,64 @@ namespace MSITTeam1.Controllers
         }
 
 
+        public IActionResult CreateSkillPort([FromBody] CStudentResumeViewModel p)
+        {
+            hello.StudentSkills.Add(p.skill);
+            hello.StudentPortfolios.Add(p.portfolio);
+            hello.SaveChanges();
+            return Content("新增成功");
+        }
+
+        public IActionResult EditSkill([FromBody] CStudentResumeViewModel p)
+        {
+            StudentSkill sw = hello.StudentSkills.FirstOrDefault(c => c.SkillId == p.SkillId);
+            if (sw != null)
+            {
+                sw.SkillName = p.SkillName;
+                sw.SkillDescription = p.SkillDescription;
+
+                hello.SaveChanges();
+            }
+            return Content("修改成功");
+        }
+
+        public IActionResult DeleteSkill(String skillId)
+        {
+
+            StudentSkill sw = hello.StudentSkills.FirstOrDefault(c => c.SkillId.ToString() == skillId);
+            if (sw != null)
+            {
+                hello.StudentSkills.Remove(sw);
+                hello.SaveChanges();
+            }
+
+            return Content("刪除成功");
+        }
+
+        public IActionResult EditPort([FromBody] CStudentResumeViewModel p)
+        {
+            StudentPortfolio sw = hello.StudentPortfolios.FirstOrDefault(c => c.PortfolioId == p.PortId);
+            if (sw != null)
+            {
+                sw.PortfolioTitle = p.PortfolioTitle;
+                sw.PortfolioDescription = p.PortfolioTitle;
+                sw.PortfolioUrl = p.PortfolioURL;
+                hello.SaveChanges();
+            }
+            return Content("修改成功");
+        }
+
+        public IActionResult DeletePort(String PortId)
+        {
+
+            StudentPortfolio sw = hello.StudentPortfolios.FirstOrDefault(c => c.PortfolioId.ToString() == PortId);
+            if (sw != null)
+            {
+                hello.StudentPortfolios.Remove(sw);
+                hello.SaveChanges();
+            }
+
+            return Content("刪除成功");
+        }
     }
 }

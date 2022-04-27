@@ -12,6 +12,7 @@ namespace MSITTeam1.ViewModels
         private StudentEducation _education = null;
         private StudentLanguage _language = null;
         private StudentSkill _skill = null;
+        private StudentPortfolio _portfolio = null;
         public IFormFile photo { get; set; }
         public CStudentResumeViewModel()
         {
@@ -20,6 +21,7 @@ namespace MSITTeam1.ViewModels
             _education = new StudentEducation();
             _language = new StudentLanguage();
             _skill = new StudentSkill();
+            _portfolio = new StudentPortfolio();
         }
         public StudentBasic student
         {
@@ -45,6 +47,11 @@ namespace MSITTeam1.ViewModels
         {
             get { return _skill; }
             set { _skill = value; }
+        }
+        public StudentPortfolio portfolio
+        {
+            get { return _portfolio; }
+            set { _portfolio = value; }
         }
         public string MemberId
         {
@@ -252,6 +259,62 @@ namespace MSITTeam1.ViewModels
             中等,
             高階,
             母語
+        }
+
+        //技能
+        [DisplayName("")]
+        public long SkillId
+        {
+            get { return this.skill.SkillId; }
+            set { this.skill.SkillId = value; }
+        }
+
+        public string SkillMemberId
+        {
+            get { return this.skill.MemberId; }
+            set { this.skill.MemberId = value; }
+        }
+        [DisplayName("技能名稱:")]
+        public string SkillName
+        {
+            get { return this.skill.SkillName; }
+            set { this.skill.SkillName = value; }
+        }
+        [DisplayName("技能說明:")]
+        public string SkillDescription
+        {
+            get { return this.skill.SkillDescription; }
+            set { this.skill.SkillDescription = value; }
+        }
+        //作品
+        [DisplayName("")]
+        public long PortId
+        {
+            get { return this.portfolio.PortfolioId; }
+            set { this.portfolio.PortfolioId = value; }
+        }
+        public string PortMemberId
+        {
+            get { return this.portfolio.MemberId; }
+            set { this.portfolio.MemberId = value; }
+        }
+        [DisplayName("作品名稱:")]
+        public string PortfolioTitle
+        {
+            get { return this.portfolio.PortfolioTitle; }
+            set { this.portfolio.PortfolioTitle = value; }
+        }
+        [DisplayName("作品介紹:")]
+        public string PortfolioDescription
+        {
+            get { return this.portfolio.PortfolioDescription; }
+            set { this.portfolio.PortfolioDescription = value; }
+        }
+        [DisplayName("作品網址:")]
+        public string PortfolioURL
+        {
+            get { return this.portfolio.PortfolioUrl; }
+            set { this.portfolio.PortfolioUrl = value; }
         }
     }
 }

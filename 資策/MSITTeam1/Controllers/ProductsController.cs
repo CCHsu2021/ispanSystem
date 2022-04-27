@@ -127,20 +127,20 @@ namespace MSITTeam1.Controllers
                 {
                     string json = "";
                     List<CAddToCartViewModel> cart = new List<CAddToCartViewModel>();
-                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST))
+                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account))
                     {
-                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST);
+                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
                         cart = JsonSerializer.Deserialize<List<CAddToCartViewModel>>(json);
                         int index = cart.FindIndex(m => m.productId.Equals(id));
                         cart.RemoveAt(index);
                         if (cart.Count < 1)
                         {
-                            HttpContext.Session.Remove(CDictionary.SK_PRODUCTS_PURCHASED_LIST);
+                            HttpContext.Session.Remove(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
                         }
                         else
                         {
                             json = JsonSerializer.Serialize(cart);
-                            HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST, json);
+                            HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
                         }
                     }
                 }

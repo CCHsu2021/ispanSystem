@@ -32,16 +32,9 @@ namespace MSITTeam1.Controllers
             ViewBag.account = CDictionary.account;
             return View();
         }
-        public IActionResult CompanyInformationEdit(String CompanyTaxid)
-        {
-            TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == CompanyTaxid);
-            if (c != null)
-            {
-                return View(new CCompanyBasicViewModel() { com = c });
-            }
 
-            return View();
-        }
+
+        //更新公司基本資料
         [HttpPost]
         public IActionResult CompanyInformationEdit([FromBody]CCompanyBasicViewModel company)
         {
@@ -60,16 +53,15 @@ namespace MSITTeam1.Controllers
                 c.FBenefits = company.FBenefits;
                 c.FCustomInfo = company.FCustomInfo;
                 c.FCapitalAmount = company.FCapitalAmount;
+                c.FWebsite = company.FWebsite;
+                c.FRelatedLink = company.FRelatedLink;
+                c.FDistrictCode = company.FDistrictCode;
                 hello.SaveChanges();
             }
             return Content("success");
         }
-        [HttpPost]
-        public JsonResult GetCityByCityGroup(string selectedCity)
-        {
-            var districtlist = from c in hello.TCityContrasts where c.FCityName == selectedCity select c;
-            return Json(districtlist);
-        }
+
+        //LOGO存取
         [HttpPost]
         public IActionResult SaveLogoPicture(IFormFile img,string id)
         {
@@ -80,6 +72,22 @@ namespace MSITTeam1.Controllers
                 _enviroment.WebRootPath + @"\images\company\" + photoName, FileMode.Create));
             hello.SaveChanges();
             return Json(new { suc="ok"});
+        }
+
+        [HttpPost]
+        public ActionResult SaveFile(IFormFile filepond, string id)
+        {
+            string photoName = Guid.NewGuid().ToString() + ".jpg";
+            filepond.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\company\" + photoName, FileMode.Create));
+            TPhoto photo = new TPhoto()
+            {
+                FAccount = id,
+                FPhoto = photoName,
+            };
+            hello.TPhotos.Add(photo);
+            hello.SaveChanges();
+            
+            return Json(true);
         }
         public IActionResult CreateJobVacancy()
         {

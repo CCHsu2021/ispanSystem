@@ -10,5 +10,6 @@ namespace MSITTeam1.ViewModels
 		public string Subjects { get; set; }
 		public string Type { get; set; }
 		public string keyword { get; set; }
+		public string questionID { get; set; }
 	}
 }
