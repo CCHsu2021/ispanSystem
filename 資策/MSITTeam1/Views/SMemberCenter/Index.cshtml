@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Index";
 }
+@section Style{
+  
+}
 <link href="~/css/MemberCenter.css" rel="stylesheet">
 <div id="cont-about" class="container-fluid py-4">
     <div class="container">
@@ -28,7 +31,7 @@
                     <li class="nav-item">
                         <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu5">購買紀錄</a>
                     </li>
-                     <li class="nav-item">
+                    <li class="nav-item">
                         <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu6">其他測驗</a>
                     </li>
                     <li class="nav-item">
@@ -47,19 +50,8 @@
                     </div>
                     <div id="menu1" class="container tab-pane fade">
                         <div class="row about-box">
-                            <h3 class="text-center">測試平台</h3>
-                            <p>
-                                AntenaGames is small indie game studio based in Croatia. Founded in 2020,
-                                on a mission to make beautiful, fun and popular mobile games. The first game released
-                                was BallBoy, which belongs to franchise also called BallBoy, with game titles such as
-                                "BallBoy", "BallBoy Plus" and "BallBoy (...)". Building strong and loyal community with
-                                happy players that will come back to play our games is something that we really enjoy
-                                doing.
-                            </p>
-                            <p>
-                                Founder & CEO<br />
-                                A.K.
-                            </p>
+                            <h3 class="text-center">我的點數</h3>
+                            <vc:s-point-record></vc:s-point-record>
                         </div>
                     </div>
                     <div id="menu2" class="container tab-pane fade">
@@ -147,7 +139,7 @@
                             </p>
                         </div>
                     </div>
-                     <div id="menu7" class="container tab-pane fade">
+                    <div id="menu7" class="container tab-pane fade">
                         <div class="row about-box">
                             <h3 class="text-center">職缺搜尋</h3>
                             <p>
@@ -182,7 +174,7 @@
             fPhone: $("#fPhone").val(),
             fAddress: $("#fAddress").val(),
             fAutobiography: $("#fAutobiography").val()
-            
+
         })
         $.ajax({
             url: "@Url.Content("~/StudentResume/Edit")",
@@ -191,14 +183,14 @@
             data: jsondata,
          }).done(function (data) {
             Swal.fire({
-                        
+
                         icon: 'success',
                         title: '修改成功',
                         showConfirmButton: false,
                         timer: 1500
                         }).then(() => {
                             $('#staticBackdrop').hide()
-                            window.location.reload() 
+                            window.location.reload()
                             });
         })
     })
