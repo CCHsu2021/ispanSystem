@@ -28,13 +28,13 @@
                         <div class="icons">
                             <a href="javascript:void(0);" class="add-to-cart-index" onclick="addToCartBtn('@item.FClassExponent')" title="加入購物車" style="z-index:9"><i class="fas fa-shopping-cart"></i></a>
                         </div>
-                        @*<a class="d-block" asp-action="Details" asp-route-id="@item.FClassExponent">
-                            <img src="@item.ImgPath" alt="" />
+                        <a class="d-block" asp-action="Details" asp-route-id="@item.FClassExponent">
+                            <img src="@item.FClassPhotoPath" alt="" />
                         </a>
                         <figcaption>
-                            <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
-                            <div class="price h5">NT$@Html.DisplayFor(modelItem => item.Price, "Money")</div>
-                        </figcaption>*@
+                            <h5>@Html.DisplayFor(modelItem => item.FClassname)</h5>
+                            <div class="price h5">NT$@Html.DisplayFor(modelItem => item.FClassmoney)</div>
+                        </figcaption>
                     </figure>
                 </div>
             }
@@ -73,7 +73,7 @@
                 })
             } else {
                         $.ajax({
-                            url: "@Url.Content("~/Products/AddToCart")",
+                            url: "@Url.Content("~/Products/ClassAddToCart")",
                             type: "POST",
                             dataType: "text",
                             data: { id: id },
@@ -84,7 +84,7 @@
                                     showConfirmButton: false,
                                     timer: 1200
                                 })
-                                    $("#shoppingCartReload").load(location.href + " #shoppingCartReload");
+                                    $("#classshoppingCartReload").load(location.href + " #classshoppingCartReload");
                             }
                         })
                     }

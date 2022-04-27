@@ -219,5 +219,84 @@ namespace MSITTeam1.Controllers
         }
         #endregion
 
+        #region 加入購物車
+        public IActionResult ClassAddToCart(string id)
+        {
+            if (id != null)
+            {
+                TClassInfo prod = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == id);
+                if (prod != null)
+                {
+                    string json = "";
+                    List<CClassAddToCartViewModel> cart = new List<CClassAddToCartViewModel>();
+                    CClassAddToCartViewModel item = new CClassAddToCartViewModel()
+                    {
+                        count = 1,
+                        price = int.Parse(prod.FClassmoney),
+                        productId = prod.FClassExponent,
+                        TClassInfo = prod,
+                        name = prod.FClassname,
+                        imgPath = prod.FClassPhotoPath,
+                    };
+                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account))
+                    {
+                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
+                        cart = JsonSerializer.Deserialize<List<CClassAddToCartViewModel>>(json);
+                        int index = cart.FindIndex(m => m.productId.Equals(id));
+                        if (index != -1)
+                        {
+                            cart[index].count += item.count;
+                        }
+                        else
+                        {
+                            cart.Add(item);
+                        }
+                        json = JsonSerializer.Serialize(cart);
+                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
+                    }
+                    else
+                    {
+                        cart = new List<CClassAddToCartViewModel>();
+                        cart.Add(item);
+                        json = JsonSerializer.Serialize(cart);
+                        HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
+                    }
+                }
+            }
+            return RedirectToAction("classIndex");
+        }
+        #endregion
+
+        #region 移出購物車
+        public IActionResult classDeleteFromCart(string id)
+        {
+            if (id != null)
+            {
+                TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == id);
+                if (prod != null)
+                {
+                    string json = "";
+                    List<CClassAddToCartViewModel> cart = new List<CClassAddToCartViewModel>();
+                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account))
+                    {
+                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
+                        cart = JsonSerializer.Deserialize<List<CClassAddToCartViewModel>>(json);
+                        int index = cart.FindIndex(m => m.productId.Equals(id));
+                        cart.RemoveAt(index);
+                        if (cart.Count < 1)
+                        {
+                            HttpContext.Session.Remove(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
+                        }
+                        else
+                        {
+                            json = JsonSerializer.Serialize(cart);
+                            HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion
     }
 }

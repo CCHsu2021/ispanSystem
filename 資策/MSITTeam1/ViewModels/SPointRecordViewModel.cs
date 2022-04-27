@@ -19,7 +19,7 @@ namespace MSITTeam1.ViewModels
         public DateTime? PointDate  { get { return stPoint.PointDate; } set { stPoint.PointDate = value; } }
         public string PointType { get { return stPoint.PointType; } set { stPoint.PointType = value; } }
         public string PointDes { get { return stPoint.PointDescription; } set { stPoint.PointDescription = value; } }
-        public string PointRecord { get { return stPoint.PointRecord; } set { stPoint.PointRecord = value; } }
+        public int? PointRecord { get { return stPoint.PointRecord; } set { stPoint.PointRecord = value; } }
         public string OrderId { get { return stPoint.OrderId; } set { stPoint.OrderId = value; } }
      
     }
