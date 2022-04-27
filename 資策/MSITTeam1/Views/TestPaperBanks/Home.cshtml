@@ -1,0 +1,187 @@
+﻿@addTagHelper *, MSITTeam1
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section Style{
+    <link rel="stylesheet" href="~/css/fontawesome-all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/QuestionBankStyleSheet.css" />
+    <style>
+        .card {
+            height: 190px;
+            padding: 15px !important;
+        }
+
+            .card:hover {
+                box-shadow: 5px 10px 30px rgb(0 0 0 / 50%);
+            }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-title {
+            text-align: center !important;
+        }
+
+        p, .text {
+            line-height: 1.6em !important;
+            font-size: 14px;
+            text-indent: 2em;
+            height: 65px;
+            overflow: auto;
+        }
+
+        .p-3 {
+            padding: 3px !important;
+        }
+
+        .creator {
+            color: darkblue;
+            text-align: right;
+            font-size: 14px !important;
+        }
+    </style>
+}
+
+<link href="~/css/MemberCenter.css" rel="stylesheet">
+<div id="cont-about" class="container-fluid py-4">
+    <div class="container">
+        <h4 class="my-3 pl-2">歡迎回來! @ViewBag.Name</h4>
+        <div class="row about-content">
+            <!-- Nav pills -->
+            <div class="col-sm-3">
+                <ul class="nav nav-pills flex-column" role="tablist">
+                    <li class="nav-item">
+                        <a class="vertical-tabs-member first-vertical-tabs active mb-1" data-toggle="pill" href="#home">會員資料</a>
+                    </li>
+                    <li class=" nav-item">
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu1">照片管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu2">我的點數</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu3">試卷管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu4">其他測驗</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu5">檢視平台</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu6">職缺管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="vertical-tabs-member last-vertical-tabs" data-toggle="pill" href="#menu7">訊息通知</a>
+                    </li>
+                    @*<li class="nav-item">
+                            <a class="vertical-tabs-member" data-toggle="pill" href="#menu7">登出</a>
+                        </li>*@
+                </ul>
+            </div>
+
+            <!-- Tab panes -->
+            <div class="col-sm-9">
+                <div class="tab-content shadow-sm">
+                    <div id="home" class="container tab-pane active">
+                        @*<vc:company-basic></vc:company-basic>*@
+                    </div>
+                    <div id="menu1" class="container tab-pane fade">
+                        <div class="row about-box">
+                            <h3 class="text-center">照片列表</h3>
+
+                        </div>
+                    </div>
+                    <div id="menu2" class="container tab-pane fade">
+                        <div class="row about-box">
+                            <h3 class="text-center">檢視平台</h3>
+                            <p>
+                                AntenaGames is small indie game studio based in Croatia. Founded in 2020,
+                                on a mission to make beautiful, fun and popular mobile games. The first game released
+                                was BallBoy, which belongs to franchise also called BallBoy, with game titles such as
+                                "BallBoy", "BallBoy Plus" and "BallBoy (...)". Building strong and loyal community with
+                                happy players that will come back to play our games is something that we really enjoy
+                                doing.
+                            </p>
+                            <p>
+                                Founder & CEO<br />
+                                A.K.
+                            </p>
+                        </div>
+                    </div>
+                    <div id="menu3" class="container tab-pane fade">
+                        <div>
+                            <vc:q-test-paper-list></vc:q-test-paper-list>
+                        </div>
+                    </div>
+                    <div id="menu4" class="container tab-pane fade">
+                        <div class="row about-box">
+                            <h3 class="text-center">購買紀錄</h3>
+                            <p>
+                                AntenaGames is small indie game studio based in Croatia. Founded in 2020,
+                                on a mission to make beautiful, fun and popular mobile games. The first game released
+                                was BallBoy, which belongs to franchise also called BallBoy, with game titles such as
+                                "BallBoy", "BallBoy Plus" and "BallBoy (...)". Building strong and loyal community with
+                                happy players that will come back to play our games is something that we really enjoy
+                                doing.
+                            </p>
+                            <p>
+                                Founder & CEO<br />
+                                A.K.
+                            </p>
+                        </div>
+                    </div>
+                    <div id="menu5" class="container tab-pane fade">
+                        <div class="row about-box">
+                            <h3 class="text-center">個人履歷</h3>
+                            <p>
+                                AntenaGames is small indie game studio based in Croatia. Founded in 2020,
+                                on a mission to make beautiful, fun and popular mobile games. The first game released
+                                was BallBoy, which belongs to franchise also called BallBoy, with game titles such as
+                                "BallBoy", "BallBoy Plus" and "BallBoy (...)". Building strong and loyal community with
+                                happy players that will come back to play our games is something that we really enjoy
+                                doing.
+                            </p>
+                            <p>
+                                Founder & CEO<br />
+                                A.K.
+                            </p>
+                        </div>
+                    </div>
+                    <div id="menu6" class="container tab-pane fade">
+                        @*<vc:job-vacancy></vc:job-vacancy>*@
+                        <div id="JoblistPagination" class="row my-4"></div>
+                    </div>
+                    <div id="menu7" class="container tab-pane fade">
+                        <div class="row about-box">
+                            <h3 class="text-center">職缺搜尋</h3>
+                            <p>
+                                AntenaGames is small indie game studio based in Croatia. Founded in 2020,
+                                on a mission to make beautiful, fun and popular mobile games. The first game released
+                                was BallBoy, which belongs to franchise also called BallBoy, with game titles such as
+                                "BallBoy", "BallBoy Plus" and "BallBoy (...)". Building strong and loyal community with
+                                happy players that will come back to play our games is something that we really enjoy
+                                doing.
+                            </p>
+                            <p>
+                                Founder & CEO<br />
+                                A.K.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
+    <script>
+
+    </script>
+}
+

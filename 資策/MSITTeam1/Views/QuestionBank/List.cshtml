@@ -69,22 +69,7 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">題目修改</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @*<vc:question-bank-edit subjectID=@Model.></vc:question-bank-edit>*@
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 @section Scripts{
@@ -100,7 +85,6 @@
                     keyword: $('#keyword').val(),
                     Type: $('#FQuestionTypeId').val()
                 })
-            console.log(jsondata);
             $.ajax({
                 url: "@Url.Content("~/QuestionBank/List")",
                 type: "POST",
@@ -112,26 +96,8 @@
             })
         })
         })
-
-        const selSubject = document.querySelector('#FSubjectId');
-
-        async function LoadSubject() {
-            const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
-            renderSubject(await responseSubject.json());
-        }
-
-        LoadSubject();
-
-        function renderSubject(datas) {
-            datas.forEach((item) => {
-                const opt = new Option(item.fClassCategory, item.fClassCategory);
-                selSubject.options.add(opt);
-            })
-        }
     </script>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
     <script type="text/javascript" src="~/js/Pagination.js"></script>
     @*<script src="~/js/QuestionBankSystem.js"></script>*@

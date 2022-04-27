@@ -62,14 +62,14 @@ $('#createNew').click(function () {
             ans.Fchoice = $(item).find(':text').val();
             ansArr.push(ans);
         })
-        console.log(ansArr);
         var jsondata = JSON.stringify({
-            FSubjectId: $('#FSubjectId').val(),
+            FSubjectId: $('#FSubjectIdSel').val(),
             FQuestion: $('#FQuestion').val(),
             FQuestionTypeId: $('#FQuestionTypeId').val(),
             FChoiceList: ansArr,
             FLevel: $('.questionBarRate').val()
         })
+        console.log(jsondata);
         $.ajax({
             url: "/QuestionBank/Create",
             type: "POST",

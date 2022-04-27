@@ -5,15 +5,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
-<link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
+    <link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
+    <link href="~/css/barRating.css" rel="stylesheet" />
     <style>
         .indicator {
             width: 25px !important;
         }
-        .form-group > textarea{
-            overflow-y:auto !important;
-            height:200px !important;
+
+        .form-group > textarea {
+            overflow-y: auto !important;
+            height: 200px !important;
         }
+
         #search {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -30,12 +33,14 @@
             transition: all .3s linear;
             width: 50px;
         }
-        #testView{
-            height:450px;
-            overflow:auto;
+
+        #testView {
+            height: 450px;
+            overflow: auto;
         }
-        .slide-container{
-            height:800px !important;
+
+        .slide-container {
+            height: 800px !important;
         }
     </style>
 }
@@ -48,41 +53,6 @@
             <div class="pagination"></div>
         </div>
     </div>
-
-    @*<div class="viewport full-width-container">
-            <ul class="slide-container">
-                <li class="slide" data-tag="基本資料">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <form asp-action="Create">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="form-group">
-                                    <input type="hidden" asp-for="FDesignerAccount" value="@ViewBag.account" />
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="FTestPaperName" class="control-label"></label>
-                                    <input asp-for="FTestPaperName" class="form-control" />
-                                    <span asp-validation-for="FTestPaperName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="FSubjectId" class="control-label"></label>
-                                    <input asp-for="FSubjectId" class="form-control" />
-                                    <span asp-validation-for="FSubjectId" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="FNote" class="control-label"></label>
-                                    <input asp-for="FNote" class="form-control" />
-                                    <span asp-validation-for="FNote" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Create" class="btn btn-primary" />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>*@
 
     <div class="viewport full-width-container">
         <ul class="slide-container">
@@ -155,17 +125,18 @@
                         </div>
                     </div>
                     <br />
-                    
-                        <div id="testView">
 
-                        </div>
-                    
+                    <div id="testView">
+
+                    </div>
+
                     <div class="row data" id="workExpPage">
                         <div class="col-6">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             @*add hidden here*@
-                            <button class="creatworkbtn my-3" id="createWork">新增</button>
+                            <button data-toggle="modal" data-target="#questionCreate">新增</button>
+
                         </div>
                         <div class="col-6">
                             @*add here*@
@@ -204,28 +175,47 @@
             <button class="previous">上一步</button>
         </div>
     </div>
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+</div>
 
+<!-- Modal -->
+<div class="modal fade" id="questionCreate" tabindex="-1" aria-labelledby="questionCreate" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">題目新增</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <vc:question-bank-create></vc:question-bank-create>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-        // 取得所有課程名稱
-        @*const selSubject = document.querySelector('#FSubjectId');
+
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>*@
+    <script src="~/js/jquery.barrating.js"></script>
+    <script src="~/js/barRating.init.js"></script>
+    <script>
+          // 載入課程名稱
+        const selSubject = document.querySelector('#FSubjectIdSel');
+
         async function LoadSubject() {
             const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
             renderSubject(await responseSubject.json());
         }
-        LoadSubject();
         function renderSubject(datas) {
             datas.forEach((item) => {
                 const opt = new Option(item.fClassCategory, item.fClassCategory);
                 selSubject.options.add(opt);
             })
-        }*@
+        }
+        LoadSubject();
 
         // 題目查詢
         var jsondata = null;
@@ -249,83 +239,168 @@
         })
         })
 
+        //-----------------------------Create---------------------------------------------
+        // 判斷Checkbox
+        var currentSelect = 0, limit = 1;
+        function doCheck(obj) {
+            obj.checked ? currentSelect++ : currentSelect--;
+            if (currentSelect > limit) {
+                obj.checked = false;
+                Swal.fire("超過正確答案上限");
+                currentSelect--;
+            }
+        }
+        // 根據題型判斷答案輸入欄位及許可正確選項上限
+        $('#FQuestionTypeId').change(function () {
+            if ($(this).val() === "3") {
+                console.log("OK");
+                $('#BtnNewChoice').hide();
+                $('#ansList > #choice > label').html("答案");
+                $('#ansList div:not(:first-child)').remove();
+                $('#ansList > #choice > #checkBox1').hide();
+            } else if ($(this).val() === "2") {
+                limit = 100;
+                $('#BtnNewChoice').show();
+                $('#ansList > #choice > label').html("選項");
+                $('#ansList > #choice > #checkBox1').show();
+            } else if ($(this).val() === "1") {
+                limit = 1;
+                $('#BtnNewChoice').show();
+                $('#ansList > #choice > label').html("選項");
+                $('#ansList > #choice > input').removeAttr("checked");
+                $('#ansList > #choice > #checkBox1').show();
+            }
+        })
+
+        // 新增選項textbox
+        var count = 1;
+        const btnNewChoice = document.querySelector('#BtnNewChoice');
+        btnNewChoice.addEventListener('click', function () {
+            count++;
+            //var divChoice = "<div class=form-group id=choice c><label asp -for= FChoice class= control-label>選項" + count + "</label ><input id=txtAns asp-for=FChoice class=form-control /><span asp-validation-for=FChoice class=text-danger></span><button class=btn id=del-btn type=button><i class=fasfa-trash-alt> </i>Delete</button></div>"
+            var divChoice = `<div class="form-group" id="choice" ><label asp -for="FChoice" class="control-label">選項</label ><br /><input type="checkbox" name="FCorrectAnswer" value=1 onclick="doCheck(this)" style="margin:0 3px 0 0;" /><input id="txtAns" asp-for="FChoice" class="form-control"/><span asp-validation-for="FChoice" class="text-danger"></span><button class="btn" id="del-btn" type="button" style="margin:10px 0 0 25px"><i class="fasfa-trash-alt"> </i>Delete</button></div>`
+            $('#ansList').append(divChoice);
+        })
+        $("#outdiv").on("click", "#del-btn", function () {
+            console.log("delete");
+            $(this).closest("#choice").remove();
+        });
+
+        // 將所有選項存入Array
+        $('#createNew').click(function () {
+            var ansArr = [];
+            var selectAns = $('#ansList input[type=checkbox]:checked').length;
+            if (selectAns < 1) {
+                Swal.fire("請選擇此題正確答案");
+            } else {
+                $('#ansList > div').each(function (idx, item) {
+                    var ans = {}
+                    var c = $(item).find(':checkbox').prop('checked');
+                    ans.FCorrect = c ? 1 : 2;
+                    ans.Fchoice = $(item).find(':text').val();
+                    ansArr.push(ans);
+                })
+                var jsondata = JSON.stringify({
+                    FSubjectId: $('#FSubjectIdSel').val(),
+                    FQuestion: $('#FQuestion').val(),
+                    FQuestionTypeId: $('#FQuestionTypeIdSel').val(),
+                    FChoiceList: ansArr,
+                    FLevel: $('.questionBarRate').val()
+                })
+                console.log(jsondata);
+                $.ajax({
+                    url: "/QuestionBank/Create",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: jsondata
+                }).done(function (data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '新增成功',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })
+                })
+            }
+        })
+
+//-------------------------------------------Create End--------------------------------
+
         // 刪除不需要的jquery程式
-    //var currentSlide = 0,
-    //    $slideContainer = $('.slide-container'),
-    //    $slide = $('.slide'),
-    //    slideCount = $slide.length,
-    //    animationTime = 300;
+    var currentSlide = 0,
+        $slideContainer = $('.slide-container'),
+        $slide = $('.slide'),
+        slideCount = $slide.length,
+        animationTime = 300;
 
-    //function setSlideDimensions() {
-    //    var windowWidth = $(window).width();
-    //    $slideContainer.width(windowWidth * slideCount);
-    //    $slide.width(windowWidth);
-    //}
+    function setSlideDimensions() {
+        var windowWidth = $(window).width();
+        $slideContainer.width(windowWidth * slideCount);
+        $slide.width(windowWidth);
+    }
 
-    //function generatePagination() {
-    //    var $pagination = $('.pagination');
-    //    for (var i = 0; i < slideCount; i++) {
-    //        var $indicator = $('<div>').addClass('indicator'),
-    //            $progressBarContainer = $('<div>').addClass('progress-bar-container'),
-    //            $progressBar = $('<div>').addClass('progress-bar'),
-    //            indicatorTagText = $slide.eq(i).attr('data-tag'),
-    //            $tag = $('<div>').addClass('tag').text(indicatorTagText);
-    //        $indicator.append($tag);
-    //        $progressBarContainer.append($progressBar);
-    //        $pagination.append($indicator).append($progressBarContainer);
-    //    }
-    //    $pagination.find('.indicator').eq(0).addClass('active');
-    //}
+    function generatePagination() {
+        var $pagination = $('.pagination');
+        for (var i = 0; i < slideCount; i++) {
+            var $indicator = $('<div>').addClass('indicator'),
+                $progressBarContainer = $('<div>').addClass('progress-bar-container'),
+                $progressBar = $('<div>').addClass('progress-bar'),
+                indicatorTagText = $slide.eq(i).attr('data-tag'),
+                $tag = $('<div>').addClass('tag').text(indicatorTagText);
+            $indicator.append($tag);
+            $progressBarContainer.append($progressBar);
+            $pagination.append($indicator).append($progressBarContainer);
+        }
+        $pagination.find('.indicator').eq(0).addClass('active');
+    }
 
-    //function goToNextSlide() {
-    //    if (currentSlide >= slideCount - 1) return;
-    //    var windowWidth = $(window).width();
-    //    currentSlide++;
-    //    $slideContainer.animate({
-    //        left: -(windowWidth * currentSlide)
-    //    });
-    //    setActiveIndicator();
-    //    $('.progress-bar').eq(currentSlide - 1).animate({
-    //        width: '100%'
-    //    }, animationTime);
-    //}
+    function goToNextSlide() {
+        if (currentSlide >= slideCount - 1) return;
+        var windowWidth = $(window).width();
+        currentSlide++;
+        $slideContainer.animate({
+            left: -(windowWidth * currentSlide)
+        });
+        setActiveIndicator();
+        $('.progress-bar').eq(currentSlide - 1).animate({
+            width: '100%'
+        }, animationTime);
+    }
 
-    //function goToPreviousSlide() {
-    //    if (currentSlide <= 0) return;
-    //    var windowWidth = $(window).width();
-    //    currentSlide--;
-    //    $slideContainer.animate({
-    //        left: -(windowWidth * currentSlide)
-    //    }, animationTime);
-    //    setActiveIndicator();
-    //    $('.progress-bar').eq(currentSlide).animate({
-    //        width: '0%'
-    //    }, animationTime);
-    //}
+    function goToPreviousSlide() {
+        if (currentSlide <= 0) return;
+        var windowWidth = $(window).width();
+        currentSlide--;
+        $slideContainer.animate({
+            left: -(windowWidth * currentSlide)
+        }, animationTime);
+        setActiveIndicator();
+        $('.progress-bar').eq(currentSlide).animate({
+            width: '0%'
+        }, animationTime);
+    }
 
-    //function postitionSlides() {
-    //    var windowWidth = $(window).width();
-    //    setSlideDimensions();
-    //    $slideContainer.css({
-    //        left: -(windowWidth * currentSlide)
-    //    }, animationTime);
-    //}
+    function postitionSlides() {
+        var windowWidth = $(window).width();
+        setSlideDimensions();
+        $slideContainer.css({
+            left: -(windowWidth * currentSlide)
+        }, animationTime);
+    }
 
-    //function setActiveIndicator() {
-    //    var $indicator = $('.indicator');
-    //    $indicator.removeClass('active').removeClass('complete');
-    //    $indicator.eq(currentSlide).addClass('active');
-    //    for (var i = 0; i < currentSlide; i++) {
-    //        $indicator.eq(i).addClass('complete');
-    //    }
-    //}
+    function setActiveIndicator() {
+        var $indicator = $('.indicator');
+        $indicator.removeClass('active').removeClass('complete');
+        $indicator.eq(currentSlide).addClass('active');
+        for (var i = 0; i < currentSlide; i++) {
+            $indicator.eq(i).addClass('complete');
+        }
+    }
 
-    //setSlideDimensions();
-    //generatePagination();
-    //$(window).resize(postitionSlides);
-    //$('.next').on('click', goToNextSlide);
-    //$('.previous').on('click', goToPreviousSlide);
-
-
-</script>
+    setSlideDimensions();
+    generatePagination();
+    $(window).resize(postitionSlides);
+    $('.next').on('click', goToNextSlide);
+    $('.previous').on('click', goToPreviousSlide);
+    </script>
 }

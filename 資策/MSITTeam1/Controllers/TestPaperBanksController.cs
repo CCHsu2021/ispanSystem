@@ -18,6 +18,10 @@ namespace MSITTeam1.Controllers
         {
             _context = context;
         }
+        public IActionResult Home()
+		{
+            return View();
+		}
 
         // GET: TTestPaperBanks
         public IActionResult Index()

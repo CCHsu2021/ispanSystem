@@ -16,10 +16,6 @@ namespace MSITTeam1.Controllers
 		{
 			_context = context;
 		}
-		public IActionResult Index()
-		{
-			return View();
-		}
 
 		public IActionResult List()
 		{
@@ -114,6 +110,15 @@ namespace MSITTeam1.Controllers
 			_context.SaveChanges();
 			return Content("新增成功");
 		}
+		public IActionResult EditByVC([FromBody] CQuestionQueryViewModel query)
+		{
+			int questionID = 0;
+			if(query != null)
+			{
+				questionID = Convert.ToInt32(query.questionID);
+			}
+			return ViewComponent("QuestionBankEdit", new { subjectID = query.Subjects, questionID = questionID});
+		}
 		public IActionResult Edit(string subjectID, int questionID)
 		{
 			if (subjectID != null && questionID > 0)
@@ -151,18 +156,26 @@ namespace MSITTeam1.Controllers
 		[HttpPost]
 		public IActionResult Edit([FromBody] CQuestionBankViewModel quesList)
 		{
-			 if (quesList != null)
+			var searchLastSN = from q in _context.TQuestionDetails
+							   orderby q.FSn descending
+							   select q;
+
+			int lastSN = searchLastSN.First().FSn;
+
+			if (quesList != null)
 			{
 				string subject = quesList.FSubjectId;
 				int questionId = quesList.FQuestionId;
+				List<int> choiceSnList = new List<int>();
 
 				TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subject) && q.FQuestionId == questionId);
 				TQuestionDetail choSel = null;
+				var tchoSel = _context.TQuestionDetails.Where(c => c.FSubjectId.Equals(subject) && c.FQuestionId == questionId);
+
 				if (quesSel != null)
 				{
 					quesSel.FQuestion = quesList.FQuestion;
 					quesSel.FQuestionTypeId = Convert.ToInt32(quesList.FQuestionTypeId);
-					_context.SaveChanges();
 					foreach (var ans in quesList.FChoiceList)
 					{
 						if(ans.FSN != 0)
@@ -170,7 +183,7 @@ namespace MSITTeam1.Controllers
 						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSN);
 						choSel.FChoice = ans.Fchoice;
 						choSel.FCorrectAnswer = ans.FCorrect;
-						_context.SaveChanges();
+						choiceSnList.Add(ans.FSN);
 						}
 						else
 						{
@@ -180,10 +193,23 @@ namespace MSITTeam1.Controllers
 							quesList.FCorrectAnswer = ans.FCorrect;
 							quesList.FSn = 0;
 							_context.TQuestionDetails.Add(quesList.choice);
-							_context.SaveChanges();
+							lastSN += 1;
+							choiceSnList.Add(lastSN);
 						}
+						choiceSnList.Add(ans.FSN);
+						_context.SaveChanges();
 					}
 				}
+
+				foreach (var t in tchoSel)
+				{
+					bool isContain = choiceSnList.Contains(t.FSn);
+					if (!isContain)
+					{
+						_context.TQuestionDetails.Remove(t);
+					}
+				}
+				_context.SaveChanges();
 			}
 			return RedirectToAction("List");
 		}
