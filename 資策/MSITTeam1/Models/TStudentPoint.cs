@@ -9,7 +9,7 @@ namespace MSITTeam1.Models
     {
         public int PointUsageId { get; set; }
         public string MemberId { get; set; }
-        public string PointDate { get; set; }
+        public DateTime? PointDate { get; set; }
         public string PointType { get; set; }
         public string PointDescription { get; set; }
         public string PointRecord { get; set; }
