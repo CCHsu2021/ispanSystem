@@ -9,99 +9,122 @@
 @section Style{
 
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .hyper-link-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding-bottom:0.5rem;
+        }
+            .title-active {
+                border-bottom: 4px solid #ed731a;
+                color: #ed731a !important;
+            }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size:1em;
+        }
     </style>
 }
-
-@{int number = 0;}
-@foreach (var item in Model)
-{
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <img src="~/images/company/@item.combasic.FLogo" />
-            </div>
-            <div class="col-md-9">
-                <a>公司介紹</a>
-                <a>公司福利</a>
-                <a></a>
-                <a></a>
-            </div>
-        </div>
-        <div class="row">
-            <h3>公司介紹</h3>
-            <div class="row">
-                <div class="col-6">
-                    <div>員工人數：@item.combasic.FCapitalAmount</div>
-                    <div>公司網站：@item.combasic.FWebsite</div>
-                    <div>相關連結：@item.combasic.FRelatedLink</div>
-                </div>
-                <div class="col-6">
-                    <div>聯絡人：@item.combasic.FContactPerson</div>
-                    <div>電話：@item.combasic.FPhoneCode@item.combasic.FPhone</div>
-                    <div>傳真：@item.combasic.FFaxCode@item.combasic.FFax</div>
-                    <div class="">地址：@item.combasic.FCity@item.combasic.FDistrict@item.combasic.FAddress</div>
-                </div>
-            </div>
-            <hr />
-            <div>@item.combasic.FCustomInfo</div>
-        </div>
-        <div class="row">
-            <section class="et-slide" id="tab-flexbox">
-                <h3>公司福利</h3>
-                <div>@item.combasic.FBenefits</div>
-            </section>
-        </div>
-        <div class="row">
-            <section class="et-slide" id="tab-react">
-                <h3>React</h3>
-                <h3>something about react</h3>
-            </section>
-        </div>
-    </div>
-    <main class="et-main">
-        @if (number < 1)
+<div class="container-fluid p-3" style="background: #f3f3f3; position: static;">
+    <div class="container" style="position:static;">
+        @{int number = 0;}
+        @foreach (var item in Model)
         {
-            number++;
-            <!-- Main -->
-            <section class="et-slide" id="tab-es6">
-                <div>
-                    <h1>公司介紹</h1>
-                    <div class="row">
-                        <div class="col-6">
-                            <div>員工人數：@item.combasic.FCapitalAmount</div>
-                            <div>公司網站：@item.combasic.FWebsite</div>
-                            <div>相關連結：@item.combasic.FRelatedLink</div>
+            @if (number < 1)
+            {
+                number++;
+                <!-- Main -->
+                <div class="row p-3 my-3 shadow border rounded bg-white align-items-end">
+                    <div class="col-md-3 text-center">
+                        <img class="w-50" src="~/images/company/@item.combasic.FLogo" />
+                    </div>
+                    <div class="col-md-9">
+                        <a id="company-intro" class="hyper-link-title px-2 title-active">公司介紹</a>
+                        <a id="company-welfare" class="hyper-link-title px-2">公司福利</a>
+                        <a id="company-photo" class="hyper-link-title px-2">公司圖片</a>
+                    </div>
+                </div>
+
+                <div id="company-intro-content" class="row p-3 my-3 shadow-sm border rounded bg-white">
+                    <h3 class="w-100 col-12 font-weight-bold">公司介紹</h3>
+                    <br />
+                    <div class="col-md-6 py-2" style="line-height:2rem;">
+                        <div>
+                            <span class="font-weight-bold">員工人數：</span>@item.combasic.FCapitalAmount
                         </div>
-                        <div class="col-6">
-                            <div>聯絡人：@item.combasic.FContactPerson</div>
-                            <div>電話：@item.combasic.FPhoneCode@item.combasic.FPhone</div>
-                            <div>傳真：@item.combasic.FFaxCode@item.combasic.FFax</div>
-                            <div class="">地址：@item.combasic.FCity@item.combasic.FDistrict@item.combasic.FAddress</div>
+                        <div>
+                            <span class="font-weight-bold">公司網站：</span>@item.combasic.FWebsite
+                        </div>
+                        <div>
+                            <span class="font-weight-bold">相關連結：</span>@item.combasic.FRelatedLink
+                        </div>
+                        <div class="">
+                            <span class="font-weight-bold">地址：</span>@item.combasic.FCity@item.combasic.FDistrict@item.combasic.FAddress
                         </div>
                     </div>
-                    <hr />
-                    <div>@item.combasic.FCustomInfo</div>
+                    <div class="col-md-6  py-2" style="line-height:2rem;">
+                        <div>
+                            <span class="font-weight-bold">聯絡人：</span>@item.combasic.FContactPerson
+                        </div>
+                        <div>
+                            <span class="font-weight-bold">電話：</span>@item.combasic.FPhoneCode@item.combasic.FPhone
+                        </div>
+                        <div>
+                            <span class="font-weight-bold">傳真：</span>@item.combasic.FFaxCode@item.combasic.FFax
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <hr class="w-100" />
+                    </div>
+                    <pre class="col-12  py-2" style="line-height:1.5rem;">@item.combasic.FCustomInfo</pre>
                 </div>
-            </section>
-            <section class="et-slide" id="tab-flexbox">
-                <h1>公司福利</h1>
-                <div>@item.combasic.FBenefits</div>
-            </section>
-            <section class="et-slide" id="tab-react">
-                <h1>React</h1>
-                <h3>something about react</h3>
-            </section>
-
+                <div id="company-welfare-content" class="row p-3 my-3 shadow-sm border rounded bg-white">
+                    <h3 class="w-100 col-12 font-weight-bold">公司福利</h3>
+                    <br />
+                    <pre class="col-12  py-2" style="line-height:1.5rem;">@item.combasic.FBenefits</pre>
+                </div>
+                <div id="company-photo-content" class="row p-3 my-3 shadow-sm border rounded bg-white">
+                    <h3 class="w-100 col-12 font-weight-bold">公司圖片</h3>
+                    <br />
+                    <div class="col-12  py-2">photo</div>
+                </div>
         }
-        <section class="et-slide" id="tab-angular">
-            <h1>Angular</h1>
-            <h3>something about angular</h3>
-        </section>
-    </main>
-
-};
+        }
+            </div>
+    </div>
 @section Scripts{
     <script>
+        $(".hyper-link-title").click(function () {
+            $(".hyper-link-title").removeClass("title-active")
+            $(this).addClass("title-active")
+        })
+
+        var introDivHeight = $("#company-intro-content").offset().top;
+        var welfareDivHeight = $("#company-welfare-content").offset().top;
+        var photoDivHeight = $("#company-photo-content").offset().top;
+
+        $("#company-intro").click(function () {
+            $('html, body').animate({
+                scrollTop: introDivHeight
+            }, "fast");
+        });
+
+        $("#company-welfare").click(function () {
+            $('html, body').animate({
+                scrollTop: welfareDivHeight
+            }, "fast")
+        });
+
+        $("#company-photo").click(function () {
+            $('html, body').animate({
+                scrollTop: photoDivHeight
+            }, "fast")
+        });
+
         class StickyNavigation {
 
             constructor() {

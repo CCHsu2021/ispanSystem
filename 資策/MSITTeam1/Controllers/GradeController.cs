@@ -41,9 +41,27 @@ namespace MSITTeam1.Controllers
                 return View(list);
 
         }
-        public IActionResult Grade(TTestPaper z)
+        public void Grade(TClassGrade grade)
         {
-            return Content(z.ToString());
+            TClassGrade classGrade = hello.TClassGrades.FirstOrDefault(c => c.FAccountId == grade.FAccountId);
+            if (classGrade == null)
+            {
+                 classGrade = new TClassGrade
+                {
+                    FAccountId = grade.FAccountId,
+                    FClassCode = grade.FClassCode,
+                    FBeforeClassGrade = grade.FBeforeClassGrade,
+                    FBeforeClassTime = DateTime.Now
+                };
+                hello.TClassGrades.Add(classGrade);
+                hello.SaveChanges();
+            }
+            else
+            {
+                classGrade.FAfterClassGrade = grade.FBeforeClassGrade;
+                classGrade.FAfterClassTime = DateTime.Now;
+                hello.SaveChanges();
+            }
         }
     }
 }

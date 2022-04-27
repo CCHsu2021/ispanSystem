@@ -77,52 +77,38 @@
             </div>
         }
     }
-    <form method="post" name="grade">
-        <div id="div1" class="alert alert-info"></div>
+    <div div style="display:none" id="div1" class="alert alert-info"></div>
+    <form name="classgrade" method="post">
+        <input type="hidden" id="FAccountId" name="FAccountId" value="@ViewBag.Account">
+        <input type="hidden" id="FClassCode" name="FClassCode" value="@ViewBag.Identify">
+        <input type="hidden" id="FBeforeClassGrade" name="FBeforeClassGrade" value="">
     </form>
 </div>
 
 <script>
     const btn = document.querySelector("#button1");
-    const createpaper = document.querySelector("#createpaper");
     const divAlert = document.querySelector("#div1");
 
-    @*btn.addEventListener('click', (evt) => {
+
+    btn.addEventListener('click', (evt) => {
         evt.preventDefault();
-        @{
-            if()
-        }
-    })*@
-
-
-
-
-
-
-
-
-
-
-
-             btn.addEventListener('click', (evt) => {
-                 evt.preventDefault();
-                 var anscount = 0
-                 var count = 0
+        var anscount = 0
+        var count = 0
          @{
              if (Model != null)
              {
-             int id = 0;
-             foreach (var item in Model)
-             {
-                 if (id != item.fQuestionID)
+                 int id = 0;
+                 foreach (var item in Model)
                  {
+                     if (id != item.fQuestionID)
+                     {
                  @:var a = $('input[name=@item.fQuestionID]:checked').val();
                  @:if (1 == a) { anscount++; }
                  @:count++
                  id = item.fQuestionID;
 
 
-                  @:{ var b = $('input[name=@item.fQuestionID]:checked').html();  }
+                  @:{ var b = $('input[name=@item.fQuestionID]:checked').html(); }
                   //逐筆寫入?
 
 
@@ -131,21 +117,19 @@
 
              }
           }
-                 divAlert.innerHTML = Math.round((anscount / count) * 100)
-                 $('input').attr('disabled', 'true')
-                 btn.style.display='none';
-    })
+        divAlert.style.display = "block"
+        divAlert.innerHTML = Math.round((anscount / count) * 100)
+        document.querySelector("#FBeforeClassGrade").value = Math.round((anscount / count) * 100)
+        $('input').hide();
+        btn.style.display = 'none';
 
-    @*btn.addEventListener('click', (evt) => {
-        evt.preventDefault();
-        const formData = new FormData(document.grade);
+
+
+        const formData = new FormData(document.classgrade);
         fetch('@Url.Action("Grade", "Grade")', {
             method: 'POST',
-            body: FormData
-        }).then(Response => Response.text())
-                .then(data => divAlert.innerHTML = data)
-
-          //btn.style.display='none';
-      })*@
+            body: formData
+        })
+    })
 </script>
 

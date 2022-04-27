@@ -56,10 +56,13 @@
                                 <div class="form-group row justify-content-around py-4">
                                     <div class="row">
                                         <div class="col">
-                                            <select id="FSubjectId" name="FSubjectId" class="form-control"></select>
+                                            <select id="FSubjectId" name="FSubjectId" class="form-control">
+                                                <option value=""> 請選擇課程名稱</option>
+                                            </select>
                                         </div>
                                         <div class="col">
                                             <select id="FQuestionTypeId" class="form-control">
+                                                <option value="">請選擇題型</option>
                                                 <option value="1">單選題</option>
                                                 <option value="2">多選題</option>
                                                 <option value="3">填空題</option>
@@ -82,7 +85,7 @@
                     </div>
                     <div id="menu2" class="container tab-pane fade">
                         <a asp-action="Edit" data-toggle="modal" data-target="#questionEdit">新增</a>
-                        
+
                     </div>
                     <div id="menu3" class="container tab-pane fade">
                         <div class="row about-box">
@@ -133,23 +136,26 @@
     <script src="~/js/barRating.init.js"></script>
     <script src="~/js/QuestionBankSystem.js"></script>
     <script>
-
+        // 載入課程名稱
         const selSubject = document.querySelector('#FSubjectId');
 
         async function LoadSubject() {
             const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
             renderSubject(await responseSubject.json());
         }
-
-        LoadSubject();
-
         function renderSubject(datas) {
             datas.forEach((item) => {
                 const opt = new Option(item.fClassCategory, item.fClassCategory);
                 selSubject.options.add(opt);
             })
         }
+        LoadSubject();
     </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="~/js/jquery.barrating.js"></script>
+    <script src="~/js/barRating.init.js"></script>
+    <script src="~/js/QuestionBankSystem.js"></script>
 
 }
 
