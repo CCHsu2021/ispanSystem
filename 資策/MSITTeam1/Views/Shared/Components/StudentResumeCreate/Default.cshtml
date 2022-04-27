@@ -123,8 +123,7 @@
                 </md-input-container>
                 <md-button id="addsection" class="md-button md-primary " ng-click="addSection()">加入區塊</md-button>
                 <div class="section-drop-container" dragula-model="survey.sections" dragula="'bag-sections'">
-                    <div class="row">
-                        <div ng-repeat="section in survey.sections" class="section-container col-6">
+                        <div ng-repeat="section in survey.sections" class="section-container">
                             <div layout="row">
                                 <md-button class="md-button md-primary icon-button section-drag-handle" ng-click="section.open = !section.open" aria-label="edit question">
                                     移動
@@ -142,28 +141,7 @@
                                 <div survey-question ng-repeat="item in section.questions"></div>
                             </div>
                         </div>
-                        <div ng-repeat="section in survey.sections" class="section-container col-6">
-                            <div layout="row">
-                                <md-button class="md-button md-primary icon-button section-drag-handle" ng-click="section.open = !section.open" aria-label="edit question">
-                                    移動
-                                </md-button>
-
-                                <md-input-container class="survey-name-input" flex>
-
-                                    <input ng-model="section.name">
-                                </md-input-container>
-                                <md-button class="md-button md-primary icon-button" ng-click="removeSection(section)" aria-label="edit question">
-                                    刪除
-                                </md-button>
-                            </div>
-                            <div ng-show="section.open" dragula-model="section.questions" dragula="'bag-questions'" layout="column" class="drop-question-container section-body">
-                                @*<div survey-question ng-repeat="item in section.questions"></div>*@
-                            </div>
-                        </div>
                     </div>
-                    
-                </div>
-
             </md-whiteframe>
         </div>
 
