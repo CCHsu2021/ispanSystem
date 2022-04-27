@@ -1,33 +1,39 @@
-﻿<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css" rel="stylesheet" />
-<link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
-<link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
-<form name="fileupload">
-    <input type="hidden" name="id" value="@ViewBag.account" />
-    <input type="file"
-           accept="image/*"
-           class="filepond"
-           name="filepond"
-           multiple
-           data-max-file-size="3MB"
-           data-max-files="5" />
-</form>
-<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
-<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
-<script>
-    FilePond.registerPlugin(
-        // encodes the file as base64 data
-        FilePondPluginFileEncode,
-        // validates the size of the file
-        FilePondPluginFileValidateSize,
-        // corrects mobile image orientation
-        FilePondPluginImageExifOrientation,
-        // previews dropped images
-        FilePondPluginImagePreview
-    );
-    // Select the file input and use create() to turn it into a pond
-    FilePond.create(document.querySelector('.filepond'));
-</script>
+﻿<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 
+
+<form action="~/CMemberCenter/SaveFile" id="form1" class="dropzone">
+    <input type="hidden" name="id" value="@ViewBag.account"/>
+</form>
+
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+<script>
+    Dropzone.options.form1 = {
+        dictDefaultMessage: "拖曳檔案或是點擊上傳",
+        acceptedFiles: "image/*",
+        init: function () {
+            this.on("complete", function (file) {
+                $(".modal-backdrop").css("display", "none");
+                $("#CompanyPhotoUpload").modal('hide');
+                $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
+                $("#CompanyPhotoUpload").load(location.href + " #CompanyPhotoUpload")
+                $("#form1").val(null);
+                Dropzone.options.form1 = {
+                    dictDefaultMessage: "拖曳檔案或是點擊上傳",
+                    acceptedFiles: "image/*",
+                    init: function () {
+                        this.on("complete", function (file) {
+                            $(".modal-backdrop").css("display", "none");
+                            $("#CompanyPhotoUpload").modal('hide');
+                            $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
+                            $("#CompanyPhotoUpload").load(location.href + " #CompanyPhotoUpload")
+                            $("#form1").val(null);
+
+                        });
+                    }
+                };
+            });
+        }
+    };
+ 
+</script>
