@@ -1,0 +1,53 @@
+﻿@model IList<MSITTeam1.ViewModels.CTestPaperBankViewModel>
+@addTagHelper*,MSITTeam1
+
+<div class="container">
+    <a asp-action="Create">
+        <button asp-action="Create" class="btn-style-three">
+            <i class="far fa-plus"></i> 新增試卷
+        </button>
+    </a>
+    <div style="margin:20px">
+        <div class="row justify-content-around align-items-center">
+            @{
+                if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        @Html.DisplayFor(modelItem => item.FTestPaperName)
+                                    </h4>
+                                    <input type="hidden" value="@Html.DisplayFor(modelItem => item.FTestPaperId)" />
+                                    <div class="tab-pane active">
+                                        <div class="p-3">
+                                            <p>
+                                                @Html.DisplayFor(modelItem => item.FNote)
+                                            </p>
+                                            <br />
+                                            <h6 class="creator">
+                                                <span>創建者：</span>
+                                                @Html.DisplayFor(modelItem => item.FDesignerAccount)
+                                            </h6>
+                                        </div>
+
+                                        <div class="editBlock">
+                                            <a asp-action="Edit" asp-route-id="@item.FTestPaperId">Edit</a> |
+                                            <a asp-action="Details" asp-route-id="@item.FTestPaperId">Details</a> |
+                                            <a asp-action="Delete" asp-route-id="@item.FTestPaperId">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+            

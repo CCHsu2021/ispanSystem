@@ -8,24 +8,19 @@ namespace MSITTeam1.ViewModels
 {
     public class SPointRecordViewModel
     {
-        private StudentBasic _stu = null;
+        private TStudentPoint _stPoint = null;
         public SPointRecordViewModel()
         {
-            _stu = new StudentBasic();
+            _stPoint = new TStudentPoint();
         }
-        public StudentBasic stu { get { return _stu; } set { _stu = value; } }
-        public string FAccount { get { return this.stu.FAccount; } set { this.stu.FAccount = value; } }
-        public string Name { get { return this.stu.Name; } set { this.stu.Name = value; } }
-        public string Gender { get { return this.stu.Gender; } set { this.stu.Gender = value; } }
-        public string BirthDate { get { return this.stu.BirthDate; } set { this.stu.BirthDate = value; } }
-        public string Email { get { return this.stu.Email; } set { this.stu.Email = value; } }
-        public string Phone { get { return this.stu.Phone; } set { this.stu.Phone = value; } }
-        public string ContactAddress { get { return this.stu.ContactAddress; } set { this.stu.ContactAddress = value; } }
-        public string Autobiography { get { return this.stu.Autobiography; } set { this.stu.Autobiography = value; } }
-        public string Portrait { get { return this.stu.Portrait; } set { this.stu.Portrait = value; } }
-        public string FClassMessage { get { return this.stu.FClassMessage; } set { this.stu.FClassMessage = value; } }
-        public string FCompany { get { return this.stu.FCompany; } set { this.stu.FCompany = value; } }
-        public string FCity { get { return this.stu.FCity; } set { this.stu.FCity = value; } }
-        public string FDistrict { get { return this.stu.FDistrict; } set { this.stu.FDistrict = value; } }
+        public TStudentPoint stPoint { get { return _stPoint; } set { _stPoint = value; } }
+        public int pointUsageId  { get { return stPoint.PointUsageId; } set { stPoint.PointUsageId = value; } }
+        public string MemberId  { get { return stPoint.MemberId; } set { stPoint.MemberId = value; } }
+        public DateTime? PointDate  { get { return stPoint.PointDate; } set { stPoint.PointDate = value; } }
+        public string PointType { get { return stPoint.PointType; } set { stPoint.PointType = value; } }
+        public string PointDes { get { return stPoint.PointDescription; } set { stPoint.PointDescription = value; } }
+        public int? PointRecord { get { return stPoint.PointRecord; } set { stPoint.PointRecord = value; } }
+        public string OrderId { get { return stPoint.OrderId; } set { stPoint.OrderId = value; } }
+     
     }
 }

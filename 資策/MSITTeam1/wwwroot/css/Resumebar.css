@@ -66,6 +66,7 @@
 .full-width-container {
     width: 100%;
     min-width: 320px;
+    background-color:white;
 }
 
 .sized-container {

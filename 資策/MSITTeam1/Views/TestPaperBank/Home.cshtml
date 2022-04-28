@@ -3,6 +3,48 @@
     ViewData["Title"] = "Index";
 }
 
+@section Style{
+    <link rel="stylesheet" href="~/css/fontawesome-all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/QuestionBankStyleSheet.css" />
+    <style>
+        .card {
+            height: 190px;
+            padding: 15px !important;
+        }
+
+            .card:hover {
+                box-shadow: 5px 10px 30px rgb(0 0 0 / 50%);
+            }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-title {
+            text-align: center !important;
+        }
+
+        p, .text {
+            line-height: 1.6em !important;
+            font-size: 14px;
+            text-indent: 2em;
+            height: 65px;
+            overflow: auto;
+        }
+
+        .p-3 {
+            padding: 3px !important;
+        }
+
+        .creator {
+            color: darkblue;
+            text-align: right;
+            font-size: 14px !important;
+        }
+    </style>
+}
+
 <link href="~/css/MemberCenter.css" rel="stylesheet">
 <div id="cont-about" class="container-fluid py-4">
     <div class="container">
@@ -45,22 +87,17 @@
             <div class="col-sm-9">
                 <div class="tab-content shadow-sm">
                     <div id="home" class="container tab-pane active">
-                        <vc:company-basic></vc:company-basic>
+                        @*<vc:company-basic></vc:company-basic>*@
                     </div>
                     <div id="menu1" class="container tab-pane fade">
-                            <h3 class="text-center">照片列表</h3>
-                            <div id="PhotolistMsit">
-                                <vc:company-photo-list taxid="@ViewBag.account"></vc:company-photo-list>
-                            </div>
-                        </div>
-                    <div id="menu2" class="container tab-pane fade">
                         <div class="row about-box">
-                            
+                            <h3 class="text-center">照片列表</h3>
+
                         </div>
                     </div>
-                    <div id="menu3" class="container tab-pane fade">
+                    <div id="menu2" class="container tab-pane fade">
                         <div class="row about-box">
-                            <h3 class="text-center">我的點數</h3>
+                            <h3 class="text-center">檢視平台</h3>
                             <p>
                                 AntenaGames is small indie game studio based in Croatia. Founded in 2020,
                                 on a mission to make beautiful, fun and popular mobile games. The first game released
@@ -73,6 +110,11 @@
                                 Founder & CEO<br />
                                 A.K.
                             </p>
+                        </div>
+                    </div>
+                    <div id="menu3" class="container tab-pane fade">
+                        <div>
+                            <vc:q-test-paper-list></vc:q-test-paper-list>
                         </div>
                     </div>
                     <div id="menu4" class="container tab-pane fade">
@@ -110,7 +152,7 @@
                         </div>
                     </div>
                     <div id="menu6" class="container tab-pane fade">
-                                <vc:job-vacancy></vc:job-vacancy>
+                        @*<vc:job-vacancy></vc:job-vacancy>*@
                         <div id="JoblistPagination" class="row my-4"></div>
                     </div>
                     <div id="menu7" class="container tab-pane fade">
@@ -137,114 +179,9 @@
 </div>
 @section Scripts
 {
-
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
     <script>
-            var onResize = function () {
-                $("body").css("padding-top", $(".main-header").height());
-            };
-            $(window).resize(onResize);
-            $(function () {
-                onResize();
-            });
 
-        $("#previewpage").click(() => {
-            window.location = '@Url.Content("~/CCompanyBasic/Index?taxid=")' +'@ViewBag.Account'
-        })
-        //基本資料變更儲存
-    $("#savechanges").click(() => {
-        var jsondata ={
-            CompanyTaxid: $("#CompanyTaxid").val(),
-            FName: $("#FName").val(),
-            FPhoneCode: $("#FPhoneCode").val(),
-            FPhone: $("#FPhone").val(),
-            FFaxCode: $("#FFaxCode").val(),
-            FFax: $("#FFax").val(),
-            FWebsite: $("#FWebsite").val(),
-            FRelatedLink: $("#FRelatedLink").val(),
-            FContactPerson: $("#FContactPerson").val(),
-            FCity: $("#FCity").val(),
-            FDistrict: $("#FDistrict").val(),
-            FAddress: $("#FAddress").val(),
-            FEmail: $("#FEmail").val(),
-            FBenefits: $("#FBenefits").val(),
-            FCustomInfo: $("#FCustomInfo").val(),
-            FCity: $("#City option:selected").text(),
-            FDistrictCode: $("#District").val(),
-            FDistrict: $("#District option:selected").text(),
-            FCapitalAmount: $("#FCapitalAmount").val()
-        }
-        //var picturedata = new FormData(document.fileupload)
-        @*$.post("@Url.Content("~/CMemberCenter/CompanyInformationEdit")", jsondata, function (data) {
-            Swal.fire({
-                icon: 'success',
-                title: '修改成功',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(() => {
-                $('#staticBackdrop').hide()
-                window.location.reload()
-            });
-        })*@
-        $.ajax({
-            url: "@Url.Content("~/CMemberCenter/CompanyInformationEdit")",
-            type: "POST",
-           // contentType: "application/json; charset=utf-8",
-            data: jsondata,
-        }).done(function (data) {
-            Swal.fire({
-                icon: 'success',
-                title: '修改成功',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(() => {
-                $('#staticBackdrop').hide()
-                window.location.reload()
-            });
-        }).fail(function (error) {
-            Swal.fire(error.status + ":" + error.statusText);
-        })
-    })
-        //圖片預覽變更+儲存照片
-        function readURL(input) {
-            var formdata = new FormData(document.LogoUpload);
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {  //reader加載成功
-                    fetch('@Url.Content("~/CMemberCenter/SaveLogoPicture")',{
-                        method:"Post",
-                        body: formdata,
-                    });
-                    $('#picture').attr('src', e.target.result);
-
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $("#picture-file").change(function () {
-            readURL(this);
-        });
-        $(function () {
-            initPagination('.job-card', 2, '#JoblistPagination')
-        });
-
-        $("#uplaod-photo-btn").click(function () {
-            Dropzone.options.form1 = {
-                dictDefaultMessage: "拖曳檔案或是點擊上傳",
-                acceptedFiles: "image/*",
-                init: function () {
-                    this.on("complete", function (file) {
-                        $(".modal-backdrop").css("display", "none");
-                        $("#CompanyPhotoUpload").modal('hide');
-                        $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
-                        $("#CompanyPhotoUpload").load(location.href + " #CompanyPhotoUpload")
-                        $("#form1").val(null);
-                        console.log("good")
-                    });
-                }
-            };
-        })
     </script>
 }
 

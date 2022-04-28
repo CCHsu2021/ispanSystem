@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MSITTeam1.ViewModels.CProductViewModel>
+﻿@model IEnumerable<MSITTeam1.Models.TClassInfo>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,18 +22,18 @@
         @{
             foreach (var item in Model)
             {
-                ViewBag.prodId = item.ProductId;
+                ViewBag.prodId = item.FClassExponent;
                 <div class="col-md-4 col-lg-3 text-center">
                     <figure class="product-item">
                         <div class="icons">
-                            <a href="javascript:void(0);" class="add-to-cart-index" onclick="addToCartBtn('@item.ProductId')" title="加入購物車" style="z-index:9"><i class="fas fa-shopping-cart"></i></a>
+                            <a href="javascript:void(0);" class="add-to-cart-index" onclick="addToCartBtn('@item.FClassExponent')" title="加入購物車" style="z-index:9"><i class="fas fa-shopping-cart"></i></a>
                         </div>
-                        <a class="d-block" asp-action="Details" asp-route-id="@item.ProductId">
-                            <img src="@item.ImgPath" alt="" />
+                        <a class="d-block" asp-action="classDetails" asp-route-id="@item.FClassExponent">
+                            <img src="@item.FClassPhotoPath" alt="" />
                         </a>
                         <figcaption>
-                            <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
-                            <div class="price h5">NT$@Html.DisplayFor(modelItem => item.Price, "Money")</div>
+                            <h5>@Html.DisplayFor(modelItem => item.FClassname)</h5>
+                            <div class="price h5">NT$@Html.DisplayFor(modelItem => item.FClassmoney)</div>
                         </figcaption>
                     </figure>
                 </div>
@@ -44,7 +44,7 @@
 </div>
 @section Scripts{
     <script>
-     
+
         var snippet = [].slice.call(document.querySelectorAll('.hover'));
         if (snippet.length) {
             snippet.forEach(function (snippet) {
@@ -73,7 +73,7 @@
                 })
             } else {
                         $.ajax({
-                            url: "@Url.Content("~/Products/AddToCart")",
+                            url: "@Url.Content("~/Products/ClassAddToCart")",
                             type: "POST",
                             dataType: "text",
                             data: { id: id },
@@ -84,7 +84,7 @@
                                     showConfirmButton: false,
                                     timer: 1200
                                 })
-                                    $("#shoppingCartReload").load(location.href + " #shoppingCartReload");
+                                    $("#classshoppingCartReload").load(location.href + " #classshoppingCartReload");
                             }
                         })
                     }

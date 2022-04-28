@@ -68,18 +68,18 @@
         </div>
         <div class="col-md-4">
             <h3 class="mb-3">@Html.DisplayFor(model => model.Name)</h3>
-            <h4 class="mb-3">NT$@Html.DisplayFor(model => model.Price)</h4>
+            <h4 class="mb-3">NT$@Html.DisplayFor(model => model.Price,"Money")</h4>
             <div class="mb-3" style="height:180px;overflow:auto;">
                 <p>@Html.DisplayFor(model => model.Description)</p>
             </div>
             <div class="d-flex mb-3 align-items-center">
                 <div style="min-width:3rem">數量：</div>
                 <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                <input type="number" id="number" value="0" />
+                <input type="number" id="number" value="1" />
                 <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
             </div>
             <div class="d-flex justify-content-between">
-                <button class="btn-style-two d-inline-block" id="detail-add-to-cart">加入購物車</button>
+                <button class="btn-style-two d-inline-block" onclick="DetailAddToCart('@Html.DisplayFor(model => model.ProductId)')">加入購物車</button>
             </div>
         </div>
     </div>
@@ -87,27 +87,34 @@
 @section Scripts{
 
     <script>
-    //判斷是否已登入
-    $("#detail-add-to-cart").click(function () {
-        if ("@ViewBag.account" == "") {
-            Swal.fire({
-                icon: 'info',
-                title: '請先登入會員',
-                showConfirmButton: false,
-                timer: 1300
-            })
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: '已加入購物車',
-                showConfirmButton: false,
-                timer: 1300
-            })
-        }
-    })
-    </script>
+          //判斷是否已登入
+        function DetailAddToCart(id) {
+                          if ("@ViewBag.account" == "") {
+                Swal.fire({
+                    icon: 'info',
+                    title: '請先登入會員',
+                    showConfirmButton: false,
+                    timer: 1300
+                })
+            } else {
+                        $.ajax({
+                            url: "@Url.Content("~/Products/DetailAddToCart")",
+                            type: "POST",
+                            dataType: "text",
+                            data: { id: id, count: $("#number").val() },
+                            success: function () {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '已加入購物車',
+                                    showConfirmButton: false,
+                                    timer: 1200
+                                })
+                                    $("#shoppingCartReload").load(location.href + " #shoppingCartReload");
+                            }
+                        })
+                    }
+                }
 
-    <script>
         //+-按鈕
         function increaseValue() {
             var value = parseInt(document.getElementById('number').value, 10);

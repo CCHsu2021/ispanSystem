@@ -1,0 +1,483 @@
+﻿@model MSITTeam1.ViewModels.CTestPaperBankViewModel
+@addTagHelper *,MSITTeam1
+
+@section Style{
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/fontawesome-all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
+    <link href="~/css/barRating.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/StarBar.css" />
+    <style>
+        .indicator {
+            width: 25px !important;
+        }
+
+        .form-group > textarea {
+            overflow-y: auto !important;
+            height: 200px !important;
+        }
+
+        #search {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            padding: 0.5rem 0.75rem;
+            background-color: #1e3c84;
+            color: #FFFFFF;
+            text-transform: capitalize;
+            font-size: 18px;
+            line-height: 22px;
+            outline: none;
+            cursor: pointer;
+            transition: all .3s linear;
+            width: 50px;
+        }
+
+        #testView {
+            height: 450px;
+            overflow: auto;
+        }
+
+        .slide-container {
+            height: 800px !important;
+        }
+
+        .sized-container.questionTable {
+            max-width: 2000px;
+        }
+    </style>
+}
+
+
+
+<div class="resumebar">
+    <div class="pagination-container full-width-container">
+        <div class="sized-container">
+            <div class="pagination"></div>
+        </div>
+    </div>
+
+    <div class="viewport full-width-container">
+        <ul class="slide-container">
+            <li class="slide" data-tag="建立考卷資料">
+                <form name="basic">
+                    <div class="sized-container basic">
+                        <h1>歡迎使用資展題庫系統 這是新增考卷的頁面</h1>
+                        <h2>請填寫考卷名稱及考卷介紹，您可以依照喜好從題庫挑選想要的題目，您也可以新增屬於自己的題目，新的題目經過審核後，該張試卷才能成功啟用。</h2>
+                        <hr />
+                        <div class="row data justify-content-center">
+                            <div class="col-5">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="FDesignerAccount" value="@ViewBag.account" />
+                                <div class="form-group">
+                                    <label asp-for="FTestPaperName" class="control-label"></label>
+                                    <input asp-for="FTestPaperName" class="form-control" id="FpaperName"/>
+                                    <span asp-validation-for="FTestPaperName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <label asp-for="FBSubjectId" class="control-label"></label>
+                                    <select id="FSubject" name="FSubjectId" class="form-control"></select>
+                                    <span asp-validation-for="FBSubjectId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                @*<div class="image-upload">
+                                        <label for="file-input">
+                                            <img id="blah" class="img-thumbnail" src="/images/student/@Model.fPortrait" title="變更圖片" alt="您的圖片" />
+                                        </label>
+                                        <input id="file-input" type="file" name="photo" />
+                                    </div>*@
+                                <div class="form-group">
+                                    <label asp-for="FNote" class="control-label"></label>
+                                    <textarea id="FPaperNote" asp-for="FNote" class="form-control"></textarea>
+                                    <span asp-validation-for="FNote" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="btndiv">
+                                <button class="savebtn my-3" id="savechanges">儲存</button>
+                            </div>*@
+                    </div>
+                </form>
+            </li>
+
+            <li class="slide" data-tag="選擇題目">
+                <div class="sized-container questionTable">
+                    <div class="row row justify-content-around">
+                        <div class="col-3">
+                            <select id="FSubjectId" name="FSubjectId" class="form-control">
+                                <option value="">請選擇課程名稱</option>
+                                <option value="" selected="selected">其他</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <select id="FQuestionTypeId" class="form-control">
+                                <option value="">請選擇題型</option>
+                                <option value="1">單選題</option>
+                                <option value="2">多選題</option>
+                                <option value="3">填空題</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group input-group-rounded">
+                                <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="keyword">
+                                <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="search"><i class="fas fa-search"></i></button></span>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <a data-toggle="modal" data-target="#questionCreate">新增題目</a>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" style="margin:8px;">
+                        <div id="testView" class="col-9">
+                            @*QuestionList*@
+                        </div>
+                        <div class="col-3">
+                            <table id="testTable" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>已選題目</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row data" id="workExpPage">
+                        <!--<div class="col-6">-->
+                            @*add here*@
+                            <!--<button class="saveworkbtn my-3" id="editWork" onclick="editWork()">儲存修改</button>
+                        </div>-->
+                    </div>
+                </div>
+            </li>
+
+            <li class="slide" data-tag="試卷預覽">
+                <div class="sized-container edu">
+                    <div class="row data" id="EduPage">
+                        <div class="col-6">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            @*add hidden here*@
+                            <button class="creatworkbtn my-3" id="createPaper">新增</button>
+                        </div>
+                        <div class="col-6">
+                            @*add here*@
+                            <button class="my-3">新增試卷</button>
+                        </div>
+                    </div>
+                    <div class="card workdata">
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+
+    </div>
+    <div class="full-width-container">
+        <div class="button-container sized-container">
+            <button class="next">下一步</button>
+            <button class="previous">上一步</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="questionCreate" tabindex="-1" aria-labelledby="questionCreate" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">題目新增</h5>
+                <input type="button" class="close" data-dismiss="modal" aria-label="Close" />
+                <span aria-hidden="true">&times;</span>
+                
+            </div>
+            <div class="modal-body">
+                <vc:question-bank-create></vc:question-bank-create>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>*@
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="~/js/jquery.barrating.js"></script>
+    <script src="~/js/barRating.init.js"></script>
+    <script>
+          // 載入課程名稱
+        const selSubject = document.querySelector('#FSubjectIdSel');
+        const selTestC = document.querySelector('#FSubject');
+        async function LoadSubject() {
+            const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
+            renderSubject(await responseSubject.json());
+        }
+        function renderSubject(datas) {
+            datas.forEach((item) => {
+                const opt = new Option(item.fClassCategory, item.fClassCategory);
+                selSubject.options.add(opt);
+                selTestC.options.add(opt);
+            })
+        }
+        LoadSubject();
+
+        // 題目查詢
+        var jsondata = null;
+        $(document).ready(function () {
+        $('#search').click(function () {
+                jsondata = JSON.stringify({
+                    Subjects: $('#FSubjectId').val(),
+                    keyword: $('#keyword').val(),
+                    Type: $('#FQuestionTypeId').val()
+                })
+            $.ajax({
+                url: "@Url.Content("~/QuestionBank/List")",
+                type: "POST",
+                contentType: "application/json",
+                data: jsondata,
+                success: function (result) {
+                    $('#testView').html(result);
+                }
+            })
+        })
+        })
+
+//-----------------------------Create New Question---------------------------------------------
+        // 判斷Checkbox
+        var currentSelect = 0, limit = 1;
+        function doCheck(obj) {
+            obj.checked ? currentSelect++ : currentSelect--;
+            if (currentSelect > limit) {
+                obj.checked = false;
+                Swal.fire("超過正確答案上限");
+                currentSelect--;
+            }
+        }
+        // 根據題型判斷答案輸入欄位及許可正確選項上限
+        $('#FQuestionTypeId').change(function () {
+            if ($(this).val() === "3") {
+                console.log("OK");
+                $('#BtnNewChoice').hide();
+                $('#ansList > #choice > label').html("答案");
+                $('#ansList div:not(:first-child)').remove();
+                $('#ansList > #choice > #checkBox1').hide();
+            } else if ($(this).val() === "2") {
+                limit = 100;
+                $('#BtnNewChoice').show();
+                $('#ansList > #choice > label').html("選項");
+                $('#ansList > #choice > #checkBox1').show();
+            } else if ($(this).val() === "1") {
+                limit = 1;
+                $('#BtnNewChoice').show();
+                $('#ansList > #choice > label').html("選項");
+                $('#ansList > #choice > input').removeAttr("checked");
+                $('#ansList > #choice > #checkBox1').show();
+            }
+        })
+
+        // 新增選項textbox
+        var count = 1;
+        const btnNewChoice = document.querySelector('#BtnNewChoice');
+        btnNewChoice.addEventListener('click', function () {
+            count++;
+            //var divChoice = "<div class=form-group id=choice c><label asp -for= FChoice class= control-label>選項" + count + "</label ><input id=txtAns asp-for=FChoice class=form-control /><span asp-validation-for=FChoice class=text-danger></span><button class=btn id=del-btn type=button><i class=fasfa-trash-alt> </i>Delete</button></div>"
+            var divChoice = `<div class="form-group" id="choice" ><label asp -for="FChoice" class="control-label">選項</label ><br /><input type="checkbox" name="FCorrectAnswer" value=1 onclick="doCheck(this)" style="margin:0 3px 0 0;" /><input id="txtAns" asp-for="FChoice" class="form-control"/><span asp-validation-for="FChoice" class="text-danger"></span><button class="btn" id="del-btn" type="button" style="margin:10px 0 0 25px"><i class="fasfa-trash-alt"> </i>Delete</button></div>`
+            $('#ansList').append(divChoice);
+        })
+        $("#outdiv").on("click", "#del-btn", function () {
+            console.log("delete");
+            $(this).closest("#choice").remove();
+        });
+
+        // 將所有選項存入Array
+        $('#createNew').click(function () {
+            var ansArr = [];
+            var selectAns = $('#ansList input[type=checkbox]:checked').length;
+            if (selectAns < 1) {
+                Swal.fire("請選擇此題正確答案");
+            } else {
+                $('#ansList > div').each(function (idx, item) {
+                    var ans = {}
+                    var c = $(item).find(':checkbox').prop('checked');
+                    ans.FCorrect = c ? 1 : 2;
+                    ans.Fchoice = $(item).find(':text').val();
+                    ansArr.push(ans);
+                })
+                var jsondata = JSON.stringify({
+                    FSubjectId: $('#FSubjectIdSel').val(),
+                    FQuestion: $('#FQuestion').val(),
+                    FQuestionTypeId: $('#FQuestionTypeIdSel').val(),
+                    FChoiceList: ansArr,
+                    FLevel: $('.questionBarRate').val()
+                })
+                console.log(jsondata);
+                $.ajax({
+                    url: "/QuestionBank/Create",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: jsondata
+                }).done(function (data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '新增成功',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })
+                })
+            }
+        })
+
+//-------------------------------------------Create New Question End--------------------------------
+
+//-----------------------------Create New TestPaper---------------------------------------------
+    // 題目選取
+    function passToPaper(checkboxid) {
+        var t = $('#' + checkboxid).prop('checked');
+        if (t) {            
+            var rowid = "r" + checkboxid;
+            var currentRow = $('#' + checkboxid).closest("tr");
+            var getQuestion = currentRow.find('td').eq(2).html();
+            $('#testTable > tbody').append('<tr id = ' + rowid + '><th>' + getQuestion + '</th></tr>');
+        } else {
+            var rowid = "r" + checkboxid;
+            $('#testTable > tbody').find('#' + rowid).remove();
+        }
+        }
+
+        // 新增試卷
+        $('#createPaper').click(function () {
+            console.log("ok");
+            var selectList = [];
+            var QuestionList = $('#testTable').length;
+            if (QuestionList < 1) {
+                Swal.fire("尚未選取題目");
+            } else {
+                $('#testTable > tbody > tr').each(function (idx, item) {
+                    var queid = {};
+                    var sub = $(item).find('.subjectId').val();
+                    var que = $(item).find('.questionId').val();
+                    queid.FSubjectId = sub;
+                    queid.fQuestionId = que;
+                    selectList.push(queid);
+                })
+                console.log(selectList);
+                var newPaperJson = JSON.stringify({
+                    FDesignerAccount: $('#FDesignerAccount').val(),
+                    FTestPaperName: $('#FpaperName').val(),
+                    FBSubjectId: $('#FSubject').val(),
+                    FNote: $('#FPaperNote').val(),
+                    SelectQuestionList: selectList,
+                })
+                console.log(newPaperJson);
+                $.ajax({
+                    url: "/TestPaperBank/CreatNewPaper",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: newPaperJson
+                }).done(function (data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '新增成功',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })
+                })
+            }
+        })
+
+
+//-----------------------------Create New TestPaper End---------------------------------------------
+
+
+
+
+
+        // 刪除不需要的jquery程式
+    var currentSlide = 0,
+        $slideContainer = $('.slide-container'),
+        $slide = $('.slide'),
+        slideCount = $slide.length,
+        animationTime = 300;
+
+    function setSlideDimensions() {
+        var windowWidth = $(window).width();
+        $slideContainer.width(windowWidth * slideCount);
+        $slide.width(windowWidth);
+    }
+
+    function generatePagination() {
+        var $pagination = $('.pagination');
+        for (var i = 0; i < slideCount; i++) {
+            var $indicator = $('<div>').addClass('indicator'),
+                $progressBarContainer = $('<div>').addClass('progress-bar-container'),
+                $progressBar = $('<div>').addClass('progress-bar'),
+                indicatorTagText = $slide.eq(i).attr('data-tag'),
+                $tag = $('<div>').addClass('tag').text(indicatorTagText);
+            $indicator.append($tag);
+            $progressBarContainer.append($progressBar);
+            $pagination.append($indicator).append($progressBarContainer);
+        }
+        $pagination.find('.indicator').eq(0).addClass('active');
+    }
+
+    function goToNextSlide() {
+        if (currentSlide >= slideCount - 1) return;
+        var windowWidth = $(window).width();
+        currentSlide++;
+        $slideContainer.animate({
+            left: -(windowWidth * currentSlide)
+        });
+        setActiveIndicator();
+        $('.progress-bar').eq(currentSlide - 1).animate({
+            width: '100%'
+        }, animationTime);
+    }
+
+    function goToPreviousSlide() {
+        if (currentSlide <= 0) return;
+        var windowWidth = $(window).width();
+        currentSlide--;
+        $slideContainer.animate({
+            left: -(windowWidth * currentSlide)
+        }, animationTime);
+        setActiveIndicator();
+        $('.progress-bar').eq(currentSlide).animate({
+            width: '0%'
+        }, animationTime);
+    }
+
+    function postitionSlides() {
+        var windowWidth = $(window).width();
+        setSlideDimensions();
+        $slideContainer.css({
+            left: -(windowWidth * currentSlide)
+        }, animationTime);
+    }
+
+    function setActiveIndicator() {
+        var $indicator = $('.indicator');
+        $indicator.removeClass('active').removeClass('complete');
+        $indicator.eq(currentSlide).addClass('active');
+        for (var i = 0; i < currentSlide; i++) {
+            $indicator.eq(i).addClass('complete');
+        }
+    }
+
+    setSlideDimensions();
+    generatePagination();
+    $(window).resize(postitionSlides);
+    $('.next').on('click', goToNextSlide);
+    $('.previous').on('click', goToPreviousSlide);
+    </script>
+}

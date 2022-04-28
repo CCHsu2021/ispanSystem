@@ -4,30 +4,22 @@
     ViewData["Title"] = "Edit";
 }
 
-<div class="container" style="padding:20px;">
-    <div>
-        @{
-            if (Model != null)
-            {
-                <div class="row">
-                    <div class="col-md-4">
+<div class="container" id="outdiv" style="padding:20px">
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                if (Model != null)
+                {
                         <form asp-action="Edit" method="post" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                            @*<div class="form-group">
-                                <label asp-for="FQuestionImage" class="control-label"></label>
-                                    <input asp-for="FQuestionImage" class="form-control" />
-                                    <span asp-validation-for="FQuestionImage" class="text-danger"></span>
-                                <input type="file" name="photo" class="form-control" />
-                            </div>*@
                             <div class="form-group">
                                 <label class="control-label" asp-for="@Model[0].FSubjectId"></label>
-                                <select id="FSubjectId" name="FSubjectId" class="form-control"></select>
+                                <h6><input type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" disabled="disabled" /></h6>
                                 <span asp-validation-for="@Model[0].FSubjectId" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <input type="hidden" id="FQuestionId" asp-for="@Model[0].FQuestionId" />
-                                <input type="hidden" id="FSubjectId" asp-for="@Model[0].FSubjectId" />
                                 <label id="test1" class="control-label" asp-for="@Model[0].FQuestion"></label>
                                 <input id="FQuestion" asp-for="@Model[0].FQuestion" class="form-control">
                                 <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
@@ -36,7 +28,7 @@
                             <div class="form-group">
                                 <label asp-for="@Model[0].FQuestionTypeId" class="control-label"></label>
                                 <input type="hidden" value="@Model[0].FQuestionTypeId" id="curType" />
-                                <select id="FQuestionTypeId" asp-for="@Model[0].FQuestionTypeId" class="form-control">
+                                <select id="FQuestionTypeIdSel" asp-for="@Model[0].FQuestionTypeId" class="form-control">
                                     <option value="1">單選題</option>
                                     <option value="2">多選題</option>
                                     <option value="3">填空題</option>
@@ -68,22 +60,37 @@
                                 <btn id="BtnNewChoice" class="btn btn-primary btn-outline small">新增答案選項</btn>
                             </div>
                             <div class="form-group">
+                                <label asp-for="@Model[0].FLevel" class="control-label"></label>
+                                <input type="hidden" value="@Model[0].FLevel" id="curLevel" />
+                                <div>
+                                    <div class="rating2">
+                                        <div class="br-wrapper br-theme-fontawesome-stars">
+                                            <select class="questionBarRate" id="example-fontawesome" name="rating" autocomplete="off">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="@Model[0].FLevel" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
                                 <button class="btn btn-primary" type="button" id="saveChange">保存修改</button>
                             </div>
-                            <div>
-                                <a asp-action="List">返回題目列表</a>
-                            </div>
                         </form>
-                    </div>
-                </div>
+                }
             }
-        }
+        </div>
     </div>
 </div>
 
+@*<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>*@
 <script>
-    // 課程名稱 選單設置為 只讀
-    $('#Subjects').attr("disabled", "disabled");
     // 正確選項顯示
         var correctAnswer = 0;
     $('#ansList > div').each(function (idx,item) {
@@ -94,9 +101,12 @@
     })
 
         // 判斷Checkbox
-        var currentSelect = 0, limit = 1;
+    var currentSelect = $("input[type='checkbox']:checked").length;
+    var limit = 1;
+    console.log(currentSelect);
+
         function doCheck(obj) {
-            var quesType = $('#FQuestionTypeId').val();
+            var quesType = $('#FQuestionTypeIdSel').val();
             if (quesType === "1") {
                 limit = 1;
             } else if (quesType === "2") {
@@ -112,8 +122,8 @@
             }
         }
 
-        // 根據題型判斷答案輸入欄位及許可正確選項上限
-    $('#FQuestionTypeId').change(function () {
+        // 根據題型判斷答案輸入欄位及許可正確選項上限 代入當前題目類型和難度等級
+    $('#FQuestionTypeIdSel').change(function () {
         if ($(this).val() === "3") {
             Swal.fire({
                 title: '確定嗎?',
@@ -132,7 +142,6 @@
                     $('#ansList > .choice > #del-btn').hide();
                 } else {
                     var typeCur = $('#curType').val();
-                    console.log(typeCur);
                     $(this).find("option").each(function (i, item) {
                         if ((item.value) == typeCur) {
                             item.selected = true; return;
@@ -153,7 +162,14 @@
                 currentSelect = 0;
                 $('#ansList > .choice > #checkBox1').show();
             }
-        })
+    })
+
+    var levelCur = $('#curLevel').val();
+    $('#example-fontawesome').find("option").each(function (i, item) {
+        if ((item.value) === levelCur) {
+            item.selected = true; return;
+        }
+    })
 
         // 新增選項textbox
         var count = 1;
@@ -206,12 +222,12 @@
                      ans.FSN = SN;
                 ansArr.push(ans);
             })
-            console.log(ansArr);
-            var jsondata = JSON.stringify({
-                FSubjectId: $('#FSubjectId').val(),
+
+            var Editjsondata = JSON.stringify({
+                FSubjectId: $('#FSubjectIdV').val(),
                 FQuestionId: $('#FQuestionId').val(),
                 FQuestion: $('#FQuestion').val(),
-                FQuestionTypeId: $('#FQuestionTypeId').val(),
+                FQuestionTypeId: $('#FQuestionTypeIdSel').val(),
                 FChoiceList: ansArr,
                 FLevel: $('#FLevel').val()
             })
@@ -219,29 +235,19 @@
                 url: "@Url.Content("~/QuestionBank/Edit")",
                 type: "POST",
                 contentType: "application/json",
-                data:jsondata
+                data:Editjsondata
             }).done(function (data) {
                 Swal.fire({
                     icon: 'success',
                     title: '修改成功',
                     showConfirmButton: true,
                     timer:1500
-                })
+                }).then(() => {
+                    $('#questionEdit').hide()
+                    window.location.reload()
+                });
             })
             }
         })
 
-        // 取得課程類別
-        const selSubject = document.querySelector('#FSubjectId');
-        async function LoadSubject() {
-            const responseSubject = await fetch('@Url.Content("~/QuestionBank/Classes")');
-            renderSubject(await responseSubject.json());
-        }
-        LoadSubject();
-        function renderSubject(datas) {
-            datas.forEach((item) => {
-                const opt = new Option(item.fClassSkill, item.fClassSkill);
-                selSubject.options.add(opt);
-            })
-        }
 </script>

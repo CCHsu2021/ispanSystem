@@ -27,26 +27,31 @@ namespace MSITTeam1.ViewModels
 			get { return _testpaper; }
 			set { _testpaper = value; }
 		}
+
 		public int FBTestPaperId
 		{
 			get { return this.paperBank.FTestPaperId; }
 			set { this.paperBank.FTestPaperId = value; }
 		}
+		[DisplayName("創建者")]
 		public string FDesignerAccount
 		{
 			get { return this.paperBank.FDesignerAccount; }
 			set { this.paperBank.FDesignerAccount = value; }
 		}
+		[DisplayName("試卷名稱")]
 		public string FTestPaperName
 		{
 			get { return this.paperBank.FTestPaperName; }
 			set { this.paperBank.FTestPaperName = value; }
 		}
+		[DisplayName("課程名稱")]
 		public string FBSubjectId
 		{
 			get { return this.paperBank.FSubjectId; }
 			set { this.paperBank.FSubjectId = value; }
 		}
+		[DisplayName("試卷說明")]
 		public string FNote
 		{
 			get { return this.paperBank.FNote; }
@@ -73,5 +78,17 @@ namespace MSITTeam1.ViewModels
 			get { return this.testPaper.FQuestionId; }
 			set { this.testPaper.FQuestionId = value; }
 		}
+
+		public List<TestPaperDetailViewModel> SelectQuestionList
+		{
+			get;set;
+		}
+	}
+
+	public class TestPaperDetailViewModel
+	{
+		public int FSN { get; set; }
+		public string FSubjectId { get; set; }
+		public string FQuestionId { get; set; }
 	}
 }

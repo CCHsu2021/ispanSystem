@@ -36,7 +36,7 @@ namespace MSITTeam1.Controllers
 
         //更新公司基本資料
         [HttpPost]
-        public IActionResult CompanyInformationEdit([FromBody]CCompanyBasicViewModel company)
+        public IActionResult CompanyInformationEdit(CCompanyBasicViewModel company)
         {
             TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == company.CompanyTaxid);
             if (c != null)
@@ -75,10 +75,10 @@ namespace MSITTeam1.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveFile(IFormFile filepond, string id)
+        public ActionResult SaveFile(IFormFile file,string id)
         {
             string photoName = Guid.NewGuid().ToString() + ".jpg";
-            filepond.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\company\" + photoName, FileMode.Create));
+            file.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\company\" + photoName, FileMode.Create));
             TPhoto photo = new TPhoto()
             {
                 FAccount = id,
@@ -93,5 +93,6 @@ namespace MSITTeam1.Controllers
         {
             return View();
         }
+
     }
 }
