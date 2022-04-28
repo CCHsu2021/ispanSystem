@@ -15,15 +15,17 @@
             </div>
         </div>
     </div>
+    <button style="display:none" class="btn-style-two mt-3" type="button" id="button2">送出</button>
     <button style="display:none" class="btn-style-two mt-3" type="button" id="button1">下一題</button>
     <form name="member" method="post">
-        <input type="text" class="form-control" id="Grade" name="Grade" value="80">
+        <input type="text" class="form-control" id="Grade" name="Grade" value="0">
     </form>
 </div>
-    <script>
+<script>
 
 
         const btn = document.querySelector("#button1");
+        const btn2 = document.querySelector("#button2");
         const btn1 = document.querySelector("#btnstart");
         const divAlert = document.querySelector("#div1");
 
@@ -40,7 +42,7 @@
                 )
             } else {
                 btn1.style.display = 'none';
-                btn.style.display = 'block';
+                btn2.style.display = 'block';
                 btn.click();
             }
         })
@@ -65,9 +67,26 @@
                 }
                 $("#skill_grad_choices").html(choice)
             });
-        })
+        btn.style.display = 'none';
+        btn2.style.display = 'block';
+    })
 
-    </script>
+        var anscount = 0;
+        var count = 0;
+
+        btn2.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            var a = $('input[name=answer]:checked').val();
+            if (1 == a) { anscount++; }
+            count++
+
+            $('#Grade').attr({ 'value': Math.round((anscount / count) * 100) });
+
+            btn2.style.display = 'none';
+            btn.style.display = 'block';
+        });
+
+</script>
 
 
 
