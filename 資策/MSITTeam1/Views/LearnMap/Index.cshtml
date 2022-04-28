@@ -7,93 +7,281 @@
     <link href='https://fonts.googleapis.com/css?family=News+Cycle:400,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
     <style>
-
-        .accordion {
-            margin: 2rem auto;
+        :root {
+            --primary-color: rgba(140,160,190,1);
+            --secondary-color: #ed731a;
+            --text-color: rgba(230,230,230,1);
+            --line-color: #777;
+            --focus-color: rgba(255,0,125,1);
+            --background-color: #333;
+            --node-size: 4vw;
+        }
+        .node_text{
+            padding-left:1.5rem;
+            padding-right:1.5rem;
+            color:white;
+        }
+        .toolkit {
+            position: fixed;
+            left: 1vw;
+            height: 300px;
+            padding: 10px;
+            font-size: 16px;
+            overflow: hidden;
+            -webkit-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            background: #444;
         }
 
-            .accordion h1, h2, h3, h4 {
+            .toolkit.collapsed {
+                height: 40px;
+            }
+
+            .toolkit .collapse_btn {
+                text-align: center;
+                border: 3px solid var(--line-color);
+                -webkit-transition: all 0.5s ease;
+                transition: all 0.5s ease;
+            }
+
+            .toolkit.collapsed .collapse_btn {
+                -webkit-transform: scaleY(-1);
+                -ms-transform: scaleY(-1);
+                transform: scaleY(-1);
+            }
+
+            .toolkit label {
+                display: inline-block;
+                width: 150px;
+            }
+
+            .toolkit input {
+                width: 100px;
+                height: 22px;
+                text-align: center;
+                color: inherit;
                 cursor: pointer;
             }
 
-            .accordion h2, h3, h4 {
-                font-family: "News Cycle";
-            }
-
-            .accordion h1 {
-                padding: 15px 20px;
-                background-color: #333;
-                font-family: Lobster;
-                font-size: 1.5rem;
-                font-weight: normal;
-                color: #1abc9c;
-            }
-
-                .accordion h1:hover {
-                    color: #4afcdc;
+                .toolkit input[type=range] {
+                    border: 1px solid white;
                 }
 
-                .accordion h1:first-child {
-                    border-radius: 10px 10px 0 0;
-                }
+        .mindmap {
+            width: auto;
+            height: auto;
+            margin: 0 auto;
+            padding: calc(var(--node-size) / 2);
+            text-align: center;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-                .accordion h1:last-of-type {
-                    border-radius: 0 0 10px 10px;
-                }
-
-                .accordion h1:not(:last-of-type) {
-                    border-bottom: 1px dotted #1abc9c;
-                }
-
-            .accordion div, .accordion p {
-                display: none;
+            .mindmap:before {
+                content: '';
+                display: inline-block;
+                vertical-align: middle;
+                height: 100%;
+                width: 0;
             }
 
-            .accordion h2 {
-                padding: 5px 25px;
-                background-color: #1abc9c;
-                font-size: 1.1rem;
-                color: #333;
+        .node {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            height: var(--node-size);
+            /*width: var(--node-size);*/
+            margin: 0.25vw 0;
+            text-align: center;
+            line-height: var(--node-size);
+            border: 0.1vw solid var(--line-color);
+            border-radius: 10px;
+            background: var(--secondary-color);
+            cursor: pointer;
+            -webkit-transition: all .2s ease;
+            transition: all .2s ease;
+        }
+
+        .node_input {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            font: inherit;
+            font-style: italic;
+            text-align: center;
+            background: none;
+            color: inherit;
+        }
+
+
+        .node_root {
+            height: calc(var(--node-size) * 1.5);
+            width: calc(var(--node-size) * 1.5);
+            border: 0;
+            text-align: center;
+            line-height: calc(var(--node-size) * 1.5);
+            background: var(--primary-color);
+            font-size: 1.25em;
+        }
+
+            .node_root input {
+                opacity: 0;
             }
 
-                .accordion h2:hover {
-                    background-color: #09ab8b;
+            .node_root img {
+                width: calc(var(--node-size) * 1.5);
+                height: calc(var(--node-size) * 1.5);
+                -o-object-fit: cover;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+    
+        .children {
+            position: relative;
+            list-style: none;
+            text-align: left;
+            padding: 0 0 0 6px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+            .children:before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: -4px;
+                width: 10px;
+                border-top: 3px solid var(--line-color);
+            }
+
+        .children_item {
+            position: relative;
+            padding: 0 0 0 10px;
+            border-left: 3px solid var(--line-color);
+        }
+
+            .children_item:first-child,
+            .children_item:last-child {
+                border-left: 1px solid transparent;
+            }
+
+            .children_item:before {
+                content: '';
+                width: 10px;
+                border-top: 3px solid var(--line-color);
+                position: absolute;
+                top: 50%;
+                left: 0;
+            }
+
+            .children_item:first-child:before {
+                left: -1px;
+                bottom: 0;
+                border-radius: 4px 0 0 0;
+                border-left: 3px solid var(--line-color);
+            }
+
+            .children_item:last-child:before {
+                left: -1px;
+                top: 0;
+                bottom: 50%;
+                border-radius: 0 0 0 4px;
+                border: 0;
+                border-left: 3px solid var(--line-color);
+                border-bottom: 3px solid var(--line-color);
+            }
+
+            .children_item:first-child:last-child:before {
+                top: 50%;
+                bottom: auto;
+                border: 0;
+                border-radius: 0;
+                border-top: 3px solid var(--line-color);
+            }
+
+        .children_leftbranch,
+        .children_leftbranch .children {
+            direction: rtl;
+            text-align: right;
+            padding: 0 6px 0 0;
+        }
+
+            .children_leftbranch:before,
+            .children_leftbranch .children:before {
+                left: auto;
+                right: -4px;
+            }
+
+            .children_leftbranch .children_item {
+                padding: 0 10px 0 0;
+                border: 0;
+                border-right: 3px solid var(--line-color);
+            }
+
+                .children_leftbranch .children_item:first-child,
+                .children_leftbranch .children_item:last-child {
+                    border-right: 1px solid transparent;
                 }
 
-            .accordion h3 {
-                padding: 5px 30px;
-                background-color: #b94152;
-                font-size: .9rem;
-                color: #ddd;
-            }
-
-                .accordion h3:hover {
-                    background-color: #a93142;
+                .children_leftbranch .children_item:before {
+                    top: 50%;
+                    left: auto;
+                    right: 0;
                 }
 
-            .accordion h4 {
-                padding: 5px 35px;
-                background-color: #ffc25a;
-                font-size: .9rem;
-                color: #af720a;
-            }
-
-                .accordion h4:hover {
-                    background-color: #e0b040;
+                .children_leftbranch .children_item:first-child:before {
+                    right: -1px;
+                    border: 0;
+                    border-radius: 0 4px 0 0;
+                    border-top: 3px solid var(--line-color);
+                    border-right: 3px solid var(--line-color);
                 }
 
-            .accordion p {
-                padding: 15px 35px;
-                background-color: #ddd;
-                font-family: "Georgia";
-                font-size: .8rem;
-                color: #333;
-                line-height: 1.3rem;
-            }
+                .children_leftbranch .children_item:last-child:before {
+                    right: -1px;
+                    top: 0;
+                    bottom: 50%;
+                    border-radius: 0 0 4px 0;
+                    border: 0;
+                    border-right: 3px solid var(--line-color);
+                    border-bottom: 3px solid var(--line-color);
+                }
 
-            .accordion .opened-for-codepen {
-                display: block;
-            }
+                .children_leftbranch .children_item:first-child:last-child:before {
+                    top: 50%;
+                    bottom: auto;
+                    border: 0;
+                    border-radius: 0;
+                    border-top: 3px solid var(--line-color);
+                }
+
+        .children .children .node {
+            background: var(--secondary-color);
+            background: var(--secondary-color);
+        }
+
+        .children .children .children .node {
+            background: var(--secondary-color);
+            background: var(--secondary-color);
+        }
+
+        .children .children .children .children .node {
+            background:  var(--secondary-color);
+            background: var(--secondary-color);
+        }
+
+        .children .children .children .children .children .node {
+            background: var(--secondary-color);
+            background:  var(--secondary-color);
+        }
+
     </style>
 }
 @{ var ClassName = "";
@@ -105,6 +293,234 @@
         {
             @if (ClassName != item.FClassName)
             {
+
+                <div class="mindmap">
+                    <!--LEFT-->
+                    <ol class="children children_leftbranch">
+                        <li class="children_item">
+                            <div class="node">
+                                <div class="node_text">L1</div>
+                                <input type="text" class="node_input">
+                            </div>
+                            <ol class="children">
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">L1.1</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                </li>
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">L1.2</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="children_item">
+                            <div class="node">
+                                <div class="node_text">L2</div>
+                                <input type="text" class="node_input">
+                            </div>
+                            <ol class="children">
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">L2.1</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                </li>
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">L2.2</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                </li>
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">L2.3</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="children_item">
+                            <div class="node">
+                                <div class="node_text">
+                                    @item.FClassName.Trim()
+                                    @{ClassName = item.FClassName.Trim();
+                                    }
+                                </div>
+                                @*<input type="text" class="node_input">*@
+                            </div>
+                            <ol class="children">
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">L3.1</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                </li>
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">L3.2</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                </li>
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">L3.3</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                </li>
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">L3.4</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                    <ol class="children">
+                                        <li class="children_item">
+                                            <div class="node">
+                                                <div class="node_text">L3.4.1</div>
+                                                <input type="text" class="node_input">
+                                            </div>
+                                        </li>
+                                        <li class="children_item">
+                                            <div class="node">
+                                                <div class="node_text">L3.4.2</div>
+                                                <input type="text" class="node_input">
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+
+                    <!--CENTER-->
+                    <div class="node node_root">
+                        <div class="node_img"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/887373/profile/profile-80.jpg"></div>
+                        <input type="file" class="node_input">
+                    </div>
+
+                    <!--RIGHT-->
+                    <ol class="children children_rightbranch">
+                        <!--RIGHT-->
+                        <ol class="children children_rightbranch">
+                            <li class="children_item">
+                                <div class="node">
+                                    <div class="node_text">R1</div>
+                                    <input type="text" class="node_input">
+                                </div>
+                                <ol class="children">
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R1.1</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                    </li>
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R1.2</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                    </li>
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R1.3</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                        <ol class="children">
+                                            <li class="children_item">
+                                                <div class="node">
+                                                    <div class="node_text">R1.3.1</div>
+                                                    <input type="text" class="node_input">
+                                                </div>
+                                            </li>
+                                            <li class="children_item">
+                                                <div class="node">
+                                                    <div class="node_text">R1.3.2</div>
+                                                    <input type="text" class="node_input">
+                                                </div>
+                                                <ol class="children">
+                                                    <li class="children_item">
+                                                        <div class="node">
+                                                            <div class="node_text">R1.3.2.1</div>
+                                                            <input type="text" class="node_input">
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                            <li class="children_item">
+                                                <div class="node">
+                                                    <div class="node_text">R1.3.3</div>
+                                                    <input type="text" class="node_input">
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                            </li>
+                            <li class="children_item">
+                                <div class="node">
+                                    <div class="node_text">R2</div>
+                                    <input type="text" class="node_input">
+                                </div>
+                                <ol class="children">
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R2.1</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                    </li>
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R2.2</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                    </li>
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R2.3</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                    </li>
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R2.4</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                    </li>
+                                </ol>
+                            </li>
+                            <li class="children_item">
+                                <div class="node">
+                                    <div class="node_text">R3</div>
+                                    <input type="text" class="node_input">
+                                </div>
+                                <ol class="children">
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R3.1</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                    </li>
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R3.2</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                    </li>
+                                    <li class="children_item">
+                                        <div class="node">
+                                            <div class="node_text">R3.3</div>
+                                            <input type="text" class="node_input">
+                                        </div>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </ol>
+                </div>
+
                 <h1>@item.FClassName</h1>
                 ClassName = item.FClassName;
             }
@@ -124,30 +540,24 @@
 
 @section Scripts {
     <script>
-        var headers = ["H1", "H2", "H3", "H4", "H5", "H6"];
+        !function (e) { var a, t = { init: function (s) { var n = e(this); a = e.extend({ nodeClass: "node", nodeInputClass: "node_input", nodeTextClass: "node_text", activeClass: "node_active", editableClass: "node_editable", rootClass: "node_root", childrenClass: "children", childrenItemClass: "children_item", leftBranch: "children_leftbranch", rightBranch: "children_rightbranch", root: n, balance: !0 }, s), a.nodes = n.find("." + a.nodeClass), a.nodeInput = n.find("." + a.nodeInputClass), n.find(a.activeClass).length ? a.activeNode = n.find(a.activeClass) : a.activeNode = null, e(document).on("keydown", function (s) { if (a.activeNode) { var n, l, r, i = s.which || s.keyCode, d = a.activeNode; switch (i) { case 13: if (d.hasClass(a.editableClass)) return t.blur(), t.setActive(d), !1; if (d.hasClass(a.rootClass)) return; t.addNode(); break; case 9: d.hasClass(a.editableClass) ? (t.blur(), t.setActive(d)) : (s.preventDefault(), t.addChildNode()); break; case 27: break; case 8: case 46: if (d.hasClass(a.editableClass)) return !0; if (d.hasClass(a.rootClass)) return !1; l = d.parent().next().children("." + a.nodeClass), r = d.parent().parent().prev(), s.preventDefault(), t.removeNode(), l.length ? (l.addClass(a.activeClass), a.activeNode = l) : (r.addClass(a.activeClass), a.activeNode = r); break; case 37: if (d.hasClass(a.editableClass)) return !0; d.hasClass(a.rootClass) ? t.selectChildNode(e("." + a.leftBranch)) : d.closest("." + a.rightBranch).length ? t.selectParentNode() : t.selectChildNode(); break; case 38: if (d.hasClass(a.editableClass)) return !0; n = d.parent().prev().children("." + a.nodeClass), n.length && (t.blur(), t.setActive(n)); break; case 39: if (d.hasClass(a.editableClass)) return !0; d.hasClass(a.rootClass) ? t.selectChildNode(e("." + a.rightBranch)) : d.closest("." + a.rightBranch).length ? t.selectChildNode() : t.selectParentNode(); break; case 40: if (d.hasClass(a.editableClass)) return !0; l = d.parent().next().children("." + a.nodeClass), l.length && (t.blur(), t.setActive(l)) } } }), n.on("click", "." + a.nodeClass, function () { var s = e(this); s.hasClass(a.activeClass) ? (t.blur(), t.setActive(s), t.setEditable(s)) : (t.blur(), t.setActive(s)) }).on("input paste", "." + a.nodeInputClass, function () { var t = a.activeNode, s = t.find("." + a.nodeTextClass), n = e(this); s.text(n.val()) }).on("keydown", "." + a.nodeInputClass, function (e) { var a = e.which || e.keyCode; 9 === a && e.preventDefault() }) }, destroy: function () { e(window).unbind(".mindmap") }, selectParentNode: function () { var e, s = a.activeNode, n = s.parent().parent().parent(); e = n.children("." + a.nodeClass), t.blur(), t.setActive(e) }, selectChildNode: function (e) { var s, n = a.activeNode; e || (e = n.parent().children("." + a.childrenClass)), s = e.children("." + a.childrenItemClass + ":first-child").children("." + a.nodeClass), s.length && (t.blur(), t.setActive(s)) }, removeNode: function () { var e = a.activeNode, s = e.parent(), n = s.parent(), l = n.children().length - 1; l ? s.remove() : n.remove(), t.blur(), t.balance() }, addNode: function () { var e, s, n = a.activeNode.parent().parent(); n.append(t.getTemplate(1)), e = n.children("." + a.childrenItemClass + ":last"), s = e.children("." + a.nodeClass), t.blur(), t.setEditable(s), t.balance() }, addChildNode: function () { var e, s, n = a.activeNode.parent(), l = n.children("." + a.childrenClass); l.length ? (a.activeNode.hasClass(a.rootClass) && 2 === l.length && (l = l.filter("." + a.leftBranch)), l.append(t.getTemplate(1)), e = l.children("." + a.childrenItemClass + ":last"), s = e.children("." + a.nodeClass)) : (n.append(t.getTemplate(1, 1)), l = n.children("." + a.childrenClass), e = l.children("." + a.childrenItemClass + ":last"), s = e.children("." + a.nodeClass)), t.blur(), t.setEditable(s), t.balance() }, blur: function () { if (a.activeNode) { var e = a.activeNode, t = e.find("." + a.nodeTextClass), s = e.find("." + a.nodeInputClass); e.hasClass(a.editableClass) && (t.text(s.val()), s.blur()), e.removeClass(a.activeClass).removeClass(a.editableClass), a.activeNode = null } }, setActive: function (e) { e.addClass(a.activeClass), a.activeNode = e }, setEditable: function (e) { var t = e.find("." + a.nodeInputClass), s = e.find("." + a.nodeTextClass); e.addClass(a.activeClass).addClass(a.editableClass).attr("data-value", s.text()), t.val(s.text()).focus().select(), a.activeNode = e }, balance: function () { if (a.balance) { var s, n, l, r, i, d = 0, o = e("." + a.rightBranch), c = e("." + a.leftBranch), h = 0, C = a.root.children("." + a.childrenClass); if (!o.length) if (i = C.not("." + a.leftBranch), i.length) i.addClass(a.rightBranch); else { if (!C.length) return; C.eq(0).removeClass(a.leftBranch).addClass(a.rightBranch).appendTo(a.root) } if (!c.length) if (i = C.not("." + a.rightBranch), i.length) i.addClass(a.leftBranch); else { if (!C.length) return; a.root.prepend(t.getTemplate(0, 1)), a.root.children("." + a.childrenClass).not("." + a.rightBranch).addClass(a.leftBranch) } r = c.children(), l = o.children(), h = o.outerHeight() + c.outerHeight(), s = .5 * h; for (var u = 0, v = l.length; v > u; u++) { if (d += l.eq(u).outerHeight(), n = Math.abs(.5 * h - d), !(s >= n)) return void t.moveNodes(1, u, v); s = n } for (var f = 0, p = r.length; p > f; f++) { if (d += r.eq(f).outerHeight(), n = Math.abs(.5 * h - d), !(s >= n)) return void (f > 0 && t.moveNodes(0, 0, f - 1)); s = n } t.clearEmptyBranches() } }, moveNodes: function (s, n, l) { var r, i, d; i = e(s ? "." + a.rightBranch : "." + a.leftBranch), d = e(s ? "." + a.leftBranch : "." + a.rightBranch), r = i.children(), r.each(function (a) { a >= n && l >= a && e(this).appendTo(d) }), t.clearEmptyBranches() }, clearEmptyBranches: function () { var t = a.root.children("." + a.childrenClass); t.each(function () { e(this).children().length || e(this).remove() }) }, getTemplate: function (e, t) { var s = ""; return s += t ? ' <ol class="' + a.childrenClass + '">' : "", s += e ? '<li class="' + a.childrenItemClass + '"><div class="' + a.nodeClass + '"><div class="' + a.nodeTextClass + '">Node</div><input class="' + a.nodeInputClass + '" type="text"></div></li> ' : "", s += t ? "</ol>" : "" } }; e.fn.mindmap = function (a) { return t[a] ? t[a].apply(this, Array.prototype.slice.call(arguments, 1)) : "object" != typeof a && a ? void e.error("Unknown method: " + a) : t.init.apply(this, arguments) } }(jQuery), $(function () { var e = !1, a = 0, t = 0; $(window).on("mousemove touchmove", function (s) { if (e === !0) { var n = $(window).scrollTop() + (a - s.pageY), l = $(window).scrollLeft() + (t - s.pageX); $(window).scrollTop(n), $(window).scrollLeft(l) } }), $(window).on("mousedown touchstart", function (s) { e = !0, a = s.pageY, t = s.pageX }), $(window).on("mouseup touchend", function () { e = !1 }) });
 
-        $(".accordion").click(function (e) {
-            var target = e.target,
-                name = target.nodeName.toUpperCase();
-
-            if ($.inArray(name, headers) > -1) {
-                var subItem = $(target).next();
-
-                //slideUp all elements (except target) at current depth or greater
-                var depth = $(subItem).parents().length;
-                var allAtDepth = $(".accordion p, .accordion div").filter(function () {
-                    if ($(this).parents().length >= depth && this !== subItem.get(0)) {
-                        return true;
-                    }
-                });
-                $(allAtDepth).slideUp("fast");
-
-                //slideToggle target content and adjust bottom border if necessary
-                subItem.slideToggle("fast", function () {
-                    $(".accordion :visible:last").css("border-radius", "0 0 10px 10px");
-                });
-                $(target).css({ "border-bottom-right-radius": "0", "border-bottom-left-radius": "0" });
+        $(function () {
+            $('.mindmap').mindmap();
+            $('.collapse_btn').on('click', function () {
+                $(this).parent().toggleClass('collapsed');
+            });
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) { $('.node_root img').attr('src', e.target.result); }
+                    reader.readAsDataURL(input.files[0]);
+                }
             }
+
+            $('.node_root input').on('change', function () {
+                readURL(this);
+            });
         });
     </script>
 }

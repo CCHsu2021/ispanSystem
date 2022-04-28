@@ -2,14 +2,15 @@
 @{
     ViewData["Title"] = "Index";
 }
-<button class="btn-style-two mt-3" type="button" id="btnstart">開始測驗</button>
+<div class="container">
+    <button class="btn-style-two mt-3" type="button" id="btnstart">開始測驗</button>
     <div id="div1">
         <div class="row">
             <div class="container">
-                <h1 id="skill_grade_question"></h1>
+                <h4 id="skill_grade_question" class="font-weight-bold my-3 mt-4"></h4>
             </div>
             <div class="container">
-                <div class="row" id="skill_grad_choices">
+                <div class="row" id="skill_grad_choices" style="line-height:1.5rem;">
                 </div>
             </div>
         </div>
@@ -18,7 +19,7 @@
     <form name="member" method="post">
         <input type="text" class="form-control" id="Grade" name="Grade" value="80">
     </form>
-
+</div>
     <script>
 
 

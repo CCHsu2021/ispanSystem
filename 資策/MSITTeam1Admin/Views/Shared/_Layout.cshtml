@@ -61,7 +61,15 @@
                             <li><a href="chart-morris.html">分析報告</a></li>
                         </ul>
                     </li>
-                    <li><a href="app-event-calender.html"><i class="fas fa-chart-bar"></i>成績檢視及分析</a></li>
+                    <li>
+                        <a class="sidebar-sub-toggle">
+                            <i class="fas fa-chart-line"></i>成績檢視及分析 <span class="sidebar-collapse-icon ti-angle-down"></span>
+                        </a>
+                        <ul>
+                            <li><a href="@Url.Action("Index","BackGrade")">前後測驗成績</a></li>
+                            <li><a href="@Url.Action("skillIndex","BackGrade")">技能測驗成績</a></li>
+                        </ul>
+                    </li>
                     <li>
                         <a class="sidebar-sub-toggle">
                             <i class="fas fa-coins"></i>點數系統 <span class="sidebar-collapse-icon ti-angle-down"></span>
