@@ -23,13 +23,13 @@ namespace MSITTeam1.ViewComponent
         }
         public IViewComponentResult Invoke()
         {
-            if (!HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST+CDictionary.account))
+            if (!HttpContext.Session.Keys.Contains(CDictionary.SK_ClASS_PURCHASED_LIST+CDictionary.account))
             {
                 return new HtmlContentViewComponentResult(new HtmlString("<div class='text-center py-3 font-weight-bold h5 text-secondary'>暫無商品</div>"));
             }
             else
             {
-                string json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
+                string json = HttpContext.Session.GetString(CDictionary.SK_ClASS_PURCHASED_LIST + CDictionary.account);
                 List<CClassAddToCartViewModel> cart = JsonSerializer.Deserialize<List<CClassAddToCartViewModel>>(json);
                 return View(cart);
             }

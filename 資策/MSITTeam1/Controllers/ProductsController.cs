@@ -243,7 +243,7 @@ namespace MSITTeam1.Controllers
                 if (prod != null)
                 {
                     string json = "";
-                    var key = CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account;
+                    var key = CDictionary.SK_ClASS_PURCHASED_LIST + CDictionary.account;
                     List<CClassAddToCartViewModel> cart = new List<CClassAddToCartViewModel>();
                     CClassAddToCartViewModel item = new CClassAddToCartViewModel()
                     {
@@ -288,25 +288,26 @@ namespace MSITTeam1.Controllers
         {
             if (id != null)
             {
-                TProduct prod = hello.TProducts.FirstOrDefault(c => c.ProductId == id);
+                TClassInfo prod = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == id);
                 if (prod != null)
                 {
                     string json = "";
+                    var key = CDictionary.SK_ClASS_PURCHASED_LIST + CDictionary.account;
                     List<CClassAddToCartViewModel> cart = new List<CClassAddToCartViewModel>();
-                    if (HttpContext.Session.Keys.Contains(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account))
+                    if (HttpContext.Session.Keys.Contains(key))
                     {
-                        json = HttpContext.Session.GetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
+                        json = HttpContext.Session.GetString(key);
                         cart = JsonSerializer.Deserialize<List<CClassAddToCartViewModel>>(json);
                         int index = cart.FindIndex(m => m.productId.Equals(id));
                         cart.RemoveAt(index);
                         if (cart.Count < 1)
                         {
-                            HttpContext.Session.Remove(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account);
+                            HttpContext.Session.Remove(key);
                         }
                         else
                         {
                             json = JsonSerializer.Serialize(cart);
-                            HttpContext.Session.SetString(CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account, json);
+                            HttpContext.Session.SetString(key, json);
                         }
                     }
                 }
@@ -324,7 +325,7 @@ namespace MSITTeam1.Controllers
                 if (prod != null)
                 {
                     string json = "";
-                    var key = CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account;
+                    var key = CDictionary.SK_ClASS_PURCHASED_LIST + CDictionary.account;
                     List<CClassAddToCartViewModel> cart = new List<CClassAddToCartViewModel>();
                     CClassAddToCartViewModel item = new CClassAddToCartViewModel()
                     {
