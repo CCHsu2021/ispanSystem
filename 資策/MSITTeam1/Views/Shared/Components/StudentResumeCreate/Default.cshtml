@@ -1,4 +1,6 @@
-﻿@section Style{
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+
+
 <link rel="stylesheet" type="text/css" href="/css/result-light.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
 <style>
@@ -16,8 +18,27 @@
     body {
         margin: 10px;
     }
+
+    .basicCss {
+        padding-top: 20px;
+    }
+
+    .basicImage {
+        text-align: center;
+    }
+
+    .inputstyle {
+        margin-bottom: 5px;
+    }
+
+    h4{
+        margin-bottom: 5px;
+    }
+
 </style>
-}
+    
+
+
 
 
 
@@ -28,15 +49,67 @@
             <div class="panel-heading kanban-card">
                 <h3 class="panel-title">產生履歷</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body ">
                 <div id="todo">
                     &nbsp;
+                    <div class="alert alert-success kanban-card " id="basic" role="alert">
+                        @foreach (var item in Model)
+                        {
+                            
+                            <div class="row">
+                                <div class="col-md-6 basicCss">
+                                    <h4> 基本資料</h4>
+                                    <div class="inputstyle">
+                                        <label>@Html.DisplayNameFor(model => model.fName)</label>
+                                        <span>@Html.DisplayFor(modelItem => item.fName)</span>
+                                    </div>
+                                    <div class="inputstyle">
+                                        <label> @Html.DisplayNameFor(model => model.fGender)</label>
+                                        <span>@Html.DisplayFor(modelItem => item.fGender)</span>
+                                    </div>
+                                    <div class="inputstyle">
+                                        <label> @Html.DisplayNameFor(model => model.fBirthDate)</label>
+                                        <span>@Html.DisplayFor(modelItem => item.fBirthDate)</span>
+                                    </div>
+                                    <div class="inputstyle">
+                                        <label> @Html.DisplayNameFor(model => model.fEmail)</label>
+                                        <span>@Html.DisplayFor(modelItem => item.fEmail)</span>
+                                    </div>
+                                    <div class="inputstyle">
+                                        <label> @Html.DisplayNameFor(model => model.fPhone)</label>
+                                        <span>@Html.DisplayFor(modelItem => item.fPhone)</span>
+                                    </div>
+                                    <div class="inputstyle">
+                                        <label> @Html.DisplayNameFor(model => model.fAddress)</label>
+                                        <span>
+                                            @Html.DisplayFor(modelItem => item.fCity)
+                                            @Html.DisplayFor(modelItem => item.fDistrict)
+                                            @Html.DisplayFor(modelItem => item.fAddress)
+                                        </span>
+                                    </div>
 
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="basicImage">
+                                        <img class="mt-5 mb-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inputstyle">
+                                <label> @Html.DisplayNameFor(model => model.fAutobiography)</label>
+                                <br />
+                                <span>@Html.DisplayFor(modelItem => item.fAutobiography)</span>
+                            </div>
+
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-4">
+        
         <div class="panel panel-info">
             <div class="panel-heading kanban-card">
                 <h3 class="panel-title">資料</h3>
@@ -53,17 +126,17 @@
     </div>
 </div>
 
-@section Scripts{
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
-<script>
-        var dragulaCards = dragula([
+    <script>
+      var dragulaCards = dragula([
       document.querySelector('#todo'),
       document.querySelector('#in-progress'),
       document.querySelector('#done')
     ]);
 
     dragulaCards.on('drop', function(el, target, source, sibling){
-        console.log(source); // from
+      console.log(source); // from
       console.log(target); // to
       console.log(sibling); // next card
     });
@@ -76,7 +149,26 @@
       }
     });
 
+    function addElementDiv() {
+　　　　var parent = document.getElementById("#done");
+　　　　//新增 div
+　　　　var div = document.createElement("div");
+　　　　//設定 div 屬性
+　　　　div.setAttribute("class", "alert alert-success kanban-card");
+       div.setAttribute("role", "alert");
+　　　　div.innerHTML = "js 動態新增div";
+　　　　parent.appendChild(div);
+　　}
+
+    addElementDiv();
+
 </script>
-}
+
+
+
+
+
+
+
 
 

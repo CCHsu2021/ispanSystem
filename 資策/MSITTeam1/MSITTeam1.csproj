@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\student\d9e4bd0a-b5b9-40ed-9cc5-d16cf007f46a.jpg" />
     <Content Remove="wwwroot\js\appear.js" />
     <Content Remove="wwwroot\js\bootstrap.min.js" />
     <Content Remove="wwwroot\js\jquery-ui.js" />
