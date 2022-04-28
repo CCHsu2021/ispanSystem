@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
 }
+<button class="btn-style-two mt-3" type="button" id="btnstart">開始測驗</button>
     <div id="div1">
         <div class="row">
             <div class="container">
@@ -13,14 +14,35 @@
             </div>
         </div>
     </div>
-    <button class="btn-style-two mt-3" type="button" id="button1">下一題</button>
+    <button style="display:none" class="btn-style-two mt-3" type="button" id="button1">下一題</button>
     <form name="member" method="post">
         <input type="text" class="form-control" id="Grade" name="Grade" value="80">
     </form>
 
     <script>
-    const btn = document.querySelector("#button1");
-    const divAlert = document.querySelector("#div1");
+
+
+        const btn = document.querySelector("#button1");
+        const btn1 = document.querySelector("#btnstart");
+        const divAlert = document.querySelector("#div1");
+
+        btn1.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            if ("@ViewBag.account" == "") {
+                Swal.fire({
+                    icon: 'info',
+                    title: '請先登入會員',
+                    showConfirmButton: false,
+                    timer: 1300
+                }).then(
+                    location = 'https://localhost:44387/Student_Login'
+                )
+            } else {
+                btn1.style.display = 'none';
+                btn.style.display = 'block';
+                btn.click();
+            }
+        })
 
 
     btn.addEventListener('click', (evt) => {
