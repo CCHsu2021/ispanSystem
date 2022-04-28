@@ -95,7 +95,7 @@ namespace MSITTeam1.Controllers
 				newques.FQuestionId = lastId + 1;
 			}
 			newques.FSubmitterId = "測試";
-			newques.FState = 0;
+			newques.FState = 1;
 			_context.TQuestionLists.Add(newques.question);
 			foreach (var ans in newques.FChoiceList)
 			{
@@ -156,17 +156,12 @@ namespace MSITTeam1.Controllers
 		[HttpPost]
 		public IActionResult Edit([FromBody] CQuestionBankViewModel quesList)
 		{
-			var searchLastSN = from q in _context.TQuestionDetails
-							   orderby q.FSn descending
-							   select q;
-
-			int lastSN = searchLastSN.First().FSn;
-
 			if (quesList != null)
 			{
 				string subject = quesList.FSubjectId;
 				int questionId = quesList.FQuestionId;
-				List<int> choiceSnList = new List<int>();
+				List<int> editChoiceSnList = new List<int>();
+				List<string> newChoiceStrList = new List<string>();
 
 				TQuestionList quesSel = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subject) && q.FQuestionId == questionId);
 				TQuestionDetail choSel = null;
@@ -183,7 +178,7 @@ namespace MSITTeam1.Controllers
 						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSN);
 						choSel.FChoice = ans.Fchoice;
 						choSel.FCorrectAnswer = ans.FCorrect;
-						choiceSnList.Add(ans.FSN);
+						editChoiceSnList.Add(ans.FSN);
 						}
 						else
 						{
@@ -193,18 +188,17 @@ namespace MSITTeam1.Controllers
 							quesList.FCorrectAnswer = ans.FCorrect;
 							quesList.FSn = 0;
 							_context.TQuestionDetails.Add(quesList.choice);
-							lastSN += 1;
-							choiceSnList.Add(lastSN);
+							newChoiceStrList.Add(quesList.FChoice);
 						}
-						choiceSnList.Add(ans.FSN);
 						_context.SaveChanges();
 					}
 				}
 
 				foreach (var t in tchoSel)
 				{
-					bool isContain = choiceSnList.Contains(t.FSn);
-					if (!isContain)
+					bool isContainSn = editChoiceSnList.Contains(t.FSn);
+					bool isContainStr = newChoiceStrList.Contains(t.FChoice);
+					if (!isContainSn && !isContainStr)
 					{
 						_context.TQuestionDetails.Remove(t);
 					}

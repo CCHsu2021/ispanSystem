@@ -10,68 +10,86 @@
             @{
                 if (Model != null)
                 {
-                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        <div class="form-group">
-                            <label class="control-label" asp-for="@Model[0].FSubjectId"></label>
-                            <h6><input type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" disabled="disabled" /></h6>
-                            <span asp-validation-for="@Model[0].FSubjectId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" id="FQuestionId" asp-for="@Model[0].FQuestionId" />
-                            <label id="test1" class="control-label" asp-for="@Model[0].FQuestion"></label>
-                            <input id="FQuestion" asp-for="@Model[0].FQuestion" class="form-control">
-                            <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label" asp-for="@Model[0].FSubjectId"></label>
+                                <h6><input type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" disabled="disabled" /></h6>
+                                <span asp-validation-for="@Model[0].FSubjectId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" id="FQuestionId" asp-for="@Model[0].FQuestionId" />
+                                <label id="test1" class="control-label" asp-for="@Model[0].FQuestion"></label>
+                                <input id="FQuestion" asp-for="@Model[0].FQuestion" class="form-control">
+                                <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
+                            </div>
 
-                        <div class="form-group">
-                            <label asp-for="@Model[0].FQuestionTypeId" class="control-label"></label>
-                            <input type="hidden" value="@Model[0].FQuestionTypeId" id="curType" />
-                            <select id="FQuestionTypeIdSel" asp-for="@Model[0].FQuestionTypeId" class="form-control">
-                                <option value="1">單選題</option>
-                                <option value="2">多選題</option>
-                                <option value="3">填空題</option>
-                            </select>
-                            <span asp-validation-for="@Model[0].FQuestionTypeId" class="text-danger"></span>
-                        </div>
-                        <div id="ansList">
-                            @for (int i = 0; i < Model.Count; i++)
-                            {
-                                if (Model[i].FSubjectId == Model[0].FSubjectId && Model[i].FQuestionId == Model[0].FCQuestionId)
+                            <div class="form-group">
+                                <label asp-for="@Model[0].FQuestionTypeId" class="control-label"></label>
+                                <input type="hidden" value="@Model[0].FQuestionTypeId" id="curType" />
+                                <select id="FQuestionTypeIdSel" asp-for="@Model[0].FQuestionTypeId" class="form-control">
+                                    <option value="1">單選題</option>
+                                    <option value="2">多選題</option>
+                                    <option value="3">填空題</option>
+                                </select>
+                                <span asp-validation-for="@Model[0].FQuestionTypeId" class="text-danger"></span>
+                            </div>
+                            <div id="ansList">
+                                @for (int i = 0; i < Model.Count; i++)
                                 {
-                                    <div class="form-group choice">
-                                        <input type="hidden" id="FSN" asp-for="@Model[i].FSn" />
-                                        <input type="hidden" id="FCSubjectId" asp-for="@Model[i].FCSubjectId" />
-                                        <input type="hidden" id="FCQuestionId" asp-for="@Model[i].FCQuestionId" />
-                                        <input type="hidden" id="correctAns" asp-for="@Model[i].FCorrectAnswer" />
+                                    if (Model[i].FSubjectId == Model[0].FSubjectId && Model[i].FQuestionId == Model[0].FCQuestionId)
+                                    {
+                                        <div class="form-group choice">
+                                            <input type="hidden" id="FSN" asp-for="@Model[i].FSn" />
+                                            <input type="hidden" id="FCSubjectId" asp-for="@Model[i].FCSubjectId" />
+                                            <input type="hidden" id="FCQuestionId" asp-for="@Model[i].FCQuestionId" />
+                                            <input type="hidden" id="correctAns" asp-for="@Model[i].FCorrectAnswer" />
 
-                                        <label asp-for="@Model[i].FChoice" class="control-label"></label>
-                                        <br />
-                                        <input id="checkBox1" type="checkbox" name="FCorrectAnswer" onclick="doCheck(this)" />
-                                        <input asp-for="@Model[i].FChoice" class="form-control" />
-                                        <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
-                                        <button class="btn" id="del-btn" type="button" style="margin:10px 0 0 25px"><i class="fasfa-trash-alt"> </i>Delete</button>
-                                    </div>
+                                            <label asp-for="@Model[i].FChoice" class="control-label"></label>
+                                            <br />
+                                            <input id="checkBox1" type="checkbox" name="FCorrectAnswer" onclick="doCheck(this)" />
+                                            <input asp-for="@Model[i].FChoice" class="form-control" />
+                                            <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
+                                            <button class="btn" id="del-btn" type="button" style="margin:10px 0 0 25px"><i class="fasfa-trash-alt"> </i>Delete</button>
+                                        </div>
+                                    }
                                 }
-                            }
-                        </div>
-                        <div style="padding:10px 0px 30px 30px;">
-                            <btn id="BtnNewChoice" class="btn btn-primary btn-outline small">新增答案選項</btn>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary" type="button" id="saveChange">保存修改</button>
-                        </div>
-                    </form>
+                            </div>
+                            <div style="padding:10px 0px 30px 30px;">
+                                <btn id="BtnNewChoice" class="btn btn-primary btn-outline small">新增答案選項</btn>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@Model[0].FLevel" class="control-label"></label>
+                                <input type="hidden" value="@Model[0].FLevel" id="curLevel" />
+                                <div>
+                                    <div class="rating2">
+                                        <div class="br-wrapper br-theme-fontawesome-stars">
+                                            <select class="questionBarRate" id="example-fontawesome" name="rating" autocomplete="off">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="@Model[0].FLevel" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="button" id="saveChange">保存修改</button>
+                            </div>
+                        </form>
                 }
             }
         </div>
     </div>
 </div>
 
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+@*<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>*@
 <script>
     // 正確選項顯示
         var correctAnswer = 0;
@@ -104,7 +122,7 @@
             }
         }
 
-        // 根據題型判斷答案輸入欄位及許可正確選項上限 代入當前題目類型
+        // 根據題型判斷答案輸入欄位及許可正確選項上限 代入當前題目類型和難度等級
     $('#FQuestionTypeIdSel').change(function () {
         if ($(this).val() === "3") {
             Swal.fire({
@@ -144,7 +162,14 @@
                 currentSelect = 0;
                 $('#ansList > .choice > #checkBox1').show();
             }
-        })
+    })
+
+    var levelCur = $('#curLevel').val();
+    $('#example-fontawesome').find("option").each(function (i, item) {
+        if ((item.value) === levelCur) {
+            item.selected = true; return;
+        }
+    })
 
         // 新增選項textbox
         var count = 1;

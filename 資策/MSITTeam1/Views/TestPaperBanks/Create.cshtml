@@ -5,8 +5,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/fontawesome-all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
     <link href="~/css/barRating.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/StarBar.css" />
     <style>
         .indicator {
             width: 25px !important;
@@ -42,6 +45,10 @@
         .slide-container {
             height: 800px !important;
         }
+
+        .sized-container.questionTable {
+            max-width: 2000px;
+        }
     </style>
 }
 
@@ -60,7 +67,7 @@
                 <form name="basic">
                     <div class="sized-container basic">
                         <h1>歡迎使用資展題庫系統 這是新增考卷的頁面</h1>
-                        <h2>您可以依照喜好從題庫挑選想要的題目，題目已經依照排序顯示推薦，請先填寫考卷名稱及考卷介紹，然後從題庫挑選題目，這是胡亂填寫的資料。後面會更換成使用簡介</h2>
+                        <h2>請填寫考卷名稱及考卷介紹，您可以依照喜好從題庫挑選想要的題目，您也可以新增屬於自己的題目，新的題目經過審核後，該張試卷才能成功啟用。</h2>
                         <hr />
                         <div class="row data justify-content-center">
                             <div class="col-5">
@@ -101,7 +108,7 @@
             </li>
 
             <li class="slide" data-tag="選擇題目">
-                <div class="sized-container col-lg-10">
+                <div class="sized-container questionTable">
                     <div class="row row justify-content-around">
                         <div class="col-3">
                             <select id="FSubjectId" name="FSubjectId" class="form-control">
@@ -123,28 +130,21 @@
                                 <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="search"><i class="fas fa-search"></i></button></span>
                             </div>
                         </div>
+                        <div class="col-2">
+                            <a data-toggle="modal" data-target="#questionCreate">新增題目</a>
+                        </div>
                     </div>
                     <br />
-
                     <div id="testView">
-
+                        @*QuestionList*@
                     </div>
-
+                    <br />
                     <div class="row data" id="workExpPage">
-                        <div class="col-6">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                            @*add hidden here*@
-                            <button data-toggle="modal" data-target="#questionCreate">新增</button>
-
-                        </div>
-                        <div class="col-6">
+                        <!--<div class="col-6">-->
                             @*add here*@
-                            <button class="saveworkbtn my-3" id="editWork" onclick="editWork()">儲存修改</button>
-                        </div>
+                            <!--<button class="saveworkbtn my-3" id="editWork" onclick="editWork()">儲存修改</button>
+                        </div>-->
                     </div>
-
-
                 </div>
             </li>
 
@@ -183,9 +183,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">題目新增</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <input type="button" class="close" data-dismiss="modal" aria-label="Close" />
+                <span aria-hidden="true">&times;</span>
+                
             </div>
             <div class="modal-body">
                 <vc:question-bank-create></vc:question-bank-create>
@@ -198,13 +198,13 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>*@
+        <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>*@
+    <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
     <script src="~/js/jquery.barrating.js"></script>
     <script src="~/js/barRating.init.js"></script>
     <script>
           // 載入課程名稱
         const selSubject = document.querySelector('#FSubjectIdSel');
-
         async function LoadSubject() {
             const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
             renderSubject(await responseSubject.json());
@@ -239,7 +239,7 @@
         })
         })
 
-        //-----------------------------Create---------------------------------------------
+//-----------------------------Create New Question---------------------------------------------
         // 判斷Checkbox
         var currentSelect = 0, limit = 1;
         function doCheck(obj) {
@@ -324,7 +324,19 @@
             }
         })
 
-//-------------------------------------------Create End--------------------------------
+//-------------------------------------------Create New Question End--------------------------------
+
+//-----------------------------Create New TestPaper---------------------------------------------
+        // 題目選取
+        var row = [];
+
+
+
+//-----------------------------Create New TestPaper End---------------------------------------------
+
+
+
+
 
         // 刪除不需要的jquery程式
     var currentSlide = 0,
