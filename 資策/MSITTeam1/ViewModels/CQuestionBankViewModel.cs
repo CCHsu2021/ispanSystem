@@ -82,8 +82,6 @@ namespace MSITTeam1.ViewModels
 			set { this.question.FLevel = value; }
 		}
 		[DisplayName("更新時間")]
-
-		public string VupdateTime { get; set; }
 		public int FCorrectAnswer
 		{
 			get { return this.choice.FCorrectAnswer; }
@@ -96,24 +94,16 @@ namespace MSITTeam1.ViewModels
 			get { return this.question.FQuestionTypeId; }
 			set { this.question.FQuestionTypeId = value; }
 		}
-
 		public string FSubmitterId
 		{
 			get { return this.question.FSubmitterId; }
 			set { this.question.FSubmitterId = value; }
 		}
-
 		public int FState
 		{
 			get { return this.question.FState; }
 			set { this.question.FState = value; }
 		}
-
-		//public List<string> FChoiceList
-		//{
-		//	get; set;
-		//}
-
 		public List<AnswerListViewModel> FChoiceList
 		{
 			get; set;
