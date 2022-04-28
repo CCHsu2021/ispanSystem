@@ -7,33 +7,3 @@
 
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
-<script>
-    Dropzone.options.form1 = {
-        dictDefaultMessage: "拖曳檔案或是點擊上傳",
-        acceptedFiles: "image/*",
-        init: function () {
-            this.on("complete", function (file) {
-                $(".modal-backdrop").css("display", "none");
-                $("#CompanyPhotoUpload").modal('hide');
-                $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
-                $("#CompanyPhotoUpload").load(location.href + " #CompanyPhotoUpload")
-                $("#form1").val(null);
-                Dropzone.options.form1 = {
-                    dictDefaultMessage: "拖曳檔案或是點擊上傳",
-                    acceptedFiles: "image/*",
-                    init: function () {
-                        this.on("complete", function (file) {
-                            $(".modal-backdrop").css("display", "none");
-                            $("#CompanyPhotoUpload").modal('hide');
-                            $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
-                            $("#CompanyPhotoUpload").load(location.href + " #CompanyPhotoUpload")
-                            $("#form1").val(null);
-
-                        });
-                    }
-                };
-            });
-        }
-    };
- 
-</script>

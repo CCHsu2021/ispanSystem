@@ -129,38 +129,35 @@
         text-align: center;
     }
 </style>
-<div id="CompanyPhotoList">
-    <hr />
     <input type="hidden" value="@ViewBag.account" />
     <div class="container">
-        <div class="row text-center">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-3">
-                    <div class="checkbox">
-                        <label class="checkbox-wrapper">
-                            <input type="checkbox" class="checkbox-input" />
-                            <span class="checkbox-tile">
-                                <span class="checkbox-icon">
-                                    <img src="~/images/company/@item.FPhoto" />
+        <form name="selectedcheckbox">
+            <div class="row text-center" id="CompanyPhotoList">
+                @foreach (var item in Model)
+                {
+
+                    <div class="col-md-3">
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" class="checkbox-input" value="@item.FPhoto" id="@item.FPhoto" name="filename[]" />
+                                <span class="checkbox-tile">
+                                    <span class="checkbox-icon">
+                                        <img src="~/images/company/@item.FPhoto" />
+                                    </span>
                                 </span>
-                            </span>
-                        </label>
+                            </label>
+                        </div>
                     </div>
-                </div>
-            }
-        </div>
-        <div class="row">
-            <div class="col-6">
-                @*<input type="button" class="form-control" value="上傳照片" data-toggle="modal" data-target="#staticBackdrop" />*@
-                <button id="uplaod-photo-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#CompanyPhotoUpload">
-                    上傳照片
-                </button>
-                <div class="col-6">
-                    <input type="submit" class="form-control" value="刪除照片" />
-                </div>
+
+                }
             </div>
-        </div>
+            <div class="d-flex">
+                    <button id="uplaod-photo-btn" type="button" class="btn-style-two" data-toggle="modal" data-target="#CompanyPhotoUpload">
+                        上傳照片
+                    </button>
+                        <input type="button" class="btn-style-two " id="delete-photo-btn" value="刪除照片" />
+            </div>
+        </form>
         <!---modal--->
         <div class="modal fade" id="CompanyPhotoUpload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -178,13 +175,3 @@
             </div>
         </div>
     </div>
-</div>
-<script>
-    var onResize = function () {
-        $("body").css("padding-top", $(".main-header").height());
-    };
-    $(window).resize(onResize);
-    $(function () {
-        onResize();
-    });
-</script>
