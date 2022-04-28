@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,6 +36,7 @@ namespace MSITTeam1.ViewModels
 			set { this.choice.FSn = value; }
 		}
 
+		[Required(ErrorMessage ="請選擇課程")]
 		[DisplayName("課程名稱")]
 		public string FSubjectId
 		{
@@ -61,6 +63,7 @@ namespace MSITTeam1.ViewModels
 			set { this.choice.FQuestionId = value; }
 		}
 
+		[Required]
 		[DisplayName("題目")]
 		public string FQuestion
 		{

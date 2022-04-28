@@ -192,7 +192,7 @@
                                             <li>
                                                 <a href="event-detail.html">人才搜尋</a>
                                             </li>
-                                            <li>
+                                            <li id="QuestionBankSys">
                                                 <a href="@Url.Content("~/TestPaperBank/Home")">題庫及試卷</a>
                                             </li>
                                         </ul>
@@ -373,7 +373,7 @@
     <script src="~/js/cartView.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
+<script>
         //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
         $(document).ready(function () {
         var onResize = function () {
@@ -434,7 +434,15 @@
     $(document).ready(function () {
         $("#showPoint").text(totalPoint)
     })
-    </script>
+
+    // 題庫系統只有企業會員及管理員使用
+    $(function () {
+        $('#QuestionBankSys').hide();
+        if ("@ViewBag.Type" == "2") {
+            $('#QuestionBankSys').show();
+        }
+    })
+</script>
 
 </body>
 </html>
