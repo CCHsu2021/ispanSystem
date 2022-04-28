@@ -12,7 +12,7 @@ namespace MSITTeam1Admin.Models
         public DateTime? PointDate { get; set; }
         public string PointType { get; set; }
         public string PointDescription { get; set; }
-        public string PointRecord { get; set; }
+        public int? PointRecord { get; set; }
         public string OrderId { get; set; }
     }
 }

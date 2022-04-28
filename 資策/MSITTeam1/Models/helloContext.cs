@@ -275,6 +275,8 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.RSkill).HasColumnName("rSkill");
 
                 entity.Property(e => e.RWorkExp).HasColumnName("rWorkExp");
+
+                entity.Property(e => e.ResumeName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<StudentSchool>(entity =>
@@ -439,9 +441,18 @@ namespace MSITTeam1.Models
                     .HasMaxLength(50)
                     .HasColumnName("fClassOpenDate");
 
+                entity.Property(e => e.FClassPhotoPath)
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassPhotoPath");
+
                 entity.Property(e => e.FClassTestpaper)
                     .HasMaxLength(50)
                     .HasColumnName("fClassTestpaper");
+
+                entity.Property(e => e.FClassmoney)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fClassmoney");
 
                 entity.Property(e => e.FClassname)
                     .IsRequired()
@@ -664,8 +675,8 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.OrderId).HasMaxLength(50);
 
                 entity.Property(e => e.PointDate)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.PointDescription)
                     .IsRequired()
@@ -711,7 +722,10 @@ namespace MSITTeam1.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.ResumeSendId).HasColumnName("ResumeSendID");
+                entity.Property(e => e.ResumeSendId)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("ResumeSendID");
 
                 entity.Property(e => e.StudentRespondTime)
                     .HasMaxLength(2)
@@ -933,6 +947,8 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.FLevel).HasColumnName("fLevel");
 
+                entity.Property(e => e.BgPicture).HasColumnName("bgPicture");
+
                 entity.Property(e => e.Title).HasMaxLength(50);
             });
 
@@ -957,7 +973,9 @@ namespace MSITTeam1.Models
 
                 entity.ToTable("tMemberResumeSend");
 
-                entity.Property(e => e.ResumeSendId).HasColumnName("ResumeSendID");
+                entity.Property(e => e.ResumeSendId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ResumeSendID");
 
                 entity.Property(e => e.ComReadOrNot).HasMaxLength(10);
 
@@ -1398,8 +1416,6 @@ namespace MSITTeam1.Models
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.PointDescription).HasMaxLength(50);
-
-                entity.Property(e => e.PointRecord).HasMaxLength(50);
 
                 entity.Property(e => e.PointType).HasMaxLength(50);
             });

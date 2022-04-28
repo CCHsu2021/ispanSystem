@@ -1,0 +1,48 @@
+﻿@model MSITTeam1.ViewModels.TMemberResumeSendViewModel
+
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="CompanyTaxid" class="form-control" type="hidden" />
+                <input asp-for="MemberId" class="form-control" type="hidden" />
+            </div>
+            <div class="form-group">
+                <label asp-for="JobName" class="control-label"></label>
+                <input asp-for="JobName" class="form-control" />
+            <span asp-validation-for="JobName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">請選擇履歷樣式</label>
+                <select class="form-control" id="selectResume" name="ddlResume">
+                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactPhone" class="control-label"></label>
+                <input asp-for="ContactPhone" class="form-control" />
+                <span asp-validation-for="ContactPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactEmail" class="control-label"></label>
+                <input asp-for="ContactEmail" class="form-control" />
+                <span asp-validation-for="ContactEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeToContact" class="control-label"></label>
+                <input asp-for="TimeToContact" class="form-control" />
+                <span asp-validation-for="TimeToContact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoverLetter" class="control-label"></label>
+                <textarea asp-for="CoverLetter" class="form-control" style="overflow-y:scroll;resize:none"></textarea>
+                <span asp-validation-for="CoverLetter" class="text-danger"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉視窗</button>
+                <button id="savechanges" type="button" class="btn btn-primary" data-dismiss="modal">儲存變更</button>
+            </div>
+        </form>
+    </div>
+</div>

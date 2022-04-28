@@ -12,7 +12,7 @@ namespace MSITTeam1Admin.Models
             TCompanyResponds = new HashSet<TCompanyRespond>();
         }
 
-        public long ResumeSendId { get; set; }
+        public string ResumeSendId { get; set; }
         public long ResumeId { get; set; }
         public string MemberId { get; set; }
         public string CompanyTaxid { get; set; }
