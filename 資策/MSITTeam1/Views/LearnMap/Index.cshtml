@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MSITTeam1.Models.TStudioInformation>
+﻿@using MSITTeam1.ViewModels
+@model LearnMap
 @{
     ViewData["Title"] = "Index";
 }
@@ -286,113 +287,54 @@
 }
 @{ var ClassName = "";
     var ClassCate = "";}
-<div class="container">
     <aside class="accordion">
 
-        @foreach (var item in Model)
-        {
-            @if (ClassName != item.FClassName)
-            {
 
                 <div class="mindmap">
                     <!--LEFT-->
                     <ol class="children children_leftbranch">
-                        <li class="children_item">
-                            <div class="node">
-                                <div class="node_text">L1</div>
-                                <input type="text" class="node_input">
-                            </div>
-                            <ol class="children">
+                        @foreach (var item in Model.TStudioInformationleft)
+                        {
+                            @if (ClassName != item.FClassName)
+                            {
                                 <li class="children_item">
                                     <div class="node">
-                                        <div class="node_text">L1.1</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                </li>
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">L1.2</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="children_item">
-                            <div class="node">
-                                <div class="node_text">L2</div>
-                                <input type="text" class="node_input">
-                            </div>
-                            <ol class="children">
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">L2.1</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                </li>
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">L2.2</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                </li>
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">L2.3</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="children_item">
-                            <div class="node">
-                                <div class="node_text">
-                                    @item.FClassName.Trim()
-                                    @{ClassName = item.FClassName.Trim();
-                                    }
-                                </div>
-                                @*<input type="text" class="node_input">*@
-                            </div>
-                            <ol class="children">
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">L3.1</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                </li>
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">L3.2</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                </li>
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">L3.3</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                </li>
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">L3.4</div>
+                                        <div class="node_text">@item.FClassName</div>
                                         <input type="text" class="node_input">
                                     </div>
                                     <ol class="children">
-                                        <li class="children_item">
-                                            <div class="node">
-                                                <div class="node_text">L3.4.1</div>
-                                                <input type="text" class="node_input">
-                                            </div>
-                                        </li>
-                                        <li class="children_item">
-                                            <div class="node">
-                                                <div class="node_text">L3.4.2</div>
-                                                <input type="text" class="node_input">
-                                            </div>
-                                        </li>
+                                        @foreach (var item2 in Model.TStudioInformationleft)
+                                        {
+                                            @if (@item.FClassName == item2.FClassName && ClassCate != item2.FClassCategory)
+                                            {
+                                                <li class="children_item">
+                                                    <div class="node">
+                                                        <div class="node_text">@item2.FClassCategory</div>
+                                                        <input type="text" class="node_input">
+                                                    </div>
+                                                    <ol class="children">
+                                                        @foreach (var item3 in Model.TStudioInformationleft)
+                                                        {
+                                                            @if (@item.FClassName == item2.FClassName && @item2.FClassCategory == item3.FClassCategory)
+                                                            {
+                                                                <li class="children_item">
+                                                                    <div class="node">
+                                                                        <div class="node_text">@item3.FClassSkill</div>
+                                                                        <input type="text" class="node_input">
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    </ol>
+                                                </li>
+                                                ClassCate = item2.FClassCategory;
+                                            }
+                                        }
                                     </ol>
                                 </li>
-                            </ol>
-                        </li>
+                                ClassName = item.FClassName;
+                            }
+                        }
                     </ol>
 
                     <!--CENTER-->
@@ -400,142 +342,54 @@
                         <div class="node_img"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/887373/profile/profile-80.jpg"></div>
                         <input type="file" class="node_input">
                     </div>
-
-                    <!--RIGHT-->
-                    <ol class="children children_rightbranch">
                         <!--RIGHT-->
-                        <ol class="children children_rightbranch">
-                            <li class="children_item">
-                                <div class="node">
-                                    <div class="node_text">R1</div>
-                                    <input type="text" class="node_input">
-                                </div>
-                                <ol class="children">
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R1.1</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                    </li>
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R1.2</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                    </li>
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R1.3</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                        <ol class="children">
-                                            <li class="children_item">
-                                                <div class="node">
-                                                    <div class="node_text">R1.3.1</div>
-                                                    <input type="text" class="node_input">
-                                                </div>
-                                            </li>
-                                            <li class="children_item">
-                                                <div class="node">
-                                                    <div class="node_text">R1.3.2</div>
-                                                    <input type="text" class="node_input">
-                                                </div>
-                                                <ol class="children">
-                                                    <li class="children_item">
-                                                        <div class="node">
-                                                            <div class="node_text">R1.3.2.1</div>
-                                                            <input type="text" class="node_input">
-                                                        </div>
-                                                    </li>
-                                                </ol>
-                                            </li>
-                                            <li class="children_item">
-                                                <div class="node">
-                                                    <div class="node_text">R1.3.3</div>
-                                                    <input type="text" class="node_input">
-                                                </div>
-                                            </li>
-                                        </ol>
-                                    </li>
-                                </ol>
-                            </li>
-                            <li class="children_item">
-                                <div class="node">
-                                    <div class="node_text">R2</div>
-                                    <input type="text" class="node_input">
-                                </div>
-                                <ol class="children">
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R2.1</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                    </li>
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R2.2</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                    </li>
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R2.3</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                    </li>
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R2.4</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                    </li>
-                                </ol>
-                            </li>
-                            <li class="children_item">
-                                <div class="node">
-                                    <div class="node_text">R3</div>
-                                    <input type="text" class="node_input">
-                                </div>
-                                <ol class="children">
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R3.1</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                    </li>
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R3.2</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                    </li>
-                                    <li class="children_item">
-                                        <div class="node">
-                                            <div class="node_text">R3.3</div>
-                                            <input type="text" class="node_input">
-                                        </div>
-                                    </li>
-                                </ol>
-                            </li>
-                        </ol>
+                    <ol class="children children_rightbranch">
+                        @foreach (var item in Model.TStudioInformationright)
+                         {
+                            @if (ClassName != item.FClassName)
+                             {
+                                <li class="children_item">
+                                    <div class="node">
+                                        <div class="node_text">@item.FClassName</div>
+                                        <input type="text" class="node_input">
+                                    </div>
+                                    <ol class="children">
+                                        @foreach (var item2 in Model.TStudioInformationright)
+                                        {
+                                            @if (@item.FClassName == item2.FClassName && ClassCate != item2.FClassCategory)
+                                            {
+                                                <li class="children_item">
+                                                    <div class="node">
+                                                        <div class="node_text">@item2.FClassCategory</div>
+                                                        <input type="text" class="node_input">
+                                                    </div>
+                                                    <ol class="children">
+                                                        @foreach (var item3 in Model.TStudioInformationright)
+                                                        {
+                                                            @if (@item.FClassName == item2.FClassName && @item2.FClassCategory == item3.FClassCategory)
+                                                            {
+                                                                <li class="children_item">
+                                                                    <div class="node">
+                                                                        <div class="node_text">@item3.FClassSkill</div>
+                                                                        <input type="text" class="node_input">
+                                                                    </div>
+                                                                </li>
+                                                             }
+                                                         }
+                                                    </ol>
+                                                </li>
+                                                ClassCate = item2.FClassCategory;
+                                            }
+                                         }
+                                    </ol>
+                                </li>
+                                ClassName = item.FClassName;
+                            }
+                         }
                     </ol>
                 </div>
 
-                <h1>@item.FClassName</h1>
-                ClassName = item.FClassName;
-            }
-            <div>
-                @if (ClassCate != item.FClassCategory)
-                {
-                    <h2>@item.FClassCategory</h2>
-                    ClassCate = item.FClassCategory;
-
-                }
-                <a>@item.FClassSkill</a>
-            </div>
-        }
     </aside>
-</div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 @section Scripts {
@@ -559,5 +413,9 @@
                 readURL(this);
             });
         });
+
+
+
+
     </script>
 }

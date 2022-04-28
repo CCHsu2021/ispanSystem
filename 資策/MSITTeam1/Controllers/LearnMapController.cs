@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MSITTeam1.Models;
+using MSITTeam1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,12 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index()
         {
-            var list = from c in hello.TStudioInformations orderby  c.FClassName,c.FClassCategory select c;   
-            return View(list);
+            LearnMap LearnMap = new LearnMap();
+            var list = from c in hello.TStudioInformations orderby  c.FClassName,c.FClassCategory select c;
+            var count = list.Count()/2;
+            LearnMap.TStudioInformationleft = list.Take(count).ToList();
+            LearnMap.TStudioInformationright = list.Skip(count).ToList();
+            return View(LearnMap);
         }
     }
 }
