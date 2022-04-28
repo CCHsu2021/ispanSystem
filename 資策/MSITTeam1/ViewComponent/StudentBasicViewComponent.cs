@@ -40,7 +40,9 @@ namespace MSITTeam1.ViewComponent
                             Autobiography = b.Autobiography,
                             gen = b.Gender,
                             c = b.FCompany,
-                            protrait = b.Portrait
+                            protrait = b.Portrait,
+                            city  =b.FCity,
+                            district = b.FDistrict
                             
                         };
             foreach (var a in datas)
@@ -53,6 +55,8 @@ namespace MSITTeam1.ViewComponent
                 SBvModel.fBirthDate = a.birthday;
                 SBvModel.fEmail = a.Email;
                 SBvModel.fPhone = a.Phone;
+                SBvModel.fCity = a.city;
+                SBvModel.fDistrict = a.district;
                 SBvModel.fAddress = a.Address;
                 SBvModel.fAutobiography = a.Autobiography;
                 SBvModel.fPortrait = a.protrait;

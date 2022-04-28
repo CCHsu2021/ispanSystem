@@ -48,14 +48,11 @@
                         <vc:company-basic></vc:company-basic>
                     </div>
                     <div id="menu1" class="container tab-pane fade">
-                            <h3 class="text-center">照片列表</h3>
-                            <div id="PhotolistMsit">
-                                <vc:company-photo-list taxid="@ViewBag.account"></vc:company-photo-list>
-                            </div>
-                        </div>
+                            <vc:company-photo-list taxid="@ViewBag.account"></vc:company-photo-list>
+                    </div>
                     <div id="menu2" class="container tab-pane fade">
                         <div class="row about-box">
-                            
+
                         </div>
                     </div>
                     <div id="menu3" class="container tab-pane fade">
@@ -70,7 +67,8 @@
                                 doing.
                             </p>
                             <p>
-                                Founder & CEO<br />
+                                Founder & CEO
+                                <br />
                                 A.K.
                             </p>
                         </div>
@@ -87,7 +85,8 @@
                                 doing.
                             </p>
                             <p>
-                                Founder & CEO<br />
+                                Founder & CEO
+                                <br />
                                 A.K.
                             </p>
                         </div>
@@ -104,13 +103,14 @@
                                 doing.
                             </p>
                             <p>
-                                Founder & CEO<br />
+                                Founder & CEO
+                                <br />
                                 A.K.
                             </p>
                         </div>
                     </div>
                     <div id="menu6" class="container tab-pane fade">
-                                <vc:job-vacancy></vc:job-vacancy>
+                        <vc:job-vacancy></vc:job-vacancy>
                         <div id="JoblistPagination" class="row my-4"></div>
                     </div>
                     <div id="menu7" class="container tab-pane fade">
@@ -125,7 +125,8 @@
                                 doing.
                             </p>
                             <p>
-                                Founder & CEO<br />
+                                Founder & CEO
+                                <br />
                                 A.K.
                             </p>
                         </div>
@@ -225,26 +226,45 @@
         $("#picture-file").change(function () {
             readURL(this);
         });
+
+
+        $("#delete-photo-btn").click(function () {
+            var Selected_Checkedbox_FormData = new FormData(document.selectedcheckbox);
+            fetch('@Url.Content("~/CMemberCenter/DeleteFile")',{
+                method:'POST',
+                body: Selected_Checkedbox_FormData,
+            }).then(function () {
+                $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
+            })
+        })
         $(function () {
             initPagination('.job-card', 2, '#JoblistPagination')
         });
-
-        $("#uplaod-photo-btn").click(function () {
-            Dropzone.options.form1 = {
-                dictDefaultMessage: "拖曳檔案或是點擊上傳",
-                acceptedFiles: "image/*",
-                init: function () {
-                    this.on("complete", function (file) {
-                        $(".modal-backdrop").css("display", "none");
-                        $("#CompanyPhotoUpload").modal('hide');
-                        $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
-                        $("#CompanyPhotoUpload").load(location.href + " #CompanyPhotoUpload")
-                        $("#form1").val(null);
-                        console.log("good")
-                    });
-                }
-            };
-        })
+    
+        Dropzone.options.form1 = {
+            dictDefaultMessage: "拖曳檔案或是點擊上傳",
+            acceptedFiles: "image/*",
+            init: function () {
+                this.on("complete", function (file) {
+                    var res = eval('(' + file.xhr.responseText + ')');
+                    if (res.err) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '上傳失敗超過張數，最多上傳8張',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            $(".modal-backdrop").css("display", "none");
+                            $("#CompanyPhotoUpload").modal('hide');
+                        });
+                    }
+                    this.removeAllFiles(true);
+                    $(".modal-backdrop").css("display", "none");
+                    $("#CompanyPhotoUpload").modal('hide');
+                    $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
+                });
+            }
+        };
     </script>
 }
 

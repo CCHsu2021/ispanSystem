@@ -75,19 +75,49 @@ namespace MSITTeam1.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveFile(IFormFile file,string id)
+        public IActionResult SaveFile(IFormFile file,string id)
         {
-            string photoName = Guid.NewGuid().ToString() + ".jpg";
-            file.CopyTo(new FileStream(_enviroment.WebRootPath + @"\images\company\" + photoName, FileMode.Create));
-            TPhoto photo = new TPhoto()
+            var ph = (from p in hello.TPhotos where p.FAccount == id select p).Count();
+            if (ph > 7)
             {
-                FAccount = id,
-                FPhoto = photoName,
-            };
-            hello.TPhotos.Add(photo);
-            hello.SaveChanges();
-            
-            return Json(true);
+                return Json(new { err = "超過張數"});
+            }
+            string photoName = Guid.NewGuid().ToString() + ".jpg";
+            using (FileStream fs = new FileStream(_enviroment.WebRootPath + @"\images\company\" + photoName,FileMode.Create))
+            {
+                file.CopyTo(fs);
+                TPhoto photo = new TPhoto()
+                {
+                    FAccount = id,
+                    FPhoto = photoName,
+                };
+                hello.TPhotos.Add(photo);
+                hello.SaveChanges();
+            }
+            return Json(new { suc = "上傳成功"});
+        }
+        [HttpPost]
+        public IActionResult DeleteFile()
+        {
+            Array filename = Request.Form["filename[]"];
+            if (filename != null)
+            {
+                foreach(var i in filename)
+                {
+                    FileInfo file = new FileInfo(_enviroment.WebRootPath + @"\images\company\" + i);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                        TPhoto photo = hello.TPhotos.FirstOrDefault(p => p.FPhoto == i.ToString());
+                        if (photo != null) {
+                            hello.TPhotos.Remove(photo);
+                            hello.SaveChanges();
+                        }
+                    }
+                }
+                return Content("Deleted");
+            }
+            return Content("fail");
         }
         public IActionResult CreateJobVacancy()
         {

@@ -275,6 +275,8 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.RSkill).HasColumnName("rSkill");
 
                 entity.Property(e => e.RWorkExp).HasColumnName("rWorkExp");
+
+                entity.Property(e => e.ResumeName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<StudentSchool>(entity =>
@@ -944,6 +946,8 @@ namespace MSITTeam1.Models
                 entity.ToTable("tMemberLevel");
 
                 entity.Property(e => e.FLevel).HasColumnName("fLevel");
+
+                entity.Property(e => e.BgPicture).HasColumnName("bgPicture");
 
                 entity.Property(e => e.Title).HasMaxLength(50);
             });

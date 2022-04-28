@@ -32,15 +32,15 @@
                         quesId = item.FQuestionId;
                         <tr>
                             <td class="text-center">
-                                <input type="checkbox" onclick="passToPaper(this)"/>
+                                <input type="checkbox" id="@item.FSn" onclick="passToPaper(@item.FSn)"/>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.FSubjectId)
-                                <input type="hidden" name="sub" class="subjectId" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
-                                <input type="hidden" class="questionId" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.FQuestion)
+                                <input type="hidden" name="sub" class="subjectId" value="@Html.DisplayFor(modelItem => item.FSubjectId)" id="@(item.FSubjectId)@(item.FQuestionId)" />
+                                <input type="hidden" class="questionId" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
                             </td>
                             <td class="text-center">
                                 <input type="hidden" class="quesLevel" value="@Html.DisplayFor(modelItem => item.FLevel)" />
@@ -58,7 +58,7 @@
         
     </tbody>
 </table>
-<button id="test">測試</button>
+
 @*<div id="ProductPagination" class="row my-4"></div>*@
 
 <!-- Modal -->
@@ -97,7 +97,10 @@
                     Subjects: $(this).parents("tr").find('.subjectId').val(),
                     questionID: $(this).parents("tr").find('.questionId').val()
                 })
-            $.ajax({
+        var s = $(this).parents("tr").find('.subjectId').attr("id");
+
+        console.log(s);
+            @*$.ajax({
                 url: "@Url.Content("~/QuestionBank/EditByVC")",
                 type: "POST",
                 contentType: "application/json",
@@ -105,42 +108,7 @@
                 success: function (result) {
                     $('#EditModal').html(result);
                 }
-            })
-    })
-
-    // 題目選取
-    var row = [];
-    function passToPaper(obj) {
-        //var a = $(obj).parent('td').parent('tr');
-        //var b = a.find("[name='sub']").text();
-        //var c = a.find("[name='sub']").html();
-        //console.log(b);
-        //console.log(c);
-        var currentRow = $(this).closest("tr");
-        var col1 = currentRow.find("td:eq(0)").html(); //获得当前和第一个表格单元格TD值
-        var col2 = currentRow.find("td:eq(1)").html(); //获得当前和第一个表格单元格TD值
-        var col3 = currentRow.find("td:eq(2)").html(); //获得当前和第一个表格单元格TD值
-        var data = col1 + "\n" + col2 + "\n" + col3;
-        alert(data);
-        }
-
-    $('#test').click(function () {
-        var set = [];
-        $('#question').each(function (index) {
-            console.log(index)
-
-            var table = [];
-            $(this).find('tr').each(function () {
-                var row = [];
-                $(this).find('th,td').each(function () {
-                    row.push($(this).text().trim());
-                });
-                table.push(row);
-            });
-
-            set.push(table);
-        })
-        console.log(row);
+            })*@
     })
 
 </script>

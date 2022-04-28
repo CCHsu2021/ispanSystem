@@ -10,11 +10,11 @@ using MSITTeam1.ViewModels;
 
 namespace MSITTeam1.Controllers
 {
-    public class TestPaperBanksController : Controller
+    public class TestPaperBankController : Controller
     {
         private readonly helloContext _context;
 
-        public TestPaperBanksController(helloContext context)
+        public TestPaperBankController(helloContext context)
         {
             _context = context;
         }
@@ -47,6 +47,34 @@ namespace MSITTeam1.Controllers
 
             return View(paperList);
         }
+
+        [HttpPost]
+        public IActionResult CreatNewPaper([FromBody] CTestPaperBankViewModel newpaper)
+		{
+            // 試卷總覽新增
+            // TODO1:加入身份判斷
+            newpaper.FDesignerAccount = "admin";
+            newpaper.FBTestPaperId = 0;
+            _context.TTestPaperBanks.Add(newpaper.paperBank);
+            _context.SaveChanges();
+
+            // 取得新生成的paperId
+            var getPaperId = (from q in _context.TTestPaperBanks
+                         orderby q.FTestPaperId descending
+                         select q.FTestPaperId).First();               
+
+            foreach(var question in newpaper.SelectQuestionList)
+			{
+                newpaper.FTestPaperId = getPaperId;
+                newpaper.FSN = 0;
+                newpaper.FSubjectId = question.FSubjectId;
+                newpaper.FQuestionId = Convert.ToInt32(question.FQuestionId);
+                _context.TTestPapers.Add(newpaper.testPaper);
+                _context.SaveChanges();
+            }
+
+            return Content("新增成功");
+		}
 
         // GET: TTestPaperBanks/Details/5
         public async Task<IActionResult> Details(int? id)

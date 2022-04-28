@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MSITTeam1.ViewModels.TJobVacanciesViewModel>
+﻿@addTagHelper *, MSITTeam1
+@model List<MSITTeam1.ViewModels.TJobVacanciesViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -60,8 +61,13 @@
         </div>
         <div class="row job-all-list">
             <ul class="col-12" id="job-list">
+                @{
+                    int rowcount = 0;
+
+                }
                 @foreach (var item in Model)
                 {
+                    rowcount++;
                     var lastModifyTime = (DateTime.Now - item.FModifyTime).Days.ToString();
                     <li class="job-card new featured" style="align-items:stretch">
                         <div class="job-card__info">
@@ -70,7 +76,7 @@
                                     <img src="~/images/company/@item.FCompanyLogo" />
                                 </div>
                                 <div style="width:85%">
-                                    <form  name="jobListInfo">
+                                    <form name="jobListInfo">
                                         <a href="javascript:void(0)">
                                             <h6 name="@item.FJobName">@item.FJobName</h6>
                                         </a>
@@ -101,19 +107,37 @@
                                     </span>
                                 </div>
                                 <div class="number-for-hire-section">
-                                    <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
+                                    <i class="fa fa-user"></i>
+                                    <abbr title="需求人數">10</abbr>
                                 </div>
                                 <div class="job-salary-section">
-                                    <i class="fas fa-dollar-sign"></i> <span class="job-salary">@(item.FSalary) TWD/月</span>
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="job-salary">@(item.FSalary) TWD/月</span>
                                 </div>
                             </div>
                             <div class="justify-content-end">
                                 <form>
-                                    <input type="hidden" name="txtJobName" asp-for="@item.FJobName"/>
-                                    <input type="hidden" name="txtCompanyTaxid" asp-for="@item.FCompanyTaxid"/>
+                                    <input type="hidden" name="txtJobName" asp-for="@item.FJobName" />
+                                    <input type="hidden" name="txtCompanyTaxid" asp-for="@item.FCompanyTaxid" />
                                     <button type="submit" asp-action="Detail" class="btn btn-info m-b-10 m-l-5 btn-for-Detail">檢視職缺</button>
-                                    <button type="submit" asp-action="Apply" class="btn btn-info m-b-10 m-l-5">我要應徵</button>
+                                    <button type="button" id="applyButton@(rowcount)" class="btn btn-info m-b-10 m-l-5" data-toggle="modal" data-target="#@rowcount">我要應徵</button>
                                 </form>
+                                <!-- 修改Modal -->
+                                <div class="modal fade" id="@rowcount" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ProductEditModalLabel">修改產品資料</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <vc:job-apply job-name="@item.FJobName" company-taxid="@item.FCompanyTaxid"></vc:job-apply>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -154,11 +178,13 @@
                                 </span>
                             </div>
                             <div class="number-for-hire-section">
-                                <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
+                                <i class="fa fa-user"></i>
+                                <abbr title="需求人數">10</abbr>
                             </div>
                         </div>
                         <div class="job-salary-section">
-                            <i class="fas fa-dollar-sign"></i><span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
+                            <i class="fas fa-dollar-sign"></i>
+                            <span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
                         </div>
                     </div>
                 </li>
@@ -173,7 +199,8 @@
                                     <p>Manage</p>
                                     <p class="tag-new">New!</p>
                                     <p class="tag-featured">Featured</p>
-                                </div><a href="javascript:void(0)">
+                                </div>
+                                <a href="javascript:void(0)">
                                     <h6>Fullstack Developer</h6>
                                 </a>
                                 <ul>
@@ -196,11 +223,13 @@
                                 </span>
                             </div>
                             <div class="number-for-hire-section">
-                                <i class="fa fa-user"></i><abbr title="需求人數">10</abbr>
+                                <i class="fa fa-user"></i>
+                                <abbr title="需求人數">10</abbr>
                             </div>
                         </div>
                         <div class="job-salary-section">
-                            <i class="fas fa-dollar-sign"></i><span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
+                            <i class="fas fa-dollar-sign"></i>
+                            <span class="job-salary">68K&nbsp;~&nbsp;154K&nbsp;TWD/月</span>
                         </div>
                     </div>
                 </li>
@@ -215,7 +244,8 @@
                                     <p>Account</p>
                                     <p class="tag-new">New!</p>
                                     <p class="tag-featured">Featured</p>
-                                </div><a href="javascript:void(0)">
+                                </div>
+                                <a href="javascript:void(0)">
                                     <h6>Junior Frontend Developer</h6>
                                 </a>
                                 <ul>
@@ -245,7 +275,8 @@
                                     <p>MyHome</p>
                                     <p class="tag-new">New!</p>
                                     <p class="tag-featured">Featured</p>
-                                </div><a href="javascript:void(0)">
+                                </div>
+                                <a href="javascript:void(0)">
                                     <h6>Junior Frontend Developer</h6>
                                 </a>
                                 <ul>
@@ -274,7 +305,8 @@
                                     <p>Loop Studios</p>
                                     <p class="tag-new">New!</p>
                                     <p class="tag-featured">Featured</p>
-                                </div><a href="javascript:void(0)">
+                                </div>
+                                <a href="javascript:void(0)">
                                     <h6>Software Engineer</h6>
                                 </a>
                                 <ul>
@@ -304,7 +336,8 @@
                                     <p>FaceIt</p>
                                     <p class="tag-new">New!</p>
                                     <p class="tag-featured">Featured</p>
-                                </div><a href="javascript:void(0)">
+                                </div>
+                                <a href="javascript:void(0)">
                                     <h6>Senior Frontend Developer</h6>
                                 </a>
                                 <ul>
@@ -333,7 +366,8 @@
                                     <p>Shotly</p>
                                     <p class="tag-new">New!</p>
                                     <p class="tag-featured">Featured</p>
-                                </div><a href="javascript:void(0)">
+                                </div>
+                                <a href="javascript:void(0)">
                                     <h6>Junior Developer</h6>
                                 </a>
                                 <ul>
@@ -363,7 +397,8 @@
                                     <p>Insure</p>
                                     <p class="tag-new">New!</p>
                                     <p class="tag-featured">Featured</p>
-                                </div><a href="javascript:void(0)">
+                                </div>
+                                <a href="javascript:void(0)">
                                     <h6>Junior Frontend Developer</h6>
                                 </a>
                                 <ul>
@@ -393,7 +428,8 @@
                                     <p>Eyecam Co.</p>
                                     <p class="tag-new">New!</p>
                                     <p class="tag-featured">Featured</p>
-                                </div><a href="javascript:void(0)">
+                                </div>
+                                <a href="javascript:void(0)">
                                     <h6>Senior Frontend Developer</h6>
                                 </a>
                                 <ul>
@@ -423,7 +459,8 @@
                                     <p>The Air Filter Company</p>
                                     <p class="tag-new">New!</p>
                                     <p class="tag-featured">Featured</p>
-                                </div><a href="javascript:void(0)">
+                                </div>
+                                <a href="javascript:void(0)">
                                     <h6>Frontend Developer</h6>
                                 </a>
                                 <ul>
@@ -492,20 +529,32 @@
             console.log(data);
         })
     </script>
+    <script>
+        $("#applyButton@(rowcount)").click(function () {
+            $.ajax({
+                url: "@Url.Content("~/TJobVacancies/ResumeDropDownList")",
+                method: 'post',
+                dataType: 'json',
+
+
+            })
+
+        })
+    </script>
     @*<script>
 
-        $(".btn-for-Detail").click(() => {
-            let formTag = $(this).parentsUntil('ul').find('form');
-            let formData = new FormData(formTag);
+            $(".btn-for-Detail").click(() => {
+                let formTag = $(this).parentsUntil('ul').find('form');
+                let formData = new FormData(formTag);
 
-            $.ajax({
-                url: '@Url.Content("~/TJobVacancies/Detail")',
-                method: 'post',
-                data: formData,
-                success: (e) => {
-                    console.log("success")
-                }
+                $.ajax({
+                    url: '@Url.Content("~/TJobVacancies/Detail")',
+                    method: 'post',
+                    data: formData,
+                    success: (e) => {
+                        console.log("success")
+                    }
+                })
             })
-        })
-    </script>*@
+        </script>*@
 }
