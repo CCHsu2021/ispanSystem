@@ -75,15 +75,15 @@
                                 <input type="hidden" asp-for="FDesignerAccount" value="@ViewBag.account" />
                                 <div class="form-group">
                                     <label asp-for="FTestPaperName" class="control-label"></label>
-                                    <input asp-for="FTestPaperName" class="form-control" />
+                                    <input asp-for="FTestPaperName" class="form-control" id="FpaperName"/>
                                     <span asp-validation-for="FTestPaperName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-5">
                                 <div class="form-group">
-                                    <label asp-for="FSubjectId" class="control-label"></label>
-                                    <select id="FSubjectId" name="FSubjectId" class="form-control"></select>
-                                    <span asp-validation-for="FSubjectId" class="text-danger"></span>
+                                    <label asp-for="FBSubjectId" class="control-label"></label>
+                                    <select id="FSubject" name="FSubjectId" class="form-control"></select>
+                                    <span asp-validation-for="FBSubjectId" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-10">
@@ -95,7 +95,7 @@
                                     </div>*@
                                 <div class="form-group">
                                     <label asp-for="FNote" class="control-label"></label>
-                                    <textarea asp-for="FNote" class="form-control"></textarea>
+                                    <textarea id="FPaperNote" asp-for="FNote" class="form-control"></textarea>
                                     <span asp-validation-for="FNote" class="text-danger"></span>
                                 </div>
                             </div>
@@ -135,8 +135,21 @@
                         </div>
                     </div>
                     <br />
-                    <div id="testView">
-                        @*QuestionList*@
+                    <div class="row" style="margin:8px;">
+                        <div id="testView" class="col-9">
+                            @*QuestionList*@
+                        </div>
+                        <div class="col-3">
+                            <table id="testTable" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>已選題目</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <br />
                     <div class="row data" id="workExpPage">
@@ -154,11 +167,11 @@
                         <div class="col-6">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @*add hidden here*@
-                            <button class="creatworkbtn my-3" id="createEdu">新增</button>
+                            <button class="creatworkbtn my-3" id="createPaper">新增</button>
                         </div>
                         <div class="col-6">
                             @*add here*@
-                            <button class="saveworkbtn my-3" id="editEdu" onclick="editEud()">儲存修改</button>
+                            <button class="my-3">新增試卷</button>
                         </div>
                     </div>
                     <div class="card workdata">
@@ -205,6 +218,7 @@
     <script>
           // 載入課程名稱
         const selSubject = document.querySelector('#FSubjectIdSel');
+        const selTestC = document.querySelector('#FSubject');
         async function LoadSubject() {
             const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
             renderSubject(await responseSubject.json());
@@ -213,6 +227,7 @@
             datas.forEach((item) => {
                 const opt = new Option(item.fClassCategory, item.fClassCategory);
                 selSubject.options.add(opt);
+                selTestC.options.add(opt);
             })
         }
         LoadSubject();
@@ -226,7 +241,6 @@
                     keyword: $('#keyword').val(),
                     Type: $('#FQuestionTypeId').val()
                 })
-            console.log(jsondata);
             $.ajax({
                 url: "@Url.Content("~/QuestionBank/List")",
                 type: "POST",
@@ -327,9 +341,60 @@
 //-------------------------------------------Create New Question End--------------------------------
 
 //-----------------------------Create New TestPaper---------------------------------------------
-        // 題目選取
-        var row = [];
+    // 題目選取
+    function passToPaper(checkboxid) {
+        var t = $('#' + checkboxid).prop('checked');
+        if (t) {            
+            var rowid = "r" + checkboxid;
+            var currentRow = $('#' + checkboxid).closest("tr");
+            var getQuestion = currentRow.find('td').eq(2).html();
+            $('#testTable > tbody').append('<tr id = ' + rowid + '><th>' + getQuestion + '</th></tr>');
+        } else {
+            var rowid = "r" + checkboxid;
+            $('#testTable > tbody').find('#' + rowid).remove();
+        }
+        }
 
+        // 新增試卷
+        $('#createPaper').click(function () {
+            console.log("ok");
+            var selectList = [];
+            var QuestionList = $('#testTable').length;
+            if (QuestionList < 1) {
+                Swal.fire("尚未選取題目");
+            } else {
+                $('#testTable > tbody > tr').each(function (idx, item) {
+                    var queid = {};
+                    var sub = $(item).find('.subjectId').val();
+                    var que = $(item).find('.questionId').val();
+                    queid.FSubjectId = sub;
+                    queid.fQuestionId = que;
+                    selectList.push(queid);
+                })
+                console.log(selectList);
+                var newPaperJson = JSON.stringify({
+                    FDesignerAccount: $('#FDesignerAccount').val(),
+                    FTestPaperName: $('#FpaperName').val(),
+                    FBSubjectId: $('#FSubject').val(),
+                    FNote: $('#FPaperNote').val(),
+                    SelectQuestionList: selectList,
+                })
+                console.log(newPaperJson);
+                $.ajax({
+                    url: "/TestPaperBank/CreatNewPaper",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: newPaperJson
+                }).done(function (data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '新增成功',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })
+                })
+            }
+        })
 
 
 //-----------------------------Create New TestPaper End---------------------------------------------

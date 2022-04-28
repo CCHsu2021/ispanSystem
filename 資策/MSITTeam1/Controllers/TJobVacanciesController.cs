@@ -22,14 +22,16 @@ namespace MSITTeam1.Controllers
         }
 
         // GET: TJobVacancies
-        public async Task<IActionResult> Index(JobVacanciesSearchBarViewModel vModel)
+        public IActionResult Index(JobVacanciesSearchBarViewModel vModel)
         {
-            IEnumerable<TJobVacanciesViewModel> list = GetLeftJoinJobVacancies();
+            ViewBag.Account = CDictionary.account;
 
+            IEnumerable<TJobVacanciesViewModel> data = GetLeftJoinJobVacancies();
+            List<TJobVacanciesViewModel> list = new List<TJobVacanciesViewModel>();
             if (vModel.txtSearchText != null)
             {
                 string lowerSearchText = vModel.txtSearchText.ToLower();
-                list = list.Where(p => p.FJobName.ToLower().Contains(lowerSearchText)
+                data = data.Where(p => p.FJobName.ToLower().Contains(lowerSearchText)
                     || p.FJobDirect.ToLower().Contains(lowerSearchText)
                     || p.FCompanyName.ToLower().Contains(lowerSearchText)
                     || p.FOther.ToLower().Contains(lowerSearchText));
@@ -37,23 +39,28 @@ namespace MSITTeam1.Controllers
 
             if (vModel.ddlJobListId != null)
             {
-                list = list.Where(p => p.FJobListId.Equals(vModel.ddlJobListId));
+                data = data.Where(p => p.FJobListId.Equals(vModel.ddlJobListId));
             }
 
             if (vModel.ddlCity != null)
             {
-                list = list.Where(p => p.FCity.Contains(vModel.ddlCity));
+                data = data.Where(p => p.FCity.Contains(vModel.ddlCity));
+            }
+
+            foreach (var item in data)
+            {
+                list.Add(item);
             }
 
             return View(list);
 
         }
 
-        private IEnumerable<TJobVacanciesViewModel> GetLeftJoinJobVacancies()
+        public IEnumerable<TJobVacanciesViewModel> GetLeftJoinJobVacancies()
         {
-            IEnumerable<TJobVacanciesViewModel> list = null;
+            IEnumerable<TJobVacanciesViewModel> data = null;
             //LINQ，TNewJobVacancies left join TCompanyBasics left join TJobDirects
-            list = from p in _context.TNewJobVacancies
+            data = from p in _context.TNewJobVacancies
                    join t in _context.TCompanyBasics on p.FCompanyTaxid equals t.CompanyTaxid into pt
                    from combin in pt.DefaultIfEmpty()
                    join s in _context.TJobDirects on p.FJobListId equals s.JobListId into ps
@@ -65,11 +72,13 @@ namespace MSITTeam1.Controllers
                        FCompanyLogo = combin.FLogo,
                        FJobDirect = combin2.FJobDirect
                    };
-            return list;
+            return data;
         }
 
-        public async Task<IActionResult> Detail(JobInfoViewModel vModel)
+        public IActionResult Detail(JobInfoViewModel vModel)
         {
+            ViewBag.Account = CDictionary.account;
+
             var chooseOne = GetLeftJoinJobVacancies().FirstOrDefault(p=>
             p.FJobName.Equals(vModel.txtJobName) && p.FCompanyTaxid.Equals(vModel.txtCompanyTaxid));
             
@@ -126,6 +135,15 @@ namespace MSITTeam1.Controllers
                        select p.FCityName;
             var citys = city.Distinct();
                        
+            return Json(citys);
+        }
+        public IActionResult ResumeDropDownList()
+        {
+            var city = from p in _context.StudentResumes
+                       where p.MemberId == CDictionary.account
+                       select p;
+            var citys = city.Distinct();
+
             return Json(citys);
         }
 
