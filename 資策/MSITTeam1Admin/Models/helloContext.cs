@@ -441,9 +441,7 @@ namespace MSITTeam1Admin.Models
                     .HasMaxLength(50)
                     .HasColumnName("fClassOpenDate");
 
-                entity.Property(e => e.FClassPhotoPath)
-                    .HasMaxLength(50)
-                    .HasColumnName("fClassPhotoPath");
+                entity.Property(e => e.FClassPhotoPath).HasColumnName("fClassPhotoPath");
 
                 entity.Property(e => e.FClassTestpaper)
                     .HasMaxLength(50)
@@ -1090,9 +1088,13 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.FOther).HasColumnName("fOther");
 
-                entity.Property(e => e.FSalary)
+                entity.Property(e => e.FSalaryMax)
                     .HasMaxLength(50)
-                    .HasColumnName("fSalary");
+                    .HasColumnName("fSalaryMax");
+
+                entity.Property(e => e.FSalaryMin)
+                    .HasMaxLength(50)
+                    .HasColumnName("fSalaryMin");
 
                 entity.Property(e => e.FSalaryMode)
                     .HasMaxLength(50)
