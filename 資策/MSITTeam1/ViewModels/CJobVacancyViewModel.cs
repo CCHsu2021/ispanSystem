@@ -25,8 +25,10 @@ namespace MSITTeam1.ViewModels
         public string FWorkAddress { get { return this._job.FWorkAddress; } set { _job.FWorkAddress = value; } }
         [DisplayName("薪水制度")]
         public string FSalaryMode { get { return this._job.FSalaryMode; } set { _job.FSalaryMode = value; } }
-        [DisplayName("薪水")]
-        public string FSalary { get { return this._job.FSalary; } set { _job.FSalary = value; } }
+        [DisplayName("最低薪水")]
+        public string FSalaryMin { get { return this._job.FSalaryMin; } set { _job.FSalaryMin = value; } }
+        [DisplayName("最剛薪水")]
+        public string FSalaryMax { get { return this._job.FSalaryMax; } set { _job.FSalaryMax = value; } }
         [DisplayName("工作性質")]
         public string FEmployeeType { get { return this._job.FEmployeeType; } set { _job.FEmployeeType = value; } }
         [DisplayName("時數")]
