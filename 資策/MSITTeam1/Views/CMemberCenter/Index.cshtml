@@ -234,7 +234,7 @@
                 method:'POST',
                 body: Selected_Checkedbox_FormData,
             }).then(function () {
-                $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
+                $("#loadphotolist").load(location.href + " #CompanyPhotoList")
             })
         })
         $(function () {
@@ -244,6 +244,7 @@
         Dropzone.options.form1 = {
             dictDefaultMessage: "拖曳檔案或是點擊上傳",
             acceptedFiles: "image/*",
+            //uploadMultiple: true,
             init: function () {
                 this.on("complete", function (file) {
                     var res = eval('(' + file.xhr.responseText + ')');
@@ -258,10 +259,10 @@
                             $("#CompanyPhotoUpload").modal('hide');
                         });
                     }
-                    this.removeAllFiles(true);
+                    this.removeFile(file);
                     $(".modal-backdrop").css("display", "none");
                     $("#CompanyPhotoUpload").modal('hide');
-                    $("#CompanyPhotoList").load(location.href + " #CompanyPhotoList")
+                    $("#loadphotolist").load(location.href + " #CompanyPhotoList")
                 });
             }
         };
