@@ -15,8 +15,12 @@
             </div>
         </div>
     </div>
-    <button style="display:none" class="btn-style-two mt-3" type="button" id="button2">送出</button>
-    <button style="display:none" class="btn-style-two mt-3" type="button" id="button1">下一題</button>
+    <div>
+        <button style="display:none" class="btn-style-two mt-3" type="button" id="button2">送出</button>
+    </div>
+    <div>
+        <button style="display:none" class="btn-style-two mt-3" type="button" id="button1">下一題</button>
+    </div>
     <form name="member" method="post">
         <input type="text" class="form-control" id="Grade" name="Grade" value="0">
     </form>
@@ -35,10 +39,8 @@
                 Swal.fire({
                     icon: 'info',
                     title: '請先登入會員',
-                    showConfirmButton: false,
-                    timer: 1300
-                }).then(
-                    location = 'https://localhost:44387/Student_Login'
+                }).then((result) => {
+                    if (result.isConfirmed) { location = 'https://localhost:44387/Student_Login' }}
                 )
             } else {
                 btn1.style.display = 'none';
@@ -77,11 +79,13 @@
         btn2.addEventListener('click', (evt) => {
             evt.preventDefault();
             var a = $('input[name=answer]:checked').val();
-            if (1 == a) { anscount++; }
+            if (1 == a) { anscount++; $('input[name=answer]:checked').next().css("color", "green");}
+            if (1 != a) { $("input[name=answer][value='1']").next().css("color", "red"); }
             count++
 
             $('#Grade').attr({ 'value': Math.round((anscount / count) * 100) });
 
+            $('input').hide();
             btn2.style.display = 'none';
             btn.style.display = 'block';
         });

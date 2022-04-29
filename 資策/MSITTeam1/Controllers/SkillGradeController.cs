@@ -18,17 +18,6 @@ namespace MSITTeam1.Controllers
         public IActionResult Index()
         {
             ViewBag.account = CDictionary.account;
-            //IEnumerable<CTestPaperViewModel> list = null;
-            //        list = from d in hello.TQuestionDetails
-            //               join l in hello.TQuestionLists on new { d.FSubjectId, d.FQuestionId } equals new { l.FSubjectId, l.FQuestionId }
-            //               join p in hello.TTestPapers on new { d.FSubjectId, d.FQuestionId } equals new { p.FSubjectId, p.FQuestionId }
-            //               where p.FTestPaperId == 25
-            //               select new CTestPaperViewModel
-            //               {
-            //                   fQuestion = l.FQuestion,
-            //                   fChoice = d.FChoice,
-            //                   fCorrectAnswer = d.FCorrectAnswer
-            //               };
                     return View();
         }
         public IActionResult Topic(topic topic)
