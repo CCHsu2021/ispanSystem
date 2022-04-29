@@ -15,19 +15,16 @@
             </div>
         </div>
     </div>
-    <div>
-        <button style="display:none" class="btn-style-two mt-3" type="button" id="button2">送出</button>
-    </div>
-    <div>
-        <button style="display:none" class="btn-style-two mt-3" type="button" id="button1">下一題</button>
+    <div class="row justify-content-end mx-0">
+        <button style="" class="btn-style-two my-3 m-0 mx-2" type="button" id="button2">送出</button>
+        <button style="" class="btn-style-two my-3 m-0 mx-2" type="button" id="button1">下一題</button>
     </div>
     <form name="member" method="post">
         <input type="text" class="form-control" id="Grade" name="Grade" value="0">
     </form>
 </div>
-<script>
-
-
+@section Scripts{
+    <script>
         const btn = document.querySelector("#button1");
         const btn2 = document.querySelector("#button2");
         const btn1 = document.querySelector("#btnstart");
@@ -85,12 +82,13 @@
 
             $('#Grade').attr({ 'value': Math.round((anscount / count) * 100) });
 
-            $('input').hide();
+            /*            $('input').hide();*/
+            $('input').attr("disabled", "disabled");
             btn2.style.display = 'none';
             btn.style.display = 'block';
         });
 
-</script>
-
+    </script>
+}
 
 
