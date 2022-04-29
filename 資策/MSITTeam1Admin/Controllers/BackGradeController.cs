@@ -15,17 +15,21 @@ namespace MSITTeam1Admin.Controllers
         {
             hello = _hello;
         }
-        public IActionResult Index(showpage showpage)
+        public IActionResult Index()
         {
-            
             backGrade aa = new backGrade();
-            ViewBag.classpage = showpage.classpage;
-            ViewBag.skillpage = showpage.skillpage;
 
             aa.TClassGrade = (from t in hello.TClassGrades
-                        select t).Skip(showpage.classpage).Take(3);
+                        select t);
+            return View(aa);
+        }
+
+        public IActionResult skillIndex()
+        {
+            backGrade aa = new backGrade();
+
             aa.TSkillGrade = (from t in hello.TSkillGrades
-                             select t).Skip(showpage.skillpage).Take(3);
+                              select t);
             return View(aa);
         }
     }

@@ -1,13 +1,13 @@
 ﻿@using MSITTeam1Admin.ViewModels
 @model backGrade
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "skillIndex";
 }
 
 <div class="container">
     <div class="col-12">
         <div class="page-title my-4">
-            <h2>前後測驗成績檢視</h2>
+            <h2>技能成績檢視</h2>
         </div>
     </div>
     <section id="main-content">
@@ -20,35 +20,27 @@
                                 <thead>
                                     <tr>
                                         <th>帳號</th>
-                                        <th>課程外顯碼</th>
-                                        <th>前測成績</th>
-                                        <th>前測成績時間</th>
-                                        <th>後測成績</th>
-                                        <th>後測成績時間</th>
+                                        <th>姓名</th>
+                                        <th>技能</th>
+                                        <th>成績</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{
-                                        foreach (var item in Model.TClassGrade)
+                                        foreach (var item in Model.TSkillGrade)
                                         {
                                             <tr>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.FAccountId)
+                                                    @Html.DisplayFor(modelItem => item.FAccount)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.FClassCode)
+                                                    @Html.DisplayFor(modelItem => item.FMemberName)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.FBeforeClassGrade)
+                                                    @Html.DisplayFor(modelItem => item.FSkillCategory)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.FBeforeClassTime,"Date")
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.FAfterClassGrade)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.FAfterClassTime, "Date")
+                                                    @Html.DisplayFor(modelItem => item.FGrade)
                                                 </td>
                                             </tr>
                                         }
@@ -62,3 +54,5 @@
         </div>
     </section>
 </div>
+
+

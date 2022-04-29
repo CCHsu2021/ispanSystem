@@ -19,7 +19,6 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke()
         {
             string account = CDictionary.account;
-            ViewBag.Account = account;
             IEnumerable<TNewJobVacancy> job = null;
             job = hello.TNewJobVacancies.Where(p=>p.FCompanyTaxid==account);
             List < CJobVacancyViewModel > list = new List<CJobVacancyViewModel>();

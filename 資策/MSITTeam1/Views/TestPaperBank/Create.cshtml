@@ -43,11 +43,31 @@
         }
 
         .slide-container {
-            height: 800px !important;
+            height: 600px !important;
         }
 
         .sized-container.questionTable {
-            max-width: 2000px;
+            max-width: 1700px;
+        }
+        .button-container{
+            border-top: 0.2px hidden !important;
+        }
+        #searchGroup {
+            width: 1200px;
+            padding: 30px 0 15px 100px;
+        }
+        #selectCount{
+            height:35px;
+            line-height:2.7;
+            width:100px;
+            border-radius:17.5px;
+            background-color:gainsboro;
+            position:inherit;
+            margin:8px;
+            text-align:center;
+        }
+        .table {
+            border: 0.5px solid gainsboro;
         }
     </style>
 }
@@ -109,11 +129,10 @@
 
             <li class="slide" data-tag="選擇題目">
                 <div class="sized-container questionTable">
-                    <div class="row row justify-content-around">
+                    <div class="row row justify-content-around" id="searchGroup">
                         <div class="col-3">
                             <select id="FSubjectId" name="FSubjectId" class="form-control">
                                 <option value="">請選擇課程名稱</option>
-                                <option value="" selected="selected">其他</option>
                             </select>
                         </div>
                         <div class="col-3">
@@ -132,14 +151,17 @@
                         </div>
                         <div class="col-2">
                             <a data-toggle="modal" data-target="#questionCreate">新增題目</a>
-                        </div>
-                    </div>
-                    <br />
+                        </div>                        
+                    </div>                    
+                    <hr />
+
                     <div class="row" style="margin:8px;">
+                        @*<div id="selectCount">已選2項</div>*@
                         <div id="testView" class="col-9">
                             @*QuestionList*@
                         </div>
                         <div class="col-3">
+
                             <table id="testTable" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
@@ -154,9 +176,9 @@
                     <br />
                     <div class="row data" id="workExpPage">
                         <!--<div class="col-6">-->
-                            @*add here*@
-                            <!--<button class="saveworkbtn my-3" id="editWork" onclick="editWork()">儲存修改</button>
-                        </div>-->
+                        @*add here*@
+                        <!--<button class="saveworkbtn my-3" id="editWork" onclick="editWork()">儲存修改</button>
+        </div>-->
                     </div>
                 </div>
             </li>
@@ -217,8 +239,9 @@
     <script src="~/js/barRating.init.js"></script>
     <script>
           // 載入課程名稱
-        const selSubject = document.querySelector('#FSubjectIdSel');
-        const selTestC = document.querySelector('#FSubject');
+        const selSubQuest = document.querySelector('#FSubjectIdSel');
+        const selSubPaper = document.querySelector('#FSubject');
+        const selSubSearch = document.querySelector('#FSubjectId');
         async function LoadSubject() {
             const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
             renderSubject(await responseSubject.json());
@@ -226,8 +249,15 @@
         function renderSubject(datas) {
             datas.forEach((item) => {
                 const opt = new Option(item.fClassCategory, item.fClassCategory);
-                selSubject.options.add(opt);
-                selTestC.options.add(opt);
+                selSubPaper.options.add(opt);
+            })
+            datas.forEach((item) => {
+                const opt = new Option(item.fClassCategory, item.fClassCategory);
+                selSubQuest.options.add(opt);
+            })
+            datas.forEach((item) => {
+                const opt = new Option(item.fClassCategory, item.fClassCategory);
+                selSubSearch.options.add(opt);
             })
         }
         LoadSubject();
@@ -253,9 +283,10 @@
         })
         })
 
-//-----------------------------Create New Question---------------------------------------------
+        //-----------------------------Create New Question---------------------------------------------
         // 判斷Checkbox
-        var currentSelect = 0, limit = 1;
+        var currentSelect = $("input[type='checkbox']:checked").length;
+        var limit = 1;
         function doCheck(obj) {
             obj.checked ? currentSelect++ : currentSelect--;
             if (currentSelect > limit) {
@@ -265,19 +296,22 @@
             }
         }
         // 根據題型判斷答案輸入欄位及許可正確選項上限
-        $('#FQuestionTypeId').change(function () {
+        $('#FQuestionTypeIdSel').change(function () {
+            console.log("change")
             if ($(this).val() === "3") {
-                console.log("OK");
+                console.log("3");
                 $('#BtnNewChoice').hide();
                 $('#ansList > #choice > label').html("答案");
                 $('#ansList div:not(:first-child)').remove();
                 $('#ansList > #choice > #checkBox1').hide();
             } else if ($(this).val() === "2") {
+                console.log("2");
                 limit = 100;
                 $('#BtnNewChoice').show();
                 $('#ansList > #choice > label').html("選項");
                 $('#ansList > #choice > #checkBox1').show();
             } else if ($(this).val() === "1") {
+                console.log("1");
                 limit = 1;
                 $('#BtnNewChoice').show();
                 $('#ansList > #choice > label').html("選項");
@@ -304,9 +338,17 @@
         $('#createNew').click(function () {
             var ansArr = [];
             var selectAns = $('#ansList input[type=checkbox]:checked').length;
+            $('#ansList').find('#txtAns').each(function () {
+                if ($(this).text() == "") {
+                    Swal.fire("請輸入選項");
+                }
+            })
             if (selectAns < 1) {
                 Swal.fire("請選擇此題正確答案");
-            } else {
+            } else if ($('#FQuestion').val() == "") {
+                Swal.fire("請輸入題目");
+            }
+            else {
                 $('#ansList > div').each(function (idx, item) {
                     var ans = {}
                     var c = $(item).find(':checkbox').prop('checked');
