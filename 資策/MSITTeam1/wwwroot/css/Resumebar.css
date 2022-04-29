@@ -39,6 +39,23 @@
     transition: all .3s linear;
     width: 150px;
 }
+/*
+.resumebar .delBtn {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 0;
+    text-transform: capitalize;
+    font-size: 18px;
+    border: solid 1px transparent;
+    outline: none;
+    cursor: pointer;
+    line-height: 23px !important;
+    padding: 8px 30px !important;
+    transition: all .3s linear;
+    width: 100% !important;
+    background-color: none !important;
+    color: none !important;
+}*/
 
     .resumebar button:hover {
         /*background-color: #1A7F75;*/
