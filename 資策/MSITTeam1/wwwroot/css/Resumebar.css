@@ -27,6 +27,7 @@
     -moz-appearance: none;
     appearance: none;
     border: 0;
+    border: solid 1px transparent;
     padding: 14px 30px;
     background-color: #1e3c84;
     color: #FFFFFF;
@@ -51,16 +52,19 @@
     .resumebar button.previous {
         background-color: #1e3c84;
         float: left;
+        border: solid 1px transparent;
     }
 
         .resumebar button.previous:hover {
             color: #1e3c84;
             background-color: #ffffff;
+            border: solid 1px transparent;
         }
 
     .resumebar button.savebtn {
         margin: auto;
         width: 150px;
+        border: solid 1px transparent;
     }
 
 .full-width-container {
