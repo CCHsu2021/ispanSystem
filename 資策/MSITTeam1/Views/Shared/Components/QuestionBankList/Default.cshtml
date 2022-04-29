@@ -11,10 +11,11 @@
     <thead>
         <tr>
             <th class="text-center" style="width:60px;">選擇</th>
-            <th>@Html.DisplayNameFor(model => model[0].FSubjectId)</th>
+            <th style="width:130px">@Html.DisplayNameFor(model => model[0].FSubjectId)</th>
             <th>@Html.DisplayNameFor(model => model[0].FQuestion)</th>
             <th class="text-center">@Html.DisplayNameFor(model => model[0].FLevel)</th>
             <th class="text-center" style="width:130px;" id="editGroup">編輯</th>
+            <th class="text-center" style="width:60px;" id="detailGroup"></th>
         </tr>
     </thead>
     <tbody class="questionTable">
@@ -30,28 +31,30 @@
                     {
                         subject = item.FSubjectId;
                         quesId = item.FQuestionId;
-                        <tr>
-                            <td class="text-center" style="width:60px;">
-                                <input type="checkbox" id="@item.FSn" onclick="passToPaper(@item.FSn)" />
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FSubjectId)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FQuestion)
-                                <input type="hidden" name="sub" class="subjectId" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
-                                <input type="hidden" class="questionId" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
-                            </td>
-                            <td class="text-center">
-                                <input type="hidden" class="quesLevel" value="@Html.DisplayFor(modelItem => item.FLevel)" />
-                                <div class="show_rated_3_5"></div>
-                            </td>
-                            <td class="text-center editQButton" style="width:130px;">
-                                <input type="button" data-toggle="modal" data-target="#questionEdit" class="editQuestion" value="編輯" />
-                                <input type="button" data-toggle="modal" data-target="#questionDetail" class="detailQuestion" value="詳情" />
-                                @Html.ActionLink("刪除", "Delete", "QuestionBank", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }, new { onclick = "return confirm('確定要刪除嗎？')" })
-                            </td>
-                        </tr>
+                <tr>
+                    <td class="text-center" style="width:60px;">
+                        <input type="checkbox" id="@item.FSn" onclick="passToPaper(@item.FSn)" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FSubjectId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FQuestion)
+                        <input type="hidden" name="sub" class="subjectId" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
+                        <input type="hidden" class="questionId" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
+                    </td>
+                    <td class="text-center">
+                        <input type="hidden" class="quesLevel" value="@Html.DisplayFor(modelItem => item.FLevel)" />
+                        <div class="show_rated_3_5"></div>
+                    </td>
+                    <td class="text-center editQButton" style="width:130px;">
+                        <input type="button" data-toggle="modal" data-target="#questionEdit" class="editQuestion" value="編輯" />
+                        @Html.ActionLink("刪除", "Delete", "QuestionBank", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }, new { onclick = "return confirm('確定要刪除嗎？')" })
+                    </td>
+                    <td class="text-center detailQButton" style="width:60px;">
+                        <input type="button" data-toggle="modal" data-target="#questionDetail" class="detailQuestion" value="詳情" />
+                    </td>
+                </tr>
                     }
                 }
             }
@@ -99,11 +102,6 @@
 
 
 <script>
-    $('#test').click(function () {
-        $('#editGroup').hide();
-        $('.editQButton').hide();
-    })
-
     // 難度StarBar
     $('.quesLevel').each(function () {
         var i = $(this).val();

@@ -192,8 +192,8 @@
                                             <li>
                                                 <a href="event-detail.html">人才搜尋</a>
                                             </li>
-                                            <li id="QuestionBankSys">
-                                                <a href="@Url.Content("~/TestPaperBank/Home")">題庫及試卷</a>
+                                            <li  id="QuestionBankSys">
+                                                <a>題庫及試卷</a>
                                             </li>
                                         </ul>
                                         <div class="dropdown-btn">
@@ -209,12 +209,6 @@
                                             </li>
                                             <li>
                                                 @Html.ActionLink("前後測驗檢視", "Index", "ShowClassGrade")
-                                            </li>
-                                            <li>
-                                                <a href="event-detail.html">入職測驗</a>
-                                            </li>
-                                            <li>
-                                                <a href="event-detail.html">其他測驗</a>
                                             </li>
                                         </ul>
                                         <div class="dropdown-btn">
@@ -435,14 +429,30 @@
         $("#showPoint").text(totalPoint)
     })
 
-    // 題庫系統只有企業會員及管理員使用
-    $(function () {
-        $('#QuestionBankSys').hide();
-        if ("@ViewBag.Type" == "2") {
-            $('#QuestionBankSys').show();
+    // 題庫系統 登入判斷
+    $('#QuestionBankSys').click(function () {
+        if ("@ViewBag.account" == "") {
+            Swal.fire({
+                icon: 'info',
+                title: '請先登入會員',
+                showConfirmButton: false,
+                timer: 1300
+            }).then(
+                location = 'https://localhost:44387/Company_Login'
+            );
+        }
+        else if ("@ViewBag.Type" == "1") {
+            Swal.fire({
+                icon: 'info',
+                title: '題庫及試卷系統目前僅對企業會員開放',
+                showConfirmButton: false,
+                timer: 2000
+            })
+            return;
+        } else if ("@ViewBag.Type" == "2") {
+            $('#QuestionBankSys > a').attr("href", "../TestPaperBank/Home");
         }
     })
 </script>
-
 </body>
 </html>

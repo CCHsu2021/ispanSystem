@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<MSITTeam1.ViewModels.CJobVacancyViewModel>
-
+@addTagHelper *, MSITTeam1
 @{
     ViewData["Title"] = "Index";
 }
@@ -29,6 +29,25 @@
             background: #FFFFFF;
             color: #1e3c84;
         }
+
+    .jobvacancyflip {
+        margin: 0px;
+        padding: 5px;
+        text-align: center;
+        background: #e09697;
+        cursor: pointer;
+        font-family: "Arial";
+    }
+
+    .jobvacancypanel {
+        margin: 0px;
+        padding: 5px;
+        text-align: center;
+        background: #e5eecc;
+        border: solid 1px #c3c3c3;
+        display: none;
+        font-family: "Arial";
+    }
 </style>
 <div>
     <div class="form-group row justify-content-center py-4">
@@ -40,8 +59,29 @@
         </div>
     </div>
 </div>
-<div>
-    <a asp-action="CreateJobVacancy">新增職缺</a>
+
+<div class="jobvacancyflip">
+    <span>新增職缺</span>
+</div>
+<div class="jobvacancypanel">
+    職缺名稱：<input type="text" id="FJobName" />
+    薪資：  <select>
+        <option>時薪</option>
+        <option>月薪</option>
+    </select>
+    <input type="text" id="FSalary" />
+    工作地址：<vc:selector city="" district=""></vc:selector>
+    <input type="text" id="FWorkAddress" />
+    工作時數：<input type="text" id="FWorkHours" />
+    <input type="text" id="FLeaveSystem" />
+    <input type="text" id="FJobSkill" />
+    <input type="text" id="FEducation" />
+    <input type="text" id="FNeedPerson" />
+    <input type="text" id="FContactPerson" />
+    <input type="text" id="FContactPhone" />
+    <input type="text" id="FContactFax" />
+    <input type="text" id="FContactEmail" />
+    <input type="text" id="FOther" />
 </div>
 @foreach (var item in Model)
 {
@@ -80,8 +120,8 @@
                 <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0">
                     <button class="fas fa-pencil-alt fa-2x joblistbtn" value="@item.FJobName" data-toggle="modal" data-target="#JobVacancy-Edit-Modal"></button>
                     <button class="fas fa-trash-alt fa-2x joblistbtn" id="JobVacancy-Delete-Btn"></button>
-                    @Html.ActionLink("", "Edit", new { CompanyTaxID = item.FCompanyTaxid, JobName = item.FJobName }, new { @class = "fas fa-pencil-alt fa-2x joblistbtn" })
-                    @Html.ActionLink("", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "fas fa-trash-alt fa-2x joblistbtn" })
+                    @*@Html.ActionLink("", "Edit", new { CompanyTaxID = item.FCompanyTaxid, JobName = item.FJobName }, new { @class = "fas fa-pencil-alt fa-2x joblistbtn" })
+                        @Html.ActionLink("", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "fas fa-trash-alt fa-2x joblistbtn" })*@
                 </div>
             </div>
         </div>
@@ -98,13 +138,15 @@
                 </button>
             </div>
             <div class="modal-body">
-
             </div>
         </div>
     </div>
 </div>
 <script>
-    var editbtn = document.getElementById("JobVacancy-Edit-Btn");
-    var deletebtn = document.getElementById("JobVacancy-Delete-Btn");
+    $(function () {
+        $(".jobvacancyflip").click(function () {
+            $(".jobvacancypanel").slideToggle("fast");
+        });
+    });
 </script>
 

@@ -23,7 +23,6 @@
         #search {
             -webkit-appearance: none;
             -moz-appearance: none;
-            appearance: none;
             border: 0;
             padding: 0.5rem 0.75rem;
             background-color: #1e3c84;
@@ -66,8 +65,30 @@
             margin:8px;
             text-align:center;
         }
+        .selectType {
+            height: 35px;
+            line-height: 2.7;
+            width: 100px;
+            border-radius: 17.5px;
+            background-color: gainsboro;
+            position: inherit;
+            margin: 8px;
+            text-align: center;
+            cursor:pointer;
+        }
         .table {
             border: 0.5px solid gainsboro;
+        }
+        #CreatebtnType {
+            margin: 0px;
+           padding: 0px;
+           float: right;
+           background-color: #1e3c84;
+           color: #FFFFFF;
+        }
+        .selectQuestList{
+            height:450px;
+            overflow:auto;
         }
     </style>
 }
@@ -86,7 +107,7 @@
             <li class="slide" data-tag="建立考卷資料">
                 <form name="basic">
                     <div class="sized-container basic">
-                        <h1>歡迎使用資展題庫系統 這是新增考卷的頁面</h1>
+                        <h1>歡迎使用資展題庫系統</h1>
                         <h2>請填寫考卷名稱及考卷介紹，您可以依照喜好從題庫挑選想要的題目，您也可以新增屬於自己的題目，新的題目經過審核後，該張試卷才能成功啟用。</h2>
                         <hr />
                         <div class="row data justify-content-center">
@@ -150,17 +171,29 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <a data-toggle="modal" data-target="#questionCreate">新增題目</a>
-                        </div>                        
-                    </div>                    
+                            <div class="selectType" id="CreatebtnType">
+                                <span><a data-toggle="modal" data-target="#questionCreate">新增題目</a></span>
+                            </div>
+                        </div>
+                    </div>
                     <hr />
+                    <div class="row">
+                        <div id="selectCount">
+                            <span>已選2項</span>
+                        </div>
+                        <div class="selectType" id="MemberType">
+                            <span>企業會員</span>
+                        </div>
+                        <div class="selectType" id="AdminType">
+                            <span>管理員</span>
+                        </div>
+                    </div>
 
                     <div class="row" style="margin:8px;">
-                        @*<div id="selectCount">已選2項</div>*@
                         <div id="testView" class="col-9">
                             @*QuestionList*@
                         </div>
-                        <div class="col-3">
+                        <div class="col-3 .selectQuestList">
 
                             <table id="testTable" class="table table-striped table-hover">
                                 <thead>
@@ -189,17 +222,10 @@
                         <div class="col-6">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @*add hidden here*@
-                            <button class="creatworkbtn my-3" id="createPaper">新增</button>
+                            <button class="creatworkbtn my-3" id="createPaper" style="background-color:olivedrab;">完成</button>
                         </div>
-                        <div class="col-6">
-                            @*add here*@
-                            <button class="my-3">新增試卷</button>
-                        </div>
-                    </div>
-                    <div class="card workdata">
                     </div>
                 </div>
-
             </li>
         </ul>
 
@@ -219,8 +245,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">題目新增</h5>
                 <input type="button" class="close" data-dismiss="modal" aria-label="Close" />
-                <span aria-hidden="true">&times;</span>
-                
+                <span aria-hidden="true">&times;</span>                
             </div>
             <div class="modal-body">
                 <vc:question-bank-create></vc:question-bank-create>
@@ -281,8 +306,9 @@
                 }
             })
         })
-        })
+        })  
 
+        console.log(@ViewBag.account);
         //-----------------------------Create New Question---------------------------------------------
         // 判斷Checkbox
         var currentSelect = $("input[type='checkbox']:checked").length;
@@ -383,6 +409,17 @@
 //-------------------------------------------Create New Question End--------------------------------
 
 //-----------------------------Create New TestPaper---------------------------------------------
+
+        // 判斷可編輯題目
+        $('#MemberType').click(function () {
+            $('#editGroup').hide();
+            $('.editQButton').hide();
+        })
+        $('#AdminType').click(function () {
+            $('#editGroup').show();
+            $('.editQButton').show();
+        })
+
     // 題目選取
     function passToPaper(checkboxid) {
         var t = $('#' + checkboxid).prop('checked');
@@ -441,10 +478,6 @@
 
 //-----------------------------Create New TestPaper End---------------------------------------------
 
-
-
-
-
         // 刪除不需要的jquery程式
     var currentSlide = 0,
         $slideContainer = $('.slide-container'),
@@ -473,8 +506,19 @@
         $pagination.find('.indicator').eq(0).addClass('active');
     }
 
+        // 移動按鈕調整
+        if (currentSlide == 0) {
+            $('.previous').hide();
+        }
     function goToNextSlide() {
-        if (currentSlide >= slideCount - 1) return;
+        if (currentSlide >= slideCount - 1) {
+            $('.next').attr("text", "完成");
+            $('.previous').show();
+            return;
+        } else {
+            $('.next').attr("text", "下一步");
+            $('.previous').show();
+        }
         var windowWidth = $(window).width();
         currentSlide++;
         $slideContainer.animate({
@@ -487,7 +531,6 @@
     }
 
     function goToPreviousSlide() {
-        if (currentSlide <= 0) return;
         var windowWidth = $(window).width();
         currentSlide--;
         $slideContainer.animate({
@@ -497,6 +540,14 @@
         $('.progress-bar').eq(currentSlide).animate({
             width: '0%'
         }, animationTime);
+        if (currentSlide <= 0) {
+            $('.previous').hide();
+            $('.next').attr("text", "下一步");
+            return;
+        } else {
+            $('.previous').show();
+            $('.next').attr("text", "下一步");
+        }
     }
 
     function postitionSlides() {
