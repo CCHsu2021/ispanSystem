@@ -110,6 +110,17 @@ namespace MSITTeam1.Controllers
 			_context.SaveChanges();
 			return Content("新增成功");
 		}
+
+		public IActionResult DetailByVC([FromBody] CQuestionQueryViewModel query)
+		{
+			int questionID = 0;
+			if (query != null)
+			{
+				questionID = Convert.ToInt32(query.questionID);
+			}
+			return ViewComponent("QuestionBankDetail", new { subjectID = query.Subjects, questionID = questionID });
+		}
+
 		public IActionResult EditByVC([FromBody] CQuestionQueryViewModel query)
 		{
 			int questionID = 0;
@@ -118,39 +129,6 @@ namespace MSITTeam1.Controllers
 				questionID = Convert.ToInt32(query.questionID);
 			}
 			return ViewComponent("QuestionBankEdit", new { subjectID = query.Subjects, questionID = questionID});
-		}
-		public IActionResult Edit(string subjectID, int questionID)
-		{
-			if (subjectID != null && questionID > 0)
-			{
-				List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
-				var quesQuery = from choice in _context.TQuestionDetails
-								join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
-								where choice.FSubjectId.Equals(subjectID) && choice.FQuestionId == questionID
-								select new CQuestionBankViewModel
-								{
-									FSn = choice.FSn,
-									FCSubjectId = choice.FSubjectId,
-									FSubjectId = ques.FSubjectId,
-									FCQuestionId = choice.FQuestionId,
-									FQuestionId = ques.FQuestionId,
-									FQuestion = ques.FQuestion,
-									FLevel = ques.FLevel,
-									FQuestionTypeId = ques.FQuestionTypeId,
-									FChoice = choice.FChoice,
-									FCorrectAnswer = choice.FCorrectAnswer
-								};
-
-				foreach (var q in quesQuery)
-				{
-					quesList.Add(q);
-				}
-				if (quesList != null)
-				{
-					return View(quesList);
-				}
-			}
-			return RedirectToAction("List");
 		}
 
 		[HttpPost]
