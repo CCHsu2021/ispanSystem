@@ -19,9 +19,11 @@ namespace MSITTeam1.ViewComponent
         {
             _context = context;
         }
-        public IViewComponentResult Invoke(string jobName,string companyTaxid)
+        public IViewComponentResult Invoke(string jobName,string companyTaxid,string rowCount)
         {
-            CDictionary.account = "111";
+            ViewBag.rowCount = rowCount;
+            //假設登入帳號是學員：111
+            CDictionary.account = "111";    
             TMemberResumeSendViewModel memberResumeSend = new TMemberResumeSendViewModel();
             var contactOne =_context.StudentBasics.FirstOrDefault(p => p.FAccount == CDictionary.account);
 
