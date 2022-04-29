@@ -34,7 +34,7 @@ namespace MSITTeam1.Controllers
                                   FAfterClassGrade = g.Sum(c => c.FAfterClassGrade)
                               }
                                       ;
-                if (self.FAfterClassGrade != null && self.FBeforeClassGrade != null)
+                if (self != null)
                 {
                     ViewBag.classname = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassname;
                     ViewBag.showavgself = (self.FBeforeClassGrade + self.FAfterClassGrade) / 2;
@@ -52,7 +52,7 @@ namespace MSITTeam1.Controllers
                             ViewBag.showavg += list + ",";
                     }
                 }
-                if (self.FAfterClassGrade != null)
+                if (self != null)
                 {
                     ViewBag.showbeforeself = self.FBeforeClassGrade;
                     int list = 0;
@@ -69,7 +69,7 @@ namespace MSITTeam1.Controllers
                             ViewBag.showbefore += list + ",";
                     }
                 }
-                if (self.FBeforeClassGrade != null)
+                if (self != null)
                 {
                     ViewBag.showAfterself = self.FAfterClassGrade;
                     int list = 0;
