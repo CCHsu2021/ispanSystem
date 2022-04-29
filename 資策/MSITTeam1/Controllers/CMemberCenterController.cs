@@ -108,10 +108,11 @@ namespace MSITTeam1.Controllers
                     if (file.Exists)
                     {
                         file.Delete();
-                        TPhoto photo = hello.TPhotos.FirstOrDefault(p => p.FPhoto == i.ToString());
-                        if (photo != null) {
-                            hello.TPhotos.Remove(photo);
-                        }
+                    }
+                    TPhoto photo = hello.TPhotos.FirstOrDefault(p => p.FPhoto == i.ToString());
+                    if (photo != null)
+                    {
+                        hello.TPhotos.Remove(photo);
                     }
                 }
                 hello.SaveChanges();

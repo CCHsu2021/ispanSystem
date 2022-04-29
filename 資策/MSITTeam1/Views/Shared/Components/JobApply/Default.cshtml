@@ -15,18 +15,18 @@
             </div>
             <div class="form-group">
                 <label class="control-label">請選擇履歷樣式</label>
-                <select class="form-control" id="selectResume@(ViewBag.rowCount)" name="ddlResume">
+                <select class="form-control" id="selectResume@(ViewBag.rowCount)" name="ddlResume" required>
                     
                 </select>
             </div>
             <div class="form-group">
                 <label asp-for="ContactPhone" class="control-label"></label>
-                <input asp-for="ContactPhone" class="form-control" />
+                <input pattern="/^09[0-9]{8}$/" asp-for="ContactPhone" class="form-control" />
                 <span asp-validation-for="ContactPhone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ContactEmail" class="control-label"></label>
-                <input asp-for="ContactEmail" class="form-control" />
+                <input type="email" asp-for="ContactEmail" class="form-control" />
                 <span asp-validation-for="ContactEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
