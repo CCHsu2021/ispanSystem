@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MSITTeam1.ViewModels
 {
-    public class CAddToCartViewModel
+    public class CClassAddToCartViewModel
     {
         public string productId { get; set; }
 
@@ -17,7 +17,6 @@ namespace MSITTeam1.ViewModels
         public string imgPath { get; set; }
         public string name { get; set; }
 
-        public TProduct product { get; set; }
-
+        public TClassInfo TClassInfo { get; set; }
     }
 }

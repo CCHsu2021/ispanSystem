@@ -2,27 +2,31 @@
 @{
     ViewData["Title"] = "Index";
 }
-<button class="btn-style-two mt-3" type="button" id="btnstart">開始測驗</button>
+<div class="container">
+    <button class="btn-style-two mt-3" type="button" id="btnstart">開始測驗</button>
     <div id="div1">
         <div class="row">
             <div class="container">
-                <h1 id="skill_grade_question"></h1>
+                <h4 id="skill_grade_question" class="font-weight-bold my-3 mt-4"></h4>
             </div>
             <div class="container">
-                <div class="row" id="skill_grad_choices">
+                <div class="row" id="skill_grad_choices" style="line-height:1.5rem;">
                 </div>
             </div>
         </div>
     </div>
-    <button style="display:none" class="btn-style-two mt-3" type="button" id="button1">下一題</button>
+    <div class="row justify-content-end mx-0">
+        <button style="" class="btn-style-two my-3 m-0 mx-2" type="button" id="button2">送出</button>
+        <button style="" class="btn-style-two my-3 m-0 mx-2" type="button" id="button1">下一題</button>
+    </div>
     <form name="member" method="post">
-        <input type="text" class="form-control" id="Grade" name="Grade" value="80">
+        <input type="text" class="form-control" id="Grade" name="Grade" value="0">
     </form>
-
+</div>
+@section Scripts{
     <script>
-
-
         const btn = document.querySelector("#button1");
+        const btn2 = document.querySelector("#button2");
         const btn1 = document.querySelector("#btnstart");
         const divAlert = document.querySelector("#div1");
 
@@ -32,14 +36,12 @@
                 Swal.fire({
                     icon: 'info',
                     title: '請先登入會員',
-                    showConfirmButton: false,
-                    timer: 1300
-                }).then(
-                    location = 'https://localhost:44387/Student_Login'
+                }).then((result) => {
+                    if (result.isConfirmed) { location = 'https://localhost:44387/Student_Login' }}
                 )
             } else {
                 btn1.style.display = 'none';
-                btn.style.display = 'block';
+                btn2.style.display = 'block';
                 btn.click();
             }
         })
@@ -64,9 +66,29 @@
                 }
                 $("#skill_grad_choices").html(choice)
             });
-        })
+        btn.style.display = 'none';
+        btn2.style.display = 'block';
+    })
+
+        var anscount = 0;
+        var count = 0;
+
+        btn2.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            var a = $('input[name=answer]:checked').val();
+            if (1 == a) { anscount++; $('input[name=answer]:checked').next().css("color", "green");}
+            if (1 != a) { $("input[name=answer][value='1']").next().css("color", "red"); }
+            count++
+
+            $('#Grade').attr({ 'value': Math.round((anscount / count) * 100) });
+
+            /*            $('input').hide();*/
+            $('input').attr("disabled", "disabled");
+            btn2.style.display = 'none';
+            btn.style.display = 'block';
+        });
 
     </script>
-
+}
 
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,6 +30,7 @@ namespace MSITTeam1.ViewModels
         [DisplayName("聯絡電話")]
         public string ContactPhone { get { return this.memRS.ContactPhone; } set { memRS.ContactPhone= value; } }
         [DisplayName("聯絡信箱")]
+        [EmailAddress]
         public string ContactEmail { get { return this.memRS.ContactEmail; } set { memRS.ContactEmail = value; } }
         [DisplayName("求職單狀態")]
         public string ComReadOrNot { get { return this.memRS.ComReadOrNot; } set { memRS.ComReadOrNot= value; } }

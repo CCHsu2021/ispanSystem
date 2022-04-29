@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<MSITTeam1.ViewModels.CJobVacancyViewModel>
-
+@addTagHelper *, MSITTeam1
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,6 +9,7 @@
         border: lightgray solid 1px;
         border-left: 5px #ed731a solid;
     }
+
     .joblistbtn {
         border: 0;
         padding: 0px 5px;
@@ -20,12 +21,32 @@
         width: 50px;
         height: 50px;
         margin-right: 3px;
-        text-align:center;
-        line-height:50px;
+        text-align: center;
+        line-height: 50px;
     }
-    .joblistbtn:hover{
-        background:#FFFFFF;
-        color:#1e3c84;
+
+        .joblistbtn:hover {
+            background: #FFFFFF;
+            color: #1e3c84;
+        }
+
+    .jobvacancyflip {
+        margin: 0px;
+        padding: 5px;
+        text-align: center;
+        background: #e09697;
+        cursor: pointer;
+        font-family: "Arial";
+    }
+
+    .jobvacancypanel {
+        margin: 0px;
+        padding: 5px;
+        text-align: center;
+        background: #e5eecc;
+        border: solid 1px #c3c3c3;
+        display: none;
+        font-family: "Arial";
     }
 </style>
 <div>
@@ -38,12 +59,33 @@
         </div>
     </div>
 </div>
-<div>
-    <a asp-action="CreateJobVacancy">新增職缺</a>
+
+<div class="jobvacancyflip">
+    <span>新增職缺</span>
 </div>
-@foreach(var item in Model)
+<div class="jobvacancypanel">
+    職缺名稱：<input type="text" id="FJobName" />
+    薪資：  <select>
+        <option>時薪</option>
+        <option>月薪</option>
+    </select>
+    <input type="text" id="FSalary" />
+    工作地址：<vc:selector city="" district=""></vc:selector>
+    <input type="text" id="FWorkAddress" />
+    工作時數：<input type="text" id="FWorkHours" />
+    <input type="text" id="FLeaveSystem" />
+    <input type="text" id="FJobSkill" />
+    <input type="text" id="FEducation" />
+    <input type="text" id="FNeedPerson" />
+    <input type="text" id="FContactPerson" />
+    <input type="text" id="FContactPhone" />
+    <input type="text" id="FContactFax" />
+    <input type="text" id="FContactEmail" />
+    <input type="text" id="FOther" />
+</div>
+@foreach (var item in Model)
 {
-<div class="job-card mb-4" id="quesCard">
+    <div class="job-card mb-4" id="quesCard">
         <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCompanyTaxid)" />
         <div class="tab-content">
             <div class="tab-pane active" id="home2" role="tabpanel">
@@ -55,7 +97,7 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-md-7 col-lg-8" style="line-height:2rem">
-                        <div>薪資：@item.FSalaryMode@item.FSalary</div>
+                        <div>薪資：@item.FSalaryMode@item.FSalaryMin</div>
                         <div>工作地址：@item.FCity@item.FDistrict@item.FWorkAddress</div>
                         <div>工作時數：@item.FWorkHours</div>
                         <div>排休制度：@item.FLeaveSystem</div>
@@ -76,11 +118,35 @@
                     </div>
                 </div>
                 <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0">
-                    @Html.ActionLink("", "Edit", new { CompanyTaxID = item.FCompanyTaxid, JobName = item.FJobName },new { @class= "fas fa-pencil-alt fa-2x joblistbtn" }) 
-                    @Html.ActionLink("", "Delete", new { /* id=item.PrimaryKey */ },new { @class= "fas fa-trash-alt fa-2x joblistbtn" })
+                    <button class="fas fa-pencil-alt fa-2x joblistbtn" value="@item.FJobName" data-toggle="modal" data-target="#JobVacancy-Edit-Modal"></button>
+                    <button class="fas fa-trash-alt fa-2x joblistbtn" id="JobVacancy-Delete-Btn"></button>
+                    @*@Html.ActionLink("", "Edit", new { CompanyTaxID = item.FCompanyTaxid, JobName = item.FJobName }, new { @class = "fas fa-pencil-alt fa-2x joblistbtn" })
+                        @Html.ActionLink("", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "fas fa-trash-alt fa-2x joblistbtn" })*@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 }
+<!-- Modal -->
+<div class="modal fade" id="JobVacancy-Edit-Modal" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">修改資料</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".jobvacancyflip").click(function () {
+            $(".jobvacancypanel").slideToggle("fast");
+        });
+    });
+</script>
 

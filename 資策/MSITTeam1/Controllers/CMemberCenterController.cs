@@ -111,10 +111,10 @@ namespace MSITTeam1.Controllers
                         TPhoto photo = hello.TPhotos.FirstOrDefault(p => p.FPhoto == i.ToString());
                         if (photo != null) {
                             hello.TPhotos.Remove(photo);
-                            hello.SaveChanges();
                         }
                     }
                 }
+                hello.SaveChanges();
                 return Content("Deleted");
             }
             return Content("fail");
