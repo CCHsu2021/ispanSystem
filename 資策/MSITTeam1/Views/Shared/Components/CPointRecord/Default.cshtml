@@ -1,0 +1,182 @@
+﻿@addTagHelper *, MSITTeam1
+@model IEnumerable<MSITTeam1.ViewModels.SPointRecordViewModel>
+
+<style>
+
+    .pointRecordContent input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    /* Accordion styles */
+    .pointRecordContent .tabs {
+        overflow: hidden;
+        box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
+        border-top: 5px solid orange;
+    }
+
+    .pointRecordContent .tab {
+        width: 100%;
+        color: white;
+        overflow: hidden;
+    }
+
+    .pointRecordContent .tab-label {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em;
+        background: #ffffff;
+        color:#555;
+        font-weight: bold;
+        cursor: pointer;
+        /* Icon */
+    }
+
+
+        .pointRecordContent .tab-label::after {
+            content: "❯";
+            width: 1em;
+            height: 1em;
+            text-align: center;
+            transition: all 0.35s;
+        }
+
+    .pointRecordContent .tab-content {
+        max-height: 0;
+        padding: 0 1em;
+        color: #2c3e50;
+        background: white;
+        transition: all 0.35s;
+    }
+
+    .pointRecordContent .tab-close {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1em;
+        font-size: 0.75em;
+        background: #2c3e50;
+        cursor: pointer;
+    }
+
+        .pointRecordContent .tab-close:hover {
+            background: #1a252f;
+        }
+
+    .pointRecordContent input:checked + .tab-label {
+        background: #ffffff;
+        color: #555;
+        border-bottom: 1px solid #999;
+    }
+
+        .pointRecordContent input:checked + .tab-label::after {
+            transform: rotate(90deg);
+        }
+
+    .pointRecordContent input:checked ~ .tab-content {
+        max-height: 100vh;
+        padding: 1em;
+    }
+
+    .table {
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: #fefefe;
+  display: inline-block;
+}
+.table thead {
+  display: none;
+}
+.table tbody {
+  display: table;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.table tbody:last-child {
+  margin-bottom: 0;
+}
+        .table th,
+        .table td {
+            padding: 5px 10px;
+            border: solid 1px #999;
+        }
+.table th {
+  color: #555;
+  background-color: #EEE;
+  min-width:5rem;
+}
+.table tr {
+  background-color: #fefefe;
+}
+
+@@media screen and (min-width: 700px) {
+  .table:not(.table-mobile) {
+    display: table;
+  }
+  .table:not(.table-mobile) thead {
+    display: table-header-group;
+  }
+  .table:not(.table-mobile) thead tr {
+    display: table-row;
+  }
+  .table:not(.table-mobile) thead th {
+    display: table-cell;
+  }
+  .table:not(.table-mobile) tbody {
+    display: table-row;
+  }
+
+  .table:not(.table-mobile) th {
+    display: none;
+  }
+  .table:not(.table-mobile) tr {
+    border: solid 1px #999;
+    display: table-cell;
+  }
+  .table:not(.table-mobile) td {
+    border: 0;
+    display: inline-block;
+  }
+}
+.table .btn-s {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  vertical-align: baseline;
+}
+
+</style>
+<h3>我的點數</h3>
+@{
+    int totalPoint = 0;
+    <div class="row">
+        <h4 class="my-3">會員等級:<span>@ViewBag.title</span></h4>
+    </div>
+    <div class="row">
+        <h4 class="my-3">剩餘點數:<span id="showPoint"></span></h4>
+    </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>紀錄日期</th>
+                                        <th>點數類別</th>
+                                        <th>紀錄描述</th>
+                                        <th>點數紀錄</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model)
+                                {
+                                    totalPoint += (int)item.PointRecord;
+                                    <tbody>
+                                        <tr><th>紀錄日期</th><td>@Html.DisplayFor(modelItem => item.PointDate, "DateTime")</td></tr>
+                                        <tr><th>點數類別</th><td>@item.PointType</td></tr>
+                                        <tr><th>紀錄描述</th><td>@item.PointDes</td></tr>
+                                        <tr><th>點數紀錄</th><td>@item.PointRecord</td></tr>
+                                    </tbody>
+                                }
+                                    @{var total = @totalPoint;
+                                    }
+                            </table>
+                            <input id="CtotalPoint" value="@total" type="hidden"/>
+                            @*<input id="CTtile" value="@total" type="hidden"/>*@
+}
+

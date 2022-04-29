@@ -125,6 +125,7 @@ namespace MSITTeam1.ViewModels
         }
 
         // 工作經歷
+        public int WorkCount { get; set; }
         [DisplayName("")]
         public long WorkExperienceId
         {

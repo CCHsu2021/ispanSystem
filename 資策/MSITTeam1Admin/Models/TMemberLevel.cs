@@ -11,5 +11,7 @@ namespace MSITTeam1Admin.Models
         public string Title { get; set; }
         public double? BonusPercent { get; set; }
         public string BgPicture { get; set; }
+        public int? SpendMoneyFrom { get; set; }
+        public int? SpendMoneyTo { get; set; }
     }
 }
