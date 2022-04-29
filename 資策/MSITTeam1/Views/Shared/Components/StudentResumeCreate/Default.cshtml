@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
 
 
-<link rel="stylesheet" type="text/css" href="/css/result-light.css">
+@*<link rel="stylesheet" type="text/css" href="/css/result-light.css">*@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
 <style>
 
@@ -31,12 +31,12 @@
         margin-bottom: 5px;
     }
 
-    h4{
+    h4 {
         margin-bottom: 5px;
     }
 
 </style>
-    
+
 
 
 
@@ -55,7 +55,7 @@
                     <div class="alert alert-success kanban-card " id="basic" role="alert">
                         @foreach (var item in Model)
                         {
-                            
+
                             <div class="row">
                                 <div class="col-md-6 basicCss">
                                     <h4> 基本資料</h4>
@@ -109,7 +109,7 @@
         </div>
     </div>
     <div class="col-4">
-        
+
         <div class="panel panel-info">
             <div class="panel-heading kanban-card">
                 <h3 class="panel-title">資料</h3>
@@ -117,9 +117,7 @@
             <div class="panel-body">
                 <div id="done">
                     &nbsp;
-                    <div class="alert alert-success kanban-card" role="alert">Card1</div>
-                    <div class="alert alert-success kanban-card" role="alert">Card2</div>
-                    <div class="alert alert-success kanban-card" role="alert">Card3</div>
+
                 </div>
             </div>
         </div>
@@ -127,8 +125,10 @@
 </div>
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
-    <script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js">
+import { data } from "jquery";
+</script>
+<script>
       var dragulaCards = dragula([
       document.querySelector('#todo'),
       document.querySelector('#in-progress'),
@@ -149,20 +149,42 @@
       }
     });
 
-    function addElementDiv() {
-　　　　var parent = document.getElementById("#done");
-　　　　//新增 div
-　　　　var div = document.createElement("div");
-　　　　//設定 div 屬性
-　　　　div.setAttribute("class", "alert alert-success kanban-card");
-       div.setAttribute("role", "alert");
-　　　　div.innerHTML = "js 動態新增div";
-　　　　parent.appendChild(div);
-　　}
+    var parent = document.querySelector('#done');
 
-    addElementDiv();
+    $.ajax({
+            url: '@Url.Content("~/StudentResume/ReturnWorkCount")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                for(var row in datas){
+                    
+                    var div = document.createElement("div");
+                    div.role="alert";
+                    div.innerHTML= "公司名稱"+ datas[row].companyName +"<br/>"+ "工作部門:"+ datas[row].companyDepartment +"<br/>"
+                                   +"職位名稱"+ datas[row].jobTitle +"<br/>"+ "開始時間:"+ datas[row].employmentFrom +"<br/>"
+                                   +"結束時間:"+ datas[row].employmentTo  +"<br/>"+ "內容描述:"+ datas[row].JobDescription ;
+                                   
+                    div.setAttribute("class", "alert alert-success kanban-card");
+                    parent.appendChild(div);
+                
+                }
+                ;
+            }
+        }).done((data) => {
+            console.log(data)
+        })
 
+
+
+
+    //div.addClass('alert alert-success kanban-card')
+    //div.class="alert alert-success kanban-card";
+    //a="<div class=\"alert alert-success kanban-card\" >Card20</div>"
+    //parent.html(a);
+    
 </script>
+
+
 
 
 
