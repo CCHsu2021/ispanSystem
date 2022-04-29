@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label asp-for="@Model[0].FQuestionTypeId" class="control-label"></label>
                                 <input type="hidden" value="@Model[0].FQuestionTypeId" id="curType" />
-                                <select id="FQuestionTypeIdSel" asp-for="@Model[0].FQuestionTypeId" class="form-control">
+                                <select id="FQuestionTypeIdSel" asp-for="@Model[0].FQuestionTypeId" class="form-control" disabled="disabled">
                                     <option value="1">單選題</option>
                                     <option value="2">多選題</option>
                                     <option value="3">填空題</option>
@@ -46,10 +46,10 @@
                                             <input type="hidden" id="FCQuestionId" asp-for="@Model[i].FCQuestionId" />
                                             <input type="hidden" id="correctAns" asp-for="@Model[i].FCorrectAnswer" />
 
-                                            <label asp-for="@Model[i].FChoice" class="control-label"  disabled="disabled" style="overflow:auto;"></label>
+                                            <label asp-for="@Model[i].FChoice" class="control-label" style="overflow:auto;"></label>
                                             <br />
                                             <input id="checkBox1" type="checkbox" name="FCorrectAnswer" onclick="doCheck(this)" readonly="readonly"/>
-                                            <input asp-for="@Model[i].FChoice" class="form-control" />
+                                            <input asp-for="@Model[i].FChoice" class="form-control" disabled="disabled" />
                                             <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
                                         </div>
                                     }

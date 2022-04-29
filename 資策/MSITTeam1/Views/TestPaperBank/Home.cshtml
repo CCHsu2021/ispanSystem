@@ -60,52 +60,12 @@
         }
     </style>
 }
-
 <link href="~/css/MemberCenter.css" rel="stylesheet">
-<div id="cont-about" class="container-fluid py-4">
-    <div class="container">
-        <h4 class="my-3 pl-2">歡迎回來! @ViewBag.Name</h4>
-        <div class="row about-content">
-            <!-- Nav pills -->
-            <div class="col-sm-3">
-                <ul class="nav nav-pills flex-column" role="tablist">
-                    <li class="nav-item">
-                        <a class="vertical-tabs-member first-vertical-tabs active mb-1" data-toggle="pill" href="#home">試卷管理</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="vertical-tabs-member last-vertical-tabs" data-toggle="pill" href="#menu7">訊息通知</a>
-                    </li>
-                </ul>
-            </div>
 
-            <!-- Tab panes -->
-            <div class="col-sm-9">
-                <div class="tab-content shadow-sm">
-                    <div id="home" class="container tab-pane active">
-                        <vc:q-test-paper-list></vc:q-test-paper-list>
-                    </div>
-                    <div id="menu7" class="container tab-pane fade">
-                        <div class="row about-box">
-                            <h3 class="text-center">題目管理</h3>
-                            <p>
-                                AntenaGames is small indie game studio based in Croatia. Founded in 2020,
-                                on a mission to make beautiful, fun and popular mobile games. The first game released
-                                was BallBoy, which belongs to franchise also called BallBoy, with game titles such as
-                                "BallBoy", "BallBoy Plus" and "BallBoy (...)". Building strong and loyal community with
-                                happy players that will come back to play our games is something that we really enjoy
-                                doing.
-                            </p>
-                            <p>
-                                Founder & CEO<br />
-                                A.K.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div>
+    <vc:q-test-paper-list></vc:q-test-paper-list>
 </div>
+
 @section Scripts
 {
     <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
