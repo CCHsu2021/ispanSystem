@@ -550,39 +550,4 @@
                 console.log(rowNumber);
         }
     </script>
-    @*<script defer>
-            let selectResume = document.querySelector("#selectResume");
-
-            $(".applyButton").click(function () {
-                $.ajax({
-                    url: "@Url.Content("~/TJobVacancies/ResumeDropDownList")",
-                    method: 'post',
-                    dataType: 'json',
-                    success: function (datas) {
-                        datas.forEach((item) => {
-                            let opt = new Option(item.resumeName, item.resumeId);
-                            selectResume.options.add(opt);
-                        });
-                    }
-                }).done((data) => {
-                    console.log(data);
-                })
-            })
-        </script>*@
-    @*<script>
-
-            $(".btn-for-Detail").click(() => {
-                let formTag = $(this).parentsUntil('ul').find('form');
-                let formData = new FormData(formTag);
-
-                $.ajax({
-                    url: '@Url.Content("~/TJobVacancies/Detail")',
-                    method: 'post',
-                    data: formData,
-                    success: (e) => {
-                        console.log("success")
-                    }
-                })
-            })
-        </script>*@
 }
