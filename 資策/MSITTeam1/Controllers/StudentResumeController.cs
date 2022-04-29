@@ -312,5 +312,24 @@ namespace MSITTeam1.Controllers
 
             return Content("刪除成功");
         }
+
+        public IActionResult ReturnWorkCount()
+        {
+
+
+            var datas = from b in hello.StudentWorkExperiences.Where(p => p.MemberId == CDictionary.account)
+                        select b;/*new StudentWorkExperience*/
+                        //{
+                            
+                        //    CompanyName = b.CompanyName,
+                        //    CompanyDepartment = b.CompanyDepartment,
+                        //    JobTitle = b.JobTitle,
+                        //    EmploymentFrom = b.EmploymentFrom,
+                        //    EmploymentTo = b.EmploymentTo,
+                        //    JobDescription = b.JobDescription,
+                            
+                        //}; 
+            return Json(datas);
+        }
     }
 }
