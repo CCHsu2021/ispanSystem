@@ -18,7 +18,9 @@ namespace MSITTeam1.Controllers
         public IActionResult Index(GradeIdentify Grade)
         {
             IEnumerable<CTestPaperViewModel> list = null;
-            if (hello.StudentBasics.FirstOrDefault(c => c.FAccount == Grade.txtaccount) != null && hello.TClassOrderDetails.FirstOrDefault(q => q.MemberId == hello.StudentBasics.FirstOrDefault(c => c.FAccount == Grade.txtaccount).MemberId).ClassExponent == Grade.txtidentify)
+            ViewBag.MemberId = CDictionary.account;
+            var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
+            if (account != null && hello.TClassOrderDetails.FirstOrDefault(q => q.MemberId == CDictionary.account).ClassExponent == Grade.txtidentify)
             {
                 int Testpaper = int.Parse(hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassTestpaper);
                 list = from d in hello.TQuestionDetails
@@ -32,21 +34,21 @@ namespace MSITTeam1.Controllers
                            fChoice = d.FChoice,
                            fCorrectAnswer = d.FCorrectAnswer
                        };
-                ViewBag.Account = Grade.txtaccount;
+                ViewBag.account = account.FAccount;
                 ViewBag.Identify = Grade.txtidentify;
                 ViewBag.Classname = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassname;
-                return View(list);
+                return View(list.ToList());
             }
             else
                 return View(list);
 
         }
-        public void Grade(TClassGrade grade)
+        public IActionResult Grade(TClassGrade grade)
         {
             TClassGrade classGrade = hello.TClassGrades.FirstOrDefault(c => c.FAccountId == grade.FAccountId);
             if (classGrade == null)
             {
-                 classGrade = new TClassGrade
+                classGrade = new TClassGrade
                 {
                     FAccountId = grade.FAccountId,
                     FClassCode = grade.FClassCode,
@@ -55,13 +57,17 @@ namespace MSITTeam1.Controllers
                 };
                 hello.TClassGrades.Add(classGrade);
                 hello.SaveChanges();
+                return Content("before");
             }
-            else
+            else if (classGrade.FBeforeClassGrade != null && classGrade.FAfterClassGrade == null)
             {
                 classGrade.FAfterClassGrade = grade.FBeforeClassGrade;
                 classGrade.FAfterClassTime = DateTime.Now;
                 hello.SaveChanges();
+                return Content("after");
             }
+            else
+                return Content("null");
         }
     }
 }
