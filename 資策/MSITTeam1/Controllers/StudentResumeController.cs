@@ -238,7 +238,7 @@ namespace MSITTeam1.Controllers
                 return "3";
             return "4";
         }
-
+     
         public IActionResult DeleteLan(String LanguageId)
         {
 
@@ -315,9 +315,7 @@ namespace MSITTeam1.Controllers
 
         public IActionResult ReturnWorkCount()
         {
-
-
-            var datas = from b in hello.StudentWorkExperiences.Where(p => p.MemberId == CDictionary.account)
+            var datas = from b in hello.StudentWorkExperiences.Where(p => p.MemberId ==CDictionary.account)
                         select b;/*new StudentWorkExperience*/
                         //{
                             
@@ -329,6 +327,61 @@ namespace MSITTeam1.Controllers
                         //    JobDescription = b.JobDescription,
                             
                         //}; 
+            return Json(datas);
+        }
+
+        public IActionResult ReturnBasicdata()
+        {
+            var datas = from b in hello.StudentBasics.Where(p => p.MemberId ==CDictionary.account)
+                        select b;
+            return Json(datas);
+        }
+
+
+        public IActionResult ReturnEduData()
+        {
+            var datas = from b in hello.StudentEducations.Where(p => p.MemberId == CDictionary.account)
+                        select b;
+            return Json(datas);
+        }
+
+        public IActionResult ReturnLanData()
+        {
+            var datas = from b in hello.StudentLanguages.Where(p => p.MemberId == CDictionary.account)
+                        select new StudentLanguage
+                        {
+                            LanguageName = b.LanguageName,
+                            Listening = Revdetermine(b.Listening),
+                            Speaking = Revdetermine(b.Speaking),
+                            Reading = Revdetermine(b.Reading),
+                            Writing = Revdetermine(b.Writing)
+                        }; 
+            return Json(datas);
+        }
+        public static string Revdetermine(string a)
+        {
+            if (a == "0")
+                return "初階";
+            if (a == "1")
+                return "中等";
+            if (a == "2")
+                return "高階";
+            if (a == "3")
+                return "母語";
+            return "語言";
+        }
+
+        public IActionResult ReturnSkillData()
+        {
+            var datas = from b in hello.StudentSkills.Where(p => p.MemberId == CDictionary.account)
+                        select b;
+            return Json(datas);
+        }
+
+        public IActionResult ReturnPortData()
+        {
+            var datas = from b in hello.StudentPortfolios.Where(p => p.MemberId == CDictionary.account)
+                        select b;
             return Json(datas);
         }
     }

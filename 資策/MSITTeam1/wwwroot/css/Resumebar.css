@@ -39,23 +39,6 @@
     transition: all .3s linear;
     width: 150px;
 }
-/*
-.resumebar .delBtn {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border: 0;
-    text-transform: capitalize;
-    font-size: 18px;
-    border: solid 1px transparent;
-    outline: none;
-    cursor: pointer;
-    line-height: 23px !important;
-    padding: 8px 30px !important;
-    transition: all .3s linear;
-    width: 100% !important;
-    background-color: none !important;
-    color: none !important;
-}*/
 
     .resumebar button:hover {
         /*background-color: #1A7F75;*/
@@ -69,19 +52,16 @@
     .resumebar button.previous {
         background-color: #1e3c84;
         float: left;
-        border: solid 1px transparent;
     }
 
         .resumebar button.previous:hover {
             color: #1e3c84;
             background-color: #ffffff;
-            border: solid 1px transparent;
         }
 
     .resumebar button.savebtn {
         margin: auto;
         width: 150px;
-        border: solid 1px transparent;
     }
 
 .full-width-container {
@@ -91,7 +71,7 @@
 }
 
 .sized-container {
-    max-width: 1100px;
+    max-width: 1300px;
     width: 100%;
     margin: 0 auto;
     padding-right: 20px;
@@ -302,4 +282,8 @@
 .form-control {
     border: 1.5px solid #ced4da;
 }
-    
+
+.slidehieght{
+    height:730px;
+
+}

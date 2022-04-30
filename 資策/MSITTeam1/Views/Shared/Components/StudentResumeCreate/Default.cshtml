@@ -21,13 +21,21 @@
 
     .basicCss {
         padding-top: 20px;
+        
     }
 
     .basicImage {
         text-align: center;
-        background-color:#FFBD69;
-        border-radius:0;
+        background-color: whitesmoke;
+        border-radius: 0;
         padding-bottom: 25px;
+        border: 0 ;
+    }
+    .toolImage {
+        text-align: center;
+        background-color: whitesmoke;
+        border-radius: 0;
+        border: 0;
     }
 
     .inputstyle {
@@ -39,16 +47,38 @@
     }
 
     .cardBody {
-        background-color: #FFBD69;
-        margin:0px;
-        border-radius:0;
-        
+        background-color: whitesmoke;
+        margin: 0px;
+        border-radius: 0;
+        border:0;
+        text-align:center;
     }
 
-    .BigCard{
-        margin:0;
-        padding:0;
+    .panelbodyfordata > .cardBody{
+        margin:1px;
     }
+
+    .BigCard {
+        margin: 0;
+        padding: 0;
+    }
+
+    .panelbodyfordata {
+        height: 600px;
+        overflow: auto;
+    }
+
+    .basiccard{
+        height:318.44px;
+    }
+
+/*    .toolcard{
+        margin-right:5px;
+    }
+
+    .datacard{
+        margin-left:5px;
+    }*/
 </style>
 
 
@@ -57,22 +87,53 @@
 
 
 
-<div id="kanban" class="row">
+<div id="kanban" class="row ">
     @foreach (var item in Model)
     {
-    <div class="col-4  BigCard">
-        <div class="panel panel-info">
-            <div class="panel-heading kanban-card">
-                <h3 class="panel-title">產生履歷</h3>
+        <div class="col-2 BigCard toolcard pr-5">
+            <div class="panel panel-info">
+                <div class="panel-heading kanban-card">
+                    <h3 class="panel-title ">工具</h3>
+                </div>
+                <div class="panel-body panelbodyfordata">
+                    <div id="tool">
+                        &nbsp;
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>經歷</h4></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>學歷</h4></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>語言</h4></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>技能</h4></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>作品</h4></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>自我介紹</h4></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" >
+                            <img class="toolImage" src="~/images/Resume/book.jpg" width="300" style="text-align:center" />
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        
+            <div class="col-4  BigCard">
+                <div class="panel panel-info ">
+                    <div class="panel-heading kanban-card">
+                        <h3 class="panel-title">製作履歷</h3>
+                    </div>
 
-            <div class="panel-body ">
-                <div id="todo">
-                    &nbsp;
-                    <div class="alert alert-success kanban-card cardBody" id="basic" role="alert">
-                        
+                    <div class="panel-body ">
+                        <div id="todo">
+                            &nbsp;
+                            <div class="alert alert-success kanban-card cardBody basiccard" id="basic" role="alert">
+                                <h4>基本資料</h4>
+                                <hr />
                                 <div class="basicCss">
-                                    <h4> 基本資料</h4>
+
                                     <div class="inputstyle">
                                         <label>@Html.DisplayNameFor(model => model.fName)</label>
                                         <span>@Html.DisplayFor(modelItem => item.fName)</span>
@@ -102,41 +163,37 @@
                                         </span>
                                     </div>
                                 </div>
-
-                            <div class="inputstyle">
-                                <span>@Html.DisplayFor(modelItem => item.fAutobiography)</span>
                             </div>
-                        
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-4 BigCard">
-        <div class="panel panel-info ">
-            <div class="panel-heading kanban-card">
-                <h3 class="panel-title invisible">111</h3>
-            </div>
-            <div class="panel-body ">
-                <div id="mid">
-                    &nbsp;
-                    <div class="">
-                         <div class="basicImage">
-                              <img class="mt-5 mb-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
-                         </div>
+            <div class="col-4 BigCard">
+                <div class="panel panel-info ">
+                    <div class="panel-heading kanban-card">
+                        <h3 class="panel-title invisible">111</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <div id="mid">
+                            &nbsp;
+                            <div class="">
+                                <div class="basicImage">
+                                    <img class="mt-5 mb-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        
     }
-    <div class="col-1 BigCard"></div>
-    <div class="col-3 BigCard">
-        <div class="panel panel-info">
+
+    <div class="col-2 BigCard datacard pl-5">
+        <div class="panel panel-info ">
             <div class="panel-heading kanban-card">
                 <h3 class="panel-title">資料</h3>
             </div>
-            <div class="panel-body ">
+            <div class="panel-body panelbodyfordata">
                 <div id="done">
                     &nbsp;
 
@@ -159,7 +216,8 @@
       var dragulaCards = dragula([
       document.querySelector('#todo'),
       document.querySelector('#mid'),
-      document.querySelector('#done')
+      document.querySelector('#done'),
+      document.querySelector('#tool')
     ]);
 
     dragulaCards.on('drop', function(el, target, source, sibling){
@@ -187,9 +245,9 @@
 
                     var div = document.createElement("div");
                     div.role="alert";
-                    div.innerHTML= "公司名稱"+ datas[row].companyName + "工作部門:"+ datas[row].companyDepartment +"<br/>"
-                                   +"職位名稱"+ datas[row].jobTitle +"<br/>"+ "開始時間:"+ datas[row].employmentFrom +"<br/>"
-                                   +"結束時間:"+ datas[row].employmentTo  +"<br/>"+ "內容描述:"+ datas[row].JobDescription ;
+                    div.innerHTML= "公司名稱 : "+ datas[row].companyName + "  工作部門 : "+ datas[row].companyDepartment +"<br/>"
+                                   +"職位名稱 : "+ datas[row].jobTitle +"<br/>"+ "開始時間 : "+ datas[row].employmentFrom
+                                   +"  結束時間 :"+ datas[row].employmentTo  +"<br/>"+ "內容描述 :"+ datas[row].JobDescription ;
 
                     div.setAttribute("class", "alert alert-success kanban-card cardBody");
                     parent.appendChild(div);
@@ -201,7 +259,114 @@
             console.log(data)
         })
 
+     $.ajax({
+            url: '@Url.Content("~/StudentResume/ReturnBasicdata")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                for(var row in datas){
 
+                    var div = document.createElement("div");
+                    div.role="alert";
+                    div.innerHTML = datas[row].autobiography;
+
+                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                    parent.appendChild(div);
+
+                }
+                ;
+            }
+        }).done((data) => {
+            console.log(data)
+        })
+
+    $.ajax({
+            url: '@Url.Content("~/StudentResume/ReturnEduData")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                for(var row in datas){
+
+                    var div = document.createElement("div");
+                    div.role="alert";
+                    div.innerHTML = "畢業學校 : " + datas[row].graduateSchool + "  畢業系所 : " + datas[row].graduateDepartment + "<br/>"
+                        + "就讀時間 : " + datas[row].studyFrom + "  畢業時間 : " + datas[row].studyTo ;
+
+                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                    parent.appendChild(div);
+
+                }
+                ;
+            }
+        }).done((data) => {
+            console.log(data)
+        })
+
+    $.ajax({
+            url: '@Url.Content("~/StudentResume/ReturnLanData")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                for(var row in datas){
+
+                    var div = document.createElement("div");
+                    div.role="alert";
+                    div.innerHTML = "語言名稱 : " + datas[row].languageName + "  聽力程度 : " + datas[row].listening + "<br/>"
+                        + "口說程度 : " + datas[row].speaking + "  閱讀程度 : " + datas[row].reading ;
+
+                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                    parent.appendChild(div);
+
+                }
+                ;
+            }
+        }).done((data) => {
+            console.log(data)
+        })
+
+    $.ajax({
+            url: '@Url.Content("~/StudentResume/ReturnSkillData")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                for(var row in datas){
+
+                    var div = document.createElement("div");
+                    div.role="alert";
+                    div.innerHTML = "技能名稱 : " + datas[row].skillName + "<br/>" + "技能說明 : " + datas[row].skillDescription;
+
+
+                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                    parent.appendChild(div);
+
+                }
+                ;
+            }
+        }).done((data) => {
+            console.log(data)
+        })
+
+    $.ajax({
+            url: '@Url.Content("~/StudentResume/ReturnPortData")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                for(var row in datas){
+
+                    var div = document.createElement("div");
+                    div.role="alert";
+                    div.innerHTML = "作品名稱 : " + datas[row].portfolioTitle + "<br/>" + "作品介紹 : " + datas[row].portfolioDescription + "<br/>" + "作品網址 : " + datas[row].portfolioUrl;
+
+
+                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                    parent.appendChild(div);
+
+                }
+                ;
+            }
+        }).done((data) => {
+            console.log(data)
+        })
 
 
     //div.addClass('alert alert-success kanban-card')
