@@ -14,7 +14,7 @@
     </div>
     <div class="viewport full-width-container">
         <ul class="slide-container">
-            <li class="slide" data-tag="基本資料">
+            <li class="slide slidehieght" data-tag="基本資料">
                 <form name="basic">
                     <div class="sized-container basic">
                         <div class="row data">
@@ -81,7 +81,7 @@
                 </form>
             </li>
 
-            <li class="slide" data-tag="經歷">
+            <li class="slide slidehieght" data-tag="經歷">
                 <div class="sized-container">
                     <div class="row data" id="workExpPage">
                         <div class="col-6">
@@ -132,7 +132,7 @@
                 </div>
             </li>
 
-            <li class="slide" data-tag="學歷">
+            <li class="slide slidehieght" data-tag="學歷">
                 <div class="sized-container edu">
                     <div class="row data" id="EduPage">
                         <div class="col-6">
@@ -174,7 +174,7 @@
                 </div>
 
             </li>
-            <li class="slide" data-tag="語言">
+            <li class="slide slidehieght" data-tag="語言">
                 <div class="sized-container">
                     <div class="row data" id="LanPage">
                         <div class="col-6">
@@ -219,7 +219,7 @@
                     </div>
                 </div>
             </li>
-            <li class="slide" data-tag="技能與作品">
+            <li class="slide slidehieght" data-tag="技能與作品">
                 <div class="sized-container">
                         <div class="row data" id="SkillnPortfolioPage">
                             <div class="col-4">
@@ -281,7 +281,7 @@
                     <vc:student-resume-create></vc:student-resume-create>
                 </div>
             </li>
-            <li class="slide" data-tag="瀏覽及匯出">
+            <li class="slide " data-tag="瀏覽及匯出">
                 <div class="sized-container">
                     <h1>Confirm your application.</h1>
                     <h2>Information about this section.</h2>
@@ -526,7 +526,7 @@
      {
         var jsondata = JSON.stringify({
         EducationId:$("#EducationId").val(),
-        GraduateSchool:$("#GraduateSchool").find(':selected').text(),
+        GraduateSchool: $("#droplistSchools").find(':selected').text(),
         GraduateDepartment:$("#GraduateDepartment").val(),
         StudyFrom:$("#StudyFrom").val(),
         StudyTo:$("#StudyTo").val()
@@ -546,6 +546,7 @@
             $("#editEdu").hide();
             $("#createEdu").show();
             $("#eduPage").load(location.href + " #eduPage");
+            
         })}
 
     //語言新增
