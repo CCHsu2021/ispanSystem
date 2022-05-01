@@ -437,8 +437,11 @@
                 title: '請先登入會員',
                 showConfirmButton: false,
                 timer: 1300
-            }).then(
-                location = 'https://localhost:44387/Company_Login'
+            }).done(
+                setTimeout(function () {
+                    location = 'https://localhost:44387/Company_Login'
+
+                }, 1300)
             );
         }
         else if ("@ViewBag.Type" == "1") {
