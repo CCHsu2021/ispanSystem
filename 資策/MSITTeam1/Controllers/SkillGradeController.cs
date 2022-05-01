@@ -17,7 +17,7 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.account = CDictionary.account;
+            ViewBag.MemberId = CDictionary.account;
                     return View();
         }
         public IActionResult Topic(topic topic)

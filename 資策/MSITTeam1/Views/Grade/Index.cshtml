@@ -3,30 +3,27 @@
     ViewData["Title"] = "Index";
 }
 <div class="auto-container">
-    @{
-        if (Model == null)
-        {
-            <form>
-                <div class="row py-4 justify-content-center align-items-center">
-                    <div class="col-md-4">
-                        <div class="row justify-content-center">
-                            <div class="">
-                                <div class="input-group mb-2 mr-sm-2">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">識別碼</div>
-                                    </div>
-                                    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" placeholder="請輸入識別碼">
-                                </div>
+    <div id="start">
+    <form id="go">
+        <div class="row py-4 justify-content-center align-items-center">
+            <div class="col-md-4">
+                <div class="row justify-content-center">
+                    <div class="">
+                        <div class="input-group mb-2 mr-sm-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">識別碼</div>
                             </div>
+                            <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" placeholder="請輸入識別碼">
                         </div>
                     </div>
-                    <div class="ml-0 ml-md-3 ml-lg-0">
-                        <input class="btn-style-two mt-3" type="submit" id="createpaper" name="createpaper" value="確定" />
-                    </div>
                 </div>
-            </form>
-        }
-    }
+            </div>
+            <div class="ml-0 ml-md-3 ml-lg-0">
+                <input class="btn-style-two mt-3" type="button" id="createpaper" name="createpaper" value="確定" />
+            </div>
+        </div>
+    </form>
+   </div>
     @{
         if (Model != null)
         {
@@ -60,7 +57,7 @@
             <br />
             <br />
             <div class="sec-title text-center">
-                <button class="btn-style-two mt-3" type="submit" id="button1">送出</button>
+                <button class="btn-style-two mt-3" type="button" id="button1">送出</button>
             </div>
         }
     }
@@ -74,9 +71,28 @@
 
 <script>
     const btn = document.querySelector("#button1");
+    const btn1 = document.querySelector("#createpaper");
     const divAlert = document.querySelector("#div1");
+    if ("@Model" == "") {} else {
+        document.querySelector("#start").style.display = 'none';
+    }
 
 
+
+        btn1.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            if ("@ViewBag.MemberId" == "") {
+                Swal.fire({
+                    icon: 'info',
+                    title: '請先登入會員',
+                }).then((result) => {
+                    if (result.isConfirmed) { location = 'https://localhost:44387/Student_Login' }
+                }
+                )
+            } else {
+                $('#go').submit();
+            }
+        })
 
     btn.addEventListener('click', (evt) => {
         evt.preventDefault();
