@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="row justify-content-end mx-0">
-        <button style="" class="btn-style-two my-3 m-0 mx-2" type="button" id="button2">送出</button>
-        <button style="" class="btn-style-two my-3 m-0 mx-2" type="button" id="button1">下一題</button>
+        <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button2">送出</button>
+        <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button1">下一題</button>
     </div>
     <form name="member" method="post">
         <input type="text" class="form-control" id="Grade" name="Grade" value="0">
@@ -32,7 +32,7 @@
 
         btn1.addEventListener('click', (evt) => {
             evt.preventDefault();
-            if ("@ViewBag.account" == "") {
+            if ("@ViewBag.MemberId" == "") {
                 Swal.fire({
                     icon: 'info',
                     title: '請先登入會員',

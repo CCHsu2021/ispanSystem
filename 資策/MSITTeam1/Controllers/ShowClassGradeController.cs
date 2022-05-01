@@ -36,55 +36,55 @@ namespace MSITTeam1.Controllers
                                       ;
                 if (self != null)
                 {
-                    ViewBag.classname = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassname;
-                    ViewBag.showavgself = (self.FBeforeClassGrade + self.FAfterClassGrade) / 2;
-                    int list = 0;
-                    for (int i = 5; i <= 100; i += 10)
-                    {
-                        list = (from p in hello.TClassGrades
-                                where p.FClassCode == Grade.txtidentify && (p.FBeforeClassGrade + p.FAfterClassGrade) / 2 > (i - 5) && (p.FBeforeClassGrade + p.FAfterClassGrade) / 2 <= (i + 5)
-                                select p).Count();
-                        if (maxcount < list)
-                            maxcount = list;
-                        if (i == 95)
-                            ViewBag.showavg += list + "";
-                        else
-                            ViewBag.showavg += list + ",";
-                    }
+                        ViewBag.classname = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassname;
+                        ViewBag.showavgself = (self.FBeforeClassGrade + self.FAfterClassGrade) / 2;
+                        int list = 0;
+                        for (int i = 5; i <= 100; i += 10)
+                        {
+                            list = (from p in hello.TClassGrades
+                                    where p.FClassCode == Grade.txtidentify && (p.FBeforeClassGrade + p.FAfterClassGrade) / 2 > (i - 5) && (p.FBeforeClassGrade + p.FAfterClassGrade) / 2 <= (i + 5)
+                                    select p).Count();
+                            if (maxcount < list)
+                                maxcount = list;
+                            if (i == 95)
+                                ViewBag.showavg += list + "";
+                            else
+                                ViewBag.showavg += list + ",";
+                         }
                 }
                 if (self != null)
                 {
-                    ViewBag.showbeforeself = self.FBeforeClassGrade;
-                    int list = 0;
-                    for (int i = 5; i <= 100; i += 10)
-                    {
-                        list = (from p in hello.TClassGrades
-                                where p.FClassCode == Grade.txtidentify && p.FBeforeClassGrade > (i - 5) && p.FBeforeClassGrade <= (i + 5)
-                                select p).Count();
-                        if (maxcount < list)
-                            maxcount = list;
-                        if (i == 95)
-                            ViewBag.showbefore += list + "";
-                        else
-                            ViewBag.showbefore += list + ",";
-                    }
+                        ViewBag.showbeforeself = self.FBeforeClassGrade;
+                        int list = 0;
+                        for (int i = 5; i <= 100; i += 10)
+                        {
+                            list = (from p in hello.TClassGrades
+                                    where p.FClassCode == Grade.txtidentify && p.FBeforeClassGrade > (i - 5) && p.FBeforeClassGrade <= (i + 5)
+                                    select p).Count();
+                            if (maxcount < list)
+                                maxcount = list;
+                            if (i == 95)
+                                ViewBag.showbefore += list + "";
+                            else
+                                ViewBag.showbefore += list + ",";
+                        }
                 }
                 if (self != null)
                 {
-                    ViewBag.showAfterself = self.FAfterClassGrade;
-                    int list = 0;
-                    for (int i = 5; i <= 100; i += 10)
-                    {
-                        list = (from p in hello.TClassGrades
-                                where p.FClassCode == Grade.txtidentify && p.FAfterClassGrade > (i - 5) && p.FAfterClassGrade <= (i + 5)
-                                select p).Count();
-                        if (maxcount < list)
-                            maxcount = list;
-                        if (i == 95)
-                            ViewBag.showAfter += list + "";
-                        else
-                            ViewBag.showAfter += list + ",";
-                    }
+                        ViewBag.showAfterself = self.FAfterClassGrade;
+                        int list = 0;
+                        for (int i = 5; i <= 100; i += 10)
+                        {
+                            list = (from p in hello.TClassGrades
+                                    where p.FClassCode == Grade.txtidentify && p.FAfterClassGrade > (i - 5) && p.FAfterClassGrade <= (i + 5)
+                                    select p).Count();
+                            if (maxcount < list)
+                                maxcount = list;
+                            if (i == 95)
+                                ViewBag.showAfter += list + "";
+                            else
+                                ViewBag.showAfter += list + ",";
+                        }
                 }
 
 
