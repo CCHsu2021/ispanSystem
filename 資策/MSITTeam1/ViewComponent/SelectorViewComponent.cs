@@ -19,8 +19,8 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke(string city,string district)
         {
             ViewBag.ID = Guid.NewGuid();
-            ViewBag.City = SetDropDown1(city);
-            ViewBag.District = SetDropDown2(city, district);        
+            ViewBag.FCity = SetDropDown1(city);
+            ViewBag.FDistrict = SetDropDown2(city, district);        
             return View();
         }
         List<SelectListItem> GetSelectItem(bool dvalue = true)

@@ -19,14 +19,17 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke()
         {
             string account = CDictionary.account;
-            IEnumerable<TNewJobVacancy> job = null;
-            job = hello.TNewJobVacancies.Where(p=>p.FCompanyTaxid==account);
-            List < CJobVacancyViewModel > list = new List<CJobVacancyViewModel>();
-            foreach (TNewJobVacancy j in job)
-            {
-                list.Add(new CJobVacancyViewModel() { job = j });
-            }
-            return View(list);
+            IEnumerable<CJobVacancyViewModel> job = null;
+            //job = hello.TNewJobVacancies.Where(p => p.FCompanyTaxid == account);
+            job = from p in hello.TNewJobVacancies
+                  from c in hello.TJobDirects
+                  where p.FCompanyTaxid == account & c.JobListId == p.FJobListId
+                  select new CJobVacancyViewModel()
+                  {
+                      job = p,
+                      FJobListName = c.FJobDirect
+                  };
+            return View(job);
         }
     }
 }

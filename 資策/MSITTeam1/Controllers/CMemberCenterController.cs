@@ -120,9 +120,20 @@ namespace MSITTeam1.Controllers
             }
             return Content("fail");
         }
-        public IActionResult CreateJobVacancy()
+        public IActionResult CreateJobVacancy(TNewJobVacancy joblist)
         {
-            return View();
+            var job = hello.TNewJobVacancies.FirstOrDefault(p => p.FJobName == joblist.FJobName &
+            p.FCompanyTaxid == joblist.FCompanyTaxid);
+            if(job == null)
+            {
+                joblist.FCreatTime = DateTime.Now.ToString("yyyy-MM-dd");
+                var district = hello.TCityContrasts.FirstOrDefault(p => p.FPostCode.ToString() == joblist.FDistrict);
+                joblist.FDistrict = district.FDistrictName;
+                hello.TNewJobVacancies.Add(joblist);
+                hello.SaveChanges();
+                return Json(new { suc = "新增成功" });
+            }
+            return Json(new { fail="已有相同職缺"});
         }
 
     }
