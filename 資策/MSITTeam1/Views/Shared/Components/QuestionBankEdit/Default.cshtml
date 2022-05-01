@@ -13,10 +13,8 @@
                         <form asp-action="Edit" method="post" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                            <div class="form-group">
-                                <label  class="control-label my-2 font-weight-bold h5" asp-for="@Model[0].FSubjectId"></label>
-                                <h5><input type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" readonly /></h5>
-                                <span asp-validation-for="@Model[0].FSubjectId" class="text-danger"></span>
+                            <div class="form-group" style="text-align:center;">
+                                <h3><input type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" readonly style="text-align:center;" /></h3>
                             </div>
                             <div class="form-group">
                                 <input type="hidden" id="FQuestionId" asp-for="@Model[0].FQuestionId" />
@@ -47,17 +45,17 @@
                                             <input type="hidden" id="correctAns" asp-for="@Model[i].FCorrectAnswer" />
                                             <label asp-for="@Model[i].FChoice" class="control-label my-2 font-weight-bold h5"></label>
                                             <div class="row align-items-center px-3" style="flex-wrap:nowrap">
-                                                <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheck(this)" />
-                                                <input asp-for="@Model[i].FChoice" class="form-control" />
+                                                <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheck(this)" style="width:28px;height:25px"/>
+                                                <input asp-for="@Model[i].FChoice" class="form-control" style="margin:0 20px 0 10px"/>
                                                 <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
-                                                <button class="btn delBtn" id="del-btn" type="button">Delete</button>
+                                                <button class="tableBtn fas fa-trash-alt " id="del-btn" type="button" style="border-radius: 5px; width: 60px;"></button>
                                             </div>
                                         </div>
                                     }
                                 }
                             </div>
-                            <div style="padding:10px 0px 30px 30px;">
-                                <btn id="BtnNewChoice" class="btn btn-primary btn-outline small">新增答案選項</btn>
+                            <div style="text-align: center;">
+                                <button id="BtnNewChoice" class="tableBtn fas" style="border-radius:5px;width:200px"><i class="fas fa-plus" style="font-size:25px;"></i></button>
                             </div>
                             <div class="form-group">
                                 <label asp-for="@Model[0].FLevel" class="control-label my-2 font-weight-bold h5"></label>
@@ -172,9 +170,18 @@
         // 新增選項textbox
         var count = 1;
         const btnNewChoice = document.querySelector('#BtnNewChoice');
-    btnNewChoice.addEventListener('click', function () {
+        btnNewChoice.addEventListener('click', function () {
         count++;
-        var divChoice = `<div class="form-group choice"><label asp -for="FChoice" class="control-label my-2 font-weight-bold h5">選項</label ><br /><input type="checkbox" name="FCorrectAnswer" value=1 onclick="doCheck(this)" style="margin:0 3px 0 0;" /><input id="txtAns" asp-for="FChoice" class="form-control"/><span asp-validation-for="FChoice" class="text-danger"></span><button class="btn delBtn" id="del-btn" type="button">Delete</button></div>`
+        /*var divChoice = `<div class="form-group choice"><label asp -for="FChoice" class="control-label my-2 font-weight-bold h5">選項</label ><br /><input type="checkbox" name="FCorrectAnswer" value=1 onclick="doCheck(this)" style="margin:0 3px 0 0;" /><input id="txtAns" asp-for="FChoice" class="form-control"/><span asp-validation-for="FChoice" class="text-danger"></span><button class="btn delBtn" id="del-btn" type="button">Delete</button></div>`*/
+        var divChoice = `<div class="form-group choice">
+                                            <label asp-for="FChoice" class="control-label my-2 font-weight-bold h5"></label>
+                                            <div class="row align-items-center px-3" style="flex-wrap:nowrap">
+                                                <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheck(this)" style="width:28px;height:25px"/>
+                                                <input asp-for="FChoice" class="form-control" style="margin:0 20px 0 10px"/>
+                                                <span asp-validation-for="FChoice" class="text-danger"></span>
+                                                <button class="tableBtn fas fa-trash-alt " id="del-btn" type="button" style="border-radius: 5px; width: 60px;"></button>
+                                            </div>
+                                        </div>`
         $('#ansList').append(divChoice);
     });
 
@@ -246,5 +253,6 @@
             })
             }
         })
-
 </script>
+<script src="~/js/jquery.barrating.js"></script>
+<script src="~/js/barRating.init.js"></script>
