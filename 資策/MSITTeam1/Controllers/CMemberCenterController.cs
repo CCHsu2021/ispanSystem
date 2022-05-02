@@ -136,5 +136,18 @@ namespace MSITTeam1.Controllers
             return Json(new { fail="已有相同職缺"});
         }
 
+        public IActionResult JobVacancyEdit(CJobVacancyViewModel jobedit)
+        {
+            TNewJobVacancy job = hello.TNewJobVacancies.FirstOrDefault(p => p.Fid == jobedit.Fid);
+            if(job != null)
+            {
+                job = jobedit.job;
+                hello.TNewJobVacancies.Update(job);
+                hello.SaveChanges();
+                return Json(new { suc = "更新成功" });
+            }
+            return Json(new { fail = "更新失敗" });
+        }
+
     }
 }

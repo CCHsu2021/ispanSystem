@@ -28,7 +28,7 @@ namespace MSITTeam1.ViewComponent
                 }
                 ViewBag.Jobname = jobname;
             }
-            ViewBag.fJoblistID = SetDropDown1();
+            ViewBag.fJoblistID = SetDropDown1(joblistid);
             return View();
         }
         List<SelectListItem> GetSelectItem(bool dvalue = true)
@@ -38,20 +38,36 @@ namespace MSITTeam1.ViewComponent
             return items;
         }
 
-        private List<SelectListItem> SetDropDown1()
+        private List<SelectListItem> SetDropDown1(string joblistid)
         {
             var joblistname = from p in hello.TJobDirects select p;
-            List<SelectListItem> items = GetSelectItem(true);
-            foreach(var a in joblistname)
+            List<SelectListItem> items = new List<SelectListItem>();
+            if (joblistid != "")
             {
-                items.Add(new SelectListItem()
+                items = GetSelectItem(false);
+                foreach (var a in joblistname)
                 {
-                    Text = a.FJobDirect,
-                    Value = a.JobListId.ToString()
-                });
+                    items.Add(new SelectListItem()
+                    {
+                        Text = a.FJobDirect,
+                        Value = a.JobListId.ToString()
+                    });
+                }
+                return items;
             }
-            //items.AddRange(new SelectList(joblistname));
-            return items;
+            else
+            {
+                items = GetSelectItem(true);
+                foreach (var a in joblistname)
+                {
+                    items.Add(new SelectListItem()
+                    {
+                        Text = a.FJobDirect,
+                        Value = a.JobListId.ToString()
+                    });
+                }
+                return items;
+            }
         }
     }
 }

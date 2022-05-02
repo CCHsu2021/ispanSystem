@@ -202,7 +202,15 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-7 col-lg-8" style="line-height:2rem">
-                                <div>薪資：@item.FSalaryMode@item.FSalaryMin</div>
+                                @if (item.FSalaryMax != null)
+                                {
+                                    <div>薪資：@item.FSalaryMode@item.FSalaryMin～@item.FSalaryMax</div>
+                                }
+                                else
+                                {
+                                    <div>薪資：@item.FSalaryMode@item.FSalaryMin</div>
+
+                                }
                                 <div>工作地址：@item.FCity@item.FDistrict@item.FWorkAddress</div>
                                 <div>工作性質：@item.FEmployeeType</div>
                                 <div>工作時數：@item.FWorkHours</div>
@@ -226,10 +234,10 @@
                             </div>
                         </div>
                         <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0">
-                            <button class="fas fa-pencil-alt fa-2x joblistbtn" id="@item.FCompanyTaxid@count" value="@item.FJobName" data-toggle="modal" data-target="#JobVacancy-Edit-Modal+@item.FCompanyTaxid@count"></button>
+                            <button class="fas fa-pencil-alt fa-2x joblistbtn" id="@item.FCompanyTaxid@count"  data-toggle="modal" data-target="#JobVacancy-Edit-Modal-@item.FCompanyTaxid@count"></button>
                             <button class="fas fa-trash-alt fa-2x joblistbtn" id="JobVacancy-Delete-Btn"></button>
                             <!-- Modal -->
-                            <div class="modal fade" id="JobVacancy-Edit-Modal+@item.FCompanyTaxid@count" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+                            <div class="modal fade" id="JobVacancy-Edit-Modal-@item.FCompanyTaxid@count" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -239,7 +247,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <vc:job-vacancy-edit id="@item.FCompanyTaxid" jobname="@item.FJobName"></vc:job-vacancy-edit>
+                                            <vc:job-vacancy-edit id="@item.Fid"></vc:job-vacancy-edit>
                                         </div>
                                     </div>
                                 </div>

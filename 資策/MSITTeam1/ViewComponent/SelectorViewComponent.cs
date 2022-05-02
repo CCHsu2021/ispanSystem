@@ -38,29 +38,23 @@ namespace MSITTeam1.ViewComponent
                 ViewBag.Cityname = "--請選擇--";
                 items.AddRange(new SelectList(citylist));
                 return items;
-            }
-            if (cityname != "")
+            }else
             {
                 List<SelectListItem> items = GetSelectItem(false);
                 ViewBag.Cityname = cityname;
                 items.AddRange(new SelectList(citylist));
                 return items;
             }
-            List<SelectListItem> items1 = new List<SelectListItem>();
-            return items1;
         }
         private List<SelectListItem> SetDropDown2(string cityname = "", string districtname = "")
         {
             var districtlist = from c in hello.TCityContrasts where c.FCityName == cityname select c.FDistrictName;
 
-            if (cityname != "")
-            {
-                List<SelectListItem> items = GetSelectItem(false);
-                items.AddRange(new SelectList(districtlist, districtname));
-                return items;
-            }
-            List<SelectListItem> item1 = GetSelectItem(true);
-            return item1;
+            List<SelectListItem> items = GetSelectItem(false);
+            items.AddRange(new SelectList(districtlist, districtname));
+            return items;
+
+
         }
     }
 }
