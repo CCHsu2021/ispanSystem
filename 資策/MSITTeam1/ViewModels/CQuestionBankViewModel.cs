@@ -36,8 +36,8 @@ namespace MSITTeam1.ViewModels
 			set { this.choice.FSn = value; }
 		}
 
-		[Required(ErrorMessage ="請選擇課程")]
-		[DisplayName("課程名稱")]
+		[Required(ErrorMessage ="請選擇技能")]
+		[DisplayName("技能名稱")]
 		public string FSubjectId
 		{
 			get { return this.question.FSubjectId; }
