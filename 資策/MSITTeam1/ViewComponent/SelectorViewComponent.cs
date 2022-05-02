@@ -34,15 +34,29 @@ namespace MSITTeam1.ViewComponent
             var citylist = from c in hello.TCityContrasts group c by c.FCityName into a select a.Key;
             if (cityname == "")
             {
-                List<SelectListItem> items = GetSelectItem(false);
-                ViewBag.Cityname = "--請選擇--";
-                items.AddRange(new SelectList(citylist));
+                List<SelectListItem> items = GetSelectItem(true);
+                foreach(var i in citylist)
+                {
+                    items.Add(new SelectListItem
+                    {
+                        Text = i,
+                        Value = i
+                    });
+                }
                 return items;
             }else
             {
                 List<SelectListItem> items = GetSelectItem(false);
-                ViewBag.Cityname = cityname;
-                items.AddRange(new SelectList(citylist));
+                
+                foreach (var i in citylist)
+                {
+                    items.Add(new SelectListItem
+                    {
+                        Text = i,
+                        Value = i
+                    });
+                }
+                items.Where(p => p.Value == cityname).First().Selected = true;
                 return items;
             }
         }

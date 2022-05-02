@@ -53,6 +53,7 @@ namespace MSITTeam1.ViewComponent
                         Value = a.JobListId.ToString()
                     });
                 }
+                items.Where(p => p.Value == joblistid).First().Selected = true;
                 return items;
             }
             else
