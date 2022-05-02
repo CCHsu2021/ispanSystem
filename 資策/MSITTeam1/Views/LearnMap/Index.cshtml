@@ -8,416 +8,307 @@
     <link href='https://fonts.googleapis.com/css?family=News+Cycle:400,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
     <style>
-        :root {
-            --primary-color: rgba(140,160,190,1);
-            --secondary-color: #ed731a;
-            --text-color: rgba(230,230,230,1);
-            --line-color: #777;
-            --focus-color: rgba(255,0,125,1);
-            --background-color: #333;
-            --node-size: 4vw;
-        }
-        .node_text{
-            padding-left:1.5rem;
-            padding-right:1.5rem;
-            color:white;
-        }
-        .toolkit {
-            position: fixed;
-            left: 1vw;
-            height: 300px;
-            padding: 10px;
-            font-size: 16px;
-            overflow: hidden;
-            -webkit-transition: all 0.5s ease;
-            transition: all 0.5s ease;
-            background: #444;
-        }
 
-            .toolkit.collapsed {
-                height: 40px;
-            }
-
-            .toolkit .collapse_btn {
-                text-align: center;
-                border: 3px solid var(--line-color);
-                -webkit-transition: all 0.5s ease;
-                transition: all 0.5s ease;
-            }
-
-            .toolkit.collapsed .collapse_btn {
-                -webkit-transform: scaleY(-1);
-                -ms-transform: scaleY(-1);
-                transform: scaleY(-1);
-            }
-
-            .toolkit label {
-                display: inline-block;
-                width: 150px;
-            }
-
-            .toolkit input {
-                width: 100px;
-                height: 22px;
-                text-align: center;
-                color: inherit;
-                cursor: pointer;
-            }
-
-                .toolkit input[type=range] {
-                    border: 1px solid white;
-                }
-
-        .mindmap {
-            width: auto;
-            height: auto;
-            margin: 0 auto;
-            padding: calc(var(--node-size) / 2);
-            text-align: center;
-            white-space: nowrap;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-            .mindmap:before {
-                content: '';
-                display: inline-block;
-                vertical-align: middle;
-                height: 100%;
-                width: 0;
-            }
-
-        .node {
-            position: relative;
-            display: inline-block;
-            vertical-align: middle;
-            height: var(--node-size);
-            /*width: var(--node-size);*/
-            margin: 0.25vw 0;
-            text-align: center;
-            line-height: var(--node-size);
-            border: 0.1vw solid var(--line-color);
-            border-radius: 10px;
-            background: var(--secondary-color);
-            cursor: pointer;
-            -webkit-transition: all .2s ease;
-            transition: all .2s ease;
-        }
-
-        .node_input {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            font: inherit;
-            font-style: italic;
-            text-align: center;
-            background: none;
-            color: inherit;
-        }
-
-
-        .node_root {
-            height: calc(var(--node-size) * 1.5);
-            width: calc(var(--node-size) * 1.5);
-            border: 0;
-            text-align: center;
-            line-height: calc(var(--node-size) * 1.5);
-            background: var(--primary-color);
-            font-size: 1.25em;
-        }
-
-            .node_root input {
-                opacity: 0;
-            }
-
-            .node_root img {
-                width: calc(var(--node-size) * 1.5);
-                height: calc(var(--node-size) * 1.5);
-                -o-object-fit: cover;
-                object-fit: cover;
-                border-radius: 50%;
-            }
-
-    
-        .children {
-            position: relative;
+        .grid {
             list-style: none;
-            text-align: left;
-            padding: 0 0 0 6px;
+            margin-left: -40px;
+        }
+
+        .gc {
+            box-sizing: border-box;
             display: inline-block;
-            vertical-align: middle;
+            margin-right: -0.25em;
+            min-height: 1px;
+            padding-left: 40px;
+            vertical-align: top;
         }
 
-            .children:before {
-                content: '';
-                position: absolute;
-                top: 50%;
-                left: -4px;
-                width: 10px;
-                border-top: 3px solid var(--line-color);
-            }
+        .gc--1-of-3 {
+            width: 33.33333%;
+        }
 
-        .children_item {
+        .gc--2-of-3 {
+            width: 66.66666%;
+        }
+
+        .naccs .menu div {
+            padding: 15px 20px 15px 40px;
+            margin-bottom: 10px;
+            color: #777;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
             position: relative;
-            padding: 0 0 0 10px;
-            border-left: 3px solid var(--line-color);
+            vertical-align: middle;
+            font-weight: 700;
+            transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1);
         }
 
-            .children_item:first-child,
-            .children_item:last-child {
-                border-left: 1px solid transparent;
+            .naccs .menu div:hover {
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
 
-            .children_item:before {
-                content: '';
+            .naccs .menu div span.light {
+                height: 10px;
                 width: 10px;
-                border-top: 3px solid var(--line-color);
                 position: absolute;
-                top: 50%;
+                top: 24px;
+                left: 15px;
+                background-color: #1e3c84;
+                border-radius: 100%;
+                transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1);
+            }
+
+            .naccs .menu div span.textLight {
+                color: #1e3c84;
                 left: 0;
-            }
-
-            .children_item:first-child:before {
-                left: -1px;
-                bottom: 0;
-                border-radius: 4px 0 0 0;
-                border-left: 3px solid var(--line-color);
-            }
-
-            .children_item:last-child:before {
-                left: -1px;
+                height: 100%;
+                width: 3px;
                 top: 0;
-                bottom: 50%;
-                border-radius: 0 0 0 4px;
-                border: 0;
-                border-left: 3px solid var(--line-color);
-                border-bottom: 3px solid var(--line-color);
-            }
-
-            .children_item:first-child:last-child:before {
-                top: 50%;
-                bottom: auto;
-                border: 0;
                 border-radius: 0;
-                border-top: 3px solid var(--line-color);
             }
 
-        .children_leftbranch,
-        .children_leftbranch .children {
-            direction: rtl;
-            text-align: right;
-            padding: 0 6px 0 0;
-        }
-
-            .children_leftbranch:before,
-            .children_leftbranch .children:before {
-                left: auto;
-                right: -4px;
+            .naccs .menu div.active span.light {
+                background-color: #fff;
+                left: 0;
+                height: 100%;
+                width: 3px;
+                top: 0;
+                border-radius: 0;
             }
 
-            .children_leftbranch .children_item {
-                padding: 0 10px 0 0;
-                border: 0;
-                border-right: 3px solid var(--line-color);
+            .naccs .menu div.active span.textLight {
+                color: #fff;
+                background-color: #1e3c84;
+                left: 0;
+                height: 100%;
+                width: 3px;
+                top: 0;
+                border-radius: 0;
             }
 
-                .children_leftbranch .children_item:first-child,
-                .children_leftbranch .children_item:last-child {
-                    border-right: 1px solid transparent;
-                }
+            .naccs .menu div.active {
+                background-color: #1e3c84;
+                padding: 15px 20px 15px 20px;
+            }
 
-                .children_leftbranch .children_item:before {
-                    top: 50%;
-                    left: auto;
-                    right: 0;
-                }
-
-                .children_leftbranch .children_item:first-child:before {
-                    right: -1px;
-                    border: 0;
-                    border-radius: 0 4px 0 0;
-                    border-top: 3px solid var(--line-color);
-                    border-right: 3px solid var(--line-color);
-                }
-
-                .children_leftbranch .children_item:last-child:before {
-                    right: -1px;
-                    top: 0;
-                    bottom: 50%;
-                    border-radius: 0 0 4px 0;
-                    border: 0;
-                    border-right: 3px solid var(--line-color);
-                    border-bottom: 3px solid var(--line-color);
-                }
-
-                .children_leftbranch .children_item:first-child:last-child:before {
-                    top: 50%;
-                    bottom: auto;
-                    border: 0;
-                    border-radius: 0;
-                    border-top: 3px solid var(--line-color);
-                }
-
-        .children .children .node {
-            background: var(--secondary-color);
-            background: var(--secondary-color);
+        ul.nacc {
+            position: relative;
+            height: 0px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            transition: 0.5s all cubic-bezier(0.075, 0.82, 0.165, 1);
         }
 
-        .children .children .children .node {
-            background: var(--secondary-color);
-            background: var(--secondary-color);
-        }
+            ul.nacc li {
+                opacity: 0;
+                transform: translateX(50px);
+                position: absolute;
+                list-style: none;
+                transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1);
+            }
 
-        .children .children .children .children .node {
-            background:  var(--secondary-color);
-            background: var(--secondary-color);
-        }
+                ul.nacc li.active {
+                    transition-delay: 0.3s;
+                    z-index: 2;
+                    opacity: 1;
+                    transform: translateX(0px);
+                }
 
-        .children .children .children .children .children .node {
-            background: var(--secondary-color);
-            background:  var(--secondary-color);
-        }
-
+                ul.nacc li p {
+                    margin: 0;
+                }
     </style>
 }
-
-
-<div></div>
 
 
 
 @{ var ClassName = "";
     var ClassCate = "";}
-    <aside class="accordion">
 
 
-                <div class="mindmap">
-                    <!--LEFT-->
-                    <ol class="children children_leftbranch">
-                        @foreach (var item in Model.TStudioInformationleft)
-                        {
-                            @if (ClassName != item.FClassName)
-                            {
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">@item.FClassName</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                    <ol class="children">
-                                        @foreach (var item2 in Model.TStudioInformationleft)
-                                        {
-                                            @if (@item.FClassName == item2.FClassName && ClassCate != item2.FClassCategory)
-                                            {
-                                                <li class="children_item">
-                                                    <div class="node">
-                                                        <div class="node_text">@item2.FClassCategory</div>
-                                                        <input type="text" class="node_input">
-                                                    </div>
-                                                    <ol class="children">
-                                                        @foreach (var item3 in Model.TStudioInformationleft)
-                                                        {
-                                                            @if (@item.FClassName == item2.FClassName && @item2.FClassCategory == item3.FClassCategory)
-                                                            {
-                                                                <li class="children_item">
-                                                                    <div class="node">
-                                                                        <div class="node_text">@item3.FClassSkill</div>
-                                                                        <input type="text" class="node_input">
-                                                                    </div>
-                                                                </li>
-                                                            }
-                                                        }
-                                                    </ol>
-                                                </li>
-                                                ClassCate = item2.FClassCategory;
-                                            }
-                                        }
-                                    </ol>
-                                </li>
-                                ClassName = item.FClassName;
-                            }
-                        }
-                    </ol>
-
-                    <!--CENTER-->
-                    <div class="node node_root">
-                        <div class="node_img"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/887373/profile/profile-80.jpg"></div>
-                        <input type="file" class="node_input">
-                    </div>
-                        <!--RIGHT-->
-                    <ol class="children children_rightbranch">
-                        @foreach (var item in Model.TStudioInformationright)
-                         {
-                            @if (ClassName != item.FClassName)
-                             {
-                                <li class="children_item">
-                                    <div class="node">
-                                        <div class="node_text">@item.FClassName</div>
-                                        <input type="text" class="node_input">
-                                    </div>
-                                    <ol class="children">
-                                        @foreach (var item2 in Model.TStudioInformationright)
-                                        {
-                                            @if (@item.FClassName == item2.FClassName && ClassCate != item2.FClassCategory)
-                                            {
-                                                <li class="children_item">
-                                                    <div class="node">
-                                                        <div class="node_text">@item2.FClassCategory</div>
-                                                        <input type="text" class="node_input">
-                                                    </div>
-                                                    <ol class="children">
-                                                        @foreach (var item3 in Model.TStudioInformationright)
-                                                        {
-                                                            @if (@item.FClassName == item2.FClassName && @item2.FClassCategory == item3.FClassCategory)
-                                                            {
-                                                                <li class="children_item">
-                                                                    <div class="node">
-                                                                        <div class="node_text">@item3.FClassSkill</div>
-                                                                        <input type="text" class="node_input">
-                                                                    </div>
-                                                                </li>
-                                                             }
-                                                         }
-                                                    </ol>
-                                                </li>
-                                                ClassCate = item2.FClassCategory;
-                                            }
-                                         }
-                                    </ol>
-                                </li>
-                                ClassName = item.FClassName;
-                            }
-                         }
-                    </ol>
+<div class="container-fluid py-5" style="background-color: #EFEFEF;">
+    <div class="naccs container">
+        <div class="grid">
+            <div class="gc gc--1-of-3">
+                <div class="menu d-block">
+                    <div class="ActiveItem"><span class="light"></span><span class="textLight">創新應用網站開發工程師養成班</span></div>
+                    <div class="ActiveItem"><span class="light"></span><span class="textLight">Wine</span></div>
+                    <div class="ActiveItem"><span class="light"></span><span class="textLight">Lemonade</span></div>
+                    <div class="ActiveItem"><span class="light"></span><span class="textLight">Lemonade</span></div>
                 </div>
-    </aside>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            </div>
+            <div class="gc gc--2-of-3">
+                <ul class="nacc">
+                    <li class="ActiveIi w-100">
+                        <div class="row">
+                            <div class="col-md-6 d-block d-md-flex">
+                                <div class="p-3 shadow mb-4 bg-white w-100">
+                                    <h4 class="font-weight-bold mb-2 ">前端框架網站開發</h4>
+                                    <hr />
+                                    <h6 class="mb-2">◾ RSTful API & Ajax</h6>
+                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
+                                    <h6 class="mb-2">◾ JS 與 Node.js程式庫前後端整合</h6>
+                                    <h6 class="mb-2">◾ HTML5 JavaScript APIs</h6>
+                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-block d-md-flex">
+                                <div class="p-3 shadow mb-4 bg-white w-100">
+                                    <h4 class="font-weight-bold mb-2 ">前端框架網站開發</h4>
+                                    <hr />
+                                    <h6 class="mb-2">◾ RSTful API & Ajax</h6>
+                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
+                                    <h6 class="mb-2">◾ JS 與 Node.js程式庫前後端整合</h6>
+                                    <h6 class="mb-2">◾ HTML5 JavaScript APIs</h6>
+                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
+                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
+                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
+                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-block d-md-flex">
+                                <div class="p-3 shadow mb-4 bg-white w-100">
+                                    <h4 class="font-weight-bold mb-2 ">前端框架網站開發</h4>
+                                    <hr />
+                                    <h6 class="mb-2">◾ RSTful API & Ajax</h6>
+                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
+                                    <h6 class="mb-2">◾ JS 與 Node.js程式庫前後端整合</h6>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-block d-md-flex">
+                                <div class="p-3 shadow mb-4 bg-white w-100">
+                                    <h4 class="font-weight-bold mb-2 ">前端框架網站開發</h4>
+                                    <hr />
+                                    <h6 class="mb-2">◾ RSTful API & Ajax</h6>
+                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
+                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
+                                    <h6 class="mb-2">◾ JS 與 Node.js程式庫前後端整合</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p>
+                                2A vine (Latin vīnea "grapevine", "vineyard", from vīnum "wine") in the narrowest sense is the
+                                grapevine (Vitis), but more generally it can refer to any plant with a growth habit of trailing or
+                                scandent (that is, climbing) stems, lianas or runners.
+                                The word also can refer to such stems or runners themselves, for instance when used in wicker
+                                work.[1][2] In the United Kingdom, the term "vine" applies almost exclusively to the grapevine. The
+                                term "climber" is used for all climbing plants.[3]
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p>
+                                3A vine (Latin vīnea "grapevine", "vineyard", from vīnum "wine") in the narrowest sense is the
+                                grapevine (Vitis), but more generally it can refer to any plant with a growth habit of trailing or
+                                scandent (that is, climbing) stems, lianas or runners.
+                                The word also can refer to such stems or runners themselves, for instance when used in wicker
+                                work.[1][2] In the United Kingdom, the term "vine" applies almost exclusively to the grapevine. The
+                                term "climber" is used for all climbing plants.[3]
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p>
+                                4Lemonade is any of various sweetened beverages found around the world, all characterized by lemon
+                                flavor. Most lemonade varieties can be separated into two distinct types: cloudy and clear; each is
+                                known simply as "lemonade" (or a cognate) in countries
+                                where dominant.[1] Cloudy lemonade, generally found in North America and India, is a traditionally
+                                homemade drink made with lemon juice, water, and sweetener such as cane sugar or honey.[2] Found in
+                                the United Kingdom, Ireland, South Africa, Australia,
+                                and New Zealand, clear lemonade is a lemon flavoured carbonated soft drink. Not to be confused with
+                                Sprite a lemon-lime flavored, soft drink.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*<div class="container-fluid bg-light py-5">
+    <div class="naccs container">
+        <div class="grid">
+            @foreach (var item in Model.TStudioInformationleft)
+            {
+                @if (ClassName != item.FClassName)
+                {
+                    <div class="gc gc--1-of-3">
+                        <div class="menu">
+                            <div class=""><span class="light"></span><span class="textLight">@item.FClassName</span></div>
+                        </div>
+                    </div>
+                    <div class="gc gc--2-of-3">
+                        <ul class="nacc">
+                            <li class="active w-100">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="p-3 shadow mb-3">
+                                            @foreach (var item2 in Model.TStudioInformationleft)
+                                            {
+                                                @if (@item.FClassName == item2.FClassName && ClassCate != item2.FClassCategory)
+                                                {
+
+                                                    <h4 class="font-weight-bold">@item2.FClassCategory</h4>
+                                                    @foreach (var item3 in Model.TStudioInformationleft)
+                                                    {
+                                                        @if (@item.FClassName == item2.FClassName && @item2.FClassCategory == item3.FClassCategory)
+                                                        {
+                                                            <h6><i class="fas fa-circle fa-xs">&nbsp;</i>@item3.FClassSkill</h6>
+                                                        }
+                                                    }
+                                                    ClassCate = item2.FClassCategory;
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    ClassName = item.FClassName;
+                }
+            }
+        </div>
+    </div>
+</div>*@
+
 
 @section Scripts {
     <script>
-        !function (e) { var a, t = { init: function (s) { var n = e(this); a = e.extend({ nodeClass: "node", nodeInputClass: "node_input", nodeTextClass: "node_text", activeClass: "node_active", editableClass: "node_editable", rootClass: "node_root", childrenClass: "children", childrenItemClass: "children_item", leftBranch: "children_leftbranch", rightBranch: "children_rightbranch", root: n, balance: !0 }, s), a.nodes = n.find("." + a.nodeClass), a.nodeInput = n.find("." + a.nodeInputClass), n.find(a.activeClass).length ? a.activeNode = n.find(a.activeClass) : a.activeNode = null, e(document).on("keydown", function (s) { if (a.activeNode) { var n, l, r, i = s.which || s.keyCode, d = a.activeNode; switch (i) { case 13: if (d.hasClass(a.editableClass)) return t.blur(), t.setActive(d), !1; if (d.hasClass(a.rootClass)) return; t.addNode(); break; case 9: d.hasClass(a.editableClass) ? (t.blur(), t.setActive(d)) : (s.preventDefault(), t.addChildNode()); break; case 27: break; case 8: case 46: if (d.hasClass(a.editableClass)) return !0; if (d.hasClass(a.rootClass)) return !1; l = d.parent().next().children("." + a.nodeClass), r = d.parent().parent().prev(), s.preventDefault(), t.removeNode(), l.length ? (l.addClass(a.activeClass), a.activeNode = l) : (r.addClass(a.activeClass), a.activeNode = r); break; case 37: if (d.hasClass(a.editableClass)) return !0; d.hasClass(a.rootClass) ? t.selectChildNode(e("." + a.leftBranch)) : d.closest("." + a.rightBranch).length ? t.selectParentNode() : t.selectChildNode(); break; case 38: if (d.hasClass(a.editableClass)) return !0; n = d.parent().prev().children("." + a.nodeClass), n.length && (t.blur(), t.setActive(n)); break; case 39: if (d.hasClass(a.editableClass)) return !0; d.hasClass(a.rootClass) ? t.selectChildNode(e("." + a.rightBranch)) : d.closest("." + a.rightBranch).length ? t.selectChildNode() : t.selectParentNode(); break; case 40: if (d.hasClass(a.editableClass)) return !0; l = d.parent().next().children("." + a.nodeClass), l.length && (t.blur(), t.setActive(l)) } } }), n.on("click", "." + a.nodeClass, function () { var s = e(this); s.hasClass(a.activeClass) ? (t.blur(), t.setActive(s), t.setEditable(s)) : (t.blur(), t.setActive(s)) }).on("input paste", "." + a.nodeInputClass, function () { var t = a.activeNode, s = t.find("." + a.nodeTextClass), n = e(this); s.text(n.val()) }).on("keydown", "." + a.nodeInputClass, function (e) { var a = e.which || e.keyCode; 9 === a && e.preventDefault() }) }, destroy: function () { e(window).unbind(".mindmap") }, selectParentNode: function () { var e, s = a.activeNode, n = s.parent().parent().parent(); e = n.children("." + a.nodeClass), t.blur(), t.setActive(e) }, selectChildNode: function (e) { var s, n = a.activeNode; e || (e = n.parent().children("." + a.childrenClass)), s = e.children("." + a.childrenItemClass + ":first-child").children("." + a.nodeClass), s.length && (t.blur(), t.setActive(s)) }, removeNode: function () { var e = a.activeNode, s = e.parent(), n = s.parent(), l = n.children().length - 1; l ? s.remove() : n.remove(), t.blur(), t.balance() }, addNode: function () { var e, s, n = a.activeNode.parent().parent(); n.append(t.getTemplate(1)), e = n.children("." + a.childrenItemClass + ":last"), s = e.children("." + a.nodeClass), t.blur(), t.setEditable(s), t.balance() }, addChildNode: function () { var e, s, n = a.activeNode.parent(), l = n.children("." + a.childrenClass); l.length ? (a.activeNode.hasClass(a.rootClass) && 2 === l.length && (l = l.filter("." + a.leftBranch)), l.append(t.getTemplate(1)), e = l.children("." + a.childrenItemClass + ":last"), s = e.children("." + a.nodeClass)) : (n.append(t.getTemplate(1, 1)), l = n.children("." + a.childrenClass), e = l.children("." + a.childrenItemClass + ":last"), s = e.children("." + a.nodeClass)), t.blur(), t.setEditable(s), t.balance() }, blur: function () { if (a.activeNode) { var e = a.activeNode, t = e.find("." + a.nodeTextClass), s = e.find("." + a.nodeInputClass); e.hasClass(a.editableClass) && (t.text(s.val()), s.blur()), e.removeClass(a.activeClass).removeClass(a.editableClass), a.activeNode = null } }, setActive: function (e) { e.addClass(a.activeClass), a.activeNode = e }, setEditable: function (e) { var t = e.find("." + a.nodeInputClass), s = e.find("." + a.nodeTextClass); e.addClass(a.activeClass).addClass(a.editableClass).attr("data-value", s.text()), t.val(s.text()).focus().select(), a.activeNode = e }, balance: function () { if (a.balance) { var s, n, l, r, i, d = 0, o = e("." + a.rightBranch), c = e("." + a.leftBranch), h = 0, C = a.root.children("." + a.childrenClass); if (!o.length) if (i = C.not("." + a.leftBranch), i.length) i.addClass(a.rightBranch); else { if (!C.length) return; C.eq(0).removeClass(a.leftBranch).addClass(a.rightBranch).appendTo(a.root) } if (!c.length) if (i = C.not("." + a.rightBranch), i.length) i.addClass(a.leftBranch); else { if (!C.length) return; a.root.prepend(t.getTemplate(0, 1)), a.root.children("." + a.childrenClass).not("." + a.rightBranch).addClass(a.leftBranch) } r = c.children(), l = o.children(), h = o.outerHeight() + c.outerHeight(), s = .5 * h; for (var u = 0, v = l.length; v > u; u++) { if (d += l.eq(u).outerHeight(), n = Math.abs(.5 * h - d), !(s >= n)) return void t.moveNodes(1, u, v); s = n } for (var f = 0, p = r.length; p > f; f++) { if (d += r.eq(f).outerHeight(), n = Math.abs(.5 * h - d), !(s >= n)) return void (f > 0 && t.moveNodes(0, 0, f - 1)); s = n } t.clearEmptyBranches() } }, moveNodes: function (s, n, l) { var r, i, d; i = e(s ? "." + a.rightBranch : "." + a.leftBranch), d = e(s ? "." + a.leftBranch : "." + a.rightBranch), r = i.children(), r.each(function (a) { a >= n && l >= a && e(this).appendTo(d) }), t.clearEmptyBranches() }, clearEmptyBranches: function () { var t = a.root.children("." + a.childrenClass); t.each(function () { e(this).children().length || e(this).remove() }) }, getTemplate: function (e, t) { var s = ""; return s += t ? ' <ol class="' + a.childrenClass + '">' : "", s += e ? '<li class="' + a.childrenItemClass + '"><div class="' + a.nodeClass + '"><div class="' + a.nodeTextClass + '">Node</div><input class="' + a.nodeInputClass + '" type="text"></div></li> ' : "", s += t ? "</ol>" : "" } }; e.fn.mindmap = function (a) { return t[a] ? t[a].apply(this, Array.prototype.slice.call(arguments, 1)) : "object" != typeof a && a ? void e.error("Unknown method: " + a) : t.init.apply(this, arguments) } }(jQuery), $(function () { var e = !1, a = 0, t = 0; $(window).on("mousemove touchmove", function (s) { if (e === !0) { var n = $(window).scrollTop() + (a - s.pageY), l = $(window).scrollLeft() + (t - s.pageX); $(window).scrollTop(n), $(window).scrollLeft(l) } }), $(window).on("mousedown touchstart", function (s) { e = !0, a = s.pageY, t = s.pageX }), $(window).on("mouseup touchend", function () { e = !1 }) });
+        // Acc
+        $(".naccs .menu").find(".ActiveItem").first().addClass("active");
+        $(".naccs ul").find(".ActiveIi").first().addClass("active");
 
-        $(function () {
-            $('.mindmap').mindmap();
-            $('.collapse_btn').on('click', function () {
-                $(this).parent().toggleClass('collapsed');
-            });
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) { $('.node_root img').attr('src', e.target.result); }
-                    reader.readAsDataURL(input.files[0]);
-                }
+        var listItemHeight = $(".naccs ul")
+            .find(".ActiveIi").first()
+            .innerHeight();
+        $(".naccs ul").height(listItemHeight + "px");
+        console.log("good");
+        $(document).on("click", ".naccs .menu div", function () {
+          
+            var numberIndex = $(this).index();
+            if (!$(this).is("active")) {
+                $(".naccs .menu div").removeClass("active");
+                $(".naccs ul li").removeClass("active");
+
+                $(this).addClass("active");
+                $(".naccs ul").find("li:eq(" + numberIndex + ")").addClass("active");
+
+                var listItemHeight = $(".naccs ul")
+                    .find("li:eq(" + numberIndex + ")")
+                    .innerHeight();
+                $(".naccs ul").height(listItemHeight + "px");
             }
-
-            $('.node_root input').on('change', function () {
-                readURL(this);
-            });
         });
-
     </script>
 }

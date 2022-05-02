@@ -29,19 +29,6 @@ namespace MSITTeam1.Controllers
                            combasic = combin,
 
                   };
-            //List < CCompanyBasicViewModel > list = new List<CCompanyBasicViewModel>();
-            //foreach (TCompanyBasic t in com)
-            //{
-            //    if (t.FLogo == null)
-            //    {
-            //        ViewBag.picture = "upload.png";
-            //    }
-            //    else
-            //    {
-            //        ViewBag.picture = t.FLogo;
-            //    }
-            //    list.Add(new CCompanyBasicViewModel() { com = t });
-            //}
             return View(comm);
         }
     }

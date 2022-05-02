@@ -5,11 +5,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/fontawesome-all.css" />
+    @*<link rel="stylesheet" href="~/css/fontawesome-all.css" />*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
-    <link href="~/css/barRating.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/StarBar.css" />
+    <link href="~/css/Resumebar.css" rel="stylesheet" />
     <style>
         .indicator {
             width: 25px !important;
@@ -90,10 +89,50 @@
             height:450px;
             overflow:auto;
         }
-    </style>
+        #outdivCre button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    border: solid 1px transparent;
+    padding: 14px 14px;
+    background-color: #1e3c84;
+    color: #FFFFFF;
+    text-transform: capitalize;
+    font-size: 18px;
+    line-height: 22px;
+    outline: none;
+    cursor: pointer;
+    transition: all .3s linear;
+    width: 150px;
 }
 
+    #outdivCre button:hover {
+        /*background-color: #1A7F75;*/
+        color: #1e3c84;
+        z-index: 4;
+        background-color: #ffffff;
+        border: #1e3c84 solid 1px;
+        cursor: pointer;
+    }
 
+    #outdivCre button.previous {
+        background-color: #1e3c84;
+        float: left;
+    }
+
+        #outdivCre button.previous:hover {
+            color: #1e3c84;
+            background-color: #ffffff;
+        }
+
+    #outdivCre button.savebtn {
+        margin: auto;
+        width: 150px;
+    }
+
+    </style>
+}
 
 <div class="resumebar">
     <div class="pagination-container full-width-container">
@@ -153,7 +192,7 @@
                     <div class="row row justify-content-around" id="searchGroup">
                         <div class="col-3">
                             <select id="FSubjectId" name="FSubjectId" class="form-control">
-                                <option value="">請選擇課程名稱</option>
+                                <option value="">請選擇技能名稱</option>
                             </select>
                         </div>
                         <div class="col-3">
@@ -161,7 +200,6 @@
                                 <option value="">請選擇題型</option>
                                 <option value="1">單選題</option>
                                 <option value="2">多選題</option>
-                                <option value="3">填空題</option>
                             </select>
                         </div>
                         <div class="col-3">
@@ -242,8 +280,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="questionCreate" tabindex="-1" aria-labelledby="questionCreate" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade modalCre" id="questionCreate" tabindex="-1" aria-labelledby="questionCreate" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">題目新增</h5>
@@ -306,73 +344,66 @@
                 }
             })
         })
-        })  
+        })
+
         //-----------------------------Create New Question---------------------------------------------
         // 判斷Checkbox
-        var currentSelect = $("input[type='checkbox']:checked").length;
-        var limit = 1;
-        function doCheck(obj) {
+        var limitCre = $('#FQuestionTypeIdSelCre').val();        
+        function doCheckCre(obj) {                        
             obj.checked ? currentSelect++ : currentSelect--;
-            if (currentSelect > limit) {
+            var currentSelect = $("#ansListCre input[type='checkbox']:checked").length;
+            if (currentSelect > limitCre) {
                 obj.checked = false;
                 Swal.fire("超過正確答案上限");
                 currentSelect--;
             }
         }
+
         // 根據題型判斷答案輸入欄位及許可正確選項上限
-        $('#FQuestionTypeIdSel').change(function () {
-            console.log("change")
-            if ($(this).val() === "3") {
-                console.log("3");
-                $('#BtnNewChoice').hide();
-                $('#ansList > #choice > label').html("答案");
-                $('#ansList div:not(:first-child)').remove();
-                $('#ansList > #choice > #checkBox1').hide();
-            } else if ($(this).val() === "2") {
-                console.log("2");
-                limit = 100;
-                $('#BtnNewChoice').show();
-                $('#ansList > #choice > label').html("選項");
-                $('#ansList > #choice > #checkBox1').show();
+        $('#FQuestionTypeIdSelCre').change(function () {
+            if ($(this).val() === "2") {
+                limitCre = 100;
             } else if ($(this).val() === "1") {
-                console.log("1");
-                limit = 1;
-                $('#BtnNewChoice').show();
-                $('#ansList > #choice > label').html("選項");
-                $('#ansList > #choice > input').removeAttr("checked");
-                $('#ansList > #choice > #checkBox1').show();
+                limitCre = 1;
+                $('#ansListCre input').removeAttr("checked");
             }
         })
 
-        // 新增選項textbox
-        var count = 1;
-        const btnNewChoice = document.querySelector('#BtnNewChoice');
-        btnNewChoice.addEventListener('click', function () {
-            count++;
-            var divChoice = `<div class="form-group" id="choice" ><label asp -for="FChoice" class="control-label">選項</label ><br /><input type="checkbox" name="FCorrectAnswer" value=1 onclick="doCheck(this)" style="margin:0 3px 0 0;" /><input id="txtAns" asp-for="FChoice" class="form-control"/><span asp-validation-for="FChoice" class="text-danger"></span><button class="btn" id="del-btn" type="button" style="margin:10px 0 0 25px"><i class="fasfa-trash-alt"> </i>Delete</button></div>`
-            $('#ansList').append(divChoice);
+        // 新增和刪除選項textbox
+        $('#BtnNewChoiceCre').click(function () {           
+            var divChoiceCre = `<div class="form-group choiceCre">
+                                            <label class="control-label my-2 font-weight-bold h5">選項</label>
+                                            <div class="row align-items-center px-3" style="flex-wrap:nowrap">
+                                                <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheckCre(this)" style="width:28px;height:25px"/>
+                                                <input asp-for="FChoice" class="form-control txtAns" style="margin:0 20px 0 10px"/>
+                                                <span asp-validation-for="FChoice" class="text-danger"></span>
+                                                <button class="tableBtn fas fa-trash-alt delBtnCre" type="button" style="border-radius: 5px; width: 60px;"></button>
+                                            </div>
+                                        </div>`
+            $('#ansListCre').append(divChoiceCre);
         })
-        $("#outdiv").on("click", "#del-btn", function () {
-            console.log("delete");
-            $(this).closest("#choice").remove();
+        $("#outdivCre").on("click", ".delBtnCre", function () {
+            $(this).closest(".choiceCre").remove();
         });
 
         // 將所有選項存入Array
         $('#createNew').click(function () {
             var ansArr = [];
-            var selectAns = $('#ansList input[type=checkbox]:checked').length;
-            $('#ansList').find('#txtAns').each(function () {
-                if ($(this).text() == "") {
-                    Swal.fire("請輸入選項");
+            var selectAns = $("#ansListCre input[type='checkbox']:checked").length;
+            var emptyChoice = 0;
+            $('#ansListCre').find('.txtAns').each(function () {
+                if ($(this).val() == "") {
+                    emptyChoice++;
                 }
             })
-            if (selectAns < 1) {
-                Swal.fire("請選擇此題正確答案");
-            } else if ($('#FQuestion').val() == "") {
+            if ($('#FQuestionCre').val() == "") {
                 Swal.fire("請輸入題目");
-            }
-            else {
-                $('#ansList > div').each(function (idx, item) {
+            } else if (selectAns < 1) {
+                Swal.fire("請選擇此題正確答案");
+            } else if (emptyChoice > 0) {
+                Swal.fire("選項內容不得為空");
+            } else {
+                $('#ansListCre > div').each(function (idx, item) {
                     var ans = {}
                     var c = $(item).find(':checkbox').prop('checked');
                     ans.FCorrect = c ? 1 : 2;
@@ -381,10 +412,10 @@
                 })
                 var jsondata = JSON.stringify({
                     FSubjectId: $('#FSubjectIdSel').val(),
-                    FQuestion: $('#FQuestion').val(),
-                    FQuestionTypeId: $('#FQuestionTypeIdSel').val(),
+                    FQuestion: $('#FQuestionCre').val(),
+                    FQuestionTypeId: $('#FQuestionTypeIdSelCre').val(),
                     FChoiceList: ansArr,
-                    FLevel: $('.questionBarRate').val()
+                    FLevel: $('.levelCre').val()
                 })
                 console.log(jsondata);
                 $.ajax({
@@ -399,9 +430,22 @@
                         showConfirmButton: true,
                         timer: 1500
                     })
+                $('.modalCre').modal('hide');
                 })
             }
         })
+
+        $('.modalCre').on('hidden.bs.modal', function () {
+            console.log("removeCre");
+            //resetData();
+            $('#ansListCre .choiceCre:not(:first-child)').remove();
+            $('#outdivCre input[type="text"]').each(function () {
+                $(this).val('');
+            })
+            $('#ansListCre input').removeAttr("checked");
+            // TODO2:關閉後星星數量改為1
+            $('.levelCre').find('option[value="1"]').attr("selected", true);
+        });
 
 //-------------------------------------------Create New Question End--------------------------------
 
@@ -461,7 +505,7 @@
                     type: "POST",
                     contentType: "application/json",
                     data: newPaperJson
-                }).done(function (data) {
+                }).done(function (data) {                    
                     Swal.fire({
                         icon: 'success',
                         title: '新增成功',

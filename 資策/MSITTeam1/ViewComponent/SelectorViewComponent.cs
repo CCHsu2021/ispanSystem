@@ -19,8 +19,8 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke(string city,string district)
         {
             ViewBag.ID = Guid.NewGuid();
-            ViewBag.City = SetDropDown1(city);
-            ViewBag.District = SetDropDown2(city, district);        
+            ViewBag.FCity = SetDropDown1(city);
+            ViewBag.FDistrict = SetDropDown2(city, district);        
             return View();
         }
         List<SelectListItem> GetSelectItem(bool dvalue = true)
@@ -34,33 +34,41 @@ namespace MSITTeam1.ViewComponent
             var citylist = from c in hello.TCityContrasts group c by c.FCityName into a select a.Key;
             if (cityname == "")
             {
-                List<SelectListItem> items = GetSelectItem(false);
-                ViewBag.Cityname = "--請選擇--";
-                items.AddRange(new SelectList(citylist));
+                List<SelectListItem> items = GetSelectItem(true);
+                foreach(var i in citylist)
+                {
+                    items.Add(new SelectListItem
+                    {
+                        Text = i,
+                        Value = i
+                    });
+                }
                 return items;
-            }
-            if (cityname != "")
+            }else
             {
                 List<SelectListItem> items = GetSelectItem(false);
-                ViewBag.Cityname = cityname;
-                items.AddRange(new SelectList(citylist));
+                
+                foreach (var i in citylist)
+                {
+                    items.Add(new SelectListItem
+                    {
+                        Text = i,
+                        Value = i
+                    });
+                }
+                items.Where(p => p.Value == cityname).First().Selected = true;
                 return items;
             }
-            List<SelectListItem> items1 = new List<SelectListItem>();
-            return items1;
         }
         private List<SelectListItem> SetDropDown2(string cityname = "", string districtname = "")
         {
             var districtlist = from c in hello.TCityContrasts where c.FCityName == cityname select c.FDistrictName;
 
-            if (cityname != "")
-            {
-                List<SelectListItem> items = GetSelectItem(false);
-                items.AddRange(new SelectList(districtlist, districtname));
-                return items;
-            }
-            List<SelectListItem> item1 = GetSelectItem(true);
-            return item1;
+            List<SelectListItem> items = GetSelectItem(false);
+            items.AddRange(new SelectList(districtlist, districtname));
+            return items;
+
+
         }
     }
 }

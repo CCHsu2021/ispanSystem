@@ -7,6 +7,7 @@ namespace MSITTeam1Admin.Models
 {
     public partial class TNewJobVacancy
     {
+        public int Fid { get; set; }
         public string FCompanyTaxid { get; set; }
         public string FJobName { get; set; }
         public string FJobSkill { get; set; }

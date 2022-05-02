@@ -34,6 +34,7 @@ namespace MSITTeam1Admin.Models
         public virtual DbSet<TClassOrder> TClassOrders { get; set; }
         public virtual DbSet<TClassOrderDetail> TClassOrderDetails { get; set; }
         public virtual DbSet<TClassTestPaper> TClassTestPapers { get; set; }
+        public virtual DbSet<TClassTrackingList> TClassTrackingLists { get; set; }
         public virtual DbSet<TCompanyAppendix> TCompanyAppendices { get; set; }
         public virtual DbSet<TCompanyBasic> TCompanyBasics { get; set; }
         public virtual DbSet<TCompanyContactPerson> TCompanyContactPeople { get; set; }
@@ -54,6 +55,7 @@ namespace MSITTeam1Admin.Models
         public virtual DbSet<TProduct> TProducts { get; set; }
         public virtual DbSet<TProductOrder> TProductOrders { get; set; }
         public virtual DbSet<TProductOrderDetail> TProductOrderDetails { get; set; }
+        public virtual DbSet<TProductTrackingList> TProductTrackingLists { get; set; }
         public virtual DbSet<TQuestionDetail> TQuestionDetails { get; set; }
         public virtual DbSet<TQuestionList> TQuestionLists { get; set; }
         public virtual DbSet<TReceipt> TReceipts { get; set; }
@@ -471,7 +473,9 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.OrderId).HasMaxLength(50);
 
-                entity.Property(e => e.Date).HasMaxLength(50);
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Invoice).HasMaxLength(50);
             });
@@ -512,6 +516,29 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.ClassMember).HasMaxLength(50);
 
                 entity.Property(e => e.TopicAnswer).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TClassTrackingList>(entity =>
+            {
+                entity.HasKey(e => new { e.MemberId, e.ProductId });
+
+                entity.ToTable("tClassTrackingList");
+
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .HasColumnName("MemberID");
+
+                entity.Property(e => e.ProductId)
+                    .HasMaxLength(50)
+                    .HasColumnName("productId");
+
+                entity.Property(e => e.ImgPath).HasColumnName("imgPath");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Price).HasColumnName("price");
             });
 
             modelBuilder.Entity<TCompanyAppendix>(entity =>
@@ -1013,21 +1040,21 @@ namespace MSITTeam1Admin.Models
 
             modelBuilder.Entity<TNewJobVacancy>(entity =>
             {
-                entity.HasKey(e => new { e.FCompanyTaxid, e.FJobName });
+                entity.HasKey(e => e.Fid)
+                    .HasName("PK_tNewJobVacancy_1");
 
                 entity.ToTable("tNewJobVacancy");
 
-                entity.Property(e => e.FCompanyTaxid)
-                    .HasMaxLength(50)
-                    .HasColumnName("fCompanyTAXID");
-
-                entity.Property(e => e.FJobName)
-                    .HasMaxLength(50)
-                    .HasColumnName("fJobName");
+                entity.Property(e => e.Fid).HasColumnName("fid");
 
                 entity.Property(e => e.FCity)
                     .HasMaxLength(50)
                     .HasColumnName("fCity");
+
+                entity.Property(e => e.FCompanyTaxid)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fCompanyTAXID");
 
                 entity.Property(e => e.FContactEmail)
                     .HasMaxLength(50)
@@ -1063,6 +1090,11 @@ namespace MSITTeam1Admin.Models
                     .HasColumnName("fEmployeeType");
 
                 entity.Property(e => e.FJobListId).HasColumnName("fJobListId");
+
+                entity.Property(e => e.FJobName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("fJobName");
 
                 entity.Property(e => e.FJobSkill)
                     .HasMaxLength(50)
@@ -1178,9 +1210,15 @@ namespace MSITTeam1Admin.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Date).HasMaxLength(50);
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Invoice).HasMaxLength(50);
+
+                entity.Property(e => e.Recipient).HasMaxLength(50);
+
+                entity.Property(e => e.RecipientTel).HasMaxLength(50);
 
                 entity.Property(e => e.ShipTo).HasMaxLength(50);
             });
@@ -1192,6 +1230,29 @@ namespace MSITTeam1Admin.Models
                 entity.ToTable("tProductOrderDetail");
 
                 entity.Property(e => e.OrderId).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TProductTrackingList>(entity =>
+            {
+                entity.HasKey(e => new { e.MemberId, e.ProductId });
+
+                entity.ToTable("tProductTrackingList");
+
+                entity.Property(e => e.MemberId)
+                    .HasMaxLength(50)
+                    .HasColumnName("MemberID");
+
+                entity.Property(e => e.ProductId)
+                    .HasMaxLength(50)
+                    .HasColumnName("productId");
+
+                entity.Property(e => e.ImgPath).HasColumnName("imgPath");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Price).HasColumnName("price");
             });
 
             modelBuilder.Entity<TQuestionDetail>(entity =>
@@ -1462,11 +1523,7 @@ namespace MSITTeam1Admin.Models
                     .HasMaxLength(20)
                     .HasColumnName("fMemberAccount");
 
-                entity.Property(e => e.FQuestionId)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .HasColumnName("fQuestionID")
-                    .IsFixedLength(true);
+                entity.Property(e => e.FQuestionId).HasColumnName("fQuestionID");
 
                 entity.Property(e => e.FSubjectId)
                     .IsRequired()
