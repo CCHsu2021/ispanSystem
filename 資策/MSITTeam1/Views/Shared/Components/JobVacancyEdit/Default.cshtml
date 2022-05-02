@@ -1,1 +1,109 @@
-﻿@model IEnumerable<MSITTeam1.ViewModels.CJobVacancyViewModel>
+﻿@model MSITTeam1.ViewModels.CJobVacancyViewModel
+@addTagHelper *, MSITTeam1
+
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Fid" class="form-control" type="hidden" />
+            <input asp-for="FCompanyTaxid" class="form-control" type="hidden" />
+            <input asp-for="FCreatTime" type="hidden"/>
+            <div class="form-group">
+                <label asp-for="FJobName" class="control-label"></label>
+                <input asp-for="FJobName" class="form-control" />
+                <span asp-validation-for="FJobName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FJobSkill" class="control-label"></label>
+                <input asp-for="FJobSkill" class="form-control" placeholder="C#、Java" />
+                <span asp-validation-for="FJobSkill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FWorkAddress" class="control-label"></label>
+                <vc:selector city="@Model.FCity" district="@Model.FDistrict"></vc:selector>
+                <input asp-for="FWorkAddress" class="form-control" />
+                <span asp-validation-for="FWorkAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FSalaryMin" class="control-label"></label>
+                <select class="form-control" asp-for="FSalaryMode">
+                    <option value="月薪">月薪</option>
+                    <option value="時薪">時薪</option>
+                </select>
+                <input asp-for="FSalaryMin" class="form-control" />～
+                <input asp-for="FSalaryMax" class="form-control" placeholder="選填" />
+                <span asp-validation-for="FSalaryMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FEmployeeType" class="control-label"></label>
+                <select asp-for="FEmployeeType" class="form-control">
+                    <option value="全職">全職</option>
+                    <option value="兼職">兼職</option>
+                </select>
+                <span asp-validation-for="FEmployeeType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FWorkHours" class="control-label"></label>
+                <input asp-for="FWorkHours" class="form-control" placeholder="8小時" />
+                <span asp-validation-for="FWorkHours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FLeaveSystem" class="control-label"></label>
+                <select asp-for="FLeaveSystem" class="form-control">
+                    <option value="周休二日">周休二日</option>
+                    <option value="排休">排休</option>
+                    <option value="依公司規定">依公司規定</option>
+                </select>
+                <span asp-validation-for="FLeaveSystem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FWorkExp" class="control-label"></label>
+                <input asp-for="FWorkExp" class="form-control" placeholder="3年以上" />
+                <span asp-validation-for="FWorkExp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FEducation" class="control-label"></label>
+                <input asp-for="FEducation" class="form-control" placeholder="大學畢業、碩士畢業" />
+                <span asp-validation-for="FEducation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FJobListId" class="control-label">職缺類型</label>
+                <vc:job-list-name-selector joblistid="@Model.FJobListId"></vc:job-list-name-selector>
+                <span asp-validation-for="FJobListId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FContactPerson" class="control-label"></label>
+                <input asp-for="FContactPerson" class="form-control" />
+                <span asp-validation-for="FContactPerson" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FContactPhone" class="control-label"></label>
+                <input asp-for="FContactPhone" class="form-control" />
+                <span asp-validation-for="FContactPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FContactFax" class="control-label"></label>
+                <input asp-for="FContactFax" class="form-control" />
+                <span asp-validation-for="FContactFax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FContactEmail" class="control-label"></label>
+                <input asp-for="FContactEmail" class="form-control" />
+                <span asp-validation-for="FContactEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FNeedPerson" class="control-label"></label>
+                <input asp-for="FNeedPerson" class="form-control" />
+                <span asp-validation-for="FNeedPerson" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FOther" class="control-label"></label>
+                <textarea asp-for="FOther" class="form-control"></textarea>
+                <span asp-validation-for="FOther" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="text-align:right">
+                <input type="button" value="儲存修改" id="jobVacancy-Edit-Btn" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

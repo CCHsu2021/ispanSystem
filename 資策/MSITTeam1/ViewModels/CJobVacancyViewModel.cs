@@ -60,5 +60,6 @@ namespace MSITTeam1.ViewModels
         public string FDistrict { get { return this._job.FDistrict; } set { _job.FDistrict = value; } }
         public string FNeedPerson { get { return this._job.FNeedPerson; } set { _job.FNeedPerson = value; } }
         public string FJobListName { get; set; }
+        public int Fid { get { return this._job.Fid; } set { _job.Fid = value; } }
     }
 }

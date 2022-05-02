@@ -1221,6 +1221,12 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.RecipientTel).HasMaxLength(50);
 
                 entity.Property(e => e.ShipTo).HasMaxLength(50);
+
+                entity.Property(e => e.Taxid)
+                    .HasMaxLength(50)
+                    .HasColumnName("TAXID");
+
+                entity.Property(e => e.TotalPrice).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TProductOrderDetail>(entity =>
