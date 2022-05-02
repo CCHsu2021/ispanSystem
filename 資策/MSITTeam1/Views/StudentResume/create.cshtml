@@ -6,6 +6,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
 
+
 <div class="resumebar">
     <div class="pagination-container full-width-container">
         <div class="sized-container">
@@ -37,6 +38,7 @@
                                     <label asp-for="fBirthDate" class="control-label"></label>
                                     <input id="fBirthDate" asp-for="fBirthDate" class="form-control" type="text" name="fBirthDate" />
                                     <span asp-validation-for="fBirthDate" class="text-danger"></span>
+                                    <input type="text" id="basicDate" placeholder="請選擇時間" data-input>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -276,17 +278,12 @@
                      <div class="card portdata"><vc:student-portfolio></vc:student-portfolio></div>
                 </div>
             </li>
-            <li class="slide" data-tag="產生履歷">
+            <li class="slide" data-tag="產生履歷與匯出">
                 <div class="sized-container">
                     <vc:student-resume-create></vc:student-resume-create>
                 </div>
             </li>
-            <li class="slide " data-tag="瀏覽及匯出">
-                <div class="sized-container">
-                    <h1>Confirm your application.</h1>
-                    <h2>Information about this section.</h2>
-                </div>
-            </li>
+           
         </ul>
     </div>
     <div class="full-width-container ">
@@ -375,6 +372,7 @@
     $(window).resize(postitionSlides);
     $('.next').on('click', goToNextSlide);
     $('.previous').on('click', goToPreviousSlide);
+
     //圖片瀏覽
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -716,9 +714,16 @@
         })
      }
 
+    // //flatpicker
+    //$("#basicDate").flatpickr({
+    //enableTime: true,
+    //dateFormat: "F, d Y "
+    //});
+
 
 </script>
 }
+
 
 
 
