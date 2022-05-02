@@ -88,6 +88,7 @@ namespace MSITTeam1.Controllers
                 CompanyTaxid = account,
                 FPassword = passwordhashed,
                 FSalt = saltbyte,
+                FLevel = 1
             };
             hello.TCompanyBasics.Add(company);
             hello.SaveChanges();

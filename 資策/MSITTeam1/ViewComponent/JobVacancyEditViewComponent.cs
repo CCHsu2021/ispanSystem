@@ -16,9 +16,9 @@ namespace MSITTeam1.ViewComponent
         {
             hello = _hello;
         }
-        public IViewComponentResult Invoke(string id = null, string jobname = null)
+        public IViewComponentResult Invoke(int id)
         {
-            TNewJobVacancy job = hello.TNewJobVacancies.FirstOrDefault(p => p.FCompanyTaxid == id & p.FJobName == jobname);
+            TNewJobVacancy job = hello.TNewJobVacancies.FirstOrDefault(p => p.Fid == id);
 
             CJobVacancyViewModel c = new CJobVacancyViewModel() { job = job };
             

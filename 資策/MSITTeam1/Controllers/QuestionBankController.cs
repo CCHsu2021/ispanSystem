@@ -149,10 +149,12 @@ namespace MSITTeam1.Controllers
 				{
 					quesSel.FQuestion = quesList.FQuestion;
 					quesSel.FQuestionTypeId = Convert.ToInt32(quesList.FQuestionTypeId);
+					quesSel.FLevel = quesList.FLevel;
 					foreach (var ans in quesList.FChoiceList)
 					{
 						if(ans.FSN != 0)
 						{
+						// 原有選項修改
 						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSN);
 						choSel.FChoice = ans.Fchoice;
 						choSel.FCorrectAnswer = ans.FCorrect;
@@ -160,6 +162,7 @@ namespace MSITTeam1.Controllers
 						}
 						else
 						{
+							// 新增選項
 							quesList.FCSubjectId = quesList.FSubjectId;
 							quesList.FCQuestionId = quesList.FQuestionId;
 							quesList.FChoice = ans.Fchoice;
@@ -174,6 +177,7 @@ namespace MSITTeam1.Controllers
 
 				foreach (var t in tchoSel)
 				{
+					// 判斷被刪除的選項
 					bool isContainSn = editChoiceSnList.Contains(t.FSn);
 					bool isContainStr = newChoiceStrList.Contains(t.FChoice);
 					if (!isContainSn && !isContainStr)

@@ -31,7 +31,6 @@
                                 <select id="FQuestionTypeIdSel" asp-for="@Model[0].FQuestionTypeId" class="form-control" disabled="disabled">
                                     <option value="1">單選題</option>
                                     <option value="2">多選題</option>
-                                    <option value="3">填空題</option>
                                 </select>
                                 <span asp-validation-for="@Model[0].FQuestionTypeId" class="text-danger"></span>
                             </div>
@@ -91,46 +90,46 @@
     })
 
         // 根據題型判斷答案輸入欄位及許可正確選項上限 代入當前題目類型和難度等級
-    $('#FQuestionTypeIdSel').change(function () {
-        if ($(this).val() === "3") {
-            Swal.fire({
-                title: '確定嗎?',
-                text: "更改為填空題只會保留一個答案，確定更改嗎?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '是'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $('#BtnNewChoice').hide();
-                    $('#ansList > .choice > label').html("答案");
-                    $('#ansList div:not(:first-child)').remove();
-                    $('#ansList > .choice > #checkBox1').hide();
-                    $('#ansList > .choice > #del-btn').hide();
-                } else {
-                    var typeCur = $('#curType').val();
-                    $(this).find("option").each(function (i, item) {
-                        if ((item.value) == typeCur) {
-                            item.selected = true; return;
-                        }
-                    })
-                }
-            })
-            } else if ($(this).val() === "2") {
-                limit = 100;
-                $('#BtnNewChoice').show();
-                $('#ansList > .choice > label').html("選項");
-                $('#ansList > .choice > #checkBox1').show();
-            } else if ($(this).val() === "1") {
-                limit = 1;
-                $('#BtnNewChoice').show();
-                $('#ansList > .choice > label').html("選項");
-                $('#ansList > .choice > input').removeAttr("checked");
-                currentSelect = 0;
-                $('#ansList > .choice > #checkBox1').show();
-            }
-    })
+    //$('#FQuestionTypeIdSel').change(function () {
+    //    if ($(this).val() === "3") {
+    //        Swal.fire({
+    //            title: '確定嗎?',
+    //            text: "更改為填空題只會保留一個答案，確定更改嗎?",
+    //            icon: 'warning',
+    //            showCancelButton: true,
+    //            confirmButtonColor: '#3085d6',
+    //            cancelButtonColor: '#d33',
+    //            confirmButtonText: '是'
+    //        }).then((result) => {
+    //            if (result.isConfirmed) {
+    //                $('#BtnNewChoice').hide();
+    //                $('#ansList > .choice > label').html("答案");
+    //                $('#ansList div:not(:first-child)').remove();
+    //                $('#ansList > .choice > #checkBox1').hide();
+    //                $('#ansList > .choice > #del-btn').hide();
+    //            } else {
+    //                var typeCur = $('#curType').val();
+    //                $(this).find("option").each(function (i, item) {
+    //                    if ((item.value) == typeCur) {
+    //                        item.selected = true; return;
+    //                    }
+    //                })
+    //            }
+    //        })
+    //        } else if ($(this).val() === "2") {
+    //            limit = 100;
+    //            $('#BtnNewChoice').show();
+    //            $('#ansList > .choice > label').html("選項");
+    //            $('#ansList > .choice > #checkBox1').show();
+    //        } else if ($(this).val() === "1") {
+    //            limit = 1;
+    //            $('#BtnNewChoice').show();
+    //            $('#ansList > .choice > label').html("選項");
+    //            $('#ansList > .choice > input').removeAttr("checked");
+    //            currentSelect = 0;
+    //            $('#ansList > .choice > #checkBox1').show();
+    //        }
+    //})
 
     var levelCur = $('#curLevel').val();
     $('#example-fontawesome').find("option").each(function (i, item) {
