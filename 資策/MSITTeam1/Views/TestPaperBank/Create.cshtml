@@ -5,9 +5,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
-    @*<link rel="stylesheet" href="~/css/fontawesome-all.css" />*@
+    <link rel="stylesheet" href="~/css/fontawesome-all.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/StarBar.css" />
+    <link href="~/css/barRating.css" rel="stylesheet" />
     <link href="~/css/Resumebar.css" rel="stylesheet" />
     <style>
         .indicator {
@@ -47,23 +49,27 @@
         .sized-container.questionTable {
             max-width: 1700px;
         }
-        .button-container{
+
+        .button-container {
             border-top: 0.2px hidden !important;
         }
+
         #searchGroup {
             width: 1200px;
             padding: 30px 0 15px 100px;
         }
-        #selectCount{
-            height:35px;
-            line-height:2.7;
-            width:100px;
-            border-radius:17.5px;
-            background-color:gainsboro;
-            position:inherit;
-            margin:8px;
-            text-align:center;
+
+        #selectCount {
+            height: 35px;
+            line-height: 2.7;
+            width: 100px;
+            border-radius: 17.5px;
+            background-color: gainsboro;
+            position: inherit;
+            margin: 8px;
+            text-align: center;
         }
+
         .selectType {
             height: 35px;
             line-height: 2.7;
@@ -73,64 +79,67 @@
             position: inherit;
             margin: 8px;
             text-align: center;
-            cursor:pointer;
+            cursor: pointer;
         }
+
         .table {
             border: 0.5px solid gainsboro;
         }
+
         #CreatebtnType {
             margin: 0px;
-           padding: 0px;
-           float: right;
-           background-color: #1e3c84;
-           color: #FFFFFF;
+            padding: 0px;
+            float: right;
+            background-color: #1e3c84;
+            color: #FFFFFF;
         }
-        .selectQuestList{
-            height:450px;
-            overflow:auto;
+
+        .selectQuestList {
+            height: 450px;
+            overflow: auto;
         }
+
         #outdivCre button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: 0;
-    border: solid 1px transparent;
-    padding: 14px 14px;
-    background-color: #1e3c84;
-    color: #FFFFFF;
-    text-transform: capitalize;
-    font-size: 18px;
-    line-height: 22px;
-    outline: none;
-    cursor: pointer;
-    transition: all .3s linear;
-    width: 150px;
-}
-
-    #outdivCre button:hover {
-        /*background-color: #1A7F75;*/
-        color: #1e3c84;
-        z-index: 4;
-        background-color: #ffffff;
-        border: #1e3c84 solid 1px;
-        cursor: pointer;
-    }
-
-    #outdivCre button.previous {
-        background-color: #1e3c84;
-        float: left;
-    }
-
-        #outdivCre button.previous:hover {
-            color: #1e3c84;
-            background-color: #ffffff;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            border: solid 1px transparent;
+            padding: 14px 14px;
+            background-color: #1e3c84;
+            color: #FFFFFF;
+            text-transform: capitalize;
+            font-size: 18px;
+            line-height: 22px;
+            outline: none;
+            cursor: pointer;
+            transition: all .3s linear;
+            width: 150px;
         }
 
-    #outdivCre button.savebtn {
-        margin: auto;
-        width: 150px;
-    }
+            #outdivCre button:hover {
+                /*background-color: #1A7F75;*/
+                color: #1e3c84;
+                z-index: 4;
+                background-color: #ffffff;
+                border: #1e3c84 solid 1px;
+                cursor: pointer;
+            }
 
+            #outdivCre button.previous {
+                background-color: #1e3c84;
+                float: left;
+            }
+
+                #outdivCre button.previous:hover {
+                    color: #1e3c84;
+                    background-color: #ffffff;
+                }
+
+            #outdivCre button.savebtn {
+                margin: auto;
+                width: 150px;
+            }
     </style>
 }
 
@@ -155,7 +164,7 @@
                                 <input type="hidden" asp-for="FDesignerAccount" value="@ViewBag.account" />
                                 <div class="form-group">
                                     <label asp-for="FTestPaperName" class="control-label"></label>
-                                    <input asp-for="FTestPaperName" class="form-control" id="FpaperName"/>
+                                    <input asp-for="FTestPaperName" class="form-control" id="FpaperName" />
                                     <span asp-validation-for="FTestPaperName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -252,7 +261,7 @@
                         <!--<div class="col-6">-->
                         @*add here*@
                         <!--<button class="saveworkbtn my-3" id="editWork" onclick="editWork()">儲存修改</button>
-        </div>-->
+                        </div>-->
                     </div>
                 </div>
             </li>
@@ -286,7 +295,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">題目新增</h5>
                 <input type="button" class="close" data-dismiss="modal" aria-label="Close" />
-                <span aria-hidden="true">&times;</span>                
+                <span aria-hidden="true">&times;</span>
             </div>
             <div class="modal-body">
                 <vc:question-bank-create></vc:question-bank-create>
@@ -348,8 +357,8 @@
 
         //-----------------------------Create New Question---------------------------------------------
         // 判斷Checkbox
-        var limitCre = $('#FQuestionTypeIdSelCre').val();        
-        function doCheckCre(obj) {                        
+        var limitCre = $('#FQuestionTypeIdSelCre').val();
+        function doCheckCre(obj) {
             obj.checked ? currentSelect++ : currentSelect--;
             var currentSelect = $("#ansListCre input[type='checkbox']:checked").length;
             if (currentSelect > limitCre) {
@@ -370,7 +379,7 @@
         })
 
         // 新增和刪除選項textbox
-        $('#BtnNewChoiceCre').click(function () {           
+        $('#BtnNewChoiceCre').click(function () {
             var divChoiceCre = `<div class="form-group choiceCre">
                                             <label class="control-label my-2 font-weight-bold h5">選項</label>
                                             <div class="row align-items-center px-3" style="flex-wrap:nowrap">
@@ -464,7 +473,7 @@
     // 題目選取
     function passToPaper(checkboxid) {
         var t = $('#' + checkboxid).prop('checked');
-        if (t) {            
+        if (t) {
             var rowid = "r" + checkboxid;
             var currentRow = $('#' + checkboxid).closest("tr");
             var getQuestion = currentRow.find('td').eq(2).html();
@@ -505,18 +514,18 @@
                     type: "POST",
                     contentType: "application/json",
                     data: newPaperJson
-                }).done(function (data) {                    
+                }).done(function (data) {
                     Swal.fire({
                         icon: 'success',
                         title: '新增成功',
                         showConfirmButton: true,
                         timer: 1500
+                    }).then(() => {
+                        window.location.reload();
                     })
                 })
             }
         })
-
-
 //-----------------------------Create New TestPaper End---------------------------------------------
 
         // 刪除不需要的jquery程式

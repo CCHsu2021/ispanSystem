@@ -18,12 +18,12 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <div class="form-group" style="text-align:center;">
-                                <h3><input type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" readonly style="text-align:center;" /></h3>
+                                <h3><input type="text" id="FSubjectIdEd" asp-for="@Model[0].FSubjectId" readonly style="text-align:center;" /></h3>
                             </div>
                             <div class="form-group">
-                                <input type="hidden" id="FQuestionId" asp-for="@Model[0].FQuestionId" />
+                                <input type="hidden" id="FQuestionIdEd" asp-for="@Model[0].FQuestionId" />
                                 <label id="test1" class="control-label my-2 font-weight-bold h5" asp-for="@Model[0].FQuestion"></label>
-                                <input id="FQuestion" asp-for="@Model[0].FQuestion" class="form-control">
+                                <input id="FQuestionEd" asp-for="@Model[0].FQuestion" class="form-control">
                                 <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
                             </div>
 
@@ -49,7 +49,7 @@
                                             <label asp-for="@Model[i].FChoice" class="control-label my-2 font-weight-bold h5"></label>
                                             <div class="row align-items-center px-3 choicelist" style="flex-wrap:nowrap">
                                                 <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheckEd(this)" style="width:28px;height:25px"/>
-                                                <input asp-for="@Model[i].FChoice" class="form-control" style="margin:0 20px 0 10px"/>
+                                                <input asp-for="@Model[i].FChoice" class="form-control txtAnsEd" style="margin:0 20px 0 10px"/>
                                                 <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
                                                 <button class="tableBtn fas fa-trash-alt delBtnEd" type="button" style="border-radius: 5px; width: 60px;"></button>
                                             </div>
@@ -80,7 +80,7 @@
                             </div>
                             <hr class="my-4" />
                             <div class="form-group text-center">
-                                <button class="btn btn-primary" type="button" id="saveChange">保存修改</button>
+                                <button class="btn btn-primary" type="button" id="saveChangeEd">保存修改</button>
                             </div>
                         </form>
                 }
@@ -124,32 +124,6 @@
 
         // 根據題型判斷答案輸入欄位及許可正確選項上限 代入當前題目類型和難度等級
     $('#FQuestionTypeIdSelEd').change(function () {
-        //if ($(this).val() === "3") {
-        //    Swal.fire({
-        //        title: '確定嗎?',
-        //        text: "更改為填空題只會保留一個答案，確定更改嗎?",
-        //        icon: 'warning',
-        //        showCancelButton: true,
-        //        confirmButtonColor: '#3085d6',
-        //        cancelButtonColor: '#d33',
-        //        confirmButtonText: '是'
-        //    }).then((result) => {
-        //        if (result.isConfirmed) {
-        //            $('#BtnNewChoiceEdit').hide();
-        //            $('#ansListEd > .choiceEd > label').html("答案");
-        //            $('#ansListEd div:not(:first-child)').remove();
-        //            $('#ansListEd > .choiceEd > #checkBox1').hide();
-        //            $('#ansListEd > .choiceEd > #del-btn').hide();
-        //        } else {
-        //            var typeCur = $('#curType').val();
-        //            $(this).find("option").each(function (i, item) {
-        //                if ((item.value) == typeCur) {
-        //                    item.selected = true; return;
-        //                }
-        //            })
-        //        }
-        //    })
-        //}
         if ($(this).val() === "2") {
                 limit = 100;
             } else if ($(this).val() === "1") {
@@ -173,7 +147,7 @@
                                             <label class="control-label my-2 font-weight-bold h5">選項</label>
                                             <div class="row align-items-center px-3" style="flex-wrap:nowrap">
                                                 <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheckEd(this)" style="width:28px;height:25px"/>
-                                                <input asp-for="FChoice" class="form-control" style="margin:0 20px 0 10px"/>
+                                                <input asp-for="FChoice" class="form-control txtAnsEd" style="margin:0 20px 0 10px"/>
                                                 <span asp-validation-for="FChoice" class="text-danger"></span>
                                                 <button class="tableBtn fas fa-trash-alt delBtnEd" type="button" style="border-radius: 5px; width: 60px;"></button>
                                             </div>
@@ -198,32 +172,43 @@
             });
 
         // 將所有選項存入Array
-        $('#saveChange').click(function () {
-            var ansArr = [];
-            var selectAns = $('#ansListEd input[type=checkbox]:checked').length;
+        $('#saveChangeEd').click(function () {
+            var ansArrEd = [];
+            var selectAnsEd = $('#ansListEd input[type=checkbox]:checked').length;
+            var emptyChoiceEd = 0;
+            $('#ansListEd').find('.txtAnsEd').each(function () {
+                if ($(this).val() == "") {
+                    emptyChoiceEd++;
+                }
+            })
             //console.log(selectAns);
-            if (selectAns < 1) {
+            if (selectAnsEd < 1) {
                 Swal.fire("請填寫此題正確答案");
-            } else {
+            } else if ($('#FQuestionEd').val() == "") {
+                Swal.fire("題目不得為空");
+            } else if (emptyChoiceEd > 0) {
+                Swal.fire("選項內容不得為空");
+            }
+            else {
                  $('#ansListEd > div').each(function (idx, item) {
-                var ans = {}
+                var ansEd = {}
                      var c = $(item).find(':checkbox').prop('checked');
                      var SN = $(item).find('input#FSN').val();
                      if (SN == null) {
                          SN = 0;
                      }
-                     ans.FCorrect = c ? 1 : 2;
-                     ans.Fchoice = $(item).find(':text').val();
-                     ans.FSN = SN;
-                ansArr.push(ans);
+                     ansEd.FCorrect = c ? 1 : 2;
+                     ansEd.Fchoice = $(item).find(':text').val();
+                     ansEd.FSN = SN;
+                ansArrEd.push(ansEd);
             })
 
             var Editjsondata = JSON.stringify({
-                FSubjectId: $('#FSubjectIdV').val(),
-                FQuestionId: $('#FQuestionId').val(),
-                FQuestion: $('#FQuestion').val(),
+                FSubjectId: $('#FSubjectIdEd').val(),
+                FQuestionId: $('#FQuestionIdEd').val(),
+                FQuestion: $('#FQuestionEd').val(),
                 FQuestionTypeId: $('#FQuestionTypeIdSelEd').val(),
-                FChoiceList: ansArr,
+                FChoiceList: ansArrEd,
                 FLevel: $('.levelEd').val()
             })
                 //console.log(Editjsondata);
@@ -239,7 +224,7 @@
                     showConfirmButton: true,
                     timer:1500
                 }).then(() => {
-                    $('#questionEdit').hide()
+                    $('#questionEdit').hide();
                     window.location.reload()
                 });
             })
