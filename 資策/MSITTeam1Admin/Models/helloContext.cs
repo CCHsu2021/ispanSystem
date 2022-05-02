@@ -1216,6 +1216,10 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.Invoice).HasMaxLength(50);
 
+                entity.Property(e => e.Recipient).HasMaxLength(50);
+
+                entity.Property(e => e.RecipientTel).HasMaxLength(50);
+
                 entity.Property(e => e.ShipTo).HasMaxLength(50);
             });
 

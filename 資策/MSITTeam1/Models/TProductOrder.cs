@@ -15,5 +15,7 @@ namespace MSITTeam1.Models
         public int? ShipBy { get; set; }
         public string ShipTo { get; set; }
         public string Invoice { get; set; }
+        public string Recipient { get; set; }
+        public string RecipientTel { get; set; }
     }
 }
