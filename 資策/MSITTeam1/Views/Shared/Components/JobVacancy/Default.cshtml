@@ -35,7 +35,7 @@
         padding: 5px;
         text-align: center;
         background: #1e3c84;
-        color:white;
+        color: white;
         cursor: pointer;
     }
 
@@ -62,28 +62,30 @@
         <span>新增職缺</span>
     </div>
     <div class="jobvacancypanel">
-        <form>
+        <form name="jobVacancyCreateForm">
+            <input type="hidden" value="@ViewBag.account" name="FCompanyTaxID" />
             <div class="row my-2">
                 <div class="col-md-2 pr-md-0 text-left text-md-center">職缺名稱：</div>
                 <div class="col-md-10 pl-md-0">
-                    <input class="form-control" type="text" id="FJobName" />
+                    <input class="form-control" type="text" id="FJobName" name="FJobName" />
                 </div>
             </div>
             <div class="row my-2">
                 <div class="col-md-2 pr-md-0 text-left text-md-center">薪資：</div>
                 <div class="col-md-10 pl-md-0 d-flex">
-                    <select class="form-control w-25">
-                        <option>時薪</option>
-                        <option>月薪</option>
+                    <select class="form-control w-50" name="FSalaryMode">
+                        <option value="月薪">月薪</option>
+                        <option value="時薪">時薪</option>
                     </select>
-                    <input class="form-control" type="text" id="FSalary" />
+                    <input class="form-control" type="text" id="FSalaryMin" name="FSalaryMin" />～
+                    <input class="form-control" type="text" id="FSalaryMax" name="FSalaryMax" placeholder="選填" />
                 </div>
             </div>
             <div class="row my-2">
                 <div class="col-md-2 pr-md-0 text-left text-md-center">工作地址：</div>
                 <div class="col-md-10 pl-md-0">
                     <vc:selector city="" district=""></vc:selector>
-                    <input class="form-control" type="text" id="FWorkAddress" />
+                    <input class="form-control" type="text" id="FWorkAddress" name="FWorkAddress" />
                 </div>
             </div>
             <div class="row">
@@ -91,31 +93,56 @@
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">工作時數：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FWorkHours" />
+                            <input class="form-control" type="text" id="FWorkHours" name="FWorkHours" placeholder="8小時" />
+                        </div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-md-4 pr-md-0 text-left text-md-center">工作性質：</div>
+                        <div class="col-md-8 pl-md-0">
+                            <select class="form-control" name="FEmployeeType">
+                                <option value="全職">全職</option>
+                                <option value="兼職">兼職</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">排休制度：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FLeaveSystem" />
+                            <select class="form-control" name="FLeaveSystem">
+                                <option value="周休二日">周休二日</option>
+                                <option value="排休">排休</option>
+                                <option value="依公司規定">依公司規定</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-md-4 pr-md-0 text-left text-md-center">工作性質：</div>
+                        <div class="col-md-8 pl-md-0">
+                            <vc:job-list-name-selector joblistid=""></vc:job-list-name-selector>
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">需求技能：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FJobSkill" />
+                            <input class="form-control" type="text" id="FJobSkill" name="FJobSkill" placeholder="不拘、C#語言" />
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">需求學歷：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FEducation" />
+                            <input class="form-control" type="text" id="FEducation" name="FEducation" />
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">需求人數：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FNeedPerson" />
+                            <input class="form-control" type="text" id="FNeedPerson" name="FNeedPerson" plasceholder="8人" />
+                        </div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-md-4 pr-md-0 text-left text-md-center">工作經歷：</div>
+                        <div class="col-md-8 pl-md-0">
+                            <input class="form-control" type="text" id="FWorkExp" name="FWorkExp" placeholder="10年" />
                         </div>
                     </div>
                 </div>
@@ -123,105 +150,110 @@
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">聯繫人：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FContactPerson" />
+                            <input class="form-control" type="text" id="FContactPerson" name="FContactPerson" />
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">聯繫人電話：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FContactPhone" />
+                            <input class="form-control" type="text" id="FContactPhone" name="FContactPhone" placeholder="09123456789" />
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">聯繫人傳真：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FContactFax" />
+                            <input class="form-control" type="text" id="FContactFax" name="FContactFax" placeholder="02-12345678" />
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">聯繫人信箱：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FContactEmail" />
+                            <input class="form-control" type="text" id="FContactEmail" name="FContactEmail" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row my-2">
-                    <div class="col-md-2 pr-md-0 text-left text-md-center">備註：</div>
-                    <div class="col-md-10 pl-md-0">
-                        <textarea class="form-control" rows="5" id="FOther"></textarea>
+                <div class="col-md-2 pr-md-0 text-left text-md-center">備註：</div>
+                <div class="col-md-10 pl-md-0">
+                    <textarea class="form-control" rows="5" id="FOther" name="FOther"></textarea>
                 </div>
             </div>
             <div class="row justify-content-center">
-                <button class="text-right btn btn-style-two my-3" type="button">確定新增</button>
+                <button class="text-right btn btn-style-two my-3" type="button" id="job-Vacancy-Create-Btn">確定新增</button>
             </div>
         </form>
     </div>
 </div>
-@foreach (var item in Model)
-{
-    <div class="job-card mb-4" id="quesCard">
-        <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCompanyTaxid)" />
-        <div class="tab-content">
-            <div class="tab-pane active" id="home2" role="tabpanel">
-                <div class="p-10">
-                    <h5 class="font-weight-bold">
-                        @Html.DisplayFor(modelItem => item.FJobName)
-                    </h5>
-                    <hr />
-                </div>
-                <div class="row mb-2">
-                    <div class="col-md-7 col-lg-8" style="line-height:2rem">
-                        <div>薪資：@item.FSalaryMode@item.FSalaryMin</div>
-                        <div>工作地址：@item.FCity@item.FDistrict@item.FWorkAddress</div>
-                        <div>工作時數：@item.FWorkHours</div>
-                        <div>排休制度：@item.FLeaveSystem</div>
-                        <div>需求技能：@item.FJobSkill</div>
-                        <div>需求學歷：@item.FEducation</div>
-                        <div>需求人數：@item.FNeedPerson</div>
+@{  int count = 0; }
+<div id="loadJobVacancyList">
+    <div id="JobVacancylist">
+        @foreach (var item in Model)
+        {
+            <div class="job-card mb-4" id="quesCard">
+                <input type="hidden" value="@Html.DisplayFor(modelItem => item.FCompanyTaxid)" />
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home2" role="tabpanel">
+                        <div class="p-10">
+                            <h5 class="font-weight-bold">
+                                @Html.DisplayFor(modelItem => item.FJobName)
+                            </h5>
+                            <hr />
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-7 col-lg-8" style="line-height:2rem">
+                                <div>薪資：@item.FSalaryMode@item.FSalaryMin</div>
+                                <div>工作地址：@item.FCity@item.FDistrict@item.FWorkAddress</div>
+                                <div>工作性質：@item.FEmployeeType</div>
+                                <div>工作時數：@item.FWorkHours</div>
+                                <div>排休制度：@item.FLeaveSystem</div>
+                                <div>需求技能：@item.FJobSkill</div>
+                                <div>需求學歷：@item.FEducation</div>
+                                <div>需求人數：@item.FNeedPerson</div>
+                                <div>工作經歷：@item.FWorkExp</div>
+                            </div>
+                            <div class="col-md-5 col-lg-4" style="line-height:2rem">
+                                <div>工作類型：@item.FJobListName</div>
+                                <div>聯繫人：@item.FContactPerson</div>
+                                <div>聯繫人：@item.FContactPhone</div>
+                                <div>聯繫人：@item.FContactFax</div>
+                                <div>聯繫人：@item.FContactEmail</div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div>備註：@item.FOther</div>
+                            </div>
+                        </div>
+                        <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0">
+                            <button class="fas fa-pencil-alt fa-2x joblistbtn" id="@item.FCompanyTaxid@count" value="@item.FJobName" data-toggle="modal" data-target="#JobVacancy-Edit-Modal+@item.FCompanyTaxid@count"></button>
+                            <button class="fas fa-trash-alt fa-2x joblistbtn" id="JobVacancy-Delete-Btn"></button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="JobVacancy-Edit-Modal+@item.FCompanyTaxid@count" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">修改資料</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <vc:job-vacancy-edit id="@item.FCompanyTaxid" jobname="@item.FJobName"></vc:job-vacancy-edit>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-5 col-lg-4" style="line-height:2rem">
-                        <div>聯繫人：@item.FContactPerson</div>
-                        <div>聯繫人：@item.FContactPhone</div>
-                        <div>聯繫人：@item.FContactFax</div>
-                        <div>聯繫人：@item.FContactEmail</div>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <div>備註：@item.FOther</div>
-                    </div>
-                </div>
-                <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0">
-                    <button class="fas fa-pencil-alt fa-2x joblistbtn" value="@item.FJobName" data-toggle="modal" data-target="#JobVacancy-Edit-Modal"></button>
-                    <button class="fas fa-trash-alt fa-2x joblistbtn" id="JobVacancy-Delete-Btn"></button>
-                    @*@Html.ActionLink("", "Edit", new { CompanyTaxID = item.FCompanyTaxid, JobName = item.FJobName }, new { @class = "fas fa-pencil-alt fa-2x joblistbtn" })
-                        @Html.ActionLink("", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "fas fa-trash-alt fa-2x joblistbtn" })*@
                 </div>
             </div>
-        </div>
-    </div>
-}
-<!-- Modal -->
-<div class="modal fade" id="JobVacancy-Edit-Modal" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">修改資料</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            </div>
-        </div>
+            count++;
+        }
     </div>
 </div>
+
 <script>
-    $(function () {
-        $(".jobvacancyflip").click(function () {
-            $(".jobvacancypanel").slideToggle("fast");
-        });
-    });
+
 </script>
 

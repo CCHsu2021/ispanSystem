@@ -48,7 +48,7 @@
                         <vc:company-basic></vc:company-basic>
                     </div>
                     <div id="menu1" class="container tab-pane fade">
-                            <vc:company-photo-list taxid="@ViewBag.account"></vc:company-photo-list>
+                        <vc:company-photo-list taxid="@ViewBag.account"></vc:company-photo-list>
                     </div>
                     <div id="menu2" class="container tab-pane fade">
                         <div class="row about-box">
@@ -240,7 +240,7 @@
         $(function () {
             initPagination('.job-card', 2, '#JoblistPagination')
         });
-    
+
         Dropzone.options.form1 = {
             dictDefaultMessage: "拖曳檔案或是點擊上傳",
             acceptedFiles: "image/*",
@@ -266,6 +266,22 @@
                 });
             }
         };
+        //職缺新增js
+
+    $(".jobvacancyflip").click(function () {
+        $(".jobvacancypanel").slideToggle("fast");
+    });
+
+
+    $("#job-Vacancy-Create-Btn").click(function () {
+        var jobVacancy_FormData = new FormData(document.jobVacancyCreateForm);
+        fetch('@Url.Content("~/CMemberCenter/CreateJobVacancy")',{
+                method:'POST',
+            body: jobVacancy_FormData,
+            }).then(function () {
+                ("#loadJobVacancyList").load(location.href + " #JobVacancylist");
+            })
+    })
     </script>
 }
 
