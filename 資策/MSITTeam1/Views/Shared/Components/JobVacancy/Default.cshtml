@@ -63,11 +63,11 @@
     </div>
     <div class="jobvacancypanel">
         <form name="jobVacancyCreateForm">
-            <input type="hidden" value="@ViewBag.account" name="FCompanyTaxID"/>
+            <input type="hidden" value="@ViewBag.account" name="FCompanyTaxID" />
             <div class="row my-2">
                 <div class="col-md-2 pr-md-0 text-left text-md-center">職缺名稱：</div>
                 <div class="col-md-10 pl-md-0">
-                    <input class="form-control" type="text" id="FJobName" name="FJobName"/>
+                    <input class="form-control" type="text" id="FJobName" name="FJobName" />
                 </div>
             </div>
             <div class="row my-2">
@@ -77,8 +77,8 @@
                         <option value="月薪">月薪</option>
                         <option value="時薪">時薪</option>
                     </select>
-                    <input class="form-control" type="text" id="FSalaryMin" name="FSalaryMin"/>～
-                    <input class="form-control" type="text" id="FSalaryMax" name="FSalaryMax"/>
+                    <input class="form-control" type="text" id="FSalaryMin" name="FSalaryMin" />～
+                    <input class="form-control" type="text" id="FSalaryMax" name="FSalaryMax" placeholder="選填" />
                 </div>
             </div>
             <div class="row my-2">
@@ -93,7 +93,7 @@
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">工作時數：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FWorkHours" name="FWorkHours" placeholder="8小時"/>
+                            <input class="form-control" type="text" id="FWorkHours" name="FWorkHours" placeholder="8小時" />
                         </div>
                     </div>
                     <div class="row my-2">
@@ -118,13 +118,13 @@
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">工作性質：</div>
                         <div class="col-md-8 pl-md-0">
-                              <vc:job-list-name-selector joblistid=""></vc:job-list-name-selector>
+                            <vc:job-list-name-selector joblistid=""></vc:job-list-name-selector>
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">需求技能：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FJobSkill" name="FJobSkill" placeholder="不拘、C#語言"/>
+                            <input class="form-control" type="text" id="FJobSkill" name="FJobSkill" placeholder="不拘、C#語言" />
                         </div>
                     </div>
                     <div class="row my-2">
@@ -136,7 +136,7 @@
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">需求人數：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FNeedPerson" name="FNeedPerson" plasceholder="8人"/>
+                            <input class="form-control" type="text" id="FNeedPerson" name="FNeedPerson" plasceholder="8人" />
                         </div>
                     </div>
                     <div class="row my-2">
@@ -150,19 +150,19 @@
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">聯繫人：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FContactPerson" name="FContactPerson"/>
+                            <input class="form-control" type="text" id="FContactPerson" name="FContactPerson" />
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">聯繫人電話：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FContactPhone" name="FContactPhone" />
+                            <input class="form-control" type="text" id="FContactPhone" name="FContactPhone" placeholder="09123456789" />
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-md-0 text-left text-md-center">聯繫人傳真：</div>
                         <div class="col-md-8 pl-md-0">
-                            <input class="form-control" type="text" id="FContactFax" name="FContactFax"/>
+                            <input class="form-control" type="text" id="FContactFax" name="FContactFax" placeholder="02-12345678" />
                         </div>
                     </div>
                     <div class="row my-2">
@@ -185,6 +185,7 @@
         </form>
     </div>
 </div>
+@{  int count = 0; }
 <div id="loadJobVacancyList">
     <div id="JobVacancylist">
         @foreach (var item in Model)
@@ -225,33 +226,34 @@
                             </div>
                         </div>
                         <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0">
-                            <button class="fas fa-pencil-alt fa-2x joblistbtn" value="@item.FJobName" data-toggle="modal" data-target="#JobVacancy-Edit-Modal"></button>
+                            <button class="fas fa-pencil-alt fa-2x joblistbtn" id="@item.FCompanyTaxid@count" value="@item.FJobName" data-toggle="modal" data-target="#JobVacancy-Edit-Modal+@item.FCompanyTaxid@count"></button>
                             <button class="fas fa-trash-alt fa-2x joblistbtn" id="JobVacancy-Delete-Btn"></button>
-                            @*@Html.ActionLink("", "Edit", new { CompanyTaxID = item.FCompanyTaxid, JobName = item.FJobName }, new { @class = "fas fa-pencil-alt fa-2x joblistbtn" })
-                                @Html.ActionLink("", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "fas fa-trash-alt fa-2x joblistbtn" })*@
+                            <!-- Modal -->
+                            <div class="modal fade" id="JobVacancy-Edit-Modal+@item.FCompanyTaxid@count" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">修改資料</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <vc:job-vacancy-edit id="@item.FCompanyTaxid" jobname="@item.FJobName"></vc:job-vacancy-edit>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            count++;
         }
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="JobVacancy-Edit-Modal" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">修改資料</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            </div>
-        </div>
-    </div>
-</div>
+
 <script>
-    
+
 </script>
 
