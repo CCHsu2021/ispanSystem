@@ -194,14 +194,25 @@ namespace MSITTeam1.Controllers
 		{
 			if (subjectID != null && questionID > 0)
 			{
+				var paperTable = _context.TTestPapers.Where(quesInPaper => quesInPaper.FSubjectId.Equals(subjectID) && quesInPaper.FQuestionId == questionID);
+				if (paperTable.Count() > 0)
+				{
+					return Content("當前有試卷引用此題，無法刪除");
+				}
 				var ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
 				if (ques != null)
 				{
 					ques.FState = 0;
 					_context.SaveChanges();
+					return Content("刪除成功");
 				}
 			}
 			return RedirectToAction("List");
+		}
+
+		public IActionResult DeleteTest(string subjectID, int questionID)
+		{
+			return Content($"測試成功，技能名稱{subjectID} 題目編號{questionID}", "text/plain", System.Text.Encoding.UTF8);
 		}
 
 		public IActionResult Subject()
