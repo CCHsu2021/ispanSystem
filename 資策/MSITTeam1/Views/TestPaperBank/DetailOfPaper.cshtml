@@ -1,45 +1,123 @@
 ﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
 @using System.Collections.Generic;
 
+@section Style{
+    <link href="~/css/Resumebar.css" rel="stylesheet" />
+    <style>
+        #btnBox button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            border: solid 1px transparent;
+            padding: 14px 14px;
+            background-color: #1e3c84;
+            color: #FFFFFF;
+            text-transform: capitalize;
+            font-size: 18px;
+            line-height: 22px;
+            outline: none;
+            cursor: pointer;
+            transition: all .3s linear;
+            width: 150px;
+        }
+
+        #btnBox button:hover {
+            /*background-color: #1A7F75;*/
+            color: #1e3c84;
+            z-index: 4;
+            background-color: #ffffff;
+            border: #1e3c84 solid 1px;
+            cursor: pointer;
+        }
+    </style>
+}
+
 @{
     ViewData["Title"] = "DetailOfPaper";
 }
-<div class="container" style="padding:40px">
-    @{
-        if (Model != null)
-        {
-            string subject = "";
-            int quesId = 0;
-            int Sn = 65;
-            char temp = Convert.ToChar(Sn);
-            foreach (var item in Model)
+
+<div class="container" style="padding:20px;">
+    <div id="print_parts" style="padding:30px;">
+        <div id="titleOfPaper" class="text-center">
+            <h1>@ViewBag.PaperName</h1>
+            <br />
+            <p style="font-size:21px">@ViewBag.PaperNote</p>
+        </div>
+        <hr />
+        <div id="testDetail" class="row justify-content-lg-between">
+            <div class="col-3 h5">面試部門：</div>
+            <div class="col-3 h5">姓名：</div>
+            <div class="col-3 h5">得分：</div>
+        </div>
+        <br />
+        @{
+            if (Model != null)
             {
-                Sn = 65;
-                if (item.FSubjectId != subject || item.FQuestionId != quesId)
+                string subject = "";
+                int quesId = 0;
+                int Sn = 65;
+                int quesCount = 1;
+                char temp = Convert.ToChar(Sn);
+                foreach (var item in Model)
                 {
-                    subject = item.FSubjectId;
-                    quesId = item.FQuestionId;
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                @Html.DisplayFor(model => item.FQuestion)
-                            </h4>
-                            <div>
-                                @foreach (var choice in Model)
-                                {
-                                    if (choice.FSubjectId == subject && choice.FQuestionId == quesId)
-                                    {
-                                        <p class="card-text">
-                                            @temp . @Html.DisplayFor(modelItem => choice.FChoice)
-                                        </p>
-                                        temp = Convert.ToChar(++Sn);
-                              }
-                          }
-                            </div>
-                        </div>
-                    </div>
+                    if (item.FSubjectId != subject || item.FQuestionId != quesId)
+                    {
+                        <br />
+                        subject = item.FSubjectId;
+                        quesId = item.FQuestionId;
+                        <h4 class="card-titel">
+                            @quesCount . @Html.DisplayFor(model => item.FQuestion)
+                            @if (item.FQuestionTypeId == 2)
+                            {
+                                <span>（多選題）</span>
+                            }
+                        </h4>
+                        Sn = 65;
+                        temp = Convert.ToChar(Sn);
+                        quesCount++;
+                    }
+                    if (item.FSubjectId == subject && item.FQuestionId == quesId)
+                    {
+                        <p class="card-text">
+                            @temp . @Html.DisplayFor(modelItem => item.FChoice)
+                        </p>
+                        temp = Convert.ToChar(++Sn);
+                    }
                 }
             }
         }
-    }
+        <hr style="margin:40px 0 40px 0;" />
+    </div>
+    <div style="text-align:center;padding:0 30px 0 30px" id="btnBox" class="row justify-content-around">
+        <button class="col-2" id="returnToIndex" type="button" onclick="location.href='@Url.Action("Home", "TestPaperBank")'">
+            返回
+        </button>
+        <button class="col-2" type="button" onclick="printScreen()">列印</button>
+        @*<a asp-action="Home">返回</a>*@
+    </div>
 </div>
+
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/jQuery.print.js"></script>
+    <script>
+        function printScreen() {
+            $("#print_parts").print({
+                globalStyles: true,
+                mediaPrint: false,
+                stylesheet: null,
+                noPrintSelector: ".no-print",
+                iframe: true,
+                append: null,
+                prepend: null,
+                manuallyCopyFormValues: true,
+                deferred: $.Deferred(),
+                timeout: 750,
+                title: null,
+                doctype: '<!doctype html>'
+            });
+        }
+
+    </script>
+}
