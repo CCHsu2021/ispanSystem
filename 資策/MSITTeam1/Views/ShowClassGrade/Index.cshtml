@@ -18,16 +18,17 @@
                                         <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" placeholder="請輸入識別碼">
                                     </div>
                             </div>
-                            <div class="d-none row justify-content-center">
+                            <div class="row justify-content-center" id="companyselect">
                                     <div class="input-group my-2 mx-sm-2">
-                                                <select id="studentname" name="studentname" class="form-control">
-                                                    <option>選擇公司員工</option>
-                                                </select>
+                                        <select id="studentname" name="studentname" class="form-control">
+                                            <option>選擇公司員工</option>
+                                        </select>
+                                        <input type="hidden" class="form-control" id="txtaccount" name="txtaccount" value="">
                                     </div>
                             </div>
                         </div>
                     <div class="ml-0 ml-md-3 ml-lg-3">
-                        <input class="btn-style-two mt-3" type="submit" name="createpaper" value="確定" />
+                        <input class="btn-style-two mt-3" type="submit" id="createpaper" name="createpaper" value="確定" />
                     </div>
                 </div>
             </form>
@@ -52,6 +53,24 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 <script>
+    @*if (@ViewBag.memType == 2) {*@
+
+    $('#companyselect').hide();
+
+        const selectElement = document.querySelector('#studentname');
+        selectElement.addEventListener('change', (evt) => {
+            evt.preventDefault();
+            $('#txtaccount').val(evt.target.value);
+        })
+
+
+    const b = document.querySelector('#createpaper');
+    b.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        $('#companyselect').show();
+    })
+    /*}*/
+
 
     const ctx3 = document.getElementById('after').getContext('2d');
     var after = new Chart(ctx3, {
