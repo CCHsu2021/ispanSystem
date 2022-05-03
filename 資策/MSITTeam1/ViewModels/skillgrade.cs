@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace MSITTeam1.Models
+namespace MSITTeam1.ViewModels
 {
-    public partial class TSubmittedAnswer
+    public class skillgrade
     {
-        public int FSn { get; set; }
-        public string FMemberAccount { get; set; }
         public string FSubjectId { get; set; }
         public int FQuestionId { get; set; }
         public string FSubmitAnswer { get; set; }
+        public int Grade { get; set; }
     }
 }

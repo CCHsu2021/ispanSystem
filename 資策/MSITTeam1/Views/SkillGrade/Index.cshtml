@@ -1,8 +1,21 @@
-﻿@model IEnumerable<MSITTeam1.ViewModels.CTestPaperViewModel>
+﻿@model IEnumerable<MSITTeam1.Models.TQuestionList>
 @{
     ViewData["Title"] = "Index";
 }
 <div class="container">
+    <select class="form-select" id="select">
+        @{
+            string FSubjectId = null;
+            foreach (var item in Model)
+            {
+                if (item.FSubjectId != FSubjectId)
+                {
+                    <option value="@item.FSubjectId">@item.FSubjectId</option>
+                }
+                FSubjectId = item.FSubjectId;
+            }
+        }
+    </select>
     <button class="btn-style-two mt-3" type="button" id="btnstart">開始測驗</button>
     <div id="div1">
         <div class="row">
@@ -15,11 +28,15 @@
             </div>
         </div>
     </div>
+    <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button3">結束測驗</button>
     <div class="row justify-content-end mx-0">
         <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button2">送出</button>
         <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button1">下一題</button>
     </div>
     <form name="member" method="post">
+        <input type="hidden" id="FSubjectId" name="FSubjectId" value="" />
+        <input type="hidden" id="FQuestionId" name="FQuestionId" value="" />
+        <input type="hidden" id="FSubmitAnswer" name="FSubmitAnswer" value="">
         <input type="text" class="form-control" id="Grade" name="Grade" value="0">
     </form>
 </div>
@@ -27,12 +44,13 @@
     <script>
         const btn = document.querySelector("#button1");
         const btn2 = document.querySelector("#button2");
+        const btn3 = document.querySelector("#button3");
         const btn1 = document.querySelector("#btnstart");
         const divAlert = document.querySelector("#div1");
 
         btn1.addEventListener('click', (evt) => {
             evt.preventDefault();
-            if ("@ViewBag.MemberId" == "") {
+            if ("@ViewBag.Account" == "") {
                 Swal.fire({
                     icon: 'info',
                     title: '請先登入會員',
@@ -42,6 +60,9 @@
             } else {
                 btn1.style.display = 'none';
                 btn2.style.display = 'block';
+                $("#FSubjectId").val($('#select').val());
+                $("#select").hide();
+                btn3.style.display = 'block';
                 btn.click();
             }
         })
@@ -57,6 +78,8 @@
             body: formData
         }).then(Response => Response.json())
             .then(function (j) {
+                console.log(j);
+                $("#FQuestionId").val(j[0].fQuestionID);
                 $("#skill_grade_question").text(j[0].fQuestion);
                 //j[0].fQuestion;
                 for (var row in j) {
@@ -76,6 +99,7 @@
         btn2.addEventListener('click', (evt) => {
             evt.preventDefault();
             var a = $('input[name=answer]:checked').val();
+            $("#FSubmitAnswer").val($('input[name=answer]:checked').attr('id'));
             if (1 == a) { anscount++; $('input[name=answer]:checked').next().css("color", "green");}
             if (1 != a) { $("input[name=answer][value='1']").next().css("color", "red"); }
             count++
@@ -83,10 +107,24 @@
             $('#Grade').attr({ 'value': Math.round((anscount / count) * 100) });
 
             /*            $('input').hide();*/
-            $('input').attr("disabled", "disabled");
+            $('input').attr("disabled", true);
+            $('#FSubjectId').attr("disabled", false);
+            $('#FQuestionId').attr("disabled", false);
+            $('#FSubmitAnswer').attr("disabled", false);
+            $('#Grade').attr("disabled", false);
             btn2.style.display = 'none';
             btn.style.display = 'block';
         });
+
+        btn3.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            const formData = new FormData(document.member);
+
+        fetch('@Url.Action("InSQL", "SkillGrade")', {
+            method: 'POST',
+            body: formData
+        })
+        })
 
     </script>
 }
