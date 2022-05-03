@@ -21,14 +21,14 @@ namespace MSITTeam1.ViewComponent
             string account = CDictionary.account;
             IEnumerable<CJobVacancyViewModel> job = null;
             //job = hello.TNewJobVacancies.Where(p => p.FCompanyTaxid == account);
-            job = from p in hello.TNewJobVacancies
-                  from c in hello.TJobDirects
-                  where p.FCompanyTaxid == account & c.JobListId == p.FJobListId
-                  select new CJobVacancyViewModel()
-                  {
-                      job = p,
-                      FJobListName = c.FJobDirect
-                  };
+            job = (from p in hello.TNewJobVacancies
+                   from c in hello.TJobDirects
+                   where p.FCompanyTaxid == account & c.JobListId == p.FJobListId
+                   select new CJobVacancyViewModel()
+                   {
+                       job = p,
+                       FJobListName = c.FJobDirect
+                   }).ToList();
             return View(job);
         }
     }

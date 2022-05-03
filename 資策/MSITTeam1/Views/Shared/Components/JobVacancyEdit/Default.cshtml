@@ -3,11 +3,12 @@
 
 <div class="row">
     <div class="col-12">
-        <form>
+        <form id="jobVacancyListEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="Fid" class="form-control" type="hidden" />
+            <input asp-for="Fid" type="hidden" />
             <input asp-for="FCompanyTaxid" class="form-control" type="hidden" />
-            <input asp-for="FCreatTime" type="hidden"/>
+            <input asp-for="FCreatTime" type="hidden" />
+            <input asp-for="FJobStatus" type="hidden" />
             <div class="form-group">
                 <label asp-for="FJobName" class="control-label"></label>
                 <input asp-for="FJobName" class="form-control" />
