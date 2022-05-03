@@ -81,24 +81,28 @@
     .previewBtn{
         margin-left:-10px;
         transition:0;
-        margin-top:15px;
+        margin-top:20px;
+        margin-bottom: 20px;
     }
     .contiBtn{
          margin-left:60px;
          transition:0;
-         margin-top:15px;
+         margin-top:20px;
+         margin-bottom: 20px;
     }
 
     .PrintBtn{
         margin-left:763px;
+        margin-bottom: 20px;
+        margin-top: 20px;
     }
 
 
-/*    .panelbigcard {
+    /*    .panelbigcard {
         
     }*/
 
-/*    .toolcard{
+    /*    .toolcard{
         margin-right:5px;
     }
 
@@ -130,14 +134,14 @@
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>技能</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>作品</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>自我介紹</h4></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" >
                             <img class="toolImage" src="~/images/Resume/book.jpg" width="300" style="text-align:center" />
                         </div>
@@ -145,14 +149,12 @@
                 </div>
             </div>
         </div>
-
             <div class="col-4  BigCard">
                 <div class="panel panel-info ">
                     <div class="panel-heading kanban-card">
-                        <h3 class="panel-title">製作履歷</h3>
-                        
+                        <h3 class="panel-title" id="paneltitle">製作履歷</h3>
                     </div>
-                    <div class="panel-body ">
+                    <div class="panel-body" id="mainView1">
                         <div id="todo" class="bodybackground" >
                             &nbsp;
                             <div class="alert alert-success kanban-card cardBody basiccard" id="basic" role="alert">
@@ -194,7 +196,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4 BigCard">
+            <div class="col-4 BigCard" id="mainView2">
                 <div class="panel panel-info ">
                     <div class="panel-heading kanban-card">
                         <h3 class="panel-title invisible">111</h3>
@@ -211,7 +213,7 @@
                     </div>
                 </div>
             </div>
-
+        
     }
 
     <div class="col-2 BigCard datacard pl-5" id="data">
@@ -230,12 +232,7 @@
 </div>
 <button class="previewBtn" id="btnPreview" >預覽</button>
 <button class="contiBtn" id="btnEdit" >繼續編輯</button>
-<button class="PrintBtn" id="btnPrint" >匯出</button>
-
-
-
-
-
+<button class="PrintBtn" id="btnPrint" onclick="printScreen()">匯出</button>
 
 
 
@@ -401,9 +398,11 @@
     const btnEdit = document.querySelector("#btnEdit");
     const btnPreview = document.querySelector("#btnPreview");
     const btnPrint = document.querySelector("#btnPrint");
+    const paneltitle = document.querySelector("#paneltitle");
     const toolpanel = document.getElementById("toolpanel");
     const datapanel = document.getElementById("data");
     
+
     btnPrint.style.visibility="hidden";
     btnEdit.style.visibility="hidden";
     btnPreview.addEventListener('click', (evt) => {
@@ -413,6 +412,7 @@
         btnPreview.style.visibility="hidden";
         btnEdit.style.visibility="visible";
         btnPrint.style.visibility="visible";
+        paneltitle.style.visibility="hidden";
         });
 
     btnEdit.addEventListener('click', (evt) => {
@@ -422,9 +422,27 @@
         btnEdit.style.visibility="hidden";
         btnPrint.style.visibility="hidden";
         btnPreview.style.visibility="visible";
+        paneltitle.style.visibility="visible";
 
         });
 
+     function printScreen() {
+         
+            $("#kanban").print({
+                globalStyles: true,
+                mediaPrint: false,
+                stylesheet: null,
+                noPrintSelector: ".no-print",
+                iframe: true,
+                append: null,
+                prepend: null,
+                manuallyCopyFormValues: true,
+                deferred: $.Deferred(),
+                timeout: 750,
+                title: null,
+                doctype: '<!doctype html>'
+            });
+        }
     //div.addClass('alert alert-success kanban-card')
     //div.class="alert alert-success kanban-card";
     //a="<div class=\"alert alert-success kanban-card\" >Card20</div>"
