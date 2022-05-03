@@ -7,12 +7,18 @@
 
   <ItemGroup>
     <Compile Remove="js\**" />
+    <Compile Remove="wwwroot\css\NewFolder\**" />
     <Content Remove="js\**" />
+    <Content Remove="wwwroot\css\NewFolder\**" />
     <EmbeddedResource Remove="js\**" />
+    <EmbeddedResource Remove="wwwroot\css\NewFolder\**" />
     <None Remove="js\**" />
+    <None Remove="wwwroot\css\NewFolder\**" />
+    <TypeScriptCompile Remove="wwwroot\css\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\flatPicker.css" />
     <Content Remove="wwwroot\images\student\d9e4bd0a-b5b9-40ed-9cc5-d16cf007f46a.jpg" />
     <Content Remove="wwwroot\js\appear.js" />
     <Content Remove="wwwroot\js\bootstrap.min.js" />
