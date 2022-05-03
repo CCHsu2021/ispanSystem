@@ -70,7 +70,7 @@ namespace MSITTeam1.Controllers
                                  orderby Guid.NewGuid()
                                  select new { d.FQuestion }).Take(1).ToArray();
                 int x = 2;
-                while (chose == null)
+                while (chose.FirstOrDefault() == null)
                 {
                     x--;
                     chose = (from d in hello.TQuestionLists
@@ -99,7 +99,7 @@ namespace MSITTeam1.Controllers
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 int x = 3;
-                while (chose == null)
+                while (chose.FirstOrDefault() == null)
                 {
                     x--;
                     chose = (from d in hello.TQuestionLists
@@ -128,7 +128,7 @@ namespace MSITTeam1.Controllers
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 int x = 4;
-                while (chose == null)
+                while (chose.FirstOrDefault() == null)
                 {
                     x--;
                     chose = (from d in hello.TQuestionLists
@@ -157,7 +157,7 @@ namespace MSITTeam1.Controllers
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 int x = 5;
-                while (chose == null)
+                while (chose.FirstOrDefault() == null)
                 {
                     x--;
                     chose = (from d in hello.TQuestionLists

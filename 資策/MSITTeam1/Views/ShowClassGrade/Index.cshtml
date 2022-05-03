@@ -54,18 +54,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 @section Scripts{
     <script>
-    @*if (@ViewBag.memType == 2) {*@
 
         const selectElement = document.querySelector('#studentname');
         selectElement.addEventListener('change', (evt) => {
             evt.preventDefault();
             $('#txtaccount').val(evt.target.value);
         })
+        $('#companyselect').hide();
+     
 
-    $('#companyselect').hide();
-
-    $("#createpaper").click(function () {
-        $('#companyselect').show();
+        $("#createpaper").click(function () {
+            @{ 
+                if (ViewBag.memType == 2) {
+                @:$('#companyselect').show();
+                }
+            }
     })
     //const b = document.querySelector('#createpaper');
     //b.addEventListener('click', (evt) => {
