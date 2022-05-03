@@ -174,18 +174,7 @@
             FDistrict: $("#District option:selected").text(),
             FCapitalAmount: $("#FCapitalAmount").val()
         }
-        //var picturedata = new FormData(document.fileupload)
-        @*$.post("@Url.Content("~/CMemberCenter/CompanyInformationEdit")", jsondata, function (data) {
-            Swal.fire({
-                icon: 'success',
-                title: '修改成功',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(() => {
-                $('#staticBackdrop').hide()
-                window.location.reload()
-            });
-        })*@
+
         $.ajax({
             url: "@Url.Content("~/CMemberCenter/CompanyInformationEdit")",
             type: "POST",
@@ -273,15 +262,64 @@
     });
 
 
-    $("#job-Vacancy-Create-Btn").click(function () {
-        var jobVacancy_FormData = new FormData(document.jobVacancyCreateForm);
-        fetch('@Url.Content("~/CMemberCenter/CreateJobVacancy")',{
-                method:'POST',
-            body: jobVacancy_FormData,
-            }).then(function () {
-                ("#loadJobVacancyList").load(location.href + " #JobVacancylist");
+        $("#job-Vacancy-Create-Btn").click(function () {
+            var jobVacancy_FormData = new FormData(document.jobVacancyCreateForm);
+            fetch('@Url.Content("~/CMemberCenter/CreateJobVacancy")', {
+                method: 'POST',
+                body: jobVacancy_FormData,
+            }).then(function (result) {
+                if (result.fail) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: "更新失敗，請再檢查是否有同樣工作名稱",
+                    })
+                }
+                else {
+                    $("#loadJobVacancyList").load(location.href + " #JobVacancylist");
+                }
             })
-    })
+        });
+
+        $("#jobVacancy-Edit-Btn").click(() => {
+            var joblisteditformdata = new FormData(document.getElementById("jobVacancyListEdit"))
+            fetch('@Url.Content("~/CMemberCenter/JobVacancyEdit")', {
+                method: 'POST',
+                body: joblisteditformdata,
+            }).then(function (result) {
+                if (result.fail) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: "更新失敗，請再檢查是否有同樣工作名稱",
+                    })
+                } else if (result = "更新成功") {
+                    window.location.reload()
+                    //$(".loadJobVacancyList").load(location.href + " .JobVacancylist");
+                }
+            })
+        });
+
+        function deleteJobVacancy(id) {
+            Swal.fire({
+                icon: 'warning',
+                title: "確定刪除嗎?",
+                confirmButtonText: '確定',
+                cancelButtonText:'取消',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Content("~/CMemberCenter/JobVacancyDelete")',
+                        method: "Post",
+                        data: {id:id},
+                    }).then(function () {
+                        window.location.reload()
+                    })
+                } else if (result.isDismissed)
+                {
+                    Swal.close()
+                }
+            })
+
+        }
     </script>
 }
 

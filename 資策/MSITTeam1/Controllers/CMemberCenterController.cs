@@ -122,8 +122,7 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult CreateJobVacancy(TNewJobVacancy joblist)
         {
-            var job = hello.TNewJobVacancies.FirstOrDefault(p => p.FJobName == joblist.FJobName &
-            p.FCompanyTaxid == joblist.FCompanyTaxid);
+            var job = hello.TNewJobVacancies.FirstOrDefault(p => p.Fid == joblist.Fid);
             if(job == null)
             {
                 joblist.FCreatTime = DateTime.Now.ToString("yyyy-MM-dd");
@@ -138,15 +137,53 @@ namespace MSITTeam1.Controllers
 
         public IActionResult JobVacancyEdit(CJobVacancyViewModel jobedit)
         {
-            TNewJobVacancy job = hello.TNewJobVacancies.FirstOrDefault(p => p.Fid == jobedit.Fid);
-            if(job != null)
+            if(jobedit != null)
             {
-                job = jobedit.job;
-                hello.TNewJobVacancies.Update(job);
-                hello.SaveChanges();
-                return Json(new { suc = "更新成功" });
+                //helloContext h = new helloContext();
+                TNewJobVacancy job = hello.TNewJobVacancies.FirstOrDefault(p => p.Fid == jobedit.Fid);
+                if (job != null)
+                {
+                    job.FCity = jobedit.FCity;
+                    job.FCompanyTaxid = jobedit.FCompanyTaxid;
+                    job.FContactEmail = jobedit.FContactEmail;
+                    job.FContactFax = jobedit.FContactFax;
+                    job.FContactPerson = jobedit.FContactPerson;
+                    job.FContactPhone = jobedit.FContactPhone;
+                    job.FCreatTime = jobedit.FCreatTime;
+                    job.FDistrict = jobedit.FDistrict;
+                    job.FEducation = jobedit.FEducation;
+                    job.FEmployeeType = jobedit.FEmployeeType;
+                    job.Fid = jobedit.Fid;
+                    job.FJobListId = jobedit.FJobListId;
+                    job.FJobName = jobedit.FJobName;
+                    job.FJobSkill = jobedit.FJobSkill;
+                    job.FJobStatus = jobedit.FJobStatus;
+                    job.FLeaveSystem = jobedit.FLeaveSystem;
+                    job.FNeedPerson = jobedit.FNeedPerson;
+                    job.FOther = jobedit.FOther;
+                    job.FSalaryMax = jobedit.FSalaryMax;
+                    job.FSalaryMin = jobedit.FSalaryMin;
+                    job.FSalaryMode = jobedit.FSalaryMode;
+                    job.FWorkAddress = jobedit.FWorkAddress;
+                    job.FWorkExp = jobedit.FWorkExp;
+                    job.FWorkHours = jobedit.FWorkHours;
+                    hello.SaveChanges();
+                    return Json(new { suc = "更新成功" });
+                }
             }
             return Json(new { fail = "更新失敗" });
+        }
+        [HttpPost]
+        public IActionResult JobVacancyDelete(int id)
+        {
+            TNewJobVacancy job = hello.TNewJobVacancies.FirstOrDefault(p => p.Fid == id);
+            if (job != null)
+            {
+                hello.TNewJobVacancies.Remove(job);
+                hello.SaveChanges();
+                return Content("Deleted");
+            }
+            return Content("fail");
         }
 
     }
