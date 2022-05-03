@@ -39,11 +39,13 @@ namespace MSITTeam1.Controllers
         public IActionResult CompanyInformationEdit(CCompanyBasicViewModel company)
         {
             TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == company.CompanyTaxid);
+            TCityContrast city = hello.TCityContrasts.FirstOrDefault(p => p.FPostCode.ToString() == company.FDistrict);
             if (c != null)
             {
                 c.FAddress = company.FAddress;
+                c.FName = company.FName;
                 c.FCity = company.FCity;
-                c.FDistrict = company.FDistrict;
+                c.FDistrict = city.FDistrictName;
                 c.FEmail = company.FEmail;
                 c.FFaxCode = company.FFaxCode;
                 c.FFax = company.FFax;
@@ -55,7 +57,7 @@ namespace MSITTeam1.Controllers
                 c.FCapitalAmount = company.FCapitalAmount;
                 c.FWebsite = company.FWebsite;
                 c.FRelatedLink = company.FRelatedLink;
-                c.FDistrictCode = company.FDistrictCode;
+                c.FDistrictCode = city.FPostCode.ToString();
                 hello.SaveChanges();
             }
             return Content("success");
@@ -65,6 +67,43 @@ namespace MSITTeam1.Controllers
         [HttpPost]
         public IActionResult SaveLogoPicture(IFormFile img,string id)
         {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (p.photo != null)
+                    {
+                        string photoName = Guid.NewGuid().ToString() + ".jpg";
+                        //Cloudinary api https://mlog.club/article/5681377
+                        var myAccount = new Account { ApiKey = "756611421435346", ApiSecret = "q9LV4-S7fbX7leQjNUZjfEDcjMs", Cloud = "ispansystem" };
+                        Cloudinary cloudinary = new Cloudinary(myAccount);
+
+                        using (var memory = new MemoryStream())
+                        {
+
+                            await p.photo.CopyToAsync(memory);
+                            memory.Position = 0;// set cursor to the beginning of the stream.
+
+                            ImageUploadParams uploadParams = new ImageUploadParams();
+                            uploadParams.File = new FileDescription(photoName, memory);
+                            ImageUploadResult uploadResult = await cloudinary.UploadAsync(uploadParams);
+                            var url = uploadResult.SecureUrl.ToString();
+                            p.ImgPath = url;
+                        }
+                    }
+                    else
+                    {
+                        p.ImgPath = "noImg.jpg";
+                    }
+                    hello.Add(p.prodcut);
+                    await hello.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
             TCompanyBasic c = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == id);
             string photoName = Guid.NewGuid().ToString() + ".jpg";
             c.FLogo = photoName;
