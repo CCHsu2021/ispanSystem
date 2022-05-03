@@ -49,7 +49,8 @@
                     </td>
                     <td class="text-center editQButton" style="width:130px;">
                         <input type="button" data-toggle="modal" data-target="#questionEdit" class="editQuestion" value="編輯" />
-                        @Html.ActionLink("刪除", "Delete", "QuestionBank", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }, new { onclick = "return confirm('確定要刪除嗎？')" })
+                        <input type="button"  class="delQuestion" value="刪除" />
+                        @*@Html.ActionLink("刪除", "Delete", "QuestionBank", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }, new { onclick = "return confirm('確定要刪除嗎？')" })*@
                     </td>
                     <td class="text-center detailQButton" style="width:60px;">
                         <input type="button" data-toggle="modal" data-target="#questionDetail" class="detailQuestion" value="詳情" />
@@ -84,7 +85,7 @@
 @*<button id="test">測試</button>*@
 
 <!-- Modal -->
-<div class="modal fade modal-dialog-scrollable modal-lg" id="questionDetail" tabindex="-1" aria-labelledby="questionDetail" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade modal-dialog-scrollable" id="questionDetail" tabindex="-1" aria-labelledby="questionDetail" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -109,11 +110,11 @@
         $(this).next().attr("class", temp);
     })
 
-    $(document).ready(function () {
-        $(function () {
-            initPagination('.questionTable', 12, '#ProductPagination')
-        });
-    })
+    //$(document).ready(function () {
+    //    $(function () {
+    //        initPagination('.questionTable', 12, '#ProductPagination')
+    //    });
+    //})
     // 題目編輯
     $('.editQuestion').click(function () {
                 jsondata = JSON.stringify({
@@ -144,6 +145,31 @@
             data: jsondata,
             success: function (result) {
                 $('#DetailModal').html(result);
+            }
+        })
+    })
+
+    // 題目刪除
+    $('.delQuestion').click(function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {                
+                var sub = $(this).parents("tr").find('.subjectId').val();
+                var quesId = $(this).parents("tr").find('.questionId').val();
+               async function deleteQues() {
+                   const responseDelete = await fetch("@Url.Content("~/QuestionBank/Delete")" + `?subjectID=${sub}&questionID=${quesId}`);
+                   const data = await responseDelete.text()
+                   Swal.fire(data);
+                }
+                deleteQues();
+                $('search').trigger('click');
             }
         })
     })

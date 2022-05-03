@@ -4,7 +4,9 @@
 @*<link rel="stylesheet" type="text/css" href="/css/result-light.css">*@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
 <style>
-
+    hr{
+        margin:5px;
+    }
 
     .gu-mirror {
         filter: alpha(opacity=80);
@@ -20,7 +22,7 @@
     }
 
     .basicCss {
-        padding-top: 20px;
+        padding-top: 5px;
         
     }
 
@@ -68,9 +70,33 @@
         overflow: auto;
     }
 
-    .basiccard{
-        height:318.44px;
+    .basiccard {
+        height: 318.44px;
+        
     }
+    .bodybackground {
+        background-color: whitesmoke;
+    }
+
+    .previewBtn{
+        margin-left:-10px;
+        transition:0;
+        margin-top:15px;
+    }
+    .contiBtn{
+         margin-left:60px;
+         transition:0;
+         margin-top:15px;
+    }
+
+    .PrintBtn{
+        margin-left:763px;
+    }
+
+
+/*    .panelbigcard {
+        
+    }*/
 
 /*    .toolcard{
         margin-right:5px;
@@ -90,7 +116,7 @@
 <div id="kanban" class="row ">
     @foreach (var item in Model)
     {
-        <div class="col-2 BigCard toolcard pr-5">
+        <div class="col-2 BigCard toolcard pr-5" id="toolpanel">
             <div class="panel panel-info">
                 <div class="panel-heading kanban-card">
                     <h3 class="panel-title ">工具</h3>
@@ -119,15 +145,15 @@
                 </div>
             </div>
         </div>
-        
+
             <div class="col-4  BigCard">
                 <div class="panel panel-info ">
                     <div class="panel-heading kanban-card">
                         <h3 class="panel-title">製作履歷</h3>
+                        
                     </div>
-
                     <div class="panel-body ">
-                        <div id="todo">
+                        <div id="todo" class="bodybackground" >
                             &nbsp;
                             <div class="alert alert-success kanban-card cardBody basiccard" id="basic" role="alert">
                                 <h4>基本資料</h4>
@@ -174,7 +200,7 @@
                         <h3 class="panel-title invisible">111</h3>
                     </div>
                     <div class="panel-body ">
-                        <div id="mid">
+                        <div id="mid" class="bodybackground">
                             &nbsp;
                             <div class="">
                                 <div class="basicImage">
@@ -185,10 +211,10 @@
                     </div>
                 </div>
             </div>
-        
+
     }
 
-    <div class="col-2 BigCard datacard pl-5">
+    <div class="col-2 BigCard datacard pl-5" id="data">
         <div class="panel panel-info ">
             <div class="panel-heading kanban-card">
                 <h3 class="panel-title">資料</h3>
@@ -202,6 +228,10 @@
         </div>
     </div>
 </div>
+<button class="previewBtn" id="btnPreview" >預覽</button>
+<button class="contiBtn" id="btnEdit" >繼續編輯</button>
+<button class="PrintBtn" id="btnPrint" >匯出</button>
+
 
 
 
@@ -368,6 +398,32 @@
             console.log(data)
         })
 
+    const btnEdit = document.querySelector("#btnEdit");
+    const btnPreview = document.querySelector("#btnPreview");
+    const btnPrint = document.querySelector("#btnPrint");
+    const toolpanel = document.getElementById("toolpanel");
+    const datapanel = document.getElementById("data");
+    
+    btnPrint.style.visibility="hidden";
+    btnEdit.style.visibility="hidden";
+    btnPreview.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        toolpanel.style.visibility="hidden";
+        datapanel.style.visibility="hidden";
+        btnPreview.style.visibility="hidden";
+        btnEdit.style.visibility="visible";
+        btnPrint.style.visibility="visible";
+        });
+
+    btnEdit.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        toolpanel.style.visibility="visible";
+        datapanel.style.visibility="visible";
+        btnEdit.style.visibility="hidden";
+        btnPrint.style.visibility="hidden";
+        btnPreview.style.visibility="visible";
+
+        });
 
     //div.addClass('alert alert-success kanban-card')
     //div.class="alert alert-success kanban-card";

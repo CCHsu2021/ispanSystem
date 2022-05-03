@@ -1,0 +1,45 @@
+﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
+@using System.Collections.Generic;
+
+@{
+    ViewData["Title"] = "DetailOfPaper";
+}
+<div class="container" style="padding:40px">
+    @{
+        if (Model != null)
+        {
+            string subject = "";
+            int quesId = 0;
+            int Sn = 65;
+            char temp = Convert.ToChar(Sn);
+            foreach (var item in Model)
+            {
+                Sn = 65;
+                if (item.FSubjectId != subject || item.FQuestionId != quesId)
+                {
+                    subject = item.FSubjectId;
+                    quesId = item.FQuestionId;
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                @Html.DisplayFor(model => item.FQuestion)
+                            </h4>
+                            <div>
+                                @foreach (var choice in Model)
+                                {
+                                    if (choice.FSubjectId == subject && choice.FQuestionId == quesId)
+                                    {
+                                        <p class="card-text">
+                                            @temp . @Html.DisplayFor(modelItem => choice.FChoice)
+                                        </p>
+                                        temp = Convert.ToChar(++Sn);
+                              }
+                          }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    }
+</div>

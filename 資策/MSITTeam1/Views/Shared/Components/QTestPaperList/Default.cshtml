@@ -34,9 +34,10 @@
                                         </div>
 
                                         <div class="editBlock">
-                                            <a asp-action="Edit" asp-route-id="@item.FTestPaperId">Edit</a> |
-                                            <a asp-action="Details" asp-route-id="@item.FTestPaperId">Details</a> |
-                                            <a asp-action="Delete" asp-route-id="@item.FTestPaperId">Delete</a>
+                                            @*<a asp-action="Edit" asp-route-id="@item.FTestPaperId">Edit</a> |
+        <a asp-action="DetailOfPaper" asp-route-id="@item.FTestPaperId">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.FTestPaperId">Delete</a>*@
+                                            @Html.ActionLink("查看", "DetailOfPaper", "TestPaperBank", new { paperID = item.FTestPaperId })
                                         </div>
                                     </div>
                                 </div>

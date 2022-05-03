@@ -53,7 +53,7 @@ namespace MSITTeam1.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatNewPaper([FromBody] CTestPaperBankViewModel newpaper)
+        public IActionResult CreatNewPaper([Bind("FTestPaperId,FDesignerAccount,FTestPaperName,FSubjectId,FNote")][FromBody] CTestPaperBankViewModel newpaper)
 		{
             // 試卷總覽新增
             // TODO1:加入身份判斷
@@ -76,8 +76,69 @@ namespace MSITTeam1.Controllers
                 _context.TTestPapers.Add(newpaper.testPaper);
                 _context.SaveChanges();
             }
-
             return Content("新增成功");
+		}
+
+        public IActionResult DetailOfPaper(int? paperID)
+		{
+            // TODO4:迴圈要拆開 There is already an open DataReader associated with this Connection which must be closed first.
+            if (/*paperID == null || */paperID == 0)
+			{
+                return Content($"查無ID為{paperID}的考卷資料");
+			}
+            var questionIDInPaper = from t in _context.TTestPapers
+                                  where t.FTestPaperId == paperID
+                                  select t;
+            foreach(var q in questionIDInPaper)
+			{
+                //getQuestionFromPaper(q.FSubjectId, q.FQuestionId);
+                var quesQuery = from choice in _context.TQuestionDetails
+                                join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
+                                where ques.FSubjectId == q.FSubjectId && ques.FQuestionId == q.FQuestionId
+                                select new CQuestionBankViewModel
+                                {
+                                    FSn = choice.FSn,
+                                    FCSubjectId = choice.FSubjectId,
+                                    FSubjectId = ques.FSubjectId,
+                                    FCQuestionId = choice.FQuestionId,
+                                    FQuestionId = ques.FQuestionId,
+                                    FQuestion = ques.FQuestion,
+                                    FLevel = ques.FLevel,
+                                    FQuestionTypeId = ques.FQuestionTypeId,
+                                    FChoice = choice.FChoice,
+                                    FCorrectAnswer = choice.FCorrectAnswer
+                                };
+                foreach (var c in quesQuery)
+                {
+                    questionInPaper.Add(c);
+                }
+            }
+            return View(questionInPaper);
+		}
+        List<CQuestionBankViewModel> questionInPaper = new List<CQuestionBankViewModel>();
+        public void getQuestionFromPaper(string sub,int quesID)
+		{
+            // TODO3:想更好的做法
+            var quesQuery = from choice in _context.TQuestionDetails
+                            join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
+                            where ques.FSubjectId == sub && ques.FQuestionId == quesID
+                            select new CQuestionBankViewModel
+                            {
+                                FSn = choice.FSn,
+                                FCSubjectId = choice.FSubjectId,
+                                FSubjectId = ques.FSubjectId,
+                                FCQuestionId = choice.FQuestionId,
+                                FQuestionId = ques.FQuestionId,
+                                FQuestion = ques.FQuestion,
+                                FLevel = ques.FLevel,
+                                FQuestionTypeId = ques.FQuestionTypeId,
+                                FChoice = choice.FChoice,
+                                FCorrectAnswer = choice.FCorrectAnswer
+                            };
+            foreach(var q in quesQuery)
+			{
+                questionInPaper.Add(q);
+			}
 		}
 
         // GET: TTestPaperBanks/Details/5
@@ -107,18 +168,18 @@ namespace MSITTeam1.Controllers
         // POST: TTestPaperBanks/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FTestPaperId,FDesignerAccount,FTestPaperName,FSubjectId,FNote")] TTestPaperBank tTestPaperBank)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(tTestPaperBank);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tTestPaperBank);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("FTestPaperId,FDesignerAccount,FTestPaperName,FSubjectId,FNote")] TTestPaperBank tTestPaperBank)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(tTestPaperBank);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(tTestPaperBank);
+        //}
 
         // GET: TTestPaperBanks/Edit/5
         public async Task<IActionResult> Edit(int? id)

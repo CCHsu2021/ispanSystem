@@ -149,10 +149,12 @@ namespace MSITTeam1.Controllers
 				{
 					quesSel.FQuestion = quesList.FQuestion;
 					quesSel.FQuestionTypeId = Convert.ToInt32(quesList.FQuestionTypeId);
+					quesSel.FLevel = quesList.FLevel;
 					foreach (var ans in quesList.FChoiceList)
 					{
 						if(ans.FSN != 0)
 						{
+						// 原有選項修改
 						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSN);
 						choSel.FChoice = ans.Fchoice;
 						choSel.FCorrectAnswer = ans.FCorrect;
@@ -160,6 +162,7 @@ namespace MSITTeam1.Controllers
 						}
 						else
 						{
+							// 新增選項
 							quesList.FCSubjectId = quesList.FSubjectId;
 							quesList.FCQuestionId = quesList.FQuestionId;
 							quesList.FChoice = ans.Fchoice;
@@ -174,6 +177,7 @@ namespace MSITTeam1.Controllers
 
 				foreach (var t in tchoSel)
 				{
+					// 判斷被刪除的選項
 					bool isContainSn = editChoiceSnList.Contains(t.FSn);
 					bool isContainStr = newChoiceStrList.Contains(t.FChoice);
 					if (!isContainSn && !isContainStr)
@@ -190,14 +194,25 @@ namespace MSITTeam1.Controllers
 		{
 			if (subjectID != null && questionID > 0)
 			{
+				var paperTable = _context.TTestPapers.Where(quesInPaper => quesInPaper.FSubjectId.Equals(subjectID) && quesInPaper.FQuestionId == questionID);
+				if (paperTable.Count() > 0)
+				{
+					return Content("當前有試卷引用此題，無法刪除");
+				}
 				var ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
 				if (ques != null)
 				{
 					ques.FState = 0;
 					_context.SaveChanges();
+					return Content("刪除成功");
 				}
 			}
 			return RedirectToAction("List");
+		}
+
+		public IActionResult DeleteTest(string subjectID, int questionID)
+		{
+			return Content($"測試成功，技能名稱{subjectID} 題目編號{questionID}", "text/plain", System.Text.Encoding.UTF8);
 		}
 
 		public IActionResult Subject()
