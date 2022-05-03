@@ -9,24 +9,24 @@
         {
             <form>
                 <div class="row py-4 justify-content-center align-items-center">
-                        <div class="col-md-4">
-                            <div class="row justify-content-center">
-                                    <div class="input-group my-2 mx-sm-2">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">識別碼</div>
-                                        </div>
-                                        <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" placeholder="請輸入識別碼">
-                                    </div>
-                            </div>
-                            <div class="row justify-content-center" id="companyselect">
-                                    <div class="input-group my-2 mx-sm-2">
-                                        <select id="studentname" name="studentname" class="form-control">
-                                            <option>選擇公司員工</option>
-                                        </select>
-                                        <input type="hidden" class="form-control" id="txtaccount" name="txtaccount" value="">
-                                    </div>
+                    <div class="col-md-4">
+                        <div class="row justify-content-center">
+                            <div class="input-group my-2 mx-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">識別碼</div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" placeholder="請輸入識別碼">
                             </div>
                         </div>
+                        <div class="row justify-content-center" id="companyselect">
+                            <div class="input-group my-2 mx-sm-2">
+                                <select id="studentname" name="studentname" class="form-control">
+                                    <option>選擇公司員工</option>
+                                </select>
+                                <input type="hidden" class="form-control" id="txtaccount" name="txtaccount" value="">
+                            </div>
+                        </div>
+                    </div>
                     <div class="ml-0 ml-md-3 ml-lg-3">
                         <input class="btn-style-two mt-3" type="submit" id="createpaper" name="createpaper" value="確定" />
                     </div>
@@ -37,25 +37,24 @@
     @{
         if (@ViewBag.showavg != null)
         {
-        <div class="container">
-            <div class="py-4 ">
-                <div class="row bg-beige justify-content-center p-1 p-md-3 py-3 text-center">
-                    <div class="py-3 col-md-12 "><h3 class="font-weight-bold">課程名稱 : @ViewBag.classname</h3></div>
-                    <div class="py-1 col-md-4"><h4>綜合成績 :@ViewBag.showavgself</h4></div>
-                    <div class="py-1 col-md-4"><h4>課前成績 :@ViewBag.showbeforeself</h4></div>
-                    <div class="py-1 col-md-4"><h4>課後成績 :@ViewBag.showAfterself</h4></div>
+            <div class="container">
+                <div class="py-4 ">
+                    <div class="row bg-beige justify-content-center p-1 p-md-3 py-3 text-center">
+                        <div class="py-3 col-md-12 "><h3 class="font-weight-bold">課程名稱 : @ViewBag.classname</h3></div>
+                        <div class="py-1 col-md-4"><h4>綜合成績 :@ViewBag.showavgself</h4></div>
+                        <div class="py-1 col-md-4"><h4>課前成績 :@ViewBag.showbeforeself</h4></div>
+                        <div class="py-1 col-md-4"><h4>課後成績 :@ViewBag.showAfterself</h4></div>
+                    </div>
                 </div>
+                <canvas id="after" width="50" height="30" class="mb-4"></canvas>
             </div>
-            <canvas id="after" width="50" height="30" class="mb-4"></canvas>
-        </div>
         }
     }
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-<script>
+@section Scripts{
+    <script>
     @*if (@ViewBag.memType == 2) {*@
-
-    $('#companyselect').hide();
 
         const selectElement = document.querySelector('#studentname');
         selectElement.addEventListener('change', (evt) => {
@@ -63,12 +62,16 @@
             $('#txtaccount').val(evt.target.value);
         })
 
+    $('#companyselect').hide();
 
-    const b = document.querySelector('#createpaper');
-    b.addEventListener('click', (evt) => {
-        evt.preventDefault();
+    $("#createpaper").click(function () {
         $('#companyselect').show();
     })
+    //const b = document.querySelector('#createpaper');
+    //b.addEventListener('click', (evt) => {
+    //    evt.preventDefault();
+    //    $('#companyselect').show();
+    //})
     /*}*/
 
 
@@ -99,7 +102,7 @@
             scales: {
                 y: {
                     min: 0,
-                    max: @ViewBag.count,
+                    max: 10@*@ViewBag.count*@,
                     ticks: {
                         stepSize: 1
                     }
@@ -107,4 +110,5 @@
             }
         }
     });
-</script>
+    </script>
+}

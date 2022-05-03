@@ -81,44 +81,41 @@ namespace MSITTeam1.Controllers
 
         public IActionResult DetailOfPaper(int? paperID)
 		{
-            // TODO4:迴圈要拆開 There is already an open DataReader associated with this Connection which must be closed first.
-            if (/*paperID == null || */paperID == 0)
+            ViewBag.Name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
+
+            // TODO:4.迴圈要拆開 There is already an open DataReader associated with this Connection which must be closed first.
+            if (paperID == null || paperID == 0)
 			{
                 return Content($"查無ID為{paperID}的考卷資料");
 			}
+            var paper = _context.TTestPaperBanks.FirstOrDefault(p => p.FTestPaperId == paperID);
+            ViewBag.PaperName = paper.FTestPaperName;
+            ViewBag.PaperNote = paper.FNote;
+            List<CTestPaperViewModel> paperDetail = new List<CTestPaperViewModel>();
             var questionIDInPaper = from t in _context.TTestPapers
-                                  where t.FTestPaperId == paperID
-                                  select t;
-            foreach(var q in questionIDInPaper)
+                                    where t.FTestPaperId == paperID
+                                    select new CTestPaperViewModel
+                                    {
+                                        fSubjectID = t.FSubjectId,
+                                        fQuestionID = t.FQuestionId
+                                    };
+            foreach(var t in questionIDInPaper)
 			{
-                //getQuestionFromPaper(q.FSubjectId, q.FQuestionId);
-                var quesQuery = from choice in _context.TQuestionDetails
-                                join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
-                                where ques.FSubjectId == q.FSubjectId && ques.FQuestionId == q.FQuestionId
-                                select new CQuestionBankViewModel
-                                {
-                                    FSn = choice.FSn,
-                                    FCSubjectId = choice.FSubjectId,
-                                    FSubjectId = ques.FSubjectId,
-                                    FCQuestionId = choice.FQuestionId,
-                                    FQuestionId = ques.FQuestionId,
-                                    FQuestion = ques.FQuestion,
-                                    FLevel = ques.FLevel,
-                                    FQuestionTypeId = ques.FQuestionTypeId,
-                                    FChoice = choice.FChoice,
-                                    FCorrectAnswer = choice.FCorrectAnswer
-                                };
-                foreach (var c in quesQuery)
-                {
-                    questionInPaper.Add(c);
-                }
+                paperDetail.Add(t);
+			}
+
+            foreach(var q in paperDetail)
+			{
+				getQuestionFromPaper(q.fSubjectID, q.fQuestionID);
             }
             return View(questionInPaper);
 		}
         List<CQuestionBankViewModel> questionInPaper = new List<CQuestionBankViewModel>();
         public void getQuestionFromPaper(string sub,int quesID)
 		{
-            // TODO3:想更好的做法
+            // TODO:3.想更好的做法
             var quesQuery = from choice in _context.TQuestionDetails
                             join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
                             where ques.FSubjectId == sub && ques.FQuestionId == quesID
