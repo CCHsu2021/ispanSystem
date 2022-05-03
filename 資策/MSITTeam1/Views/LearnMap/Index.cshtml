@@ -1,5 +1,4 @@
-﻿@using MSITTeam1.ViewModels
-@model LearnMap
+﻿@model IEnumerable<MSITTeam1.Models.TStudioInformation>
 @{
     ViewData["Title"] = "Index";
 }
@@ -133,154 +132,64 @@
         <div class="grid">
             <div class="gc gc--1-of-3">
                 <div class="menu d-block">
-                    <div class="ActiveItem"><span class="light"></span><span class="textLight">創新應用網站開發工程師養成班</span></div>
-                    <div class="ActiveItem"><span class="light"></span><span class="textLight">Wine</span></div>
-                    <div class="ActiveItem"><span class="light"></span><span class="textLight">Lemonade</span></div>
-                    <div class="ActiveItem"><span class="light"></span><span class="textLight">Lemonade</span></div>
+                    @{
+                        foreach (var item in Model)
+                        {
+                            if (ClassName != item.FClassName)
+                            {
+                                <div class="ActiveItem">
+                                    <span class="light"></span>
+                                    <span class="textLight">@item.FClassName</span>
+                                </div>
+                            }
+                            ClassName = item.FClassName;
+                        }
+                    }
+
                 </div>
             </div>
             <div class="gc gc--2-of-3">
                 <ul class="nacc">
-                    <li class="ActiveIi w-100">
-                        <div class="row">
-                            <div class="col-md-6 d-block d-md-flex">
-                                <div class="p-3 shadow mb-4 bg-white w-100">
-                                    <h4 class="font-weight-bold mb-2 ">前端框架網站開發</h4>
-                                    <hr />
-                                    <h6 class="mb-2">◾ RSTful API & Ajax</h6>
-                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
-                                    <h6 class="mb-2">◾ JS 與 Node.js程式庫前後端整合</h6>
-                                    <h6 class="mb-2">◾ HTML5 JavaScript APIs</h6>
-                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-block d-md-flex">
-                                <div class="p-3 shadow mb-4 bg-white w-100">
-                                    <h4 class="font-weight-bold mb-2 ">前端框架網站開發</h4>
-                                    <hr />
-                                    <h6 class="mb-2">◾ RSTful API & Ajax</h6>
-                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
-                                    <h6 class="mb-2">◾ JS 與 Node.js程式庫前後端整合</h6>
-                                    <h6 class="mb-2">◾ HTML5 JavaScript APIs</h6>
-                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
-                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
-                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
-                                    <h6 class="mb-2">◾ JavaScript Framework-React.js</h6>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-block d-md-flex">
-                                <div class="p-3 shadow mb-4 bg-white w-100">
-                                    <h4 class="font-weight-bold mb-2 ">前端框架網站開發</h4>
-                                    <hr />
-                                    <h6 class="mb-2">◾ RSTful API & Ajax</h6>
-                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
-                                    <h6 class="mb-2">◾ JS 與 Node.js程式庫前後端整合</h6>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-block d-md-flex">
-                                <div class="p-3 shadow mb-4 bg-white w-100">
-                                    <h4 class="font-weight-bold mb-2 ">前端框架網站開發</h4>
-                                    <hr />
-                                    <h6 class="mb-2">◾ RSTful API & Ajax</h6>
-                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
-                                    <h6 class="mb-2">◾ 網頁動態與UI技術</h6>
-                                    <h6 class="mb-2">◾ JS 與 Node.js程式庫前後端整合</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <p>
-                                2A vine (Latin vīnea "grapevine", "vineyard", from vīnum "wine") in the narrowest sense is the
-                                grapevine (Vitis), but more generally it can refer to any plant with a growth habit of trailing or
-                                scandent (that is, climbing) stems, lianas or runners.
-                                The word also can refer to such stems or runners themselves, for instance when used in wicker
-                                work.[1][2] In the United Kingdom, the term "vine" applies almost exclusively to the grapevine. The
-                                term "climber" is used for all climbing plants.[3]
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <p>
-                                3A vine (Latin vīnea "grapevine", "vineyard", from vīnum "wine") in the narrowest sense is the
-                                grapevine (Vitis), but more generally it can refer to any plant with a growth habit of trailing or
-                                scandent (that is, climbing) stems, lianas or runners.
-                                The word also can refer to such stems or runners themselves, for instance when used in wicker
-                                work.[1][2] In the United Kingdom, the term "vine" applies almost exclusively to the grapevine. The
-                                term "climber" is used for all climbing plants.[3]
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <p>
-                                4Lemonade is any of various sweetened beverages found around the world, all characterized by lemon
-                                flavor. Most lemonade varieties can be separated into two distinct types: cloudy and clear; each is
-                                known simply as "lemonade" (or a cognate) in countries
-                                where dominant.[1] Cloudy lemonade, generally found in North America and India, is a traditionally
-                                homemade drink made with lemon juice, water, and sweetener such as cane sugar or honey.[2] Found in
-                                the United Kingdom, Ireland, South Africa, Australia,
-                                and New Zealand, clear lemonade is a lemon flavoured carbonated soft drink. Not to be confused with
-                                Sprite a lemon-lime flavored, soft drink.
-                            </p>
-                        </div>
-                    </li>
+                    @{
+                        foreach (var item in Model)
+                        {
+                            if (ClassName != item.FClassName)
+                            {
+                                <li class="ActiveIi w-100">
+                                    <div class="row">
+                                        @foreach (var item2 in Model)
+                                        {
+                                            @if (item.FClassName == item2.FClassName && ClassCate != item2.FClassCategory)
+                                            {
+                                                <div class="col-md-6 d-block d-md-flex">
+                                                    <div class="p-3 shadow mb-4 bg-white w-100">
+                                                        <h4 class="font-weight-bold mb-2 ">@item2.FClassCategory</h4>
+                                                        <hr />
+                                                        @foreach (var item3 in Model)
+                                                        {
+                                                            @if (@item.FClassName == item2.FClassName && @item2.FClassCategory == item3.FClassCategory)
+                                                            {
+                                                                <h6 class="mb-2">@item3.FClassSkill</h6>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                            ClassCate = item2.FClassCategory;
+                                        }
+
+                                    </div>
+                                </li>
+                            }
+                            ClassName = item.FClassName;
+                        }
+                    }
+  
                 </ul>
             </div>
         </div>
     </div>
 </div>
-
-
-
-@*<div class="container-fluid bg-light py-5">
-    <div class="naccs container">
-        <div class="grid">
-            @foreach (var item in Model.TStudioInformationleft)
-            {
-                @if (ClassName != item.FClassName)
-                {
-                    <div class="gc gc--1-of-3">
-                        <div class="menu">
-                            <div class=""><span class="light"></span><span class="textLight">@item.FClassName</span></div>
-                        </div>
-                    </div>
-                    <div class="gc gc--2-of-3">
-                        <ul class="nacc">
-                            <li class="active w-100">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="p-3 shadow mb-3">
-                                            @foreach (var item2 in Model.TStudioInformationleft)
-                                            {
-                                                @if (@item.FClassName == item2.FClassName && ClassCate != item2.FClassCategory)
-                                                {
-
-                                                    <h4 class="font-weight-bold">@item2.FClassCategory</h4>
-                                                    @foreach (var item3 in Model.TStudioInformationleft)
-                                                    {
-                                                        @if (@item.FClassName == item2.FClassName && @item2.FClassCategory == item3.FClassCategory)
-                                                        {
-                                                            <h6><i class="fas fa-circle fa-xs">&nbsp;</i>@item3.FClassSkill</h6>
-                                                        }
-                                                    }
-                                                    ClassCate = item2.FClassCategory;
-                                                }
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    ClassName = item.FClassName;
-                }
-            }
-        </div>
-    </div>
-</div>*@
 
 
 @section Scripts {
@@ -295,7 +204,7 @@
         $(".naccs ul").height(listItemHeight + "px");
         console.log("good");
         $(document).on("click", ".naccs .menu div", function () {
-          
+
             var numberIndex = $(this).index();
             if (!$(this).is("active")) {
                 $(".naccs .menu div").removeClass("active");
