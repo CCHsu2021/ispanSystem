@@ -204,7 +204,7 @@ namespace MSITTeam1.Controllers
                     hello.SaveChanges();
                 }
             }
-            return RedirectToAction("Index", "ShowSkillGrade");
+            return RedirectToAction("Index", "ShowSkillGrade",null);
         }
 
     }

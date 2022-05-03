@@ -3,20 +3,27 @@
     ViewData["Title"] = "Index";
 }
 <div class="container">
-    <select class="form-select" id="select">
-        @{
-            string FSubjectId = null;
-            foreach (var item in Model)
-            {
-                if (item.FSubjectId != FSubjectId)
-                {
-                    <option value="@item.FSubjectId">@item.FSubjectId</option>
+    <div class="row justify-content-center mt-4 mb-2 align-items-center">
+        <div class="col-md-4">
+            <select class="form-select form-control" id="select">
+                @{
+                    string FSubjectId = null;
+                    foreach (var item in Model)
+                    {
+                        if (item.FSubjectId != FSubjectId)
+                        {
+                            <option value="@item.FSubjectId">@item.FSubjectId</option>
+                        }
+                        FSubjectId = item.FSubjectId;
+                    }
                 }
-                FSubjectId = item.FSubjectId;
-            }
-        }
-    </select>
-    <button class="btn-style-two mt-3" type="button" id="btnstart">開始測驗</button>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn-style-two mt-3" type="button" id="btnstart">開始測驗</button>
+        </div>
+    </div>
+  
     <div id="div1">
         <div class="row">
             <div class="container">
@@ -28,10 +35,12 @@
             </div>
         </div>
     </div>
-    <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button3">結束測驗</button>
-    <div class="row justify-content-end mx-0">
-        <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button2">送出</button>
-        <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button1">下一題</button>
+    <div class="row justify-content-between mx-0">
+        <div>
+            <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button2">送出</button>
+            <button style="display:none" class="btn-style-two my-3 m-0 mx-2" type="button" id="button1">下一題</button>
+        </div>
+    <button style="display:none" class="btn-style-four my-3 m-0 mx-2" type="button" id="button3">結束測驗</button>
     </div>
     <form name="member" method="post">
         <input type="hidden" id="FSubjectId" name="FSubjectId" value="" />
