@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row py-4 justify-content-center align-items-center">
+    <div class="col-md-4">
+        <div class="row justify-content-center">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">購買點數</div>
+                </div>
+                <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" placeholder="請輸入欲購買的點數">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">回饋點數</div>
+                </div>
+                <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" readonly placeholder="根據會員等級回饋等數">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">總共獲得</div>
+                </div>
+                <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" readonly placeholder="總共獲得點數">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">付款方式</div>
+                </div>
+                <select class="form-control" name="PayMethod">
+                    <option value="1">信用卡付款</option>
+                    <option value="2">Web ATM</option>
+                    <option value="3">ATM 櫃員機</option>
+                    <option value="4">超商代碼</option>
+                    <option value="5">超商條碼</option>
+                    <option value="6">Apple Pay</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="ml-0 ml-md-3 ml-lg-0">
+        <input class="btn-style-two mt-3" type="button" id="createpaper" name="createpaper" value="確定" />
+    </div>
+</div>
+<input type="hidden" />
+
+
+

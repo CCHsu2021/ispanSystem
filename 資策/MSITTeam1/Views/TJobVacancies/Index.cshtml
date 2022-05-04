@@ -6,6 +6,8 @@
 }
 @section Style{
     <link rel="stylesheet" href="~/css/JobSearchList.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <style>
         .box {
             width: 300px;
@@ -118,8 +120,9 @@
                             </div>
                             <div class="justify-content-end">
                                 <form>
-                                    <input type="hidden" name="txtJobName" asp-for="@item.FJobName" />
-                                    <input type="hidden" name="txtCompanyTaxid" asp-for="@item.FCompanyTaxid" />
+                                    <input type="hidden" name="txtJobId" asp-for="@item.Fid"/>
+                                    @*<input type="hidden" name="txtJobName" asp-for="@item.FJobName" />
+                                    <input type="hidden" name="txtCompanyTaxid" asp-for="@item.FCompanyTaxid" />*@
                                     <button type="submit" asp-action="Detail" class="btn btn-info m-b-10 m-l-5 btn-for-Detail">檢視職缺</button>
                                     <button type="button" class="btn btn-info m-b-10 m-l-5 applyButton" data-toggle="modal" data-target="#jobModel@(rowNumber)" onclick="GetResumeData(@(rowNumber))">我要應徵</button>
                                 </form>
@@ -134,7 +137,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <vc:job-apply job-name="@item.FJobName" company-taxid="@item.FCompanyTaxid" row-count="@rowNumber"></vc:job-apply>
+                                                <vc:job-apply job-id="@item.Fid" job-name="@item.FJobName" company-taxid="@item.FCompanyTaxid" row-count="@rowNumber"></vc:job-apply>
                                             </div>
                                         </div>
                                     </div>
@@ -490,6 +493,33 @@
     @*套用版面的原生js*@
     <script src="~/js/JobSearchList.js"></script>
 
+    @*flatpickr的js*@
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $("#startTime").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            minuteIncrement: 30,
+            onchange: function (dstr, dobjs, fp) {
+                let d = new Date();
+                let mins = d.getMinutes();
+                if (mins % 30) {
+                    d.setMinutes(30 * Math.round(d.getMinutes() / 30));
+                }
+            }
+            //dateFormat: "h:i",
+        });
+
+        $("#endTime").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            minuteIncrement: 30,
+            //dateFormat: "h:i",
+        });
+
+        
+    </script>
+
     @*頁面底部換頁*@
     <script>
         $(function () {
@@ -530,6 +560,8 @@
             console.log(data);
         })
     </script>
+    
+    @*.applyButton的履歷DropDownList載入*@
     <script>
         function GetResumeData(rowNumber) {
             let selectResume = document.querySelector(`#selectResume${rowNumber}`);
@@ -550,39 +582,18 @@
                 console.log(rowNumber);
         }
     </script>
-    @*<script defer>
-            let selectResume = document.querySelector("#selectResume");
 
-            $(".applyButton").click(function () {
-                $.ajax({
-                    url: "@Url.Content("~/TJobVacancies/ResumeDropDownList")",
-                    method: 'post',
-                    dataType: 'json',
-                    success: function (datas) {
-                        datas.forEach((item) => {
-                            let opt = new Option(item.resumeName, item.resumeId);
-                            selectResume.options.add(opt);
-                        });
-                    }
-                }).done((data) => {
-                    console.log(data);
-                })
-            })
-        </script>*@
+    @*以下為程式碼設定結束時間不得晚於開始時間，未成功待研究*@
     @*<script>
-
-            $(".btn-for-Detail").click(() => {
-                let formTag = $(this).parentsUntil('ul').find('form');
-                let formData = new FormData(formTag);
-
-                $.ajax({
-                    url: '@Url.Content("~/TJobVacancies/Detail")',
-                    method: 'post',
-                    data: formData,
-                    success: (e) => {
-                        console.log("success")
-                    }
-                })
-            })
-        </script>*@
+        let maxIndex = $("#ddlendTime option:last").attr("index");
+        let checkIndex = $("#ddlstartTime").get(0).selectedIndex;
+        $("#ddlstartTime").change(function () {
+            console.log(maxIndex);
+            for (let i = 0; i <= maxIndex; i++) {
+                let eachOptionIndex = $(`#ddlendTime option[index=${i}]`).attr("index");
+                console.log(eachOptionIndex);
+                //if ()
+            }
+        })
+    </script>*@
 }
