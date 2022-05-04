@@ -1,0 +1,100 @@
+﻿@model IList<MSITTeam1.ViewModels.CQuestionBankViewModel>
+@using System.Collections.Generic;
+@addTagHelper *, MSITTeam1
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<table class="table table-striped table-hover" id="question">
+    <thead>
+        <tr>
+            <th style="width:180px">@Html.DisplayNameFor(model => model[0].FSubjectId)</th>
+            <th>@Html.DisplayNameFor(model => model[0].FQuestion)</th>
+            <th class="text-center">@Html.DisplayNameFor(model => model[0].FLevel)</th>
+            <th class="text-center" style="width:130px;" id="editGroup">編輯</th>
+            <th class="text-center" style="width:60px;" id="detailGroup"></th>
+        </tr>
+    </thead>
+    <tbody class="questionTable">
+
+        @{
+            if (Model != null)
+            {
+                string subject = "";
+                int quesId = 0;
+                foreach (var item in Model)
+                {
+                    if (item.FSubjectId != subject || item.FQuestionId != quesId)
+                    {
+                        subject = item.FSubjectId;
+                        quesId = item.FQuestionId;
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FSubjectId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FQuestion)
+                                <input type="hidden" name="sub" class="subjectId" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
+                                <input type="hidden" class="questionId" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
+                            </td>
+                            <td class="text-center">
+                                <input type="hidden" class="quesLevel" value="@Html.DisplayFor(modelItem => item.FLevel)" />
+                                <div class="show_rated_3_5"></div>
+                            </td>
+                            <td class="text-center editQButton" style="width:130px;">
+                                <input type="button" data-toggle="modal" data-target="#questionEdit" class="editQuestion" value="編輯" />
+                                <input type="button" class="delQuestion" value="刪除" />
+                                @*@Html.ActionLink("刪除", "Delete", "QuestionBank", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }, new { onclick = "return confirm('確定要刪除嗎？')" })*@
+                            </td>
+                            <td class="text-center detailQButton" style="width:60px;">
+                                <input type="button" data-toggle="modal" data-target="#questionDetail" class="detailQuestion" value="詳情" />
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        }
+
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade modal-dialog-scrollable" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">題目修改</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="EditModal">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade modal-dialog-scrollable" id="questionDetail" tabindex="-1" aria-labelledby="questionDetail" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">題目內容</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="DetailModal">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+</script>

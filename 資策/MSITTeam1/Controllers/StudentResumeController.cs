@@ -80,6 +80,7 @@ namespace MSITTeam1.Controllers
         public IActionResult EditBasic(CStudentResumeViewModel p)
         {
             StudentBasic sb = hello.StudentBasics.FirstOrDefault(c => c.MemberId == p.MemberId);
+            TCityContrast tc = hello.TCityContrasts.FirstOrDefault(c=>c.FPostCode.ToString() == p.fDistrict);
             if (sb != null)
             {
                 if (p.photo != null)
@@ -96,7 +97,7 @@ namespace MSITTeam1.Controllers
                 sb.Email = p.fEmail;
                 sb.Phone = p.fPhone;
                 sb.FCity = p.fCity;
-                sb.FDistrict = p.fDistrict;
+                sb.FDistrict = tc.FDistrictName;
                 sb.ContactAddress = p.fAddress;
                 sb.Autobiography = p.fAutobiography;
                 hello.SaveChanges();

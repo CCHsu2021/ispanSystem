@@ -1,12 +1,11 @@
 ﻿@model IList<MSITTeam1.ViewModels.CTestPaperBankViewModel>
 @addTagHelper*,MSITTeam1
+@using System.Collections.Generic;
 
 <div class="container">
-    <a asp-action="Create">
-        <button class="btn-style-three">
-            <i class="far fa-plus"></i> 新增試卷
+        <button class="btn-style-three" onclick="location.href='@Url.Action("Create", "TestPaperBank")'">
+            <i class="far fa-plus"></i> 新建試卷
         </button>
-    </a>
     <div style="margin:20px">
         <div class="row justify-content-around align-items-center">
             @{
@@ -15,34 +14,32 @@
                     foreach (var item in Model)
                     {
                         <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        @Html.DisplayFor(modelItem => item.FTestPaperName)
-                                    </h4>
-                                    <input type="hidden" value="@Html.DisplayFor(modelItem => item.FTestPaperId)" />
-                                    <div class="tab-pane active">
-                                        <div class="p-3">
-                                            <p>
-                                                @Html.DisplayFor(modelItem => item.FNote)
-                                            </p>
-                                            <br />
-                                            <h6 class="creator">
-                                                <span>創建者：</span>
-                                                @Html.DisplayFor(modelItem => item.FDesignerAccount)
-                                            </h6>
-                                        </div>
+                                        <div class="card">
+                                            <div style="z-index:99;position:absolute;left:0;top:0;width:7px;height:100%;border-top-left-radius:11px;border-bottom-left-radius:11px;background:#ed731a;"></div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">
+                                                    @Html.DisplayFor(modelItem => item.FTestPaperName)
+                                                </h4>
+                                                <input type="hidden" class="testPaperID" value="@Html.DisplayFor(modelItem => item.FTestPaperId)" />
+                                                <div class="tab-pane active">
+                                                    <div class="p-3">
+                                                        <p>
+                                                            @Html.DisplayFor(modelItem => item.FNote)
+                                                        </p>
+                                                        <br />
+                                                        <h6 class="creator">
+                                                            <span>創建者：</span>
+                                                            @Html.DisplayFor(modelItem => item.FDesignerAccount)
+                                                        </h6>
+                                                    </div>
 
-                                        <div class="editBlock">
-                                            @*<a asp-action="Edit" asp-route-id="@item.FTestPaperId">Edit</a> |
-        <a asp-action="DetailOfPaper" asp-route-id="@item.FTestPaperId">Details</a> |
-        <a asp-action="Delete" asp-route-id="@item.FTestPaperId">Delete</a>*@
-                                            @Html.ActionLink("刪除", "DeletePaper", "TestPaperBank",new { paperID = item.FTestPaperId })
-                                            @Html.ActionLink("查看", "DetailOfPaper", "TestPaperBank", new { paperID = item.FTestPaperId })
+                                                    <div class="editBlock">
+                                                        <input type="button" class="delPaper" value="刪除" id="@(item.FTestPaperId)" />
+                                                        @Html.ActionLink("查看", "DetailOfPaper", "TestPaperBank", new { paperID = item.FTestPaperId })
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     }
                 }
@@ -52,4 +49,5 @@
 </div>
 
 
-            
+<script>
+</script>
