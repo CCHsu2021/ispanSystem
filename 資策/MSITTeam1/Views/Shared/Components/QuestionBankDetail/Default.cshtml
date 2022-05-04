@@ -12,19 +12,17 @@
                 {
                     <form asp-action="Edit" method="post" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                        <div class="form-group">
-                            <label class="control-label" asp-for="@Model[0].FSubjectId"></label>
-                            <h6><input type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" disabled="disabled" /></h6>
+                        <div class="form-group" style="text-align:center;">
+                            <h3><input style="text-align:center;" type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" disabled="disabled" /></h3>
                         </div>
                         <div class="form-group">
                             <input type="hidden" id="FQuestionId" asp-for="@Model[0].FQuestionId" />
-                            <label id="test1" class="control-label" asp-for="@Model[0].FQuestion"></label>
+                            <label id="test1" class="control-label h5" asp-for="@Model[0].FQuestion"></label>
                             <input id="FQuestion" asp-for="@Model[0].FQuestion" class="form-control" disabled="disabled" style="overflow:auto;" />
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="@Model[0].FQuestionTypeId" class="control-label"></label>
+                            <label asp-for="@Model[0].FQuestionTypeId" class="control-label h5"></label>
                             <input type="hidden" value="@Model[0].FQuestionTypeId" id="curType" />
                             <select id="FQuestionTypeIdSel" asp-for="@Model[0].FQuestionTypeId" class="form-control" disabled="disabled">
                                 <option value="1">單選題</option>
@@ -42,16 +40,16 @@
                                         <input type="hidden" id="FCQuestionId" asp-for="@Model[i].FCQuestionId" />
                                         <input type="hidden" id="correctAns" asp-for="@Model[i].FCorrectAnswer" />
 
-                                        <label asp-for="@Model[i].FChoice" class="control-label" style="overflow:auto;"></label>
+                                        <label asp-for="@Model[i].FChoice" class="control-labe h5" style="overflow:auto;"></label>
                                         <br />
-                                        <input id="checkBox1" type="checkbox" name="FCorrectAnswer" disabled="disabled" />
-                                        <input asp-for="@Model[i].FChoice" class="form-control" disabled="disabled" readonly />
+                                            <input id="checkBox1" type="checkbox" name="FCorrectAnswer" disabled="disabled" />
+                                            <input asp-for="@Model[i].FChoice" class="form-control" disabled="disabled" readonly />
                                     </div>
                                 }
                             }
                         </div>
                         <div class="form-group">
-                            <label asp-for="@Model[0].FLevel" class="control-label"></label>
+                            <label asp-for="@Model[0].FLevel" class="control-label h5"></label>
                             <input type="hidden" value="@Model[0].FLevel" id="curLevelDetail" />
                             <div class="show_rated_3_5"></div>
                         </div>

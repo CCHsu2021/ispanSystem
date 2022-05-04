@@ -11,7 +11,7 @@
     <thead>
         <tr>
             <th class="text-center" style="width:60px;">選擇</th>
-            <th style="width:130px">@Html.DisplayNameFor(model => model[0].FSubjectId)</th>
+            <th style="width:160px">@Html.DisplayNameFor(model => model[0].FSubjectId)</th>
             <th>@Html.DisplayNameFor(model => model[0].FQuestion)</th>
             <th class="text-center">@Html.DisplayNameFor(model => model[0].FLevel)</th>
             <th class="text-center" style="width:130px;" id="editGroup">編輯</th>
@@ -31,14 +31,14 @@
                     {
                         subject = item.FSubjectId;
                         quesId = item.FQuestionId;
-                <tr>
+                <tr class="questionRows">
                     <td class="text-center" style="width:60px;">
                         <input type="checkbox" id="@item.FSn" onclick="passToPaper(@item.FSn)" />
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FSubjectId)
                     </td>
-                    <td>
+                    <td class="qIdForSearch">
                         @Html.DisplayFor(modelItem => item.FQuestion)
                         <input type="hidden" name="sub" class="subjectId" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
                         <input type="hidden" class="questionId" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
@@ -64,7 +64,7 @@
     </tbody>
 </table>
 
-@*<div id="ProductPagination" class="row my-4"></div>*@
+<div id="QuestionPagination" class="row my-4"></div>
 
 <!-- Modal -->
 <div class="modal fade modal-dialog-scrollable" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -169,7 +169,7 @@
                    Swal.fire(data);
                 }
                 deleteQues();
-                $('search').trigger('click');
+                $('#search').trigger('click');
             }
         })
     })
@@ -177,48 +177,56 @@
 </script>
 <script>
 
-    // 分頁套件
-    //function initPagination(pageEle, showItem, paginationTarget) {
-        //let pageLength = $(pageEle).length
-        //let showItemLength = showItem
-        //let showPage = Math.ceil(pageLength / showItemLength)
+    $(document).ready(function () {
+        initPagination('.questionRows', 7, '#QuestionPagination');
+    })
 
-        //$(paginationTarget).twbsPagination({
-        //    totalPages: showPage,
-        //    visiblePages: 5,
-        //    first: "第一頁",
-        //    prev: "前一頁",
-        //    next: "下一頁",
-        //    last: "最後一頁",
-        //    nextClass: "page-item pageColor",
-        //    prevClass: "page-item pageColor",
-        //    lastClass: "page-item pageColor last",
-        //    firstClass: "page-item pageColor first",
-        //    pageClass: "page-item pageColor",
-        //    activeClass: "page-item pageBG",
-        //    onPageClick: function (event, page) {
-        //    }
-        //}).on('page', function (event, page) {
-        //    $(pageEle).fadeOut(200)
-        //    let start = (page - 1) * showItemLength
-        //    let end = (page - 1) * showItemLength + showItemLength - 1
-        //    $(pageEle).each((index, item) => {
-        //        if (index >= start && index <= end) {
-        //            $(item).fadeIn(600)
-        //        }
-        //    })
-        //});
-
-        //$(pageEle).hide()
-
-        //pageLength <= showItemLength && $(pageEle).fadeIn(600)
-        //if (pageLength > showItemLength) {
-        //    $(pageEle).each((index, item) => {
-        //        if (index < showItemLength) {
-        //            $(item).fadeIn(600)
-        //        }
-        //    })
-        //}
+    //window.onload = function () {
+    //    initPagination('.questionRows', 7, '#QuestionPagination');
     //}
+
+     //分頁套件
+    function initPagination(pageEle, showItem, paginationTarget) {
+        let pageLength = $(pageEle).length
+        let showItemLength = showItem
+        let showPage = Math.ceil(pageLength / showItemLength)
+
+        $(paginationTarget).twbsPagination({
+            totalPages: showPage,
+            visiblePages: 5,
+            first: "第一頁",
+            prev: "前一頁",
+            next: "下一頁",
+            last: "最後一頁",
+            nextClass: "page-item pageColor",
+            prevClass: "page-item pageColor",
+            lastClass: "page-item pageColor last",
+            firstClass: "page-item pageColor first",
+            pageClass: "page-item pageColor",
+            activeClass: "page-item pageBG",
+            onPageClick: function (event, page) {
+            }
+        }).on('page', function (event, page) {
+            $(pageEle).fadeOut(200)
+            let start = (page - 1) * showItemLength
+            let end = (page - 1) * showItemLength + showItemLength - 1
+            $(pageEle).each((index, item) => {
+                if (index >= start && index <= end) {
+                    $(item).fadeIn(600)
+                }
+            })
+        });
+
+        $(pageEle).hide()
+
+        pageLength <= showItemLength && $(pageEle).fadeIn(600)
+        if (pageLength > showItemLength) {
+            $(pageEle).each((index, item) => {
+                if (index < showItemLength) {
+                    $(item).fadeIn(600)
+                }
+            })
+        }
+    }
 
 </script>

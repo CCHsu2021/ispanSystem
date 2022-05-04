@@ -45,7 +45,7 @@ namespace MSITTeam1.ViewModels
 			get { return this.paperBank.FTestPaperName; }
 			set { this.paperBank.FTestPaperName = value; }
 		}
-		[DisplayName("課程名稱")]
+		[DisplayName("技能名稱")]
 		public string FBSubjectId
 		{
 			get { return this.paperBank.FSubjectId; }

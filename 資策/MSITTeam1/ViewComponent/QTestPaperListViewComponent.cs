@@ -25,7 +25,7 @@ namespace MSITTeam1.ViewComponent
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
 			ViewBag.account = CDictionary.account;
-
+			// TODO:7.試卷只顯示自己賬號生成的試卷
 			List<CTestPaperBankViewModel> paperList = new List<CTestPaperBankViewModel>();
 			var paperQuery = from t in _context.TTestPaperBanks
 							 where t.FDesignerAccount == CDictionary.account || t.FDesignerAccount == "admin"

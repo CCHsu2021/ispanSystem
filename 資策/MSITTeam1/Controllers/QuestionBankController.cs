@@ -94,7 +94,15 @@ namespace MSITTeam1.Controllers
 				int lastId = searchLastId.First().FQuestionId;
 				newques.FQuestionId = lastId + 1;
 			}
-			newques.FSubmitterId = "測試";
+			// TODO:6.題目創建者修改
+			if(CDictionary.account != null)
+			{
+				newques.FSubmitterId = CDictionary.account;
+			}
+			else
+			{
+				newques.FSubmitterId = "admin";
+			}
 			newques.FState = 1;
 			_context.TQuestionLists.Add(newques.question);
 			foreach (var ans in newques.FChoiceList)

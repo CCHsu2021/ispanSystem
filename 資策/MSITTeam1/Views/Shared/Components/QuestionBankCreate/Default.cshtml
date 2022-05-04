@@ -14,7 +14,9 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mb-3">
                     <label asp-for="FSubjectId" class="control-label my-2 font-weight-bold h5"></label>
-                    <select id="FSubjectIdSel" name="FSubjectId" class="form-control"></select>
+                    <select id="FSubjectIdSel" name="FSubjectId" class="form-control">
+                        <option value="">請選擇技能名稱</option>
+                    </select>
                     <span asp-validation-for="FSubjectId" class="text-danger"></span>
 
                 </div>
