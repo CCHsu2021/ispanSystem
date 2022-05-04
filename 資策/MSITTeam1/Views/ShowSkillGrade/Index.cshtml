@@ -11,13 +11,14 @@
                     <div class="input-group-text">技能類別</div>
                 </div>
                 <select class="form-select form-control" id="select">
+                    <option style="display:none" value="0">選擇技能</option>
                     @{
                         var FSkillCategory = "";
                         foreach (var item in Model)
                         {
                             if (item.FSkillCategory != FSkillCategory)
                             {
-                                <option value="@item.FSkillCategory">@item.FSkillCategory</option>
+                        <option value="@item.FSkillCategory">@item.FSkillCategory</option>
                             }
                             FSkillCategory = item.FSkillCategory;
                         }
@@ -36,30 +37,76 @@
 @{
     if (@ViewBag.show != null)
     {
-        <div class="container">
-            <div class="py-4 ">
-                <div class="row bg-beige justify-content-center p-1 p-md-3 py-3 text-center">
-                    <div class="py-3 col-md-12 ">
-                        <h3 class="font-weight-bold">課程名稱 : @ViewBag.classname</h3>
-                    </div>
-                    <div class="py-1 col-md-4">
-                        <h4>技能成績 :@ViewBag.showself</h4>
-                    </div>
+    <div class="container">
+        <div class="py-4 ">
+            <div class="row bg-beige justify-content-center p-1 p-md-3 py-3 text-center">
+                <div class="py-3 col-md-12 ">
+                    <h3 class="font-weight-bold">技能名稱 : @ViewBag.skillname</h3>
+                </div>
+                <div class="py-1 col-md-4">
+                    <h4>技能成績 :@ViewBag.showself</h4>
                 </div>
             </div>
-            <canvas id="show" width="50" height="30" class="mb-4"></canvas>
         </div>
+        <canvas id="show" width="50" height="30" class="mb-4"></canvas>
+    </div>
     }
 }
+<select style="display:none" class="form-select form-control" id="selectskill">
+</select>
+<input style="display:none" class="btn-style-two mt-3" type="button" id="skillmap" name="skillmap" value="課程導覽" />
+<form name="memberskill" method="post">
+    <input type="hidden" id="selectmap" name="selectmap" value="@ViewBag.skillname" />
+</form>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 <script>
     const btn = document.querySelector("#createpaper");
+            const btn2 = document.querySelector("#skillmap");
+            const formData = new FormData(document.memberskill);
+
+     @{
+    if (@ViewBag.show != null)
+    {
+    @:btn2.style.display = 'block';
+    @:document.querySelector("#selectskill").style.display = 'block';
+    }
+    }
+     window.onload = function () {
+
+        fetch('@Url.Action("skill","LearnMap")', {
+            method: 'POST',
+            body: formData
+        }).then(Response => Response.json())
+            .then(function (j) {
+                console.log(j);
+                for (var row in j) {
+                    $("#selectskill").append("<option value='" + j[row].fClassName + "'>" + j[row].fClassName+"</option>");
+                }
+            });
+    }
+
+    btn2.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        sessionStorage.setItem("type", $('#selectskill').val());
+
+        location = '@Url.Action("Index", "LearnMap")';
+
+    })
 
         btn.addEventListener('click', (evt) => {
            evt.preventDefault();
             $('#txtidentify').val($('#select').val());
-            $('#member').submit();
+            if ($('#txtidentify').val() == "0") {
+                Swal.fire({
+                    icon: 'info',
+                    title: '請選擇技能',
+                    showConfirmButton: false,
+                    timer: 1300
+                })
+            } else {
+                $('#member').submit();
+            }
         })
         const ctx3 = document.getElementById('show').getContext('2d');
         var show = new Chart(ctx3, {

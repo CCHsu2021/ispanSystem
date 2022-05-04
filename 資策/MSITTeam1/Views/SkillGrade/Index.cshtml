@@ -64,7 +64,7 @@
                     icon: 'info',
                     title: '請先登入會員',
                 }).then((result) => {
-                    if (result.isConfirmed) { location = 'https://localhost:44387/Student_Login' }}
+                    if (result.isConfirmed) { location = '@Url.Action("Index", "Student_Login")'}}
                 )
             } else {
                 btn1.style.display = 'none';
@@ -132,7 +132,7 @@
         fetch('@Url.Action("InSQL", "SkillGrade")', {
             method: 'POST',
             body: formData
-        })
+        }).then(location = '@Url.Action("Index", "ShowSkillGrade")')
         })
 
     </script>

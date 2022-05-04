@@ -17,16 +17,18 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index(GradeIdentify Grade)
         {
-            if(CDictionary.memtype != null)
+            ViewBag.count = 0;
+            if (CDictionary.memtype != null)
                 ViewBag.memType = 0;
             else
                 ViewBag.memType = CDictionary.memtype;
             if (CDictionary.account != null)
             {
                 var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
+                TCompanyBasic comaccount = null;
                 if (account == null)
                 {
-                    var comaccount = hello.TCompanyBasics.FirstOrDefault(c => c.CompanyTaxid == CDictionary.account);
+                    comaccount = hello.TCompanyBasics.FirstOrDefault(c => c.CompanyTaxid == CDictionary.account);
                     ViewBag.Account = comaccount.CompanyTaxid;
                 }
                 else
@@ -101,14 +103,16 @@ namespace MSITTeam1.Controllers
                     var maxcount = 0;
                     var comself = from p in hello.TClassGrades
                                   join i in hello.StudentBasics on p.FAccountId equals i.FAccount
-                                  where i.FCompany == account.FAccount && p.FClassCode == Grade.txtidentify
+                                  join od in hello.TClassOrderDetails on i.MemberId equals od.MemberId
+                                  join o in hello.TClassOrders on od.OrderId equals o.OrderId
+                                  where o.MemberId == comaccount.CompanyTaxid && p.FClassCode == Grade.txtidentify
                                   group p by i.FCompany into g
                                   select new
                                   {
                                       FBeforeClassGrade = g.Sum(c => c.FBeforeClassGrade),
                                       FAfterClassGrade = g.Sum(c => c.FAfterClassGrade)
                                   };
-                    if (comself != null)
+                    if (comself.FirstOrDefault() != null)
                     {
                         foreach (var obj in comself)
                         {
@@ -129,7 +133,7 @@ namespace MSITTeam1.Controllers
                             }
                         }
                     }
-                    if (comself != null)
+                    if (comself.FirstOrDefault() != null)
                     {
                         foreach (var obj in comself)
                         {
@@ -149,7 +153,7 @@ namespace MSITTeam1.Controllers
                             }
                         }
                     }
-                    if (comself != null)
+                    if (comself.FirstOrDefault() != null)
                     {
                         foreach (var obj in comself)
                         {

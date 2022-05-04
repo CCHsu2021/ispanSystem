@@ -17,6 +17,7 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index(GradeIdentify Grade)
         {
+            ViewBag.skillname = "";
             var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
             if (account != null)
                 ViewBag.Account = account.FAccount;
@@ -32,7 +33,7 @@ namespace MSITTeam1.Controllers
                     TSkillGrade self = hello.TSkillGrades.FirstOrDefault(c => c.FAccount == account.FAccount && c.FSkillCategory == Grade.txtidentify);
                     if (self != null)
                     {
-                        ViewBag.classname = self.FSkillCategory;
+                        ViewBag.skillname = self.FSkillCategory;
                         ViewBag.showself = self.FGrade;
                         int list = 0;
                         for (int i = 5; i <= 100; i += 10)

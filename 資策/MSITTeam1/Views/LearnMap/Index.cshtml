@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MSITTeam1.Models.TStudioInformation>
+﻿@using MSITTeam1.ViewModels
+@model LearnMap
 @{
     ViewData["Title"] = "Index";
 }
@@ -124,18 +125,33 @@
 
 
 @{ var ClassName = "";
-    var ClassCate = "";}
-
-
+    var ClassCate = "";
+    var FSkillselect = "";}
+<form id="a">
+    <select class="form-select form-control" id="selectmap" name="selectmap">
+        @{
+                <option value="所有課程">所有課程</option>
+            foreach (var item in Model.TStudioInformationright)
+            {
+                if (item.FClassName != FSkillselect && item.FClassName != "其他")
+                {
+                    <option value="@item.FClassName">@item.FClassName</option>
+                }
+                FSkillselect = item.FClassName;
+            }
+        }
+    </select>
+    <input class="btn-style-two mt-3" type="submit" id="createpaper" name="createpaper" value="確定" />
+</form>
 <div class="container-fluid py-5" style="background-color: #EFEFEF;">
     <div class="naccs container">
         <div class="grid">
             <div class="gc gc--1-of-3">
                 <div class="menu d-block my-0">
                     @{
-                        foreach (var item in Model)
+                        foreach (var item in Model.TStudioInformationleft)
                         {
-                            if (ClassName != item.FClassName)
+                            if (ClassName != item.FClassName && item.FClassName != "其他")
                             {
                                 <div class="ActiveItem">
                                     <span class="light"></span>
@@ -144,6 +160,7 @@
                             }
                             ClassName = item.FClassName;
                         }
+                        ClassName = "";
                     }
 
                 </div>
@@ -151,13 +168,13 @@
             <div class="gc gc--2-of-3">
                 <ul class="nacc">
                     @{
-                        foreach (var item in Model)
+                        foreach (var item in Model.TStudioInformationleft)
                         {
-                            if (ClassName != item.FClassName)
+                            if (ClassName != item.FClassName && item.FClassName != "其他")
                             {
                                 <li class="ActiveIi w-100">
                                     <div class="row">
-                                        @foreach (var item2 in Model)
+                                        @foreach (var item2 in Model.TStudioInformationleft)
                                         {
                                             @if (item.FClassName == item2.FClassName && ClassCate != item2.FClassCategory)
                                             {
@@ -165,7 +182,7 @@
                                                     <div class="p-3 shadow mb-4 bg-white w-100">
                                                         <h4 class="font-weight-bold mb-2 ">@item2.FClassCategory</h4>
                                                         <hr />
-                                                        @foreach (var item3 in Model)
+                                                        @foreach (var item3 in Model.TStudioInformationleft)
                                                         {
                                                             @if (@item.FClassName == item2.FClassName && @item2.FClassCategory == item3.FClassCategory)
                                                             {
@@ -184,7 +201,7 @@
                             ClassName = item.FClassName;
                         }
                     }
-  
+
                 </ul>
             </div>
         </div>
@@ -194,6 +211,19 @@
 
 @section Scripts {
     <script>
+
+        window.onload = function () {
+            document.getElementById('selectmap').value = '@ViewBag.classmap';
+            var type = sessionStorage.getItem("type");
+            console.log(type);
+            if (type != '') {
+                document.getElementById('selectmap').value = type;
+
+                sessionStorage.setItem("type", "");
+                $('#createpaper').click();
+            }
+        }
+
         // Acc
         $(".naccs .menu").find(".ActiveItem").first().addClass("active");
         $(".naccs ul").find(".ActiveIi").first().addClass("active");
@@ -202,7 +232,6 @@
             .find(".ActiveIi").first()
             .innerHeight();
         $(".naccs ul").height(listItemHeight + "px");
-        console.log("good");
         $(document).on("click", ".naccs .menu div", function () {
 
             var numberIndex = $(this).index();
