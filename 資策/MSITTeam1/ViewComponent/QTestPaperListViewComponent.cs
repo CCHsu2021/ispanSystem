@@ -19,9 +19,9 @@ namespace MSITTeam1.ViewComponent
 		{
 			_context = context;
 		}
-
 		public async Task<IViewComponentResult> InvokeAsync()
 		{
+			//TODO:5.檢查有沒有取得會員資料
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
 			ViewBag.account = CDictionary.account;
