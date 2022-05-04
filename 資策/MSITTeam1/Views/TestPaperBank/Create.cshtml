@@ -265,24 +265,13 @@
                     </div>
                 </div>
             </li>
-
-            <li class="slide" data-tag="試卷預覽">
-                <div class="sized-container edu">
-                    <div class="row data" id="EduPage">
-                        <div class="col-6">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            @*add hidden here*@
-                            <button class="creatworkbtn my-3" id="createPaper" style="background-color: #ed731a;">完成</button>
-                        </div>
-                    </div>
-                </div>
-            </li>
         </ul>
 
     </div>
     <div class="full-width-container">
         <div class="button-container sized-container">
             <button class="next">下一步</button>
+            <button class="paperCreate" id="createPaper" style="float:none;margin: 0 0 30px 400px;">新增試卷</button>
             <button class="previous">上一步</button>
         </div>
     </div>
@@ -500,7 +489,7 @@
                     queid.fQuestionId = que;
                     selectList.push(queid);
                 })
-                console.log(selectList);
+                //console.log(selectList);
                 var newPaperJson = JSON.stringify({
                     FDesignerAccount: $('#FDesignerAccount').val(),
                     FTestPaperName: $('#FpaperName').val(),
@@ -508,7 +497,7 @@
                     FNote: $('#FPaperNote').val(),
                     SelectQuestionList: selectList,
                 })
-                console.log(newPaperJson);
+                //console.log(newPaperJson);
                 $.ajax({
                     url: "/TestPaperBank/CreatNewPaper",
                     type: "POST",
@@ -559,18 +548,32 @@
         // 移動按鈕調整
         if (currentSlide == 0) {
             $('.previous').hide();
+            $('.paperCreate').hide();
+            $('.next').show();
+        } else {
+            $('.previous').show();
+            $('.next').hide();
+            $('.paperCreate').show();
         }
     function goToNextSlide() {
         if (currentSlide >= slideCount - 1) {
-            $('.next').attr("text", "完成");
             $('.previous').show();
             return;
         } else {
-            $('.next').attr("text", "下一步");
-            $('.previous').show();
+            currentSlide++;
+            if (currentSlide == 0) {
+                $('.previous').hide();
+                $('.paperCreate').hide();
+                $('.next').show();
+            } else {
+                $('.previous').show();
+                $('.paperCreate').show();
+                $('.next').hide();
+            }
+            console.log(currentSlide);
         }
         var windowWidth = $(window).width();
-        currentSlide++;
+        //currentSlide++;
         $slideContainer.animate({
             left: -(windowWidth * currentSlide)
         });
@@ -589,14 +592,17 @@
         setActiveIndicator();
         $('.progress-bar').eq(currentSlide).animate({
             width: '0%'
-        }, animationTime);
+        }, animationTime);        
+        console.log(currentSlide);
         if (currentSlide <= 0) {
             $('.previous').hide();
-            $('.next').attr("text", "下一步");
+            $('.paperCreate').hide();
+            $('.next').show();
             return;
         } else {
             $('.previous').show();
-            $('.next').attr("text", "下一步");
+            $('.paperCreate').show();
+            $('.next').hide();
         }
     }
 

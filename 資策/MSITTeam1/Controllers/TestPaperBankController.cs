@@ -18,6 +18,7 @@ namespace MSITTeam1.Controllers
         {
             _context = context;
         }
+
         public IActionResult Home()
 		{
             ViewBag.Name = CDictionary.username;
@@ -231,7 +232,8 @@ namespace MSITTeam1.Controllers
                 _context.TTestPapers.Remove(q);
 			}
             _context.SaveChanges();
-            return RedirectToAction("Home");
+            //TODO:4.刪除後不整頁刷新
+			return Content("刪除成功", "text/plain", System.Text.Encoding.UTF8);
 		}
         public async Task<IActionResult> Delete(int? id)
         {

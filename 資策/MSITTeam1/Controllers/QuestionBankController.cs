@@ -197,14 +197,14 @@ namespace MSITTeam1.Controllers
 				var paperTable = _context.TTestPapers.Where(quesInPaper => quesInPaper.FSubjectId.Equals(subjectID) && quesInPaper.FQuestionId == questionID);
 				if (paperTable.Count() > 0)
 				{
-					return Content("當前有試卷引用此題，無法刪除");
+					return Content("當前有試卷引用此題，無法刪除", "text/plain", System.Text.Encoding.UTF8);
 				}
 				var ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
 				if (ques != null)
 				{
 					ques.FState = 0;
 					_context.SaveChanges();
-					return Content("刪除成功");
+					return Content("刪除成功", "text/plain", System.Text.Encoding.UTF8);
 				}
 			}
 			return RedirectToAction("List");
