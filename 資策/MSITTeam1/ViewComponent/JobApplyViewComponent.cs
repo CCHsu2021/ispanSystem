@@ -19,7 +19,7 @@ namespace MSITTeam1.ViewComponent
         {
             _context = context;
         }
-        public IViewComponentResult Invoke(string jobName,string companyTaxid,string rowCount)
+        public IViewComponentResult Invoke(int jobId,string jobName,string companyTaxid,string rowCount)
         {
             //todo 必須判斷是否已登入
             //假設登入帳號是學員：111
@@ -27,35 +27,25 @@ namespace MSITTeam1.ViewComponent
             
             ViewBag.rowCount = rowCount;
             TMemberResumeSendViewModel memberResumeSend = new TMemberResumeSendViewModel();
+
+            
+
             var contactOne =_context.StudentBasics.FirstOrDefault(p => p.FAccount == CDictionary.account);
-
-            var jobApply = _context.TMemberResumeSends.Max(p => p.ResumeSendId);
-            string dateNow = DateTime.Now.ToString("yyyyMMdd");
-            string addNewRS = $"RS{dateNow}00001";
-
-            if (jobApply != null)
+            if(contactOne != null)
             {
-                string lastDate = jobApply.Substring(2, 9);
-                if (lastDate != dateNow)
+                if (!string.IsNullOrEmpty(contactOne.Phone))
                 {
-                    memberResumeSend.ResumeSendId = addNewRS;
+                    memberResumeSend.ContactPhone = contactOne.Phone;
                 }
-                else
+                if (!string.IsNullOrEmpty(contactOne.Email))
                 {
-                    int num = int.Parse(jobApply.Substring(10, 14)) + 1;
-                    memberResumeSend.ResumeSendId = $"RS{lastDate + num:00000}";
+                    memberResumeSend.ContactEmail = contactOne.Email;
                 }
             }
-            else
-            {
-                memberResumeSend.ResumeSendId = addNewRS;
-            }
-
+            memberResumeSend.JobId = jobId;
             memberResumeSend.MemberId = CDictionary.account;  
             memberResumeSend.JobName = jobName;
             memberResumeSend.CompanyTaxid = companyTaxid;
-            memberResumeSend.ContactPhone = contactOne.Phone;
-            memberResumeSend.ContactEmail = contactOne.Email;
 
             return View(memberResumeSend);
         }

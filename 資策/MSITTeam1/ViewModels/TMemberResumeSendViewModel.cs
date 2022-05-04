@@ -19,6 +19,8 @@ namespace MSITTeam1.ViewModels
         public TMemberResumeSend memRS { get { return _memRS; } set { _memRS = value; } }
         [DisplayName("求職單ID")]
         public string ResumeSendId { get { return this.memRS.ResumeSendId; } set { memRS.ResumeSendId= value; } }
+        [DisplayName("職缺ID")]
+        public int JobId { get { return this.memRS.JobId; } set { memRS.JobId= value; } }
         [DisplayName("履歷ID")]
         public long ResumeId { get { return this.memRS.ResumeId; } set { memRS.ResumeId= value; } }
         [DisplayName("學員帳號")]
@@ -37,6 +39,8 @@ namespace MSITTeam1.ViewModels
         [DisplayName("聯絡時間")]
         public string TimeToContact { get { return this.memRS.TimeToContact; } set { memRS.TimeToContact = value; } }
         [DisplayName("求職信內容")]
+        [MinLength(20)]
+        [MaxLength(500)]
         public string CoverLetter { get { return this.memRS.CoverLetter; } set { memRS.CoverLetter= value; } }
         [DisplayName("建立時間")]
         public string CreatTime { get { return this.memRS.CreatTime; } set { memRS.CreatTime = value; } }

@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\TJobVacancies\Create.cshtml" />
+    <Content Remove="Views\TJobVacancies\Delete.cshtml" />
+    <Content Remove="Views\TJobVacancies\Details.cshtml" />
+    <Content Remove="Views\TJobVacancies\Edit.cshtml" />
     <Content Remove="wwwroot\images\student\d9e4bd0a-b5b9-40ed-9cc5-d16cf007f46a.jpg" />
     <Content Remove="wwwroot\js\appear.js" />
     <Content Remove="wwwroot\js\bootstrap.min.js" />
@@ -99,8 +103,8 @@
     <PackageReference Include="MailKit" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.16">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -116,7 +120,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\css\PM\" />
     <Folder Include="wwwroot\images\company\" />
+    <Folder Include="wwwroot\js\PM\" />
     <Folder Include="wwwroot\UploadImage\" />
   </ItemGroup>
 

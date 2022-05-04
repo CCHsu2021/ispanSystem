@@ -14,7 +14,7 @@ header {
     }
 
 main {
-    background-color: #f0fafb;
+    background-color: #EFEFEF;
 }
 
 .container {
@@ -54,7 +54,7 @@ main {
 
 .job-card p {
     font-size: 15px;
-    color: #58a9a7;
+    color: #227299;
     font-weight: 500;
     line-height: 1.4;
 }
