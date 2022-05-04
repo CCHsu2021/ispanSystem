@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MSITTeam1.Controllers
 {
@@ -28,7 +29,6 @@ namespace MSITTeam1.Controllers
         {
             if(password != null) { 
             SHA384Managed sha = new SHA384Managed();
-            //helloContext hello = new helloContext();
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
@@ -116,7 +116,34 @@ namespace MSITTeam1.Controllers
         } 
        
         
+        public IActionResult PWDidentify()
+        {
+            return View();
+        }
+        public IActionResult MailPWDresetLink(string account,string email)
+        {
+            TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account & p.FEmail == email);
+            if(com != null)
+            {
+                string sVerify = account + "|" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+                MD5 md5 = new MD5CryptoServiceProvider();
+                byte[] buf = Encoding.UTF8.GetBytes("IspanMsit40");
+                byte[] result = md5.ComputeHash(buf);
+                string md5Key = BitConverter.ToString(result).Replace("-", "").ToLower().Substring(0, 24);
+                DES.Key = UTF8Encoding.UTF8.GetBytes(md5Key);
+                DES.Mode = CipherMode.ECB;
+                ICryptoTransform DESEncrypt = DES.CreateEncryptor();
+                byte[] Buffer = UTF8Encoding.UTF8.GetBytes(sVerify);
+                sVerify = Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
 
+                sVerify = HttpUtility.UrlEncode(sVerify);
+                string webPath = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/");
+                CMailDelivery.mail(email, account);
+                return Json(new { suc = "已發送郵件至信箱" });
+            }
+            return Json(new { fail = "找不到用戶" });
+        }
         public IActionResult ForgetPWD()
         {
             return View();

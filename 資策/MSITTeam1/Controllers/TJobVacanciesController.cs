@@ -75,14 +75,53 @@ namespace MSITTeam1.Controllers
             return data;
         }
 
-        public IActionResult Detail(JobInfoViewModel vModel)
+        public IActionResult Detail(int txtJobId)
         {
             ViewBag.Account = CDictionary.account;
 
-            var chooseOne = GetLeftJoinJobVacancies().FirstOrDefault(p=>
-            p.FJobName.Equals(vModel.txtJobName) && p.FCompanyTaxid.Equals(vModel.txtCompanyTaxid));
+            var chooseOne = GetLeftJoinJobVacancies().FirstOrDefault(p=>p.Fid.Equals(txtJobId));
             
-            return View(chooseOne);
+            return View(chooseOne);     //todo 尚未將View調整為專案檢視格式。需時一天
+        }
+
+        public IActionResult ResumeSend(TMemberResumeSend vModel,string ddlstartTime,string ddlendTime,long ddlResume)
+        {
+            
+            var jobApply = _context.TMemberResumeSends.Max(p => p.ResumeSendId);
+            DateTime dateTimeNow = DateTime.Now;
+            string dateNow = dateTimeNow.ToString("yyyyMMdd");
+            string addNewRS = $"RS{dateNow}00001";
+
+            if (jobApply != null)
+            {
+                string lastDate = jobApply.Substring(2, 8);
+                if (lastDate != dateNow)
+                {
+                    vModel.ResumeSendId = addNewRS;
+                }
+                else
+                {
+                    int num = int.Parse(jobApply.Substring(10, 5)) + 1;
+                    vModel.ResumeSendId = $"RS{lastDate + num.ToString("00000")}";
+                }
+            }
+            else
+            {
+                vModel.ResumeSendId = addNewRS;
+            }
+
+            string contactTime = $"{ddlstartTime}~{ddlendTime}";
+
+            vModel.ComReadOrNot = "未讀";
+            vModel.TimeToContact = contactTime;
+            vModel.ResumeId = ddlResume;
+            vModel.CreatTime = dateTimeNow.ToString();
+            vModel.ModifyTime = dateTimeNow.ToString();
+
+            _context.Add(vModel);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult JobDirectDropDownList()

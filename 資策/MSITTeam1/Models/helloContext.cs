@@ -1021,6 +1021,8 @@ namespace MSITTeam1.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.JobId).HasColumnName("JobID");
+
                 entity.Property(e => e.JobName)
                     .IsRequired()
                     .HasMaxLength(50);

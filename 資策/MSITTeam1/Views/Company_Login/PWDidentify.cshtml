@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "PWDidentify";
+}
+
+
+<link href="~/css/login.css" rel="stylesheet">
+
+<div class="background">
+    <div class="container-fulid px-3 px-md-0">
+        <div class="login-wrap my-5">
+            <div class="login-html">
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+                <label for="tab-1" class="tab" style="cursor: default;">忘記密碼</label>
+                <input id="tab-2" type="radio" name="tab" class="sign-up d-none">
+                <label for="tab-2" class="tab d-none"></label>
+                <div class="login-form">
+                    <div class="sign-in-htm">
+                        <div class="group">
+                            <label for="pass" class="label">請輸入帳號(統編)</label>
+                            <input id="RfAccount" type="text" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">請輸入信箱(Email)</label>
+                            <input id="RfEmail" type="text" class="input" data-type="password">
+                        </div>
+                        <div class="container">
+                            <span class="text-warning mt-0 mb-0" id="WarningMsg"></span>
+                        </div>
+                        <div class="group mt-1">
+                            <button id="resetbtn" class="button" type="button">確定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+    $("#resetbtn").click(() => {
+        const account = $("#RfAccount").val();
+        const email = $("#RfEmail").val();
+
+            $.ajax({
+                type: "Post",
+                url: "@Url.Content("~/Company_Login/MailPWDresetLink")",
+                data: { account: account,email:email },
+                dataType: "text",
+                success: function (message) {
+                    if (message.fail) {
+                        Swal.fire("Uh Oh", message.fail, "warning");
+                    } else if (message.suc) {
+                        Swal.fire("已發送認證信件請至信箱查看", message.suc, "success").then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = "@Url.Content("~/Company_Login")";
+                            }
+                        })
+                    }
+                }
+            })
+    })
+    </script>
+}

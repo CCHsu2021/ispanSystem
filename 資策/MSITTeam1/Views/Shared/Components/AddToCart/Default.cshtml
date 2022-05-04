@@ -27,10 +27,12 @@
 
 }
 <li class="cart-footer mt-3">
-    <div class="cart-checkout-btn">
-        <span class="checkout-cart-ic"></span>
-        <span class="checkout-label">確認購買<br />(共計 NT$@totalPrice.ToString("###,###,##0"))</span>
-    </div>
+    <a href="@Url.Action("Index","CheckOut")">
+        <div  class="cart-checkout-btn" >
+            <span class="checkout-cart-ic"></span>
+            <span class="checkout-label">前往結帳<br />(共計 NT$@totalPrice.ToString("###,###,##0"))</span>
+        </div>
+    </a>
 </li>
 @section Scripts{
 

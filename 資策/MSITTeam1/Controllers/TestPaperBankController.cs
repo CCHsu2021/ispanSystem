@@ -138,24 +138,6 @@ namespace MSITTeam1.Controllers
 			}
 		}
 
-        // GET: TTestPaperBanks/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tTestPaperBank = await _context.TTestPaperBanks
-                .FirstOrDefaultAsync(m => m.FTestPaperId == id);
-            if (tTestPaperBank == null)
-            {
-                return NotFound();
-            }
-
-            return View(tTestPaperBank);
-        }
-
         // GET: TTestPaperBanks/Create
         public IActionResult Create()
         {
@@ -230,6 +212,27 @@ namespace MSITTeam1.Controllers
         }
 
         // GET: TTestPaperBanks/Delete/5
+        public IActionResult DeletePaper(int? paperID)
+		{
+            if(paperID == null)
+			{
+                return Content($"查無編號為{paperID}的試卷");
+			}
+            var paperBank = _context.TTestPaperBanks.FirstOrDefault(t => t.FTestPaperId == paperID);
+            var paperDetail = _context.TTestPapers.Where(t => t.FTestPaperId == paperID);
+            if(paperBank == null || paperDetail == null)
+			{
+                return Content($"查無編號為{paperID}的試卷");
+            }
+            _context.TTestPaperBanks.Remove(paperBank);
+            _context.SaveChanges();
+            foreach(var q in paperDetail)
+			{
+                _context.TTestPapers.Remove(q);
+			}
+            _context.SaveChanges();
+            return RedirectToAction("Home");
+		}
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

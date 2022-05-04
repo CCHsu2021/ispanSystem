@@ -13,6 +13,7 @@ namespace MSITTeam1.Models
         }
 
         public string ResumeSendId { get; set; }
+        public int JobId { get; set; }
         public long ResumeId { get; set; }
         public string MemberId { get; set; }
         public string CompanyTaxid { get; set; }

@@ -18,17 +18,17 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index(string taxid)
         {
-            //IEnumerable<TCompanyBasic> com = null;
-            //com = hello.TCompanyBasics.Where(t => t.CompanyTaxid == taxid);
-            var comm = from p in hello.TPhotos where p.FAccount == taxid
+            ViewBag.account = CDictionary.account;
+            ViewBag.type = CDictionary.memtype;
+            ViewBag.name = CDictionary.username;
+            var comm = (from p in hello.TPhotos where p.FAccount == taxid
                        join t in hello.TCompanyBasics on taxid equals t.CompanyTaxid into pt
                        from combin in pt.DefaultIfEmpty()
                        select new CCompanyBasicWithPhotoViewModelcs()
                        {
                            photo = p,
                            combasic = combin,
-
-                  };
+                  }).ToList();
             return View(comm);
         }
     }
