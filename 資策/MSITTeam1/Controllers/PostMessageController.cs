@@ -20,7 +20,7 @@ namespace MSITTeam1.Controllers
         }
 
         // GET: PostMessage
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             string account = "222";
             ViewBag.account = account;
@@ -30,29 +30,42 @@ namespace MSITTeam1.Controllers
                                        join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
                                        from combin2 in ps.DefaultIfEmpty()
                                        where p.CompanyTaxid.Equals(account)
+                                       orderby p.CreatTime descending
                                        select new
                                        {
                                            p,
                                            combin.FName,
                                            combin2.Name
                                        };
-            TCompanyResumeReceiveViewModel vModel = new TCompanyResumeReceiveViewModel();
             List<TCompanyResumeReceiveViewModel> list = new List<TCompanyResumeReceiveViewModel>();
             foreach (var item in companyResumeReceive)
             {
+                TCompanyResumeReceiveViewModel vModel = new TCompanyResumeReceiveViewModel();
                 vModel.memRS = item.p;
                 vModel.FCompanyName = item.FName;
                 vModel.FStudentName = item.Name;
                 list.Add(vModel);
             }
+
             return View(list);
-            
         }
         public IActionResult StudentResumeDetail(string ResumeSendId)
         {
+            var chooseOne = (from p in _context.TMemberResumeSends
+                             join t in _context.TCompanyBasics on p.CompanyTaxid equals t.CompanyTaxid into pt
+                             from combin in pt.DefaultIfEmpty()
+                             join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
+                             from combin2 in ps.DefaultIfEmpty()
+                             select new TCompanyResumeReceiveViewModel
+                             {
+                                 memRS = p,
+                                 FCompanyName = combin.FName,
+                                 FStudentName = combin2.Name
+                             }).FirstOrDefault(p => p.ResumeSendId.Equals(ResumeSendId));
+            chooseOne.ComReadOrNot = "已讀";
 
-
-            return View();
+            return View(chooseOne);
+            //todo 尚未做成View的格式，套用檢視職缺頁面
         }
 
         // GET: PostMessage/Details/5

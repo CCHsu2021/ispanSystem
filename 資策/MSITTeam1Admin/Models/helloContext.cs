@@ -498,6 +498,8 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.MemberId)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.StaffName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TClassTestPaper>(entity =>
@@ -613,9 +615,7 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.FLevel).HasColumnName("fLevel");
 
-                entity.Property(e => e.FLogo)
-                    .HasMaxLength(50)
-                    .HasColumnName("fLogo");
+                entity.Property(e => e.FLogo).HasColumnName("fLogo");
 
                 entity.Property(e => e.FName)
                     .HasMaxLength(50)
@@ -1162,7 +1162,6 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.FPhoto)
                     .IsRequired()
-                    .HasMaxLength(50)
                     .HasColumnName("fPhoto");
 
                 entity.Property(e => e.FType)
@@ -1238,6 +1237,8 @@ namespace MSITTeam1Admin.Models
                 entity.ToTable("tProductOrderDetail");
 
                 entity.Property(e => e.OrderId).HasMaxLength(50);
+
+                entity.Property(e => e.ProductId).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TProductTrackingList>(entity =>

@@ -58,12 +58,22 @@ namespace MSITTeam1.Controllers
 		{
             // 試卷總覽新增
             // TODO1:加入身份判斷
-            newpaper.FDesignerAccount = "admin";
+            ViewBag.Name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
+            if(CDictionary.account != null)
+			{
+                newpaper.FDesignerAccount = CDictionary.account;
+			}
+			else
+			{
+                newpaper.FDesignerAccount = "admin";
+            }
             newpaper.FBTestPaperId = 0;
             _context.TTestPaperBanks.Add(newpaper.paperBank);
             _context.SaveChanges();
 
-            // 取得新生成的paperId
+            // 取得新生成的paperId 以將使用者選取的題目存入tTestPaper
             var getPaperId = (from q in _context.TTestPaperBanks
                          orderby q.FTestPaperId descending
                          select q.FTestPaperId).First();               
@@ -142,6 +152,10 @@ namespace MSITTeam1.Controllers
         // GET: TTestPaperBanks/Create
         public IActionResult Create()
         {
+            ViewBag.Name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
+            ViewBag.account = CDictionary.account;
+
             return View();
         }
 
