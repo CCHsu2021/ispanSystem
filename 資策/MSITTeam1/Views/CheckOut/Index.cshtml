@@ -1,0 +1,613 @@
+﻿@model List<MSITTeam1.ViewModels.CheckOutViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section Style{
+    <style>
+        .cf:before,
+        .cf:after {
+            content: " ";
+            display: table;
+        }
+
+        .cf:after {
+            clear: both;
+        }
+
+        .cf {
+            *zoom: 1;
+        }
+
+        .projTitle {
+            font-family: "Montserrat", sans-serif;
+            font-weight: bold;
+            text-align: center;
+            font-size: 2em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+            .projTitle span {
+                font-family: "Droid Serif", serif;
+                font-weight: normal;
+                font-style: italic;
+                text-transform: lowercase;
+                color: #777;
+            }
+
+        .heading {
+            padding: 1em 0;
+            border-bottom: 1px solid #D0D0D0;
+        }
+
+            .heading h1 {
+                font-family: "Droid Serif", serif;
+                font-size: 2em;
+                float: left;
+            }
+
+            .heading a.continue:link,
+            .heading a.continue:visited,
+            .heading input.continue:link,
+            .heading input.continue:visited {
+                text-decoration: none;
+                font-family: "Montserrat", sans-serif;
+                letter-spacing: -.015em;
+                padding: 1em;
+                color: #fff;
+                background: #82ca9c;
+                font-weight: bold;
+                position:absolute;
+                bottom:15px;
+                right:0;
+                border-radius: 50px;
+                float: right;
+                text-align: right;
+                -webkit-transition: all 0.25s linear;
+                -moz-transition: all 0.25s linear;
+                -ms-transition: all 0.25s linear;
+                -o-transition: all 0.25s linear;
+                transition: all 0.25s linear;
+            }
+
+
+            .heading a.continue:after,
+            .heading input.continue:after {
+                content: "\276f";
+                padding: .5em;
+                position: relative;
+                right: 0;
+                -webkit-transition: all 0.15s linear;
+                -moz-transition: all 0.15s linear;
+                -ms-transition: all 0.15s linear;
+                -o-transition: all 0.15s linear;
+                transition: all 0.15s linear;
+            }
+
+            .heading a.continue:hover,
+            .heading a.continue:focus,
+            .heading a.continue:active,
+            .heading input.continue:hover,
+            .heading input.continue:focus,
+            .heading input.continue:active {
+                background: #f69679;
+            }
+
+                .heading a.continue:hover:after,
+                .heading a.continue:focus:after,
+                .heading a.continue:active:after,
+                .heading div.continue:hover:after,
+                .heading div.continue:focus:after,
+                .heading div.continue:active:after {
+                    right: -10px;
+                }
+
+        .tableHead {
+            display: table;
+            width: 100%;
+            font-family: "Montserrat", sans-serif;
+            font-size: .75em;
+        }
+
+            .tableHead li {
+                display: table-cell;
+                padding: 1em 0;
+                text-align: center;
+            }
+
+                .tableHead li.prodHeader {
+                    text-align: left;
+                }
+
+        .cart .items {
+            display: block;
+            width: 100%;
+            padding: 1.5em;
+            border-bottom: 1px solid #fafafa;
+        }
+
+            .cart .items.even {
+                background: #fafafa;
+            }
+
+            .cart .items .infoWrap {
+                display: table;
+                width: 100%;
+            }
+
+            .cart .items .cartSection {
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+                .cart .items .cartSection .itemNumber {
+                    font-size: .75em;
+                    color: #777;
+                    margin-bottom: .5em;
+                }
+
+                .cart .items .cartSection h3 {
+                    font-size: 1em;
+                    font-family: "Montserrat", sans-serif;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    letter-spacing: .025em;
+                }
+
+                .cart .items .cartSection p {
+                    display: inline-block;
+                    font-size: .85em;
+                    color: #777777;
+                    font-family: "Montserrat", sans-serif;
+                }
+
+                    .cart .items .cartSection p .quantity {
+                        font-weight: bold;
+                        color: #333;
+                    }
+
+                    .cart .items .cartSection p.stockStatus {
+                        color: #82CA9C;
+                        font-weight: bold;
+                        padding: .5em 0 0 1em;
+                        text-transform: uppercase;
+                    }
+
+                        .cart .items .cartSection p.stockStatus.out {
+                            color: #F69679;
+                        }
+
+                .cart .items .cartSection .itemImg {
+                    width: 4em;
+                    float: left;
+                }
+
+                .cart .items .cartSection.qtyWrap,
+                .cart .items .cartSection.prodTotal {
+                    text-align: center;
+                }
+
+                    .cart .items .cartSection.qtyWrap p,
+                    .cart .items .cartSection.prodTotal p {
+                        font-weight: bold;
+                        font-size: 1.25em;
+                    }
+
+                .cart .items .cartSection input.qty {
+                    width: 2em;
+                    text-align: center;
+                    font-size: 1em;
+                    padding: .25em;
+                    margin: 1em .5em 0 0;
+                }
+
+                .cart .items .cartSection .itemImg {
+                    width: 8em;
+                    display: inline;
+                    padding-right: 1em;
+                }
+
+        .special {
+            display: block;
+            font-family: "Montserrat", sans-serif;
+        }
+
+            .special .specialContent {
+                padding: 1em 1em 0;
+                display: block;
+                margin-top: .5em;
+                border-top: 1px solid #dadada;
+            }
+
+                .special .specialContent:before {
+                    content: "\21b3";
+                    font-size: 1.5em;
+                    margin-right: 1em;
+                    color: #6f6f6f;
+                    font-family: helvetica, arial, sans-serif;
+                }
+
+        a.remove {
+            text-decoration: none;
+            font-family: "Montserrat", sans-serif;
+            color: #ffffff;
+            font-weight: bold;
+            background: #e0e0e0;
+            padding: .5em;
+            font-size: .75em;
+            display: inline-block;
+            border-radius: 100%;
+            line-height: .85;
+            -webkit-transition: all 0.25s linear;
+            -moz-transition: all 0.25s linear;
+            -ms-transition: all 0.25s linear;
+            -o-transition: all 0.25s linear;
+            transition: all 0.25s linear;
+        }
+
+            a.remove:hover {
+                background: #f30;
+            }
+
+        .promoCode {
+            border: 2px solid #efefef;
+            float: left;
+            width: 35%;
+            padding: 2%;
+        }
+
+            .promoCode label {
+                display: block;
+                width: 100%;
+                font-style: italic;
+                font-size: 1.15em;
+                margin-bottom: .5em;
+                letter-spacing: -.025em;
+            }
+
+            .promoCode input {
+                width: 85%;
+                font-size: 1em;
+                padding: .5em;
+                float: left;
+                border: 1px solid #dadada;
+            }
+
+                .promoCode input:active,
+                .promoCode input:focus {
+                    outline: 0;
+                }
+
+            .promoCode a.btn {
+                float: left;
+                width: 15%;
+                padding: .75em 0;
+                border-radius: 0 1em 1em 0;
+                text-align: center;
+                border: 1px solid #82ca9c;
+            }
+
+                .promoCode a.btn:hover {
+                    border: 1px solid #f69679;
+                    background: #f69679;
+                }
+
+        .btn:link,
+        .btn:visited {
+            text-decoration: none;
+            font-family: "Montserrat", sans-serif;
+            letter-spacing: -.015em;
+            font-size: 1em;
+            padding: 1em 3em;
+            color: #fff;
+            background: #82ca9c;
+            font-weight: bold;
+            border-radius: 50px;
+            float: right;
+            text-align: right;
+            -webkit-transition: all 0.25s linear;
+            -moz-transition: all 0.25s linear;
+            -ms-transition: all 0.25s linear;
+            -o-transition: all 0.25s linear;
+            transition: all 0.25s linear;
+        }
+
+        .btn:after {
+            content: "\276f";
+            padding: .5em;
+            position: relative;
+            right: 0;
+            -webkit-transition: all 0.15s linear;
+            -moz-transition: all 0.15s linear;
+            -ms-transition: all 0.15s linear;
+            -o-transition: all 0.15s linear;
+            transition: all 0.15s linear;
+        }
+
+        .btn:hover,
+        .btn:focus,
+        .btn:active {
+            background: #f69679;
+        }
+
+            .btn:hover:after,
+            .btn:focus:after,
+            .btn:active:after {
+                right: -10px;
+            }
+
+        .promoCode .btn {
+            font-size: .85em;
+            padding: .5em 2em;
+        }
+
+        /* TOTAL AND CHECKOUT  */
+        .subtotal {
+            float: right;
+            width: 35%;
+        }
+
+            .subtotal .totalRow {
+                padding: .5em;
+                text-align: right;
+            }
+
+                .subtotal .totalRow.final {
+                    font-size: 1.25em;
+                    font-weight: bold;
+                }
+
+                .subtotal .totalRow span {
+                    display: inline-block;
+                    padding: 0 0 0 1em;
+                    text-align: right;
+                }
+
+                .subtotal .totalRow .label {
+                    font-family: "Montserrat", sans-serif;
+                    font-size: .85em;
+                    text-transform: uppercase;
+                    color: #777;
+                }
+
+                .subtotal .totalRow .value {
+                    letter-spacing: -.025em;
+                    width: 35%;
+                }
+
+        @@media only screen and (max-width: 39.375em) {
+            .wrap {
+                width: 98%;
+                padding: 2% 0;
+            }
+
+            .projTitle {
+                font-size: 1.5em;
+                padding: 10% 5%;
+            }
+
+            .heading {
+                padding: 1em;
+                font-size: 90%;
+            }
+
+            .cart .items .cartSection {
+                width: 90%;
+                display: block;
+                float: left;
+            }
+
+                .cart .items .cartSection.qtyWrap {
+                    width: 10%;
+                    text-align: center;
+                    padding: .5em 0;
+                    float: right;
+                }
+
+                    .cart .items .cartSection.qtyWrap:before {
+                        content: "QTY";
+                        display: block;
+                        font-family: "Montserrat", sans-serif;
+                        padding: .25em;
+                        font-size: .75em;
+                    }
+
+                .cart .items .cartSection.prodTotal,
+                .cart .items .cartSection.removeWrap {
+                    display: none;
+                }
+
+                .cart .items .cartSection .itemImg {
+                    width: 25%;
+                }
+
+            .promoCode,
+            .subtotal {
+                width: 100%;
+            }
+
+            a.btn.continue {
+                width: 100%;
+                text-align: center;
+            }
+            input.btn.continue {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+}
+<div class="container py-4">
+    <h3 class="projTitle">結帳資訊</h3>
+    <div class="heading cf" style="position:relative;">
+        <a href="@Url.Action("Index", "Products")" class="continue">繼續購物</a>
+    </div>
+    <form asp-action="ComfirmPay" class="row">
+        <div class="col-md-5 px-4 pb-4 pt-0">
+            <div class="row align-items-center">
+                <div class="w-100 row justify-content-between align-items-center">
+                    <h3 class="mt-4 mb-3 font-weight-bold h4">收件人資訊</h3>
+                    <div>
+                        <input id="receivePerson" type="checkbox">
+                        <label for="receivePerson">同購買人資料</label>
+                    </div>
+                </div>
+                <div class="col-md-3 pr-0 mb-3">
+                    姓名：
+                </div>
+                <div class="col-md-9 pl-0 mb-3">
+                    <input type="text" id="productOrderName" class="form-control" name="Recipient">
+                </div>
+                <div class="col-md-3 pr-0 mb-3">
+                    電話：
+                </div>
+                <div class="col-md-9 pl-0 mb-3">
+                    <input type="text" id="productOrderTel" class="form-control" name="RecipientTel">
+                </div>
+                <div class="col-md-3 pr-0 mb-3">
+                    地址：
+                </div>
+                <div class="col-md-9 pl-0 mb-3">
+                    <input type="text" id="productOrderAddress" class="form-control" name="ShipTo" />
+                </div>
+                <div class="col-md-3 pr-0 mb-3">
+                   統一編號：
+                </div>
+                <div class="col-md-9 pl-0 mb-3">
+                    <input type="text" id="productOrderTAXID" class="form-control" name="TAXID" />
+                </div>
+                <div class="w-100 row align-items-center">
+                    <h3 class="mt-4 mb-3 font-weight-bold h4">寄送及付款方式</h3>
+                </div>
+                <div class="col-md-3 pr-0 mb-3">
+                    寄送方式：
+                </div>
+                <div class="col-md-9 pl-0 mb-3">
+                    <select class="form-control" name="ShipBy">
+                        <option value="1">全家便利商店</option>
+                        <option value="2">7-ELEVEN超商</option>
+                        <option value="3">萊爾富</option>
+                        <option value="4">OK超商</option>
+                        <option value="5">黑貓宅急便</option>
+                        <option value="6">大嘴鳥宅配通</option>
+                    </select>
+                </div>
+                <div class="col-md-3 pr-0 mb-3">
+                    付款方式：
+                </div>
+                <div class="col-md-9 pl-0 mb-3">
+                    <select class="form-control" name="PayMethod">
+                        <option value="1">信用卡付款</option>
+                        <option value="2">Web ATM</option>
+                        <option value="3">ATM 櫃員機</option>
+                        <option value="4">超商代碼</option>
+                        <option value="5">超商條碼</option>
+                        <option value="6">Apple Pay</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="wrap cf">
+                @{
+                    int total = 0;
+                    <div class="cart" style="height: 430px;overflow: auto;">
+                        <ul class="cartWrap">
+                            @foreach (var item in Model)
+                            {
+                            <li class="items odd">
+                                <div class="infoWrap">
+                                    <div class="cartSection">
+                                        <img src="@item.ImgPath" alt=""
+                                             class="itemImg" />
+                                        <h3>@item.Name</h3>
+                                        <p> <input type="text" class="qty border" value="@item.count" /> x NT$@Html.DisplayFor(modelItem => item.Price, "Money")</p>
+                                    </div>
+                                    <div class="prodTotal cartSection">
+                                        <p>NT$@Html.DisplayFor(modelItem => item.SubTotal, "Money")</p>
+                                    </div>
+                                    @*<div class="cartSection removeWrap text-right">
+                                        <a href="#" class="remove">x</a>
+                                    </div>*@
+                                </div>
+                            </li>
+                            total += (int)(@item.SubTotal);
+                            }
+                        </ul>
+                    </div>
+                        <input type="hidden" name="OrderId" value="@ViewBag.OrderId" />
+                        <input type="hidden" name="MemberId" value="@ViewBag.Account" />
+                        <div class="h5 text-right py-3 font-weight-bold">
+                            <input id="usePoint" type="checkbox">
+                            <label for="usePoint">使用點數折抵</label>
+                            <span class="label">共計：NT$</span><input readonly name="TotalPrice" value="@total.ToString("###,###,##0")">
+                        </div>
+                }
+            </div>
+        </div>
+        <div> <input type="submit" class="btn-style-three" value="確定付款"></div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        @*function orderOk(orderId) {
+            $.ajax({
+                url: "@Url.Content("~/CheckOut/OrderCompleted")",
+                type: "POST",
+                dataType: "text",
+                data: { orderId: orderId },
+            //    success: function () {
+            //        $("#shoppingCartReload").load(location.href + " #shoppingCartReload");
+            //    }
+            //})
+            })
+        }*@
+        // Remove Items From Cart
+        $('a.remove').click(function () {
+            event.preventDefault();
+            $(this).parent().parent().parent().hide(400);
+        })
+        $('input.remove').click(function () {
+            event.preventDefault();
+            $(this).parent().parent().parent().hide(400);
+        })
+
+        // Just for testing, show all items
+        $('a.btn.continue').click(function () {
+            $('li.items').show(400);
+        })
+        $('input.btn.continue').click(function () {
+            $('li.items').show(400);
+        })
+
+
+        $("#receivePerson").click(function () {
+            if ($("#receivePerson").prop("checked") == true) {
+                if (@ViewBag.Type== "2") {
+                    $("#productOrderName").val('@ViewBag.Name');
+                    $("#productOrderTel").val('@ViewBag.Tel');
+                    $("#productOrderAddress").val('@ViewBag.Address');
+                    $("#productOrderTAXID").val('@ViewBag.account');
+                }
+                else if (@ViewBag.Type== "1") {
+                    $("#productOrderName").val('@ViewBag.Name');
+                    $("#productOrderTel").val('@ViewBag.STel');
+                    $("#productOrderAddress").val('@ViewBag.SAddress');
+                }
+            } else {
+                if (@ViewBag.Type== "2") {
+                    $("#productOrderName").val("");
+                    $("#productOrderTel").val("");
+                    $("#productOrderAddress").val("");
+                    $("#productOrderTAXID").val("");
+                }
+                else if (@ViewBag.Type== "1") {
+                    $("#productOrderName").val("");
+                    $("#productOrderTel").val("");
+                    $("#productOrderAddress").val("");
+                }
+            }
+            })
+    </script>
+}
