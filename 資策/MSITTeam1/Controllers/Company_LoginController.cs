@@ -138,7 +138,7 @@ namespace MSITTeam1.Controllers
                 sVerify = Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
 
                 sVerify = HttpUtility.UrlEncode(sVerify);
-                string webPath = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/");
+                //string webPath = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/");
                 CMailDelivery.mail(email, account);
                 return Json(new { suc = "已發送郵件至信箱" });
             }

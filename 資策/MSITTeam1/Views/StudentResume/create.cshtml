@@ -454,11 +454,11 @@
 
         const formdata = new FormData(document.basic);
         var   GenderChoice = $("#fGender option:selected").text();
-        var   CityChoice = $("#City option:selected").text();
-        var   DistrictChoice = $("#District option:selected").text();
-        formdata.append('fGender',GenderChoice);
-        formdata.append('fCity', CityChoice);
-        formdata.append('fDistrict', DistrictChoice);
+        //var   CityChoice = $("#City option:selected").text();
+        //var   DistrictChoice = $("#District option:selected").text();
+        //formdata.append('fGender',GenderChoice);
+        //formdata.append('fCity', CityChoice);
+        //formdata.append('fDistrict', DistrictChoice);
 
         fetch('@Url.Content("~/StudentResume/EditBasic")',{
             method:'POST',
