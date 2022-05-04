@@ -1,0 +1,74 @@
+﻿@model MSITTeam1Admin.ViewModels.CQuestionBankViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<style>
+
+</style>
+
+<div class="container" id="outdivCre">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mb-3">
+                    <label asp-for="FSubjectId" class="control-label my-2 font-weight-bold h5"></label>
+                    <select id="FSubjectIdSel" name="FSubjectId" class="form-control">
+                        <option value="">請選擇技能名稱</option>
+                    </select>
+                    <span asp-validation-for="FSubjectId" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="FQuestionTypeId" class="control-label my-2 font-weight-bold h5"></label>
+                    <select id="FQuestionTypeIdSelCre" class="form-control">
+                        <option value="1">單選題</option>
+                        <option value="2">多選題</option>
+                    </select>
+                    <span asp-validation-for="FQuestionTypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FQuestion" class="control-label my-2 font-weight-bold h5"></label>
+                    <input type="text" id="FQuestionCre" name="FQuestion" class="form-control" />
+                    <span asp-validation-for="FQuestion" class="text-danger"></span>
+                </div>
+                <div id="ansListCre">
+                    <div class="form-group choiceCre">
+                        <label asp-for="FChoice" class="control-label my-2 font-weight-bold h5"></label>
+                        <div class="row align-items-center px-3 choicelistCre" style="flex-wrap:nowrap;">
+                            <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" style="width: 28px; height: 25px" onclick="doCheckCre(this)" />
+                            <input type="text" asp-for="FChoice" class="form-control txtAns" style="margin:0 20px 0 10px" />
+                            <span asp-validation-for="FChoice" class="text-danger"></span>
+                            <button class="tableBtn fas fa-trash-alt delBtnCre" type="button" style="border-radius: 5px; width: 60px;"></button>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="text-align: center;">
+                    @*<btn id="BtnNewChoiceCre" class="btn btn-primary btn-outline small">新增答案選項</btn>*@
+                    <button id="BtnNewChoiceCre" type="button" class="tableBtn fas" style="border-radius:5px;width:200px"><i class="fas fa-plus" style="font-size:25px;"></i></button>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FLevel" class="control-labe my-2 font-weight-bold h5l"></label>
+                    <div>
+                        <div class="rating2">
+                            <select class="questionBarRate levelCre" id="example-fontawesome" name="rating" autocomplete="off">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <span asp-validation-for="FLevel" class="text-danger"></span>
+                </div>
+                <hr class="my-4" />
+                <div class="form-group text-center">
+                    <button class="btn btn-primary" type="button" id="createNew" style="padding: 20px 20px; width: 200px;">新增題目</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
