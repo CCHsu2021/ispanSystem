@@ -21,6 +21,8 @@ namespace MSITTeam1.ViewModels
         public TNewJobVacancy jobV { get { return _jobV; } set { _jobV = value; } }
         public TCompanyBasic comB { get { return _comB; } set { _comB = value; } }
         public TJobDirect jobD { get { return _jobD; } set { _jobD = value; } }
+        [DisplayName("職缺ID")]
+        public int Fid { get { return this.jobV.Fid; } set { jobV.Fid = value; } }
         [DisplayName("公司統編")]
         public string FCompanyTaxid { get { return this.jobV.FCompanyTaxid; } set { jobV.FCompanyTaxid = value; } }
         [DisplayName("職缺名稱")]

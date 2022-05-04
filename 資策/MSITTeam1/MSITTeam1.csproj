@@ -19,6 +19,10 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\css\flatPicker.css" />
+    <Content Remove="Views\TJobVacancies\Create.cshtml" />
+    <Content Remove="Views\TJobVacancies\Delete.cshtml" />
+    <Content Remove="Views\TJobVacancies\Details.cshtml" />
+    <Content Remove="Views\TJobVacancies\Edit.cshtml" />
     <Content Remove="wwwroot\images\student\d9e4bd0a-b5b9-40ed-9cc5-d16cf007f46a.jpg" />
     <Content Remove="wwwroot\js\appear.js" />
     <Content Remove="wwwroot\js\bootstrap.min.js" />
@@ -122,7 +126,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\css\PM\" />
     <Folder Include="wwwroot\images\company\" />
+    <Folder Include="wwwroot\js\PM\" />
     <Folder Include="wwwroot\UploadImage\" />
   </ItemGroup>
 
