@@ -12,21 +12,21 @@ namespace MSITTeam1.Models
 {
     public class CMailDelivery
     {
-        public static string mail(string emailaddress,string account,string password)
+        public static string mail(string emailaddress,string account)
         {
             try
             {
                 MimeMessage message = new MimeMessage();
                 message.From.Add(new MailboxAddress(System.Text.Encoding.UTF8, "Ispan.International.Company@gmail.com", "資展國際股份有限公司"));
                 message.To.Add(new MailboxAddress(System.Text.Encoding.UTF8, account, emailaddress));
-                message.Subject = "《資展國際股份有限公司》帳號/密碼通知信";
+                message.Subject = "《資展國際股份有限公司》忘記密碼重設信";
                 var bodyBuilder = new BodyBuilder();
                 bodyBuilder.TextBody = $"親愛的{account}您好\n";
                 bodyBuilder.TextBody += $"您於{DateTime.Now.ToString("yyyyMMdd")}申請忘記密碼\n";
                 bodyBuilder.TextBody += $"如您未申請此功能請忽略此郵件\n";
                 bodyBuilder.TextBody += $"以下是您的密碼\n";
                 bodyBuilder.TextBody += $"------------------------------------------------------\n";
-                bodyBuilder.TextBody += $"密碼：{password}";
+                bodyBuilder.TextBody += $"密碼：";
                 bodyBuilder.TextBody += $"------------------------------------------------------\n";
                 bodyBuilder.TextBody += $"\n";
                 bodyBuilder.TextBody += $"\n";

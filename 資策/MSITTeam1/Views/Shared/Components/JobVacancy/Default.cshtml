@@ -226,9 +226,9 @@
                                     <div class="col-md-5 col-lg-5" style="line-height:2rem">
                                         <div>工作類型：@item.FJobListName</div>
                                         <div>聯繫人：@item.FContactPerson</div>
-                                        <div>聯繫人：@item.FContactPhone</div>
-                                        <div>聯繫人：@item.FContactFax</div>
-                                        <div>聯繫人：@item.FContactEmail</div>
+                                        <div>聯繫人電話：@item.FContactPhone</div>
+                                        <div>聯繫人傳真：@item.FContactFax</div>
+                                        <div>聯繫人信箱：@item.FContactEmail</div>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +238,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0">
+                        <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0" style="position: relative;">
+                            <div style="position: absolute; left: 0; bottom: 0;">最後更新時間：@item.FModifyTime</div>
                             <button class="fas fa-pencil-alt fa-2x joblistbtn" id="@item.FCompanyTaxid@count"  data-toggle="modal" data-target="#JobVacancy-Edit-Modal-@item.FCompanyTaxid@count"></button>
                             <button class="fas fa-trash-alt fa-2x joblistbtn" id="JobVacancy-Delete-Btn" onclick="deleteJobVacancy(@item.Fid)"></button>
                             <!-- Modal -->

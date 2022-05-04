@@ -111,7 +111,17 @@ namespace MSITTeam1.ViewModels
 		{
 			get; set;
 		}
+		public string TestPaperName
+		{
+			get; set;
+		}
+		public string TestPaperNote
+		{
+			get; set;
+		}
 	}
+
+
 	public class AnswerListViewModel
 	{
 		public int FSN { get; set; }

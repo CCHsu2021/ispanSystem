@@ -149,46 +149,27 @@
             });
 
         $("#previewpage").click(() => {
-            window.location = '@Url.Content("~/CCompanyBasic/Index?taxid=")' +'@ViewBag.Account'
+            window.open('@Url.Content("~/CCompanyBasic/Index?taxid=")' +'@ViewBag.Account')
         })
         //基本資料變更儲存
-    $("#savechanges").click(() => {
-        var jsondata ={
-            CompanyTaxid: $("#CompanyTaxid").val(),
-            FName: $("#FName").val(),
-            FPhoneCode: $("#FPhoneCode").val(),
-            FPhone: $("#FPhone").val(),
-            FFaxCode: $("#FFaxCode").val(),
-            FFax: $("#FFax").val(),
-            FWebsite: $("#FWebsite").val(),
-            FRelatedLink: $("#FRelatedLink").val(),
-            FContactPerson: $("#FContactPerson").val(),
-            FCity: $("#FCity").val(),
-            FDistrict: $("#FDistrict").val(),
-            FAddress: $("#FAddress").val(),
-            FEmail: $("#FEmail").val(),
-            FBenefits: $("#FBenefits").val(),
-            FCustomInfo: $("#FCustomInfo").val(),
-            FCity: $("#City option:selected").text(),
-            FDistrictCode: $("#District").val(),
-            FDistrict: $("#District option:selected").text(),
-            FCapitalAmount: $("#FCapitalAmount").val()
-        }
-
-        $.ajax({
-            url: "@Url.Content("~/CMemberCenter/CompanyInformationEdit")",
-            type: "POST",
-           // contentType: "application/json; charset=utf-8",
-            data: jsondata,
-        }).done(function (data) {
+        $("#savechanges").click(() => {
+            var companybasiceditformdata = new FormData(document.getElementById("companyBasicEditForm"));
+            fetch('@Url.Content("~/CMemberCenter/CompanyInformationEdit")', {
+                method: 'POST',
+                body: companybasiceditformdata,
+            }).then(function (data) {
             Swal.fire({
                 icon: 'success',
                 title: '修改成功',
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                $('#staticBackdrop').hide()
-                window.location.reload()
+                $.ajax({
+                    url:"@Url.Content("~/Company_Login/getUserName")"
+                }).then(() => {
+                    $('#staticBackdrop').hide()
+                    window.location.reload()
+                })   
             });
         }).fail(function (error) {
             Swal.fire(error.status + ":" + error.statusText);

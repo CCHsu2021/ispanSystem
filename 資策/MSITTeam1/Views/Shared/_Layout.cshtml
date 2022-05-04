@@ -22,7 +22,7 @@
     <link href="~/css/Resumebar.css?@date" rel="stylesheet">
     <link href="~/css/Pagination.css?@date" rel="stylesheet" />
     <link href="~/css/CartView.css" rel="stylesheet" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/flatpickr.min.css" rel="stylesheet" />
     @await RenderSectionAsync("Style", required: false)
 
     <!-- Responsive -->
@@ -205,10 +205,10 @@
                                         <ul>
                                             <li>@Html.ActionLink("前後課堂測試", "Index", "Grade")</li>
                                             <li>
-                                                @Html.ActionLink("前後測驗檢視", "Index", "ShowClassGrade")
+                                                @Html.ActionLink("技能綜合測試", "Index", "SkillGrade")
                                             </li>
                                             <li>
-                                                @Html.ActionLink("技能綜合測試", "Index", "SkillGrade")
+                                                @Html.ActionLink("前後測驗檢視", "Index", "ShowClassGrade")
                                             </li>
                                             <li>
                                                 @Html.ActionLink("技能測驗檢視", "Index", "ShowSkillGrade")
@@ -225,7 +225,7 @@
                                         <a href="https://www.ispan.com.tw/serviceplace">服務據點</a>
                                     </li>
                                     <li>
-                                        @Html.ActionLink("學習地圖", "Index", "LearnMap")
+                                        @Html.ActionLink("前後課堂測試", "Index", "LearnMap")
                                     </li>
                                 </ul>
                             </div>
@@ -368,6 +368,9 @@
     <script src="~/js/Resumebar.js"></script>
     <script src="~/js/Pagination.js"></script>
     <script src="~/js/cartView.js"></script>
+    <script src="~/js/jQuery.print.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/flatpickr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/l10n/zh-tw.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 <script>
