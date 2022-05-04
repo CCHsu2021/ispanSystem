@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MSITTeam1.Models;
-using MSITTeam1.ViewModels;
+using MSITTeam1Admin.Models;
+using MSITTeam1Admin.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MSITTeam1.Controllers
+namespace MSITTeam1Admin.Controllers
 {
-	public class QuestionBankController : Controller
+	public class QuesBankSysAdminController : Controller
 	{
 		private readonly helloContext _context;
-		public QuestionBankController(helloContext context)
+		public QuesBankSysAdminController(helloContext context)
 		{
 			_context = context;
 		}
@@ -22,11 +22,11 @@ namespace MSITTeam1.Controllers
 			return View();
 		}
 		[HttpPost]
-		public IActionResult List([FromBody]CQuestionQueryViewModel query)
+		public IActionResult List([FromBody] CQuestionQueryViewModel query)
 		{
-			ViewBag.Name = CDictionary.username;
-			ViewBag.Type = CDictionary.memtype;
-			ViewBag.account = CDictionary.account;
+			//ViewBag.Name = CDictionary.username;
+			//ViewBag.Type = CDictionary.memtype;
+			//ViewBag.account = CDictionary.account;
 
 			return ViewComponent("QuestionBankList", new { keyword = query.keyword, Subjects = query.Subjects, Type = query.Type });
 		}
@@ -58,7 +58,7 @@ namespace MSITTeam1.Controllers
 			}
 		}
 
-		private IQueryable<CQuestionBankViewModel> FilterByClass(IQueryable<CQuestionBankViewModel> table,string className)
+		private IQueryable<CQuestionBankViewModel> FilterByClass(IQueryable<CQuestionBankViewModel> table, string className)
 		{
 			if (!string.IsNullOrEmpty(className))
 			{
@@ -94,16 +94,18 @@ namespace MSITTeam1.Controllers
 				int lastId = searchLastId.First().FQuestionId;
 				newques.FQuestionId = lastId + 1;
 			}
-			// TODO:6.題目創建者修改
-			if(CDictionary.account != null)
-			{
-				newques.FSubmitterId = CDictionary.account;
-			}
-			else
-			{
-				newques.FSubmitterId = "admin";
-			}
-			newques.FState = 1;
+
+			//if (CDictionary.account != null)
+			//{
+			//	newques.FSubmitterId = CDictionary.account;
+			//}
+			//else
+			//{
+			//	newques.FSubmitterId = "admin";
+			//}
+			newques.FSubmitterId = "admin";
+			// TODO:8.管理者新增題目可以自己設定題目狀態
+			//newques.FState = 2;
 			_context.TQuestionLists.Add(newques.question);
 			foreach (var ans in newques.FChoiceList)
 			{
@@ -132,11 +134,11 @@ namespace MSITTeam1.Controllers
 		public IActionResult EditByVC([FromBody] CQuestionQueryViewModel query)
 		{
 			int questionID = 0;
-			if(query != null)
+			if (query != null)
 			{
 				questionID = Convert.ToInt32(query.questionID);
 			}
-			return ViewComponent("QuestionBankEdit", new { subjectID = query.Subjects, questionID = questionID});
+			return ViewComponent("QuestionBankEdit", new { subjectID = query.Subjects, questionID = questionID });
 		}
 
 		[HttpPost]
@@ -160,13 +162,13 @@ namespace MSITTeam1.Controllers
 					quesSel.FLevel = quesList.FLevel;
 					foreach (var ans in quesList.FChoiceList)
 					{
-						if(ans.FSN != 0)
+						if (ans.FSN != 0)
 						{
-						// 原有選項修改
-						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSN);
-						choSel.FChoice = ans.Fchoice;
-						choSel.FCorrectAnswer = ans.FCorrect;
-						editChoiceSnList.Add(ans.FSN);
+							// 原有選項修改
+							choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSN);
+							choSel.FChoice = ans.Fchoice;
+							choSel.FCorrectAnswer = ans.FCorrect;
+							editChoiceSnList.Add(ans.FSN);
 						}
 						else
 						{
@@ -218,10 +220,6 @@ namespace MSITTeam1.Controllers
 			return RedirectToAction("List");
 		}
 
-		public IActionResult DeleteTest(string subjectID, int questionID)
-		{
-			return Content($"測試成功，技能名稱{subjectID} 題目編號{questionID}", "text/plain", System.Text.Encoding.UTF8);
-		}
 
 		public IActionResult Subject()
 		{
@@ -232,13 +230,5 @@ namespace MSITTeam1.Controllers
 			return Json(subjects);
 		}
 
-		public IActionResult Classes()
-		{
-			var subjects = _context.TStudioInformations.Select(s => new
-			{
-				s.FClassSkill
-			}).Distinct().OrderBy(s => s.FClassSkill);
-			return Json(subjects);
-		}
 	}
 }

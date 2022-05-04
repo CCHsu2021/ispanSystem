@@ -1,0 +1,232 @@
+﻿@model IList<MSITTeam1Admin.ViewModels.CQuestionBankViewModel>
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+
+</style>
+
+
+<div class="container" id="outdivEd" style="padding:20px">
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                if (Model != null)
+                {
+                        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group" style="text-align:center;">
+                                <h3><input type="text" id="FSubjectIdEd" asp-for="@Model[0].FSubjectId" readonly style="text-align:center;" /></h3>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" id="FQuestionIdEd" asp-for="@Model[0].FQuestionId" />
+                                <label id="test1" class="control-label my-2 font-weight-bold h5" asp-for="@Model[0].FQuestion"></label>
+                                <input id="FQuestionEd" asp-for="@Model[0].FQuestion" class="form-control">
+                                <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="@Model[0].FQuestionTypeId" class="control-label my-2 font-weight-bold h5"></label>
+                                <input type="hidden" value="@Model[0].FQuestionTypeId" id="curType" />
+                                <select id="FQuestionTypeIdSelEd" asp-for="@Model[0].FQuestionTypeId" class="form-control">
+                                    <option value="1">單選題</option>
+                                    <option value="2">多選題</option>
+                                </select>
+                                <span asp-validation-for="@Model[0].FQuestionTypeId" class="text-danger"></span>
+                            </div>
+                            <div id="ansListEd">
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    if (Model[i].FSubjectId == Model[0].FSubjectId && Model[i].FQuestionId == Model[0].FCQuestionId)
+                                    {
+                                        <div class="form-group choiceEd">
+                                            <input type="hidden" id="FSN" asp-for="@Model[i].FSn" />
+                                            <input type="hidden" id="FCSubjectId" asp-for="@Model[i].FCSubjectId" />
+                                            <input type="hidden" id="FCQuestionId" asp-for="@Model[i].FCQuestionId" />
+                                            <input type="hidden" id="correctAns" asp-for="@Model[i].FCorrectAnswer" />
+                                            <label asp-for="@Model[i].FChoice" class="control-label my-2 font-weight-bold h5"></label>
+                                            <div class="row align-items-center px-3 choicelist" style="flex-wrap:nowrap">
+                                                <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheckEd(this)" style="width:28px;height:25px"/>
+                                                <input asp-for="@Model[i].FChoice" class="form-control txtAnsEd" style="margin:0 20px 0 10px"/>
+                                                <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
+                                                <button class="tableBtn fas fa-trash-alt delBtnEd" type="button" style="border-radius: 5px; width: 60px;"></button>
+                                            </div>
+                                        </div>
+                                    }
+                                    //TODO:9.增加題目狀態調整欄位
+                                }
+                            </div> 
+                            <div style="text-align: center;">
+                                <button id="BtnNewChoiceEdit" type="button" class="tableBtn fas" style="border-radius:5px;width:200px"><i class="fas fa-plus" style="font-size:25px;"></i></button>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@Model[0].FLevel" class="control-label my-2 font-weight-bold h5"></label>
+                                <input type="hidden" value="@Model[0].FLevel" id="curLevel" />
+                                <div>
+                                    <div class="rating2">
+                                        <div class="br-wrapper br-theme-fontawesome-stars">
+                                            <select class="questionBarRate levelEd" id="example-fontawesome" name="rating" autocomplete="off">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="@Model[0].FLevel" class="text-danger"></span>
+                            </div>
+                            <hr class="my-4" />
+                            <div class="form-group text-center">
+                                <button class="btn btn-primary" type="button" id="saveChangeEd">保存修改</button>
+                            </div>
+                        </form>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    // 正確選項顯示
+        var correctAnswer = 0;
+    $('#ansListEd > div').each(function (idx,item) {
+        correctAnswer = $(item).find('input#correctAns').val();
+        if (correctAnswer === "1") {
+                $(item).find('#checkBox1').attr("checked", true);
+            }
+    })
+
+        // 判斷Checkbox
+    var currentSelectEd = $("#ansListEd input[type='checkbox']:checked").length;
+    var limit = $('#FQuestionTypeIdSelEd').val();
+
+        function doCheckEd(obj) {
+            var quesType = $('#FQuestionTypeIdSelEd').val();            
+            if (quesType === "1") {
+                limit = 1;
+            } else if (quesType === "2") {
+                limit = 100;
+            } else if (quesType === "3") {
+                limit = 1;
+            }
+            obj.checked ? currentSelectEd++ : currentSelectEd--;
+            //console.log("ED" + currentSelectEd);
+            if (currentSelectEd > limit) {
+                obj.checked = false;
+                Swal.fire("超過正確答案上限");
+                currentSelectEd--;
+            }
+        }
+
+        // 根據題型判斷答案輸入欄位及許可正確選項上限 代入當前題目類型和難度等級
+    $('#FQuestionTypeIdSelEd').change(function () {
+        if ($(this).val() === "2") {
+                limit = 100;
+            } else if ($(this).val() === "1") {
+                limit = 1;
+                $('#ansListEd input').removeAttr("checked");
+                currentSelectEd = 0;
+            }
+    })
+
+    var levelCur = $('#curLevel').val();
+    $('#example-fontawesome').find("option").each(function (i, item) {
+        if ((item.value) === levelCur) {
+            item.selected = true; return;
+        }
+    })
+
+        // 新增選項textbox
+        const BtnNewChoiceEdit = document.querySelector('#BtnNewChoiceEdit');
+        BtnNewChoiceEdit.addEventListener('click', function () {
+        var divChoice = `<div class="form-group choiceEd">
+                                            <label class="control-label my-2 font-weight-bold h5">選項</label>
+                                            <div class="row align-items-center px-3" style="flex-wrap:nowrap">
+                                                <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheckEd(this)" style="width:28px;height:25px"/>
+                                                <input asp-for="FChoice" class="form-control txtAnsEd" style="margin:0 20px 0 10px"/>
+                                                <span asp-validation-for="FChoice" class="text-danger"></span>
+                                                <button class="tableBtn fas fa-trash-alt delBtnEd" type="button" style="border-radius: 5px; width: 60px;"></button>
+                                            </div>
+                                        </div>`
+        $('#ansListEd').append(divChoice);
+    });
+
+            $("#outdivEd").on("click", ".delBtnEd", function () {
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(this).closest(".choiceEd").remove();
+                }
+            })
+            });
+
+        // 將所有選項存入Array
+        $('#saveChangeEd').click(function () {
+            var ansArrEd = [];
+            var selectAnsEd = $('#ansListEd input[type=checkbox]:checked').length;
+            var emptyChoiceEd = 0;
+            $('#ansListEd').find('.txtAnsEd').each(function () {
+                if ($(this).val() == "") {
+                    emptyChoiceEd++;
+                }
+            })
+            if (selectAnsEd < 1) {
+                Swal.fire("請填寫此題正確答案");
+            } else if ($('#FQuestionEd').val() == "") {
+                Swal.fire("題目不得為空");
+            } else if (emptyChoiceEd > 0) {
+                Swal.fire("選項內容不得為空");
+            }
+            else {
+                 $('#ansListEd > div').each(function (idx, item) {
+                var ansEd = {}
+                     var c = $(item).find(':checkbox').prop('checked');
+                     var SN = $(item).find('input#FSN').val();
+                     if (SN == null) {
+                         SN = 0;
+                     }
+                     ansEd.FCorrect = c ? 1 : 2;
+                     ansEd.Fchoice = $(item).find(':text').val();
+                     ansEd.FSN = SN;
+                ansArrEd.push(ansEd);
+            })
+
+            var Editjsondata = JSON.stringify({
+                FSubjectId: $('#FSubjectIdEd').val(),
+                FQuestionId: $('#FQuestionIdEd').val(),
+                FQuestion: $('#FQuestionEd').val(),
+                FQuestionTypeId: $('#FQuestionTypeIdSelEd').val(),
+                FChoiceList: ansArrEd,
+                FLevel: $('.levelEd').val()
+            })
+            $.ajax({
+                url: "@Url.Content("~/QuesBankSysAdmin/Edit")",
+                type: "POST",
+                contentType: "application/json",
+                data:Editjsondata
+            }).done(function (data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '修改成功',
+                    showConfirmButton: true,
+                    timer:1500
+                }).then(() => {
+                    $('#questionEdit').modal('hide');
+                });
+            })
+            }
+        })
+</script>
+<script src="~/js/jquery.barrating.js"></script>
+<script src="~/js/barRating.init.js"></script>
