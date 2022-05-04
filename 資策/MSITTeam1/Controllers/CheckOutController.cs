@@ -44,6 +44,7 @@ namespace MSITTeam1.Controllers
                 var Sdis = hello.StudentBasics.FirstOrDefault(c => c.FAccount == CDictionary.account).FDistrict;
                 var Sadr = hello.StudentBasics.FirstOrDefault(c => c.FAccount == CDictionary.account).ContactAddress;
                 ViewBag.SAddress = Scity + Sdis + Sadr;
+                ViewBag.Point = hello.TStudentPoints.Sum(p => p.PointRecord);
             }
             if (CDictionary.memtype == "2")
             {
