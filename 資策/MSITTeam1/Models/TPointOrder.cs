@@ -12,5 +12,7 @@ namespace MSITTeam1.Models
         public string OrderDate { get; set; }
         public int? BuyPoint { get; set; }
         public int? PayMethod { get; set; }
+        public int? Bonus { get; set; }
+        public int? ToTalGetPoint { get; set; }
     }
 }

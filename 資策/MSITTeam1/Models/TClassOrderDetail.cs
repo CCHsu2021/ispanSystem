@@ -14,5 +14,7 @@ namespace MSITTeam1.Models
         public string MemberId { get; set; }
         public double? Discount { get; set; }
         public string DepartmentName { get; set; }
+        public string StaffName { get; set; }
+        public string StaffEmail { get; set; }
     }
 }
