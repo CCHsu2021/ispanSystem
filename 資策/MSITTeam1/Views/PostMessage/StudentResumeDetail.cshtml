@@ -1,0 +1,60 @@
+﻿@model MSITTeam1.ViewModels.TCompanyResumeReceiveViewModel
+
+@{
+    ViewData["Title"] = "StudentResumeDetail";
+}
+
+<h1>StudentResumeDetail</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form>  
+    <button class="btn-style-two" type="submit">資料修改</button>
+</form>
+@*@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResumeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyTaxid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComReadOrNot)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeToContact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CoverLetter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifyTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ResumeSendId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ResumeSendId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ResumeSendId">Delete</a>
+            </td>
+        </tr>
+}*@
