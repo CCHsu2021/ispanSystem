@@ -7,12 +7,18 @@
 
   <ItemGroup>
     <Compile Remove="js\**" />
+    <Compile Remove="wwwroot\css\NewFolder\**" />
     <Content Remove="js\**" />
+    <Content Remove="wwwroot\css\NewFolder\**" />
     <EmbeddedResource Remove="js\**" />
+    <EmbeddedResource Remove="wwwroot\css\NewFolder\**" />
     <None Remove="js\**" />
+    <None Remove="wwwroot\css\NewFolder\**" />
+    <TypeScriptCompile Remove="wwwroot\css\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\flatPicker.css" />
     <Content Remove="Views\TJobVacancies\Create.cshtml" />
     <Content Remove="Views\TJobVacancies\Delete.cshtml" />
     <Content Remove="Views\TJobVacancies\Details.cshtml" />

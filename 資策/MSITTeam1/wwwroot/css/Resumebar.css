@@ -156,7 +156,7 @@
 }
 
 .indicator {
-    width: 35px;
+    width: 30px;
     height: 25px;
     border: 4px solid #fab684;
     border-radius: 50%;
@@ -236,17 +236,18 @@
 .image-upload {
     overflow: hidden;
     text-align: center;
-    margin-top:20px;
-    
+    margin-top: 20px;
+    padding-bottom: 20px;
 }
 
     .image-upload img {
         margin-top: 25px;
         border-radius: 15px;
-        height: 220px;
+        height: 230px;
         object-fit: contain;
         transform: scale(1,1);
-        transition: all 0.2s ease-out
+        transition: all 0.2s ease-out;
+        cursor: pointer;
     }
 
         .image-upload img:hover {
@@ -287,3 +288,4 @@
     height:730px;
 
 }
+

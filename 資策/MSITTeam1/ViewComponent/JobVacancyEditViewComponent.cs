@@ -16,13 +16,18 @@ namespace MSITTeam1.ViewComponent
         {
             hello = _hello;
         }
-        public IViewComponentResult Invoke(int id)
+        public IViewComponentResult Invoke(int id = 0)
         {
-            TNewJobVacancy job = hello.TNewJobVacancies.FirstOrDefault(p => p.Fid == id);
-
-            CJobVacancyViewModel c = new CJobVacancyViewModel() { job = job };
-            
-            return View(c);
+            if (id != 0) 
+            {
+                TNewJobVacancy job = hello.TNewJobVacancies.FirstOrDefault(p => p.Fid == id);
+                if(job != null)
+                {
+                    CJobVacancyViewModel c = new CJobVacancyViewModel() { job = job };
+                    return View(c);
+                }
+            }
+            return View();
         }
     }
 }

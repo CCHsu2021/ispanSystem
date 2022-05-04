@@ -6,6 +6,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
 
+
 <div class="resumebar">
     <div class="pagination-container full-width-container">
         <div class="sized-container">
@@ -35,8 +36,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="fBirthDate" class="control-label"></label>
-                                    <input id="fBirthDate" asp-for="fBirthDate" class="form-control" type="text" name="fBirthDate" />
+                                    @*<input id="fBirthDate" asp-for="fBirthDate" class="form-control" type="text" name="fBirthDate" />*@
+                                    <input style="background-color:white" type="text" class="form-control" id="flatpickr-maxDate" name="fBirthDate">
                                     <span asp-validation-for="fBirthDate" class="text-danger"></span>
+                                    
                                 </div>
                             </div>
                             <div class="col-4">
@@ -106,7 +109,8 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="EmploymentFrom" class="control-label"></label>
-                                <input id="EmploymentFrom" asp-for="EmploymentFrom" class="form-control" />
+                                @*<input id="EmploymentFrom" asp-for="EmploymentFrom" class="form-control" />*@
+                                <input style="background-color:white" type="text" class="form-control" id="flatpickr-maxDate-EmploymentFrom" >
                                 <span asp-validation-for="EmploymentFrom" class="text-danger"></span>
                             </div>
                             <button class="creatworkbtn my-3" id="createWork">新增</button>
@@ -114,7 +118,8 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label asp-for="EmploymentTo" class="control-label"></label>
-                                <input id="EmploymentTo" asp-for="EmploymentTo" class="form-control" />
+                                @*<input id="EmploymentTo" asp-for="EmploymentTo" class="form-control" />*@
+                                <input style="background-color:white" type="text" class="form-control" id="flatpickr-maxDate-EmploymentTo" >
                                 <span asp-validation-for="EmploymentTo" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -276,17 +281,12 @@
                      <div class="card portdata"><vc:student-portfolio></vc:student-portfolio></div>
                 </div>
             </li>
-            <li class="slide" data-tag="產生履歷">
+            <li class="slide" data-tag="產生履歷與匯出">
                 <div class="sized-container">
                     <vc:student-resume-create></vc:student-resume-create>
                 </div>
             </li>
-            <li class="slide " data-tag="瀏覽及匯出">
-                <div class="sized-container">
-                    <h1>Confirm your application.</h1>
-                    <h2>Information about this section.</h2>
-                </div>
-            </li>
+           
         </ul>
     </div>
     <div class="full-width-container ">
@@ -299,6 +299,7 @@
 
 @section Scripts
 {
+
 <script>
     var currentSlide = 0,
         $slideContainer = $('.slide-container'),
@@ -327,8 +328,17 @@
         $pagination.find('.indicator').eq(0).addClass('active');
     }
 
+    if (currentSlide==0){
+    $('.previous').hide();
+    }
     function goToNextSlide() {
-        if (currentSlide >= slideCount - 1) return;
+        if (currentSlide >= slideCount - 1) {
+            $('.previous').show();
+            return;
+        }else{
+            $('.previous').show();
+        };
+
         var windowWidth = $(window).width();
         currentSlide++;
         $slideContainer.animate({
@@ -341,7 +351,10 @@
     }
 
     function goToPreviousSlide() {
-        if (currentSlide <= 0) return;
+        if (currentSlide <= 0) {
+             $('.previous').hide();
+            return
+        };
         var windowWidth = $(window).width();
         currentSlide--;
         $slideContainer.animate({
@@ -375,6 +388,38 @@
     $(window).resize(postitionSlides);
     $('.next').on('click', goToNextSlide);
     $('.previous').on('click', goToPreviousSlide);
+
+    // 最大値
+    flatpickr('#flatpickr-maxDate', {
+    maxDate: 'today',
+    locale: 'zh_tw'
+    });
+    flatpickr('#flatpickr-maxDate-EmploymentFrom', {
+    maxDate: 'today',
+    locale: 'zh_tw'
+    });
+    flatpickr('#flatpickr-maxDate-EmploymentTo', {
+    maxDate: 'today',
+    locale: 'zh_tw'
+    });
+
+     $.ajax({
+            url: '@Url.Content("~/StudentResume/ReturnBasicdata")',
+            method:'post',
+            dataType:'json',
+            success: function (datas) {
+                for(var row in datas){
+
+                    $("#flatpickr-maxDate").val(datas[row].birthDate);
+
+                }
+                ;
+            }
+        }).done((data) => {
+            console.log(data)
+        })
+    //var daytime = $("#flatpickr-maxDate option:selected").text();
+    //console.log(daytime);
     //圖片瀏覽
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -426,8 +471,8 @@
         CompanyName:$("#CompanyName").val(),
         CompanyDepartment:$("#CompanyDepartment").val(),
         JobTitle:$("#JobTitle").val(),
-        EmploymentFrom:$("#EmploymentFrom").val(),
-        EmploymentTo:$("#EmploymentTo").val(),
+        EmploymentFrom:$("#flatpickr-maxDate-EmploymentFrom").val(),
+        EmploymentTo:$("#flatpickr-maxDate-EmploymentTo").val(),
         JobDescription:$("#JobDescription").val()
         })
 
@@ -458,8 +503,8 @@
         CompanyName:$("#CompanyName").val(),
         CompanyDepartment:$("#CompanyDepartment").val(),
         JobTitle:$("#JobTitle").val(),
-        EmploymentFrom:$("#EmploymentFrom").val(),
-        EmploymentTo:$("#EmploymentTo").val(),
+        EmploymentFrom:$("#flatpickr-maxDate-EmploymentFrom").val(),
+        EmploymentTo:$("#flatpickr-maxDate-EmploymentTo").val(),
         JobDescription:$("#JobDescription").val()
         })
         $.ajax({
@@ -716,9 +761,16 @@
         })
      }
 
+    // //flatpicker
+    //$("#basicDate").flatpickr({
+    //enableTime: true,
+    //dateFormat: "F, d Y "
+    //});
+
 
 </script>
 }
+
 
 
 

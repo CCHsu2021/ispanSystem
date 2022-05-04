@@ -149,57 +149,27 @@
             });
 
         $("#previewpage").click(() => {
-            window.location = '@Url.Content("~/CCompanyBasic/Index?taxid=")' +'@ViewBag.Account'
+            window.open('@Url.Content("~/CCompanyBasic/Index?taxid=")' +'@ViewBag.Account')
         })
         //基本資料變更儲存
-    $("#savechanges").click(() => {
-        var jsondata ={
-            CompanyTaxid: $("#CompanyTaxid").val(),
-            FName: $("#FName").val(),
-            FPhoneCode: $("#FPhoneCode").val(),
-            FPhone: $("#FPhone").val(),
-            FFaxCode: $("#FFaxCode").val(),
-            FFax: $("#FFax").val(),
-            FWebsite: $("#FWebsite").val(),
-            FRelatedLink: $("#FRelatedLink").val(),
-            FContactPerson: $("#FContactPerson").val(),
-            FCity: $("#FCity").val(),
-            FDistrict: $("#FDistrict").val(),
-            FAddress: $("#FAddress").val(),
-            FEmail: $("#FEmail").val(),
-            FBenefits: $("#FBenefits").val(),
-            FCustomInfo: $("#FCustomInfo").val(),
-            FCity: $("#City option:selected").text(),
-            FDistrictCode: $("#District").val(),
-            FDistrict: $("#District option:selected").text(),
-            FCapitalAmount: $("#FCapitalAmount").val()
-        }
-        //var picturedata = new FormData(document.fileupload)
-        @*$.post("@Url.Content("~/CMemberCenter/CompanyInformationEdit")", jsondata, function (data) {
+        $("#savechanges").click(() => {
+            var companybasiceditformdata = new FormData(document.getElementById("companyBasicEditForm"));
+            fetch('@Url.Content("~/CMemberCenter/CompanyInformationEdit")', {
+                method: 'POST',
+                body: companybasiceditformdata,
+            }).then(function (data) {
             Swal.fire({
                 icon: 'success',
                 title: '修改成功',
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                $('#staticBackdrop').hide()
-                window.location.reload()
-            });
-        })*@
-        $.ajax({
-            url: "@Url.Content("~/CMemberCenter/CompanyInformationEdit")",
-            type: "POST",
-           // contentType: "application/json; charset=utf-8",
-            data: jsondata,
-        }).done(function (data) {
-            Swal.fire({
-                icon: 'success',
-                title: '修改成功',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(() => {
-                $('#staticBackdrop').hide()
-                window.location.reload()
+                $.ajax({
+                    url:"@Url.Content("~/Company_Login/getUserName")"
+                }).then(() => {
+                    $('#staticBackdrop').hide()
+                    window.location.reload()
+                })   
             });
         }).fail(function (error) {
             Swal.fire(error.status + ":" + error.statusText);
@@ -273,15 +243,64 @@
     });
 
 
-    $("#job-Vacancy-Create-Btn").click(function () {
-        var jobVacancy_FormData = new FormData(document.jobVacancyCreateForm);
-        fetch('@Url.Content("~/CMemberCenter/CreateJobVacancy")',{
-                method:'POST',
-            body: jobVacancy_FormData,
-            }).then(function () {
-                ("#loadJobVacancyList").load(location.href + " #JobVacancylist");
+        $("#job-Vacancy-Create-Btn").click(function () {
+            var jobVacancy_FormData = new FormData(document.jobVacancyCreateForm);
+            fetch('@Url.Content("~/CMemberCenter/CreateJobVacancy")', {
+                method: 'POST',
+                body: jobVacancy_FormData,
+            }).then(function (result) {
+                if (result.fail) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: "更新失敗，請再檢查是否有同樣工作名稱",
+                    })
+                }
+                else {
+                    $("#loadJobVacancyList").load(location.href + " #JobVacancylist");
+                }
             })
-    })
+        });
+
+        $("#jobVacancy-Edit-Btn").click(() => {
+            var joblisteditformdata = new FormData(document.getElementById("jobVacancyListEdit"))
+            fetch('@Url.Content("~/CMemberCenter/JobVacancyEdit")', {
+                method: 'POST',
+                body: joblisteditformdata,
+            }).then(function (result) {
+                if (result.fail) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: "更新失敗，請再檢查是否有同樣工作名稱",
+                    })
+                } else if (result = "更新成功") {
+                    window.location.reload()
+                    //$(".loadJobVacancyList").load(location.href + " .JobVacancylist");
+                }
+            })
+        });
+
+        function deleteJobVacancy(id) {
+            Swal.fire({
+                icon: 'warning',
+                title: "確定刪除嗎?",
+                confirmButtonText: '確定',
+                cancelButtonText:'取消',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Content("~/CMemberCenter/JobVacancyDelete")',
+                        method: "Post",
+                        data: {id:id},
+                    }).then(function () {
+                        window.location.reload()
+                    })
+                } else if (result.isDismissed)
+                {
+                    Swal.close()
+                }
+            })
+
+        }
     </script>
 }
 
