@@ -16,6 +16,8 @@
         firstClass: "page-item pageColor first",
         pageClass: "page-item pageColor",
         activeClass: "page-item pageBG",
+        initiateStartPageClick: true,
+        hideOnlyOnePage: true,
         onPageClick: function (event, page) {
         }
     }).on('page', function (event, page) {
