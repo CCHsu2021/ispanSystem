@@ -22,6 +22,7 @@ namespace MSITTeam1.Controllers
         // GET: PostMessage
         public IActionResult Index()
         {
+            //todo 目前這邊登入資料寫死
             string account = "222";
             ViewBag.account = account;
             var companyResumeReceive = from p in _context.TMemberResumeSends
