@@ -110,7 +110,9 @@
                         </div>
                     </div>
                     <div id="menu6" class="container tab-pane fade">
-                        <vc:job-vacancy></vc:job-vacancy>
+                        <div id="jobVacancy-List-View">
+                            <vc:job-vacancy></vc:job-vacancy>
+                        </div>
                         <div id="JoblistPagination" class="row my-4"></div>
                     </div>
                     <div id="menu7" class="container tab-pane fade">
@@ -261,24 +263,27 @@
             })
         });
 
-        $("#jobVacancy-Edit-Btn").click(() => {
-            var joblisteditformdata = new FormData(document.getElementById("jobVacancyListEdit"))
+        function editJobVacancy(id) {
+            var joblisteditformdata = new FormData(document.getElementById("jobVacancyListEdit-"+id))
             fetch('@Url.Content("~/CMemberCenter/JobVacancyEdit")', {
                 method: 'POST',
                 body: joblisteditformdata,
-            }).then(function (result) {
-                if (result.fail) {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: "更新失敗，請再檢查是否有同樣工作名稱",
-                    })
-                } else if (result = "更新成功") {
-                    window.location.reload()
-                    //$(".loadJobVacancyList").load(location.href + " .JobVacancylist");
-                }
-            })
-        });
-
+            }).then(async function (response) {
+                selectJobDetail(await response.json())
+            });
+        };
+        function selectJobDetail(data) {
+            $("#fJobName" + data.fid).text(data.fJobName);
+            if (data.fSalaryMin != null && data.fSalaryMax != null) {
+                $("#fSalary" + data.fid).text("薪資：" + data.fSalaryMode + data.fSalaryMin + "～" + data.fSalaryMax);
+            } else
+            {
+                $("#fSalary" + data.fid).text("薪資：" + data.fSalaryMode + data.fSalaryMin);
+            }
+            //$.each(data,function (item) {
+            //    $("#1").text(item.fJobName)
+            //})
+        }
         function deleteJobVacancy(id) {
             Swal.fire({
                 icon: 'warning',

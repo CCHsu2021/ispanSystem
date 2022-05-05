@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-12">
-        <form id="jobVacancyListEdit">
+        <form id="jobVacancyListEdit-@ViewBag.fid">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Fid" type="hidden" />
             <input asp-for="FCompanyTaxid" class="form-control" type="hidden" />
@@ -103,7 +103,7 @@
                 <span asp-validation-for="FOther" class="text-danger"></span>
             </div>
             <div class="form-group" style="text-align:right">
-                <input type="button" value="儲存修改" id="jobVacancy-Edit-Btn" class="btn btn-primary" />
+                <input type="button" value="儲存修改" id="jobVacancy-Edit-Btn-@ViewBag.fid" class="btn btn-primary" onclick="editJobVacancy(@ViewBag.fid)" data-dismiss="modal"/>
             </div>
         </form>
     </div>

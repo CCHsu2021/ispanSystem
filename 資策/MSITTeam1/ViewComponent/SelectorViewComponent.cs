@@ -75,7 +75,15 @@ namespace MSITTeam1.ViewComponent
             }
             if(districtname != "")
             {
-                items.Where(p => p.Text == districtname).First().Selected = true;
+                int num = 0;
+                if (int.TryParse(districtname,out num))
+                {
+                    items.Where(p => p.Value == districtname).First().Selected = true;
+                }
+                else
+                {
+                    items.Where(p => p.Text == districtname).First().Selected = true;
+                }
             }
             return items;
 

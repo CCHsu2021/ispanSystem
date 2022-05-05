@@ -206,11 +206,14 @@ namespace MSITTeam1.Controllers
                     job.FWorkAddress = jobedit.FWorkAddress;
                     job.FWorkExp = jobedit.FWorkExp;
                     job.FWorkHours = jobedit.FWorkHours;
+                    job.FModifyTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd tt HH:mm:ss"));
                     hello.SaveChanges();
-                    return Json(new { suc = "更新成功" });
+                    //return ViewComponent("JobVacancy");
+                    return Json(jobedit);
+                    //return Json(new { suc = "更新成功" });
                 }
             }
-            return Json(new { fail = "更新失敗" });
+            return PartialView("JobVacancy");
         }
         [HttpPost]
         public IActionResult JobVacancyDelete(int id)

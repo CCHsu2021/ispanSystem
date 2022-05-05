@@ -1,4 +1,5 @@
 ﻿using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.IdentityModel.Protocols;
 using MimeKit;
 using System;
@@ -14,35 +15,33 @@ namespace MSITTeam1.Models
     {
         public static string mail(string emailaddress,string account,string webpath)
         {
-            try
-            {
                 MimeMessage message = new MimeMessage();
                 message.From.Add(new MailboxAddress(System.Text.Encoding.UTF8, "Ispan.International.Company@gmail.com", "資展國際股份有限公司"));
                 message.To.Add(new MailboxAddress(System.Text.Encoding.UTF8, account, emailaddress));
                 message.Subject = "《資展國際股份有限公司》忘記密碼重設信";
                 var bodyBuilder = new BodyBuilder();
-                bodyBuilder.TextBody = $"親愛的{account}您好\n";
-                bodyBuilder.TextBody += $"您於{DateTime.Now.ToString("yyyyMMdd")}申請忘記密碼\n";
-                bodyBuilder.TextBody += $"如您未申請此功能請忽略此郵件\n";
-                bodyBuilder.TextBody += $"請點擊以下連結，返回網站重新設定密碼，逾期 30 分鐘後，此連結將會失效。<br><br>";
-                bodyBuilder.TextBody += $"------------------------------------------------------\n";
-                bodyBuilder.TextBody += webpath;
-                bodyBuilder.TextBody += $"------------------------------------------------------\n";
-                bodyBuilder.TextBody += $"\n";
-                bodyBuilder.TextBody += $"\n";
-                bodyBuilder.TextBody += $"\n";
-                bodyBuilder.TextBody += $"\n";
-                bodyBuilder.TextBody += $"如有任何問題請隨時與我們聯繫";
+                bodyBuilder.HtmlBody = $"<div>親愛的  {account}  您好</div><hr><br><br>";
+                bodyBuilder.HtmlBody += $"<div>您於{DateTime.Now.ToString("yyyyMMdd g")}申請忘記密碼</div><br><br>";
+                bodyBuilder.HtmlBody += $"<div>如您未申請此功能請忽略此郵件</div><br><br>";
+                bodyBuilder.HtmlBody += $"請點擊以下連結，返回網站重新設定密碼，逾期 30 分鐘後，此連結將會失效。<br><br>";
+                bodyBuilder.HtmlBody += $"------------------------------------------------------------------------<br>";
+                bodyBuilder.HtmlBody += webpath;
+                bodyBuilder.HtmlBody += $"------------------------------------------------------------------------<br>";
+                bodyBuilder.HtmlBody += $"<br>";
+                bodyBuilder.HtmlBody += $"<br>";
+                bodyBuilder.HtmlBody += $"<br>";
+                bodyBuilder.HtmlBody += $"<br>";
+                bodyBuilder.HtmlBody += $"<div>如有任何問題請隨時與我們聯繫</div>";
                 message.Body = bodyBuilder.ToMessageBody();
 
                 using (var client = new SmtpClient())
                 {
                     var hostUrl = "smtp.gmail.com";
                     var port = 587;
-                    var useSsl = true;
+                    //var useSsl = true;
 
 
-                    client.Connect(hostUrl, port, useSsl);
+                    client.Connect(hostUrl, port, false);
 
 
                     client.Authenticate("Ispan.International.Company@gmail.com", "Aa19950617");
@@ -54,17 +53,5 @@ namespace MSITTeam1.Models
                 message.Dispose();
                 return "success"; 
             }
-            catch
-            {
-                return "false";
-            }
-         
-
-
-
-
-
-
         }
     }
-}

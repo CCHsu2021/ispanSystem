@@ -198,7 +198,7 @@
                         <div class="loadJobVacancyList">
                             <div class="JobVacancylist">
                                 <div class="p-10">
-                                    <h5 class="font-weight-bold">
+                                    <h5 class="font-weight-bold" id="fJobName@(item.Fid)">
                                         @Html.DisplayFor(modelItem => item.FJobName)
                                     </h5>
                                     <hr />
@@ -207,39 +207,39 @@
                                     <div class="col-md-7 col-lg-7" style="line-height:2rem">
                                         @if (item.FSalaryMax != null)
                                         {
-                                            <div>薪資：@item.FSalaryMode@item.FSalaryMin～@item.FSalaryMax</div>
+                                            <div id="fSalary@(item.Fid) ">薪資：@item.FSalaryMode@item.FSalaryMin～@item.FSalaryMax</div>
                                         }
                                         else
                                         {
-                                            <div>薪資：@item.FSalaryMode@item.FSalaryMin</div>
+                                            <div id="fSalary@(item.Fid)">薪資：@item.FSalaryMode@item.FSalaryMin</div>
 
                                         }
-                                        <div>工作地址：@item.FCity@item.FDistrict@item.FWorkAddress</div>
-                                        <div>工作性質：@item.FEmployeeType</div>
-                                        <div>工作時數：@item.FWorkHours</div>
-                                        <div>排休制度：@item.FLeaveSystem</div>
-                                        <div>需求技能：@item.FJobSkill</div>
-                                        <div>需求學歷：@item.FEducation</div>
-                                        <div>需求人數：@item.FNeedPerson</div>
-                                        <div>工作經歷：@item.FWorkExp</div>
+                                        <div id="fWorkAddress@(item.Fid)">工作地址：@item.FCity@item.FDistrict@item.FWorkAddress</div>
+                                        <div id="fEmpolyeeType@(item.Fid)">工作性質：@item.FEmployeeType</div>
+                                        <div id="fWorkhours@(item.Fid)">工作時數：@item.FWorkHours</div>
+                                        <div id="fLeaveSystem@(item.Fid)">排休制度：@item.FLeaveSystem</div>
+                                        <div id="fJobSkill@(item.Fid)">需求技能：@item.FJobSkill</div>
+                                        <div id="fEducation@(item.Fid)">需求學歷：@item.FEducation</div>
+                                        <div id="fNeedPerson@(item.Fid)">需求人數：@item.FNeedPerson</div>
+                                        <div id="fWorkExp@(item.Fid)">工作經歷：@item.FWorkExp</div>
                                     </div>
                                     <div class="col-md-5 col-lg-5" style="line-height:2rem">
-                                        <div>工作類型：@item.FJobListName</div>
-                                        <div>聯繫人：@item.FContactPerson</div>
-                                        <div>聯繫人電話：@item.FContactPhone</div>
-                                        <div>聯繫人傳真：@item.FContactFax</div>
-                                        <div>聯繫人信箱：@item.FContactEmail</div>
+                                        <div id="fJobListName@(item.Fid)">工作類型：@item.FJobListName</div>
+                                        <div id="fContactPerson@(item.Fid)">聯繫人：@item.FContactPerson</div>
+                                        <div id="fContactPhonee@(item.Fid)">聯繫人電話：@item.FContactPhone</div>
+                                        <div id="fContactFax@(item.Fid)">聯繫人傳真：@item.FContactFax</div>
+                                        <div id="fContactEmail@(item.Fid)">聯繫人信箱：@item.FContactEmail</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-12">
-                                    <div>備註：@item.FOther</div>
+                                    <div id="fOther@(item.Fid)">備註：@item.FOther</div>
                                 </div>
                             </div>
                         </div>
                         <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0" style="position: relative;">
-                            <div style="position: absolute; left: 0; bottom: 0;">最後更新時間：@item.FModifyTime</div>
+                            <div id="fModifyTime@(item.Fid)" style="position: absolute; left: 0; bottom: 0;">最後更新時間：@item.FModifyTime</div>
                             <button class="fas fa-pencil-alt fa-2x joblistbtn" id="@item.FCompanyTaxid@count"  data-toggle="modal" data-target="#JobVacancy-Edit-Modal-@item.FCompanyTaxid@count"></button>
                             <button class="fas fa-trash-alt fa-2x joblistbtn" id="JobVacancy-Delete-Btn" onclick="deleteJobVacancy(@item.Fid)"></button>
                             <!-- Modal -->
@@ -266,6 +266,7 @@
         }
     </div>
 </div>
+
 
 
 
