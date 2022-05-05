@@ -1,0 +1,42 @@
+﻿@model MSITTeam1.ViewModels.TCompanyRespondViewModel
+
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="CompanyRespondId" class="form-control" type="hidden" />
+                <input asp-for="ResumeSendId" class="form-control" type="hidden" />
+            </div>
+            <div class="form-group">
+                <label asp-for="JobName" class="control-label"></label>
+                <input asp-for="JobName" class="form-control" readonly />
+                <span asp-validation-for="JobName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactPerson" class="control-label"></label>
+                <input asp-for="ContactPerson" class="form-control" />
+                <span asp-validation-for="ContactPerson" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactPersonPhone" class="control-label"></label>
+                <input asp-for="ContactPersonPhone" class="form-control" placeholder="EX.0912345678" /> @*pattern="/^09[0-9]{8}$/"*@
+                <span asp-validation-for="ContactPersonPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactPersonEmail" class="control-label"></label>
+                <input type="email" asp-for="ContactPersonEmail" class="form-control" placeholder="EX.abc123@gmail.com" /> 
+                <span asp-validation-for="ContactPersonEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InterviewContent" class="control-label"></label>
+                <textarea asp-for="InterviewContent" class="form-control" style="overflow-y:scroll;resize:none" maxlength="500" placeholder="請輸入500字以內的求職信內容"></textarea>
+                <span asp-validation-for="InterviewContent" class="text-danger"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button asp-action="ResumeSend" type="submit" class="btn btn-primary" data-dismiss="modal">送出</button>  @*data-dismiss="modal"*@
+            </div>
+        </form>
+    </div>
+</div>

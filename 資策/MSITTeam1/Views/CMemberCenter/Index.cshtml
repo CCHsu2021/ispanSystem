@@ -113,7 +113,7 @@
                         <div id="jobVacancy-List-View">
                             <vc:job-vacancy></vc:job-vacancy>
                         </div>
-                        <div id="JoblistPagination" class="row my-4"></div>
+                        
                     </div>
                     <div id="menu7" class="container tab-pane fade">
                         <div class="row about-box">
@@ -209,9 +209,8 @@
                 $("#loadphotolist").load(location.href + " #CompanyPhotoList")
             })
         })
-        $(function () {
-            initPagination('.job-card', 2, '#JoblistPagination')
-        });
+
+    
 
         Dropzone.options.form1 = {
             dictDefaultMessage: "拖曳檔案或是點擊上傳",
@@ -269,21 +268,16 @@
                 method: 'POST',
                 body: joblisteditformdata,
             }).then(async function (response) {
-                selectJobDetail(await response.json())
-            });
+                //$('#JoblistPagination').empty();
+                //$('#JoblistPagination').removeData("twbs-pagination");
+                //$('#JoblistPagination').unbind('.job-card');
+                $('#JoblistPagination').twbsPagination('destroy');
+                return (await response.text());
+            }).then(async function (data) {
+                $("#jobVacancy-List-View").html(data);
+            })
         };
-        function selectJobDetail(data) {
-            $("#fJobName" + data.fid).text(data.fJobName);
-            if (data.fSalaryMin != null && data.fSalaryMax != null) {
-                $("#fSalary" + data.fid).text("薪資：" + data.fSalaryMode + data.fSalaryMin + "～" + data.fSalaryMax);
-            } else
-            {
-                $("#fSalary" + data.fid).text("薪資：" + data.fSalaryMode + data.fSalaryMin);
-            }
-            //$.each(data,function (item) {
-            //    $("#1").text(item.fJobName)
-            //})
-        }
+
         function deleteJobVacancy(id) {
             Swal.fire({
                 icon: 'warning',
