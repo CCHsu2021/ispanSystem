@@ -11,5 +11,6 @@ namespace MSITTeam1Admin.ViewModels
 		public string Type { get; set; }
 		public string keyword { get; set; }
 		public string questionID { get; set; }
+		public string State { get; set; }
 	}
 }
