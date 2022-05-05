@@ -144,8 +144,47 @@ namespace MSITTeam1.Controllers
             }
             return Json(new { fail = "找不到用戶" });
         }
-        public IActionResult ForgetPWD()
+        public IActionResult ForgetPWD(string verify)
         {
+
+            if (verify == "")
+            {
+                ViewData["ErrorMsg"] = "缺少驗證碼";
+                return View();
+            }
+            string SecretKey = "IspanMsit40";
+            try
+            {
+                TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+                MD5 md5 = new MD5CryptoServiceProvider();
+                byte[] buf = Encoding.UTF8.GetBytes(SecretKey);
+                byte[] md5result = md5.ComputeHash(buf);
+                string md5Key = BitConverter.ToString(md5result).Replace("-", "").ToLower().Substring(0, 24);
+                DES.Key = UTF8Encoding.UTF8.GetBytes(md5Key);
+                DES.Mode = CipherMode.ECB;
+                DES.Padding = PaddingMode.PKCS7;
+                ICryptoTransform DESDecrypt = DES.CreateDecryptor();
+                byte[] Buffer = Convert.FromBase64String(verify);
+                string deCode = UTF8Encoding.UTF8.GetString(DESDecrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+
+                verify = deCode;
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMsg"] = "驗證碼錯誤";
+                return View();
+            }
+            string UserID = verify.Split('|')[0];
+            string ResetTime = verify.Split('|')[1];
+            DateTime dResetTime = Convert.ToDateTime(ResetTime);
+            TimeSpan TS = new System.TimeSpan(DateTime.Now.Ticks - dResetTime.Ticks);
+            double diff = Convert.ToDouble(TS.TotalMinutes);
+            if (diff > 30)
+            {
+                ViewData["ErrorMsg"] = "超過驗證碼有效時間，請重寄驗證碼";
+                return View();
+            }
+            HttpContext.Session.SetString("ResetPwdUserId", UserID);
             return View();
         }
 
