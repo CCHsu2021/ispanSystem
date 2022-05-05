@@ -17,6 +17,11 @@ namespace MSITTeam1Admin.Controllers
 			_context = context;
 		}
 
+		public IActionResult Index()
+		{
+			return View();
+		}
+
 		public IActionResult List()
 		{
 			return View();
