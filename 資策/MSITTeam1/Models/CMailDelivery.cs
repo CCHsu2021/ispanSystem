@@ -12,7 +12,7 @@ namespace MSITTeam1.Models
 {
     public class CMailDelivery
     {
-        public static string mail(string emailaddress,string account)
+        public static string mail(string emailaddress,string account,string webpath)
         {
             try
             {
@@ -24,9 +24,9 @@ namespace MSITTeam1.Models
                 bodyBuilder.TextBody = $"親愛的{account}您好\n";
                 bodyBuilder.TextBody += $"您於{DateTime.Now.ToString("yyyyMMdd")}申請忘記密碼\n";
                 bodyBuilder.TextBody += $"如您未申請此功能請忽略此郵件\n";
-                bodyBuilder.TextBody += $"以下是您的密碼\n";
+                bodyBuilder.TextBody += $"請點擊以下連結，返回網站重新設定密碼，逾期 30 分鐘後，此連結將會失效。<br><br>";
                 bodyBuilder.TextBody += $"------------------------------------------------------\n";
-                bodyBuilder.TextBody += $"密碼：";
+                bodyBuilder.TextBody += webpath;
                 bodyBuilder.TextBody += $"------------------------------------------------------\n";
                 bodyBuilder.TextBody += $"\n";
                 bodyBuilder.TextBody += $"\n";
@@ -45,7 +45,7 @@ namespace MSITTeam1.Models
                     client.Connect(hostUrl, port, useSsl);
 
 
-                    // client.Authenticate("account", "password");
+                    client.Authenticate("Ispan.International.Company@gmail.com", "Aa19950617");
 
                     client.Send(message);
 

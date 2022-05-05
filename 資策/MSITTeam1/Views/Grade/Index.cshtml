@@ -48,7 +48,7 @@
 
                 <div>
                     <input type="radio" id="@count" name="@item.fQuestionID" value="@item.fCorrectAnswer">
-                    <label for="@count" class="@item.fCorrectAnswer" style="font-size:18px;"> @item.fChoice</label>
+                    <label for="@count" class="@item.fCorrectAnswer" style="font-size:18px;">  @Html.Raw(item.fChoice)</label>
                 </div>
                 count++;
             }
@@ -85,7 +85,7 @@
                     icon: 'info',
                     title: '請先登入會員',
                 }).then((result) => {
-                    if (result.isConfirmed) { location = 'https://localhost:44387/Student_Login' }
+                    if (result.isConfirmed) { location = '@Url.Action("Index", "Student_Login")' }
                 }
                 )
             } else {
