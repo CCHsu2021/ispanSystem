@@ -17,14 +17,20 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index(GradeIdentify Grade)
         {
+            ViewBag.txtidentify = Grade.txtidentify;
             ViewBag.count = 0;
-            if (CDictionary.memtype != null)
-                ViewBag.memType = 0;
-            else
+            ViewBag.showavgself = 0;
                 ViewBag.memType = CDictionary.memtype;
             if (CDictionary.account != null)
             {
-                var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
+                StudentBasic account = null;
+                if (Grade.txtaccount == null)
+                {
+                    account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
+                }
+                else {
+                    account = hello.StudentBasics.FirstOrDefault(c => c.FAccount == Grade.txtaccount);
+                }
                 TCompanyBasic comaccount = null;
                 if (account == null)
                 {
@@ -101,78 +107,65 @@ namespace MSITTeam1.Controllers
                 else
                 {
                     var maxcount = 0;
-                    var comself = from p in hello.TClassGrades
-                                  join i in hello.StudentBasics on p.FAccountId equals i.FAccount
-                                  join od in hello.TClassOrderDetails on i.MemberId equals od.MemberId
-                                  join o in hello.TClassOrders on od.OrderId equals o.OrderId
-                                  where o.MemberId == comaccount.CompanyTaxid && p.FClassCode == Grade.txtidentify
-                                  group p by i.FCompany into g
-                                  select new
-                                  {
-                                      FBeforeClassGrade = g.Sum(c => c.FBeforeClassGrade),
-                                      FAfterClassGrade = g.Sum(c => c.FAfterClassGrade)
-                                  };
-                    if (comself.FirstOrDefault() != null)
+                    var comselfSQL = from p in hello.TClassGrades
+                                     join i in hello.StudentBasics on p.FAccountId equals i.FAccount
+                                     join od in hello.TClassOrderDetails on i.MemberId equals od.MemberId
+                                     join o in hello.TClassOrders on od.OrderId equals o.OrderId
+                                     where o.MemberId == comaccount.CompanyTaxid && p.FClassCode == Grade.txtidentify
+                                     group p by i.FCompany into g
+                                     select new
+                                     {
+                                         FBeforeClassGrade = g.Sum(c => c.FBeforeClassGrade),
+                                         FAfterClassGrade = g.Sum(c => c.FAfterClassGrade)
+                                     };
+                    var comself = comselfSQL.FirstOrDefault();
+                    if (comself != null)
                     {
-                        foreach (var obj in comself)
+                        ViewBag.classname = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassname;
+                        ViewBag.showavgself = (comself.FBeforeClassGrade + comself.FAfterClassGrade) / 2;
+                        int list = 0;
+                        for (int i = 5; i <= 100; i += 10)
                         {
-                            ViewBag.classname = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassname;
-                            ViewBag.showavgself = (obj.FBeforeClassGrade + obj.FAfterClassGrade) / 2;
-                            int list = 0;
-                            for (int i = 5; i <= 100; i += 10)
-                            {
-                                list = (from p in hello.TClassGrades
-                                        where p.FClassCode == Grade.txtidentify && (p.FBeforeClassGrade + p.FAfterClassGrade) / 2 > (i - 5) && (p.FBeforeClassGrade + p.FAfterClassGrade) / 2 <= (i + 5)
-                                        select p).Count();
-                                if (maxcount < list)
-                                    maxcount = list;
-                                if (i == 95)
-                                    ViewBag.showavg += list + "";
-                                else
-                                    ViewBag.showavg += list + ",";
-                            }
+                            list = (from p in hello.TClassGrades
+                                    where p.FClassCode == Grade.txtidentify && (p.FBeforeClassGrade + p.FAfterClassGrade) / 2 > (i - 5) && (p.FBeforeClassGrade + p.FAfterClassGrade) / 2 <= (i + 5)
+                                    select p).Count();
+                            if (maxcount < list)
+                                maxcount = list;
+                            if (i == 95)
+                                ViewBag.showavg += list + "";
+                            else
+                                ViewBag.showavg += list + ",";
+                        }
+                        ViewBag.showbeforeself = comself.FBeforeClassGrade;
+                        int list2 = 0;
+                        for (int i = 5; i <= 100; i += 10)
+                        {
+                            list2 = (from p in hello.TClassGrades
+                                     where p.FClassCode == Grade.txtidentify && p.FBeforeClassGrade > (i - 5) && p.FBeforeClassGrade <= (i + 5)
+                                     select p).Count();
+                            if (maxcount < list2)
+                                maxcount = list2;
+                            if (i == 95)
+                                ViewBag.showbefore += list2 + "";
+                            else
+                                ViewBag.showbefore += list2 + ",";
+                        }
+                        ViewBag.showAfterself = comself.FAfterClassGrade;
+                        int list3 = 0;
+                        for (int i = 5; i <= 100; i += 10)
+                        {
+                            list3 = (from p in hello.TClassGrades
+                                     where p.FClassCode == Grade.txtidentify && p.FAfterClassGrade > (i - 5) && p.FAfterClassGrade <= (i + 5)
+                                     select p).Count();
+                            if (maxcount < list3)
+                                maxcount = list3;
+                            if (i == 95)
+                                ViewBag.showAfter += list3 + "";
+                            else
+                                ViewBag.showAfter += list3 + ",";
                         }
                     }
-                    if (comself.FirstOrDefault() != null)
-                    {
-                        foreach (var obj in comself)
-                        {
-                            ViewBag.showbeforeself = obj.FBeforeClassGrade;
-                            int list = 0;
-                            for (int i = 5; i <= 100; i += 10)
-                            {
-                                list = (from p in hello.TClassGrades
-                                        where p.FClassCode == Grade.txtidentify && p.FBeforeClassGrade > (i - 5) && p.FBeforeClassGrade <= (i + 5)
-                                        select p).Count();
-                                if (maxcount < list)
-                                    maxcount = list;
-                                if (i == 95)
-                                    ViewBag.showbefore += list + "";
-                                else
-                                    ViewBag.showbefore += list + ",";
-                            }
-                        }
-                    }
-                    if (comself.FirstOrDefault() != null)
-                    {
-                        foreach (var obj in comself)
-                        {
-                            ViewBag.showAfterself = obj.FAfterClassGrade;
-                            int list = 0;
-                            for (int i = 5; i <= 100; i += 10)
-                            {
-                                list = (from p in hello.TClassGrades
-                                        where p.FClassCode == Grade.txtidentify && p.FAfterClassGrade > (i - 5) && p.FAfterClassGrade <= (i + 5)
-                                        select p).Count();
-                                if (maxcount < list)
-                                    maxcount = list;
-                                if (i == 95)
-                                    ViewBag.showAfter += list + "";
-                                else
-                                    ViewBag.showAfter += list + ",";
-                            }
-                        }
-                    }
+
                     if (maxcount < 5)
                         maxcount = 5;
                     ViewBag.count = maxcount;
@@ -180,6 +173,27 @@ namespace MSITTeam1.Controllers
                 }
             }
             return View();
+        }
+        public IActionResult Employee(GradeIdentify Grade)
+        {
+            if (CDictionary.memtype == "2")
+            {
+                var select = from p in hello.TClassGrades
+                             join i in hello.StudentBasics on p.FAccountId equals i.FAccount
+                             join od in hello.TClassOrderDetails on i.MemberId equals od.MemberId
+                             join o in hello.TClassOrders on od.OrderId equals o.OrderId
+                             where o.MemberId == CDictionary.account && p.FClassCode == Grade.txtidentify
+                             select new classgradeselect
+                             {
+                                 account = i.FAccount,
+                                 Name = i.Name
+                             };
+                return Json(select);
+            }
+            else
+            {
+                return Json(new { account = "" , Name =""});
+            }
         }
     }
 }
