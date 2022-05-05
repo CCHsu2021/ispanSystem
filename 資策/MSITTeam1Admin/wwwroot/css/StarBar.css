@@ -1,12 +1,12 @@
 ﻿
-/*[class^="show_rated_"] {
+[class^="show_rated_"] {
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;
     font-size: 15px;
     text-rendering: auto;
-    color: #ed731a;*/
-/*    color: #1e3c84;*/
-    /*-webkit-font-smoothing: antialiased;
+    color: #ed731a;
+    color: #1e3c84;
+    -webkit-font-smoothing: antialiased;
     moz-osx-font-smoothing: grayscale;
     margin-top: 5px;
     letter-spacing: 5px;
@@ -54,4 +54,4 @@
 
 .show_rated_5::before {
     content: "\f005 \f005 \f005 \f005 \f005";
-}*/
+}

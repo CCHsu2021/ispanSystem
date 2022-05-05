@@ -1,0 +1,1615 @@
+﻿@model IList<MSITTeam1Admin.ViewModels.CQuestionBankViewModel>
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@*<link href="~/css/barRating.css" />*@
+<style>
+    /*1.bars-1to10.css*/
+
+    .br-theme-bars-1to10 .br-widget {
+        height: 50px;
+        white-space: nowrap;
+    }
+
+        .br-theme-bars-1to10 .br-widget a {
+            display: block;
+            width: 12px;
+            padding: 5px 0;
+            height: 28px;
+            float: left;
+            background-color: #fbedd9;
+            margin: 1px;
+            text-align: center;
+        }
+
+            .br-theme-bars-1to10 .br-widget a.br-active,
+            .br-theme-bars-1to10 .br-widget a.br-selected {
+                background-color: #EDB867;
+            }
+
+        .br-theme-bars-1to10 .br-widget .br-current-rating {
+            font-size: 20px;
+            line-height: 2;
+            float: left;
+            padding: 0 20px 0 20px;
+            color: #EDB867;
+            font-weight: 400;
+        }
+
+    .br-theme-bars-1to10 .br-readonly a {
+        cursor: default;
+    }
+
+        .br-theme-bars-1to10 .br-readonly a.br-active,
+        .br-theme-bars-1to10 .br-readonly a.br-selected {
+            background-color: #f2cd95;
+        }
+
+    .br-theme-bars-1to10 .br-readonly .br-current-rating {
+        color: #f2cd95;
+    }
+
+    @@media print {
+        .br-theme-bars-1to10 .br-widget a {
+            border: 1px solid #b3b3b3;
+            background: white;
+            height: 38px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+            .br-theme-bars-1to10 .br-widget a.br-active,
+            .br-theme-bars-1to10 .br-widget a.br-selected {
+                border: 1px solid black;
+                background: white;
+            }
+
+        .br-theme-bars-1to10 .br-widget .br-current-rating {
+            color: black;
+        }
+    }
+
+
+
+
+
+
+
+
+    /*2.bars-horizontal.css*/
+
+    .br-theme-bars-horizontal .br-widget {
+        width: 120px;
+        white-space: nowrap;
+    }
+
+        .br-theme-bars-horizontal .br-widget a {
+            display: block;
+            width: 120px;
+            height: 5px;
+            background-color: #fbedd9;
+            margin: 1px;
+        }
+
+            .br-theme-bars-horizontal .br-widget a.br-active,
+            .br-theme-bars-horizontal .br-widget a.br-selected {
+                background-color: #EDB867;
+            }
+
+        .br-theme-bars-horizontal .br-widget .br-current-rating {
+            width: 120px;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 2;
+            text-align: center;
+            color: #EDB867;
+        }
+
+    .br-theme-bars-horizontal .br-readonly a {
+        cursor: default;
+    }
+
+        .br-theme-bars-horizontal .br-readonly a.br-active,
+        .br-theme-bars-horizontal .br-readonly a.br-selected {
+            background-color: #f2cd95;
+        }
+
+    .br-theme-bars-horizontal .br-readonly .br-current-rating {
+        color: #f2cd95;
+    }
+
+    @@media print {
+        .br-theme-bars-horizontal .br-widget a {
+            border: 1px solid #b3b3b3;
+            background: white;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+            .br-theme-bars-horizontal .br-widget a.br-active,
+            .br-theme-bars-horizontal .br-widget a.br-selected {
+                border: 1px solid black;
+                background: white;
+            }
+
+        .br-theme-bars-horizontal .br-widget .br-current-rating {
+            color: black;
+        }
+    }
+
+
+
+
+
+
+
+
+    /*3.bars-movie.css*/
+
+    .br-theme-bars-movie .br-widget {
+        height: 10px;
+        white-space: nowrap;
+    }
+
+        .br-theme-bars-movie .br-widget a {
+            display: block;
+            width: 60px;
+            height: 8px;
+            float: left;
+            background-color: #bbcefb;
+            margin: 1px;
+        }
+
+            .br-theme-bars-movie .br-widget a.br-active,
+            .br-theme-bars-movie .br-widget a.br-selected {
+                background-color: #4278F5;
+            }
+
+        .br-theme-bars-movie .br-widget .br-current-rating {
+            clear: both;
+            width: 240px;
+            text-align: center;
+            font-weight: 600;
+            display: block;
+            padding: .5em 0;
+            color: #4278F5;
+            font-weight: 400;
+        }
+
+    .br-theme-bars-movie .br-readonly a {
+        cursor: default;
+    }
+
+        .br-theme-bars-movie .br-readonly a.br-active,
+        .br-theme-bars-movie .br-readonly a.br-selected {
+            background-color: #729bf8;
+        }
+
+    .br-theme-bars-movie .br-readonly .br-current-rating {
+        color: #729bf8;
+    }
+
+    @@media print {
+        .br-theme-bars-movie .br-widget a {
+            border: 1px solid #b3b3b3;
+            background: white;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+            .br-theme-bars-movie .br-widget a.br-active,
+            .br-theme-bars-movie .br-widget a.br-selected {
+                border: 1px solid black;
+                background: white;
+            }
+
+        .br-theme-bars-movie .br-widget .br-current-rating {
+            color: black;
+        }
+    }
+
+
+
+
+
+    /*4.bars-pill.css*/
+
+    .br-theme-bars-pill .br-widget {
+        white-space: nowrap;
+    }
+
+        .br-theme-bars-pill .br-widget a {
+            padding: 7px 15px;
+            background-color: #bef5e8;
+            color: #50E3C2;
+            text-decoration: none;
+            font-size: 13px;
+            line-height: 3;
+            text-align: center;
+            font-weight: 400;
+        }
+
+            .br-theme-bars-pill .br-widget a:first-child {
+                -webkit-border-top-left-radius: 999px;
+                -webkit-border-bottom-left-radius: 999px;
+                -moz-border-radius-topleft: 999px;
+                -moz-border-radius-bottomleft: 999px;
+                border-top-left-radius: 999px;
+                border-bottom-left-radius: 999px;
+            }
+
+            .br-theme-bars-pill .br-widget a:last-child {
+                -webkit-border-top-right-radius: 999px;
+                -webkit-border-bottom-right-radius: 999px;
+                -moz-border-radius-topright: 999px;
+                -moz-border-radius-bottomright: 999px;
+                border-top-right-radius: 999px;
+                border-bottom-right-radius: 999px;
+            }
+
+            .br-theme-bars-pill .br-widget a.br-active,
+            .br-theme-bars-pill .br-widget a.br-selected {
+                background-color: #50E3C2;
+                color: white;
+            }
+
+    .br-theme-bars-pill .br-readonly a {
+        cursor: default;
+    }
+
+        .br-theme-bars-pill .br-readonly a.br-active,
+        .br-theme-bars-pill .br-readonly a.br-selected {
+            background-color: #7cead1;
+        }
+
+    @@media print {
+        .br-theme-bars-pill .br-widget a {
+            border: 1px solid #b3b3b3;
+            border-left: none;
+            background: white;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+            .br-theme-bars-pill .br-widget a.br-active,
+            .br-theme-bars-pill .br-widget a.br-selected {
+                border: 1px solid black;
+                border-left: none;
+                background: white;
+                color: black;
+            }
+
+            .br-theme-bars-pill .br-widget a:first-child {
+                border-left: 1px solid black;
+            }
+    }
+
+
+
+
+
+
+
+
+
+
+    /*5.bars-reversed.css*/
+
+    .br-theme-bars-reversed .br-widget {
+        height: 25px;
+        white-space: nowrap;
+    }
+
+        .br-theme-bars-reversed .br-widget a {
+            display: block;
+            width: 22px;
+            height: 22px;
+            float: left;
+            background-color: #bef5e8;
+            margin: 1px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.4;
+            color: #50E3C2;
+            text-align: center;
+        }
+
+            .br-theme-bars-reversed .br-widget a.br-active,
+            .br-theme-bars-reversed .br-widget a.br-selected {
+                background-color: #50E3C2;
+                color: white;
+            }
+
+        .br-theme-bars-reversed .br-widget .br-current-rating {
+            line-height: 1.3;
+            float: left;
+            padding: 0 20px 0 20px;
+            color: #50E3C2;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+    .br-theme-bars-reversed .br-readonly a {
+        cursor: default;
+    }
+
+        .br-theme-bars-reversed .br-readonly a.br-active,
+        .br-theme-bars-reversed .br-readonly a.br-selected {
+            background-color: #7cead1;
+        }
+
+    .br-theme-bars-reversed .br-readonly .br-current-rating {
+        color: #7cead1;
+    }
+
+    @@media print {
+        .br-theme-bars-reversed .br-widget a {
+            border: 1px solid #b3b3b3;
+            background: white;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+            .br-theme-bars-reversed .br-widget a.br-active,
+            .br-theme-bars-reversed .br-widget a.br-selected {
+                border: 1px solid black;
+                background: white;
+            }
+
+        .br-theme-bars-reversed .br-widget .br-current-rating {
+            color: black;
+        }
+    }
+
+
+
+
+
+
+
+
+    /*6.bars-square.css*/
+
+    .br-theme-bars-square .br-widget {
+        height: 15px;
+        white-space: nowrap;
+    }
+
+        .br-theme-bars-square .br-widget a {
+            display: block;
+            width: 30px;
+            height: 30px;
+            float: left;
+            border: 2px solid #bbcefb;
+            background-color: white;
+            margin: 2px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 2;
+            text-align: center;
+            color: #bbcefb;
+            font-weight: 600;
+        }
+
+            .br-theme-bars-square .br-widget a.br-active,
+            .br-theme-bars-square .br-widget a.br-selected {
+                border: 2px solid #4278F5;
+                color: #4278F5;
+            }
+
+        .br-theme-bars-square .br-widget .br-current-rating {
+            clear: both;
+            width: 330px;
+            text-align: center;
+            font-weight: 600;
+            display: block;
+            padding: .5em 0;
+            color: #646464;
+        }
+
+    .br-theme-bars-square .br-readonly a {
+        cursor: default;
+    }
+
+        .br-theme-bars-square .br-readonly a.br-active,
+        .br-theme-bars-square .br-readonly a.br-selected {
+            border: 2px solid #729bf8;
+            color: #729bf8;
+        }
+
+    @@media print {
+        .br-theme-bars-square .br-widget a {
+            border: 2px solid #b3b3b3;
+            color: #b3b3b3;
+        }
+
+            .br-theme-bars-square .br-widget a.br-active,
+            .br-theme-bars-square .br-widget a.br-selected {
+                border: 2px solid black;
+                color: black;
+            }
+    }
+
+
+
+
+
+
+
+
+    /*7.bootstrap-stars.css*/
+
+    .br-theme-bootstrap-stars .br-widget {
+        height: 28px;
+        white-space: nowrap;
+    }
+
+        .br-theme-bootstrap-stars .br-widget a {
+            font: normal normal normal 18px/1 'Glyphicons Halflings';
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            text-decoration: none;
+            margin-right: 2px;
+        }
+
+            .br-theme-bootstrap-stars .br-widget a:after {
+                content: '\e006';
+                color: #d2d2d2;
+            }
+
+            .br-theme-bootstrap-stars .br-widget a.br-active:after {
+                color: #EDB867;
+            }
+
+            .br-theme-bootstrap-stars .br-widget a.br-selected:after {
+                color: #EDB867;
+            }
+
+        .br-theme-bootstrap-stars .br-widget .br-current-rating {
+            display: none;
+        }
+
+    .br-theme-bootstrap-stars .br-readonly a {
+        cursor: default;
+    }
+
+    @@media print {
+        .br-theme-bootstrap-stars .br-widget a:after {
+            content: '\e007';
+            color: black;
+        }
+
+        .br-theme-bootstrap-stars .br-widget a.br-active:after,
+        .br-theme-bootstrap-stars .br-widget a.br-selected:after {
+            content: '\e006';
+            color: black;
+        }
+    }
+
+
+
+
+
+
+
+
+    /*8.css-stars.css*/
+
+    .br-theme-css-stars .br-widget {
+        height: 28px;
+        white-space: nowrap;
+    }
+
+        .br-theme-css-stars .br-widget a {
+            text-decoration: none;
+            height: 18px;
+            width: 18px;
+            float: left;
+            font-size: 23px;
+            margin-right: 5px;
+        }
+
+            .br-theme-css-stars .br-widget a:after {
+                content: "\2605";
+                color: #d2d2d2;
+            }
+
+            .br-theme-css-stars .br-widget a.br-active:after {
+                color: #EDB867;
+            }
+
+            .br-theme-css-stars .br-widget a.br-selected:after {
+                color: #EDB867;
+            }
+
+        .br-theme-css-stars .br-widget .br-current-rating {
+            display: none;
+        }
+
+    .br-theme-css-stars .br-readonly a {
+        cursor: default;
+    }
+
+    @@media print {
+        .br-theme-css-stars .br-widget a:after {
+            content: "\2606";
+            color: black;
+        }
+
+        .br-theme-css-stars .br-widget a.br-active:after,
+        .br-theme-css-stars .br-widget a.br-selected:after {
+            content: "\2605";
+            color: black;
+        }
+    }
+
+
+
+
+
+
+    /*9.fontawesome-stars.css*/
+
+    .br-theme-fontawesome-stars .br-widget {
+        height: 28px;
+        white-space: nowrap;
+    }
+
+        .br-theme-fontawesome-stars .br-widget a {
+            font: normal normal normal 20px/1 FontAwesome;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            text-decoration: none;
+            margin-right: 2px;
+        }
+
+            .br-theme-fontawesome-stars .br-widget a:after {
+                content: '\f005';
+                color: #d2d2d2;
+            }
+
+            .br-theme-fontawesome-stars .br-widget a.br-active:after {
+                color: #EDB867;
+            }
+
+            .br-theme-fontawesome-stars .br-widget a.br-selected:after {
+                color: #EDB867;
+            }
+
+        .br-theme-fontawesome-stars .br-widget .br-current-rating {
+            display: none;
+        }
+
+    .br-theme-fontawesome-stars .br-readonly a {
+        cursor: default;
+    }
+
+    @@media print {
+        .br-theme-fontawesome-stars .br-widget a:after {
+            content: '\f006';
+            color: black;
+        }
+
+        .br-theme-fontawesome-stars .br-widget a.br-active:after,
+        .br-theme-fontawesome-stars .br-widget a.br-selected:after {
+            content: '\f005';
+            color: black;
+        }
+    }
+
+
+
+
+
+
+
+    /*10.fontawesome-stars-o.css*/
+
+
+    .br-theme-fontawesome-stars-o .br-widget {
+        height: 28px;
+        white-space: nowrap;
+    }
+
+        .br-theme-fontawesome-stars-o .br-widget a {
+            font: normal normal normal 20px/1 FontAwesome;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            text-decoration: none;
+            margin-right: 2px;
+        }
+
+            .br-theme-fontawesome-stars-o .br-widget a:after {
+                content: '\f006';
+                color: #d2d2d2;
+            }
+
+            .br-theme-fontawesome-stars-o .br-widget a.br-active:after {
+                content: '\f005';
+                color: #50E3C2;
+            }
+
+            .br-theme-fontawesome-stars-o .br-widget a.br-selected:after {
+                content: '\f005';
+                color: #50E3C2;
+            }
+
+            .br-theme-fontawesome-stars-o .br-widget a.br-fractional:after {
+                content: '\f123';
+                color: #50E3C2;
+            }
+
+        .br-theme-fontawesome-stars-o .br-widget .br-current-rating {
+            display: none;
+        }
+
+    .br-theme-fontawesome-stars-o .br-readonly a {
+        cursor: default;
+    }
+
+    .br-theme-fontawesome-stars-o .br-reverse a.br-fractional {
+        display: inline-block;
+        transform: scaleX(-1);
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+    }
+
+    @@media print {
+        .br-theme-fontawesome-stars-o .br-widget a:after {
+            content: '\f006';
+            color: black;
+        }
+
+        .br-theme-fontawesome-stars-o .br-widget a.br-active:after,
+        .br-theme-fontawesome-stars-o .br-widget a.br-selected:after {
+            content: '\f005';
+            color: black;
+        }
+
+        .br-theme-fontawesome-stars-o .br-widget a.br-fractional:after {
+            content: '\f123';
+            color: black;
+        }
+    }
+</style>
+<div id="outdivEd" style="padding:20px">
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                if (Model != null)
+                {
+                        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group" style="text-align:center;">
+                                @*<h3><input type="text" id="FSubjectIdEd" asp-for="@Model[0].FSubjectId" readonly style="text-align:center;" /></h3>*@
+                                <h3>@Html.DisplayFor(model => model[0].FSubjectId)</h3>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" id="FQuestionIdEd" asp-for="@Model[0].FQuestionId" />
+                                <label id="test1" class="control-label my-2 font-weight-bold h5" asp-for="@Model[0].FQuestion"></label>
+                                <input id="FQuestionEd" asp-for="@Model[0].FQuestion" class="form-control">
+                                <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="@Model[0].FQuestionTypeId" class="control-label my-2 font-weight-bold h5"></label>
+                                <input type="hidden" value="@Model[0].FQuestionTypeId" id="curType" />
+                                <select id="FQuestionTypeIdSelEd" asp-for="@Model[0].FQuestionTypeId" class="form-control">
+                                    <option value="1">單選題</option>
+                                    <option value="2">多選題</option>
+                                </select>
+                                <span asp-validation-for="@Model[0].FQuestionTypeId" class="text-danger"></span>
+                            </div>
+                            <div id="ansListEd">
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    if (Model[i].FSubjectId == Model[0].FSubjectId && Model[i].FQuestionId == Model[0].FCQuestionId)
+                                    {
+                                        <div class="form-group choiceEd">
+                                            <input type="hidden" id="FSN" asp-for="@Model[i].FSn" />
+                                            <input type="hidden" id="FCSubjectId" asp-for="@Model[i].FCSubjectId" />
+                                            <input type="hidden" id="FCQuestionId" asp-for="@Model[i].FCQuestionId" />
+                                            <input type="hidden" id="correctAns" asp-for="@Model[i].FCorrectAnswer" />
+                                            <label asp-for="@Model[i].FChoice" class="control-label my-2 font-weight-bold h5"></label>
+                                            <div class="row align-items-center px-3 choicelist" style="flex-wrap:nowrap">
+                                                <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheckEd(this)" style="width:28px;height:25px"/>
+                                                <input asp-for="@Model[i].FChoice" class="form-control txtAnsEd" style="margin:0 20px 0 10px"/>
+                                                <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
+                                                <button class="tableBtn fas fa-trash-alt delBtnEd" type="button" style="border-radius: 5px; width: 60px;"></button>
+                                            </div>
+                                        </div>
+                                    }
+                                    //TODO:9.增加題目狀態調整欄位
+                                }
+                            </div> 
+                            <div style="text-align: center;">
+                                <button id="BtnNewChoiceEdit" type="button" class="tableBtn fas" style="border-radius:5px;width:200px"><i class="fas fa-plus" style="font-size:25px;"></i></button>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@Model[0].FLevel" class="control-label my-2 font-weight-bold h5"></label>
+                                <input type="hidden" value="@Model[0].FLevel" id="curLevel" />
+                                <div>
+                                    <div class="rating2">
+                                        <div class="br-wrapper br-theme-fontawesome-stars">
+                                            <select class="questionBarRate levelEd" id="example-fontawesome" name="rating" autocomplete="off">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="@Model[0].FLevel" class="text-danger"></span>
+                            </div>
+                            <hr class="my-4" />
+                            <div class="form-group text-center">
+                                <button class="btn btn-primary" type="button" id="saveChangeEd">保存修改</button>
+                            </div>
+                        </form>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    // 正確選項顯示
+        var correctAnswer = 0;
+    $('#ansListEd > div').each(function (idx,item) {
+        correctAnswer = $(item).find('input#correctAns').val();
+        if (correctAnswer === "1") {
+                $(item).find('#checkBox1').attr("checked", true);
+            }
+    })
+
+        // 判斷Checkbox
+    var currentSelectEd = $("#ansListEd input[type='checkbox']:checked").length;
+    var limit = $('#FQuestionTypeIdSelEd').val();
+
+        function doCheckEd(obj) {
+            var quesType = $('#FQuestionTypeIdSelEd').val();            
+            if (quesType === "1") {
+                limit = 1;
+            } else if (quesType === "2") {
+                limit = 100;
+            } else if (quesType === "3") {
+                limit = 1;
+            }
+            obj.checked ? currentSelectEd++ : currentSelectEd--;
+            //console.log("ED" + currentSelectEd);
+            if (currentSelectEd > limit) {
+                obj.checked = false;
+                Swal.fire("超過正確答案上限");
+                currentSelectEd--;
+            }
+        }
+
+        // 根據題型判斷答案輸入欄位及許可正確選項上限 代入當前題目類型和難度等級
+    $('#FQuestionTypeIdSelEd').change(function () {
+        if ($(this).val() === "2") {
+                limit = 100;
+            } else if ($(this).val() === "1") {
+                limit = 1;
+                $('#ansListEd input').removeAttr("checked");
+                currentSelectEd = 0;
+            }
+    })
+
+    var levelCur = $('#curLevel').val();
+    $('#example-fontawesome').find("option").each(function (i, item) {
+        if ((item.value) === levelCur) {
+            item.selected = true; return;
+        }
+    })
+
+        // 新增選項textbox
+        const BtnNewChoiceEdit = document.querySelector('#BtnNewChoiceEdit');
+        BtnNewChoiceEdit.addEventListener('click', function () {
+        var divChoice = `<div class="form-group choiceEd">
+                                            <label class="control-label my-2 font-weight-bold h5">選項</label>
+                                            <div class="row align-items-center px-3" style="flex-wrap:nowrap">
+                                                <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheckEd(this)" style="width:28px;height:25px"/>
+                                                <input asp-for="FChoice" class="form-control txtAnsEd" style="margin:0 20px 0 10px"/>
+                                                <span asp-validation-for="FChoice" class="text-danger"></span>
+                                                <button class="tableBtn fas fa-trash-alt delBtnEd" type="button" style="border-radius: 5px; width: 60px;"></button>
+                                            </div>
+                                        </div>`
+        $('#ansListEd').append(divChoice);
+    });
+
+            $("#outdivEd").on("click", ".delBtnEd", function () {
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(this).closest(".choiceEd").remove();
+                }
+            })
+            });
+
+        // 將所有選項存入Array
+        $('#saveChangeEd').click(function () {
+            var ansArrEd = [];
+            var selectAnsEd = $('#ansListEd input[type=checkbox]:checked').length;
+            var emptyChoiceEd = 0;
+            $('#ansListEd').find('.txtAnsEd').each(function () {
+                if ($(this).val() == "") {
+                    emptyChoiceEd++;
+                }
+            })
+            if (selectAnsEd < 1) {
+                Swal.fire("請填寫此題正確答案");
+            } else if ($('#FQuestionEd').val() == "") {
+                Swal.fire("題目不得為空");
+            } else if (emptyChoiceEd > 0) {
+                Swal.fire("選項內容不得為空");
+            }
+            else {
+                 $('#ansListEd > div').each(function (idx, item) {
+                var ansEd = {}
+                     var c = $(item).find(':checkbox').prop('checked');
+                     var SN = $(item).find('input#FSN').val();
+                     if (SN == null) {
+                         SN = 0;
+                     }
+                     ansEd.FCorrect = c ? 1 : 2;
+                     ansEd.Fchoice = $(item).find(':text').val();
+                     ansEd.FSN = SN;
+                ansArrEd.push(ansEd);
+            })
+
+            var Editjsondata = JSON.stringify({
+                FSubjectId: $('#FSubjectIdEd').val(),
+                FQuestionId: $('#FQuestionIdEd').val(),
+                FQuestion: $('#FQuestionEd').val(),
+                FQuestionTypeId: $('#FQuestionTypeIdSelEd').val(),
+                FChoiceList: ansArrEd,
+                FLevel: $('.levelEd').val()
+            })
+            $.ajax({
+                url: "@Url.Content("~/QuesBankSysAdmin/Edit")",
+                type: "POST",
+                contentType: "application/json",
+                data:Editjsondata
+            }).done(function (data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '修改成功',
+                    showConfirmButton: true,
+                    timer:1500
+                }).then(() => {
+                    $('#questionEdit').modal('hide');
+                    window.location.reload();
+                });
+            })
+            }
+        })
+</script>
+<script>
+        $(function () {
+            "use strict";
+            function ratingEnable() {
+                $('#example-1to10').barrating('show', {
+                    theme: 'bars-1to10'
+                });
+
+                $('#example-movie').barrating('show', {
+                    theme: 'bars-movie'
+                });
+
+                //        $('#example-movie').barrating('set', 'Mediocre');
+
+                $('#example-square').barrating('show', {
+                    theme: 'bars-square',
+                    showValues: true,
+                    showSelectedRating: false
+                });
+
+                $('#example-pill').barrating('show', {
+                    theme: 'bars-pill',
+                    initialRating: 'A',
+                    showValues: true,
+                    showSelectedRating: false,
+                    allowEmpty: true,
+                    emptyValue: '-- no rating selected --',
+                    onSelect: function (value, text) {
+                        alert('Selected rating: ' + value);
+                    }
+                });
+
+                $('#example-reversed').barrating('show', {
+                    theme: 'bars-reversed',
+                    showSelectedRating: true,
+                    reverse: true
+                });
+
+                $('#example-horizontal').barrating('show', {
+                    theme: 'bars-horizontal',
+                    reverse: true,
+                    hoverState: false
+                });
+
+                $('#example-fontawesome').barrating({
+                    theme: 'fontawesome-stars',
+                    showSelectedRating: false
+                });
+
+                $('#example-css').barrating({
+                    theme: 'css-stars',
+                    showSelectedRating: false
+                });
+
+                $('#example-bootstrap').barrating({
+                    theme: 'bootstrap-stars',
+                    showSelectedRating: false
+                });
+
+                var currentRating = $('#example-fontawesome-o').data('current-rating');
+
+                $('.stars-example-fontawesome-o .current-rating')
+                    .find('span')
+                    .html(currentRating);
+
+                $('.stars-example-fontawesome-o .clear-rating').on('click', function (event) {
+                    event.preventDefault();
+
+                    $('#example-fontawesome-o')
+                        .barrating('clear');
+                });
+
+                $('#example-fontawesome-o').barrating({
+                    theme: 'fontawesome-stars-o',
+                    showSelectedRating: false,
+                    initialRating: currentRating,
+                    onSelect: function (value, text) {
+                        if (!value) {
+                            $('#example-fontawesome-o')
+                                .barrating('clear');
+                        } else {
+                            $('.stars-example-fontawesome-o .current-rating')
+                                .addClass('hidden');
+
+                            $('.stars-example-fontawesome-o .your-rating')
+                                .removeClass('hidden')
+                                .find('span')
+                                .html(value);
+                        }
+                    },
+                    onClear: function (value, text) {
+                        $('.stars-example-fontawesome-o')
+                            .find('.current-rating')
+                            .removeClass('hidden')
+                            .end()
+                            .find('.your-rating')
+                            .addClass('hidden');
+                    }
+                });
+            }
+
+            function ratingDisable() {
+                $('select').barrating('destroy');
+            }
+
+            $('.rating-enable').on("click", function (event) {
+                event.preventDefault();
+
+                ratingEnable();
+
+                $(this).addClass('deactivated');
+                $('.rating-disable').removeClass('deactivated');
+            });
+
+            $('.rating-disable').on("click", function (event) {
+                event.preventDefault();
+
+                ratingDisable();
+
+                $(this).addClass('deactivated');
+                $('.rating-enable').removeClass('deactivated');
+            });
+
+            ratingEnable();
+        });
+
+
+    (function (factory) {
+        if (typeof define === 'function' && define.amd) {
+            // AMD
+            define(['jquery'], factory);
+        } else if (typeof module === 'object' && module.exports) {
+            // Node/CommonJS
+            module.exports = factory(require('jquery'));
+        } else {
+            // browser globals
+            factory(jQuery);
+        }
+    }(function ($) {
+
+        var BarRating = (function () {
+
+            function BarRating() {
+                var self = this;
+
+                // wrap element in a wrapper div
+                var wrapElement = function () {
+                    var classes = ['br-wrapper'];
+
+                    if (self.options.theme !== '') {
+                        classes.push('br-theme-' + self.options.theme);
+                    }
+
+                    self.$elem.wrap($('<div />', {
+                        'class': classes.join(' ')
+                    }));
+                };
+
+                // unwrap element
+                var unwrapElement = function () {
+                    self.$elem.unwrap();
+                };
+
+                // find option by value
+                var findOption = function (value) {
+                    if ($.isNumeric(value)) {
+                        value = Math.floor(value);
+                    }
+
+                    return $('option[value="' + value + '"]', self.$elem);
+                };
+
+                // get initial option
+                var getInitialOption = function () {
+                    var initialRating = self.options.initialRating;
+
+                    if (!initialRating) {
+                        return $('option:selected', self.$elem);
+                    }
+
+                    return findOption(initialRating);
+                };
+
+                // get empty option
+                var getEmptyOption = function () {
+                    var $emptyOpt = self.$elem.find('option[value="' + self.options.emptyValue + '"]');
+
+                    if (!$emptyOpt.length && self.options.allowEmpty) {
+                        $emptyOpt = $('<option />', { 'value': self.options.emptyValue });
+
+                        return $emptyOpt.prependTo(self.$elem);
+                    }
+
+                    return $emptyOpt;
+                };
+
+                // get data
+                var getData = function (key) {
+                    var data = self.$elem.data('barrating');
+
+                    if (typeof key !== 'undefined') {
+                        return data[key];
+                    }
+
+                    return data;
+                };
+
+                // set data
+                var setData = function (key, value) {
+                    if (value !== null && typeof value === 'object') {
+                        self.$elem.data('barrating', value);
+                    } else {
+                        self.$elem.data('barrating')[key] = value;
+                    }
+                };
+
+                // save data on element
+                var saveDataOnElement = function () {
+                    var $opt = getInitialOption();
+                    var $emptyOpt = getEmptyOption();
+
+                    var value = $opt.val();
+                    var text = $opt.data('html') ? $opt.data('html') : $opt.text();
+
+                    // if the allowEmpty option is not set let's check if empty option exists in the select field
+                    var allowEmpty = (self.options.allowEmpty !== null) ?
+                        self.options.allowEmpty :
+                        !!$emptyOpt.length;
+
+                    var emptyValue = ($emptyOpt.length) ? $emptyOpt.val() : null;
+                    var emptyText = ($emptyOpt.length) ? $emptyOpt.text() : null;
+
+                    setData(null, {
+                        userOptions: self.options,
+
+                        // initial rating based on the OPTION value
+                        ratingValue: value,
+                        ratingText: text,
+
+                        // rating will be restored by calling clear method
+                        originalRatingValue: value,
+                        originalRatingText: text,
+
+                        // allow empty ratings?
+                        allowEmpty: allowEmpty,
+
+                        // rating value and text of the empty OPTION
+                        emptyRatingValue: emptyValue,
+                        emptyRatingText: emptyText,
+
+                        // read-only state
+                        readOnly: self.options.readonly,
+
+                        // did the user already select a rating?
+                        ratingMade: false
+                    });
+                };
+
+                // remove data on element
+                var removeDataOnElement = function () {
+                    self.$elem.removeData('barrating');
+                };
+
+                // return current rating text
+                var ratingText = function () {
+                    return getData('ratingText');
+                };
+
+                // return current rating value
+                var ratingValue = function () {
+                    return getData('ratingValue');
+                };
+
+                // build widget and return jQuery element
+                var buildWidget = function () {
+                    var $w = $('<div />', { 'class': 'br-widget' });
+
+                    // create A elements that will replace OPTIONs
+                    self.$elem.find('option').each(function () {
+                        var val, text, html, $a;
+
+                        val = $(this).val();
+
+                        // create ratings - but only if val is not defined as empty
+                        if (val !== getData('emptyRatingValue')) {
+                            text = $(this).text();
+                            html = $(this).data('html');
+                            if (html) { text = html; }
+
+                            $a = $('<a />', {
+                                'href': '#',
+                                'data-rating-value': val,
+                                'data-rating-text': text,
+                                'html': (self.options.showValues) ? text : ''
+                            });
+
+                            $w.append($a);
+                        }
+
+                    });
+
+                    // append .br-current-rating div to the widget
+                    if (self.options.showSelectedRating) {
+                        $w.append($('<div />', { 'text': '', 'class': 'br-current-rating' }));
+                    }
+
+                    // additional classes for the widget
+                    if (self.options.reverse) {
+                        $w.addClass('br-reverse');
+                    }
+
+                    if (self.options.readonly) {
+                        $w.addClass('br-readonly');
+                    }
+
+                    return $w;
+                };
+
+                // return a jQuery function name depending on the 'reverse' setting
+                var nextAllorPreviousAll = function () {
+                    if (getData('userOptions').reverse) {
+                        return 'nextAll';
+                    } else {
+                        return 'prevAll';
+                    }
+                };
+
+                // set the value of the select field
+                var setSelectFieldValue = function (value) {
+                    // change selected option
+                    findOption(value).prop('selected', true);
+
+                    if (getData('userOptions').triggerChange) {
+                        self.$elem.change();
+                    }
+                };
+
+                // reset select field
+                var resetSelectField = function () {
+                    $('option', self.$elem).prop('selected', function () {
+                        return this.defaultSelected;
+                    });
+
+                    if (getData('userOptions').triggerChange) {
+                        self.$elem.change();
+                    }
+                };
+
+                // display the currently selected rating
+                var showSelectedRating = function (text) {
+                    // text undefined?
+                    text = text ? text : ratingText();
+
+                    // special case when the selected rating is defined as empty
+                    if (text == getData('emptyRatingText')) {
+                        text = '';
+                    }
+
+                    // update .br-current-rating div
+                    if (self.options.showSelectedRating) {
+                        self.$elem.parent().find('.br-current-rating').text(text);
+                    }
+                };
+
+                // return rounded fraction of a value (14.4 -> 40, 0.99 -> 90)
+                var fraction = function (value) {
+                    return Math.round(((Math.floor(value * 10) / 10) % 1) * 100);
+                };
+
+                // remove all classes from elements
+                var resetStyle = function () {
+                    // remove all classes starting with br-*
+                    self.$widget.find('a').removeClass(function (index, classes) {
+                        return (classes.match(/(^|\s)br-\S+/g) || []).join(' ');
+                    });
+                };
+
+                // apply style by setting classes on elements
+                var applyStyle = function () {
+                    var $a = self.$widget.find('a[data-rating-value="' + ratingValue() + '"]');
+                    var initialRating = getData('userOptions').initialRating;
+                    var baseValue = $.isNumeric(ratingValue()) ? ratingValue() : 0;
+                    var f = fraction(initialRating);
+                    var $all, $fractional;
+
+                    resetStyle();
+
+                    // add classes
+                    $a.addClass('br-selected br-current')[nextAllorPreviousAll()]()
+                        .addClass('br-selected');
+
+                    if (!getData('ratingMade') && $.isNumeric(initialRating)) {
+                        if ((initialRating <= baseValue) || !f) {
+                            return;
+                        }
+
+                        $all = self.$widget.find('a');
+
+                        $fractional = ($a.length) ?
+                            $a[(getData('userOptions').reverse) ? 'prev' : 'next']() :
+                            $all[(getData('userOptions').reverse) ? 'last' : 'first']();
+
+                        $fractional.addClass('br-fractional');
+                        $fractional.addClass('br-fractional-' + f);
+                    }
+                };
+
+                // check if the element is deselectable?
+                var isDeselectable = function ($element) {
+                    if (!getData('allowEmpty') || !getData('userOptions').deselectable) {
+                        return false;
+                    }
+
+                    return (ratingValue() == $element.attr('data-rating-value'));
+                };
+
+                // handle click events
+                var attachClickHandler = function ($elements) {
+                    $elements.on('click.barrating', function (event) {
+                        var $a = $(this),
+                            options = getData('userOptions'),
+                            value,
+                            text;
+
+                        event.preventDefault();
+
+                        value = $a.attr('data-rating-value');
+                        text = $a.attr('data-rating-text');
+
+                        // is current and deselectable?
+                        if (isDeselectable($a)) {
+                            value = getData('emptyRatingValue');
+                            text = getData('emptyRatingText');
+                        }
+
+                        // remember selected rating
+                        setData('ratingValue', value);
+                        setData('ratingText', text);
+                        setData('ratingMade', true);
+
+                        setSelectFieldValue(value);
+                        showSelectedRating(text);
+
+                        applyStyle();
+
+                        // onSelect callback
+                        options.onSelect.call(
+                            self,
+                            ratingValue(),
+                            ratingText(),
+                            event
+                        );
+
+                        return false;
+                    });
+                };
+
+                // handle mouseenter events
+                var attachMouseEnterHandler = function ($elements) {
+                    $elements.on('mouseenter.barrating', function () {
+                        var $a = $(this);
+
+                        resetStyle();
+
+                        $a.addClass('br-active')[nextAllorPreviousAll()]()
+                            .addClass('br-active');
+
+                        showSelectedRating($a.attr('data-rating-text'));
+                    });
+                };
+
+                // handle mouseleave events
+                var attachMouseLeaveHandler = function ($elements) {
+                    self.$widget.on('mouseleave.barrating blur.barrating', function () {
+                        showSelectedRating();
+                        applyStyle();
+                    });
+                };
+
+                // somewhat primitive way to remove 300ms click delay on touch devices
+                // for a more advanced solution consider setting `fastClicks` option to false
+                // and using a library such as fastclick (https://github.com/ftlabs/fastclick)
+                var fastClicks = function ($elements) {
+                    $elements.on('touchstart.barrating', function (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        $(this).click();
+                    });
+                };
+
+                // disable clicks
+                var disableClicks = function ($elements) {
+                    $elements.on('click.barrating', function (event) {
+                        event.preventDefault();
+                    });
+                };
+
+                var attachHandlers = function ($elements) {
+                    // attach click event handler
+                    attachClickHandler($elements);
+
+                    if (self.options.hoverState) {
+                        // attach mouseenter event handler
+                        attachMouseEnterHandler($elements);
+
+                        // attach mouseleave event handler
+                        attachMouseLeaveHandler($elements);
+                    }
+                };
+
+                var detachHandlers = function ($elements) {
+                    // remove event handlers in the ".barrating" namespace
+                    $elements.off('.barrating');
+                };
+
+                var setupHandlers = function (readonly) {
+                    var $elements = self.$widget.find('a');
+
+                    if (fastClicks) {
+                        fastClicks($elements);
+                    }
+
+                    if (readonly) {
+                        detachHandlers($elements);
+                        disableClicks($elements);
+                    } else {
+                        attachHandlers($elements);
+                    }
+                };
+
+                this.show = function () {
+                    // run only once
+                    if (getData()) return;
+
+                    // wrap element
+                    wrapElement();
+
+                    // save data
+                    saveDataOnElement();
+
+                    // build & append widget to the DOM
+                    self.$widget = buildWidget();
+                    self.$widget.insertAfter(self.$elem);
+
+                    applyStyle();
+
+                    showSelectedRating();
+
+                    setupHandlers(self.options.readonly);
+
+                    // hide the select field
+                    self.$elem.hide();
+                };
+
+                this.readonly = function (state) {
+                    if (typeof state !== 'boolean' || getData('readOnly') == state) return;
+
+                    setupHandlers(state);
+                    setData('readOnly', state);
+                    self.$widget.toggleClass('br-readonly');
+                };
+
+                this.set = function (value) {
+                    var options = getData('userOptions');
+
+                    if (self.$elem.find('option[value="' + value + '"]').length === 0) return;
+
+                    // set data
+                    setData('ratingValue', value);
+                    setData('ratingText', self.$elem.find('option[value="' + value + '"]').text());
+                    setData('ratingMade', true);
+
+                    setSelectFieldValue(ratingValue());
+                    showSelectedRating(ratingText());
+
+                    applyStyle();
+
+                    // onSelect callback
+                    if (!options.silent) {
+                        options.onSelect.call(
+                            this,
+                            ratingValue(),
+                            ratingText()
+                        );
+                    }
+                };
+
+                this.clear = function () {
+                    var options = getData('userOptions');
+
+                    // restore original data
+                    setData('ratingValue', getData('originalRatingValue'));
+                    setData('ratingText', getData('originalRatingText'));
+                    setData('ratingMade', false);
+
+                    resetSelectField();
+                    showSelectedRating(ratingText());
+
+                    applyStyle();
+
+                    // onClear callback
+                    options.onClear.call(
+                        this,
+                        ratingValue(),
+                        ratingText()
+                    );
+                };
+
+                this.destroy = function () {
+                    var value = ratingValue();
+                    var text = ratingText();
+                    var options = getData('userOptions');
+
+                    // detach handlers
+                    detachHandlers(self.$widget.find('a'));
+
+                    // remove widget
+                    self.$widget.remove();
+
+                    // remove data
+                    removeDataOnElement();
+
+                    // unwrap the element
+                    unwrapElement();
+
+                    // show the element
+                    self.$elem.show();
+
+                    // onDestroy callback
+                    options.onDestroy.call(
+                        this,
+                        value,
+                        text
+                    );
+                };
+            }
+
+            BarRating.prototype.init = function (options, elem) {
+                this.$elem = $(elem);
+                this.options = $.extend({}, $.fn.barrating.defaults, options);
+
+                return this.options;
+            };
+
+            return BarRating;
+        })();
+
+        $.fn.barrating = function (method, options) {
+            return this.each(function () {
+                var plugin = new BarRating();
+
+                // plugin works with select fields
+                if (!$(this).is('select')) {
+                    $.error('Sorry, this plugin only works with select fields.');
+                }
+
+                // method supplied
+                if (plugin.hasOwnProperty(method)) {
+                    plugin.init(options, this);
+                    if (method === 'show') {
+                        return plugin.show(options);
+                    } else {
+                        // plugin exists?
+                        if (plugin.$elem.data('barrating')) {
+                            plugin.$widget = $(this).next('.br-widget');
+                            return plugin[method](options);
+                        }
+                    }
+
+                    // no method supplied or only options supplied
+                } else if (typeof method === 'object' || !method) {
+                    options = method;
+                    plugin.init(options, this);
+                    return plugin.show();
+
+                } else {
+                    $.error('Method ' + method + ' does not exist on jQuery.barrating');
+                }
+            });
+        };
+
+        $.fn.barrating.defaults = {
+            theme: '',
+            initialRating: null, // initial rating
+            allowEmpty: null, // allow empty ratings?
+            emptyValue: '', // this is the expected value of the empty rating
+            showValues: false, // display rating values on the bars?
+            showSelectedRating: true, // append a div with a rating to the widget?
+            deselectable: true, // allow to deselect ratings?
+            reverse: false, // reverse the rating?
+            readonly: false, // make the rating ready-only?
+            fastClicks: true, // remove 300ms click delay on touch devices?
+            hoverState: true, // change state on hover?
+            silent: false, // supress callbacks when controlling ratings programatically
+            triggerChange: true, // trigger change event when ratings are set or reset
+            onSelect: function (value, text, event) {
+            }, // callback fired when a rating is selected
+            onClear: function (value, text) {
+            }, // callback fired when a rating is cleared
+            onDestroy: function (value, text) {
+            } // callback fired when a widget is destroyed
+        };
+
+        $.fn.barrating.BarRating = BarRating;
+
+    }));
+
+</script>
+
