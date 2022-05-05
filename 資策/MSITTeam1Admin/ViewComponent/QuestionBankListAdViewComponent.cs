@@ -1,37 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
-using MSITTeam1.Models;
-using MSITTeam1.ViewModels;
+using MSITTeam1Admin.Models;
+using MSITTeam1Admin.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace MSITTeam1.ViewComponent
+namespace MSITTeam1Admin.ViewComponent
 {
 	[Microsoft.AspNetCore.Mvc.ViewComponent]
-	public class QuestionBankListViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
+	public class QuestionBankListAdViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
 	{
 		private readonly helloContext _context;
 
 		[ActivatorUtilitiesConstructor]
-		public QuestionBankListViewComponent(helloContext context)
+		public QuestionBankListAdViewComponent(helloContext context)
 		{
 			_context = context;
 		}
-		public async Task<IViewComponentResult> InvokeAsync(string keyword, string Subjects, string Type)
+		public IViewComponentResult Invoke(string keyword, string Subjects, string Type)
 		{
-			ViewBag.Name = CDictionary.username;
-			ViewBag.Type = CDictionary.memtype;
-			ViewBag.account = CDictionary.account;
-
 			// 從資料庫讀取題目
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails
 														   join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
-														   where ques.FState == 2 || (ques.FState == 1 && ques.FSubmitterId == CDictionary.account)
 														   orderby ques.FSubjectId
 														   select new CQuestionBankViewModel
 														   {
@@ -43,10 +38,11 @@ namespace MSITTeam1.ViewComponent
 															   FQuestion = ques.FQuestion,
 															   FLevel = ques.FLevel,
 															   FQuestionTypeId = ques.FQuestionTypeId,
+															   FState = ques.FState,
 															   FChoice = choice.FChoice,
 															   FCorrectAnswer = choice.FCorrectAnswer
 														   };
-		
+
 			// 篩選題目
 			quesQuery = this.FilterByClass(quesQuery, Subjects);
 			quesQuery = this.FilterByKeyWord(quesQuery, keyword);

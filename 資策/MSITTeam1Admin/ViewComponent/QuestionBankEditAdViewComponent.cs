@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using MSITTeam1.Models;
-using MSITTeam1.ViewModels;
+using MSITTeam1Admin.Models;
+using MSITTeam1Admin.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MSITTeam1.ViewComponent
+namespace MSITTeam1Admin.ViewComponent
 {
 	[Microsoft.AspNetCore.Mvc.ViewComponent]
-	public class QuestionBankEditViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
+	public class QuestionBankEditAdViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
 	{
 		private readonly helloContext _context;
 
 		[ActivatorUtilitiesConstructor]
-		public QuestionBankEditViewComponent(helloContext context)
+		public QuestionBankEditAdViewComponent(helloContext context)
 		{
 			_context = context;
 		}

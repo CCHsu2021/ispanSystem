@@ -102,6 +102,7 @@ namespace MSITTeam1Admin.ViewModels
 			get { return this.question.FSubmitterId; }
 			set { this.question.FSubmitterId = value; }
 		}
+		[DisplayName("题目状态")]
 		public int FState
 		{
 			get { return this.question.FState; }

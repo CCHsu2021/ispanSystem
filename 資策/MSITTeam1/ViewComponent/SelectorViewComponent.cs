@@ -63,7 +63,13 @@ namespace MSITTeam1.ViewComponent
         private List<SelectListItem> SetDropDown2(string cityname = "", string districtname = "")
         {
             var districtlist = from c in hello.TCityContrasts where c.FCityName == cityname select c;
-
+            int num = 0;
+            if (int.TryParse(districtname,out num))
+            {
+                TCityContrast district = hello.TCityContrasts.FirstOrDefault(p => p.FPostCode.ToString() == districtname);
+                districtname = district.FDistrictName;
+                
+            }
             List<SelectListItem> items = GetSelectItem(false);
             foreach (var i in districtlist)
             {
@@ -75,8 +81,9 @@ namespace MSITTeam1.ViewComponent
             }
             if(districtname != "")
             {
-                items.Where(p => p.Text == districtname).First().Selected = true;
+            items.Where(p => p.Text == districtname).First().Selected = true;
             }
+
             return items;
 
 

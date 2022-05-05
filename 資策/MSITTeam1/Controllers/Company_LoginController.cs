@@ -138,11 +138,11 @@ namespace MSITTeam1.Controllers
                 sVerify = Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
 
                 sVerify = HttpUtility.UrlEncode(sVerify);
-                string webPath = Request.Scheme + "://" + Request.PathBase + Url.Content("~/");
+                string webPath = Request.Scheme + "://" + Request.Host + Url.Content("~/");
                 string Action = "Company_Login/ForgetPWD";
-                string path = "<a href='" + webPath + Action + "?verify =" + sVerify + " target = _blank'>點此連結</a>";
+                string path = "<a href='" + webPath + Action + "?verify=" + sVerify + "'>點此連結</a>";
                 CMailDelivery.mail(email, account,path);
-                return Json(new { suc = "已發送郵件至信箱" });
+                return Content("已發送郵件至信箱");
             }
             return Json(new { fail = "找不到用戶" });
         }

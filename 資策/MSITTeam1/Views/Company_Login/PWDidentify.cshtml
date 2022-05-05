@@ -39,27 +39,29 @@
 @section Scripts
 {
     <script>
-    $("#resetbtn").click(() => {
-        const account = $("#RfAccount").val();
-        const email = $("#RfEmail").val();
+        $("#resetbtn").click(() => {
+            const account = $("#RfAccount").val();
+            const email = $("#RfEmail").val();
 
             $.ajax({
                 type: "Post",
                 url: "@Url.Content("~/Company_Login/MailPWDresetLink")",
-                data: { account: account,email:email },
+                data: { account: account, email: email },
                 dataType: "text",
                 success: function (message) {
-                    if (message.fail) {
-                        Swal.fire("Uh Oh", message.fail, "warning");
-                    } else if (message.suc) {
-                        Swal.fire("已發送認證信件請至信箱查看", message.suc, "success").then((result) => {
+                    console.log(message);
+                    if (message == "已發送郵件至信箱") {
+                        Swal.fire("已發送認證信件請至信箱查看", "success", "success").then((result) => {
                             if (result.isConfirmed) {
                                 window.location = "@Url.Content("~/Company_Login")";
                             }
-                        })
+                        });
+                    }
+                    else {
+                        Swal.fire("Uh Oh", message.fail, "warning");
                     }
                 }
-            })
-    })
+            });
+        });
     </script>
 }

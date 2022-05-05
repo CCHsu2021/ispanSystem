@@ -1,17 +1,23 @@
-﻿@model MSITTeam1.ViewModels.CTestPaperBankViewModel
-@addTagHelper *,MSITTeam1
+﻿@addTagHelper *, MSITTeam1Admin
+@{
+    ViewData["Title"] = "Index";
+}
 
 @section Style{
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/fontawesome-all.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="~/css/QuestionBankStyleSheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/QuestionBankStyleSheet.css" />
+    <link href="~/css/QTabCard.css" rel="stylesheet" />
+    <link href="~/css/SearchBar.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/StarBar.css" />
-    <link href="~/css/barRating.css" rel="stylesheet" />
-    <link href="~/css/Resumebar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/barRating.css" />
     <style>
+        .input-group-btn .btn {
+            padding: 8px 12px !important;
+        }
+
         .indicator {
             width: 25px !important;
         }
@@ -21,7 +27,7 @@
             height: 200px !important;
         }
 
-        #search {
+             #testsearch {
             -webkit-appearance: none;
             -moz-appearance: none;
             border: 0;
@@ -37,15 +43,10 @@
             width: 50px;
         }
 
-        #testView {
+/*        #testView {
             height: 500px;
             overflow: auto;
-        }
-
-        #testTable {
-            height: 500px;
-            overflow: auto;
-        }
+        }*/
 
         .slide-container {
             height: 600px !important;
@@ -57,11 +58,6 @@
 
         .button-container {
             border-top: 0.2px hidden !important;
-        }
-
-        #searchGroup {
-            width: 1200px;
-            padding: 30px 0 15px 100px;
         }
 
         #selectCount {
@@ -123,7 +119,6 @@
         }
 
             #outdivCre button:hover {
-                /*background-color: #1A7F75;*/
                 color: #1e3c84;
                 z-index: 4;
                 background-color: #ffffff;
@@ -145,57 +140,102 @@
                 margin: auto;
                 width: 150px;
             }
+
+        .card {
+            height: 190px;
+            padding: 15px !important;
+            border-radius: 11px !important;
+        }
+
+            .card:hover {
+                box-shadow: 5px 10px 30px rgb(0 0 0 / 50%);
+            }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-title {
+            text-align: center !important;
+        }
+
+        p, .text {
+            line-height: 1.6em !important;
+            font-size: 14px;
+            text-indent: 2em;
+            height: 65px;
+            overflow: auto;
+        }
+
+        .p-3 {
+            padding: 3px !important;
+        }
+
+        .creator {
+            color: darkblue;
+            text-align: right;
+            font-size: 14px !important;
+        }
+
+        .indicator {
+            display: block !important;
+            border: 0.2px solid #428bff !important;
+        }
+
+        #outdivEd button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            border: solid 1px transparent;
+            padding: 14px 14px;
+            background-color: #1e3c84;
+            color: #FFFFFF;
+            text-transform: capitalize;
+            font-size: 18px;
+            line-height: 22px;
+            outline: none;
+            cursor: pointer;
+            transition: all .3s linear;
+            width: 150px;
+        }
+
+            #outdivEd button:hover {
+                /*background-color: #1A7F75;*/
+                color: #1e3c84;
+                z-index: 4;
+                background-color: #ffffff;
+                border: #1e3c84 solid 1px;
+                cursor: pointer;
+            }
     </style>
 }
+<h1>試卷及題目管理</h1>
+<div style="margin-bottom:50px">
+    <div class="tabs">
+        <input type="radio" id="tab1" name="tab-control" checked>
+        <input type="radio" id="tab2" name="tab-control">
 
-<div class="resumebar">
-    <div class="pagination-container full-width-container">
-        <div class="sized-container">
-            <div class="pagination"></div>
-        </div>
-    </div>
-
-    <div class="viewport full-width-container">
-        <ul class="slide-container">
-            <li class="slide" data-tag="建立考卷資料">
-                <form name="basic">
-                    <div class="sized-container basic">
-                        <h1>歡迎使用資展題庫系統</h1>
-                        <h2>請填寫考卷名稱及考卷介紹，您可以依照喜好從題庫挑選想要的題目，您也可以設計屬於自己的題目。</h2>
-                        <hr />
-                        <div class="row data justify-content-center">
-                            <div class="col-5">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="FDesignerAccount" value="@ViewBag.account" />
-                                <div class="form-group">
-                                    <label asp-for="FTestPaperName" class="control-label"></label>
-                                    <input asp-for="FTestPaperName" class="form-control" id="FpaperName" />
-                                    <span asp-validation-for="FTestPaperName" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div class="form-group">
-                                    <label asp-for="FBSubjectId" class="control-label">技能名稱</label>
-                                    <select id="FSubject" name="FSubjectId" class="form-control">
-                                        <option value="">請選擇技能名稱</option>
-                                    </select>
-                                    <span asp-validation-for="FBSubjectId" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <div class="form-group">
-                                    <label asp-for="FNote" class="control-label"></label>
-                                    <textarea id="FPaperNote" asp-for="FNote" class="form-control"></textarea>
-                                    <span asp-validation-for="FNote" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+        <ul>
+            <li title="PaperBank">
+                <label for="tab1" role="button">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14,2A8,8 0 0,0 6,10A8,8 0 0,0 14,18A8,8 0 0,0 22,10H20C20,13.32 17.32,16 14,16A6,6 0 0,1 8,10A6,6 0 0,1 14,4C14.43,4 14.86,4.05 15.27,4.14L16.88,2.54C15.96,2.18 15,2 14,2M20.59,3.58L14,10.17L11.62,7.79L10.21,9.21L14,13L22,5M4.93,5.82C3.08,7.34 2,9.61 2,12A8,8 0 0,0 10,20C10.64,20 11.27,19.92 11.88,19.77C10.12,19.38 8.5,18.5 7.17,17.29C5.22,16.25 4,14.21 4,12C4,11.7 4.03,11.41 4.07,11.11C4.03,10.74 4,10.37 4,10C4,8.56 4.32,7.13 4.93,5.82Z" />
+                    </svg><br><span>上架中題目</span>
+                </label>
             </li>
+            <li title="QuestionBank">
+                <label for="tab2" role="button">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M2,10.96C1.5,10.68 1.35,10.07 1.63,9.59L3.13,7C3.24,6.8 3.41,6.66 3.6,6.58L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.66,6.72 20.82,6.88 20.91,7.08L22.36,9.6C22.64,10.08 22.47,10.69 22,10.96L21,11.54V16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V10.96C2.7,11.13 2.32,11.14 2,10.96M12,4.15V4.15L12,10.85V10.85L17.96,7.5L12,4.15M5,15.91L11,19.29V12.58L5,9.21V15.91M19,15.91V12.69L14,15.59C13.67,15.77 13.3,15.76 13,15.6V19.29L19,15.91M13.85,13.36L20.13,9.73L19.55,8.72L13.27,12.35L13.85,13.36Z" />
+                    </svg><br><span>題目回收站</span>
+                </label>
+            </li>
+        </ul>
 
-            <li class="slide" data-tag="選擇題目">
-                <div class="sized-container questionTable">
+        <div class="content">
+            <section>
+                <div>
                     <div class="row row justify-content-around" id="searchGroup">
                         <div class="col-3">
                             <select id="FSubjectId" name="FSubjectId" class="form-control">
@@ -209,10 +249,10 @@
                                 <option value="2">多選題</option>
                             </select>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <div class="input-group input-group-rounded">
                                 <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="keyword">
-                                <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="search"><i class="fas fa-search"></i></button></span>
+                                <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="testsearch"><i class="fas fa-search"></i></button></span>
                             </div>
                         </div>
                         <div class="col-2">
@@ -221,55 +261,14 @@
                             </div>
                         </div>
                     </div>
-                    <hr />
-                    <div class="row" style="justify-content: end;">
-                        <div id="selectCount">
-                            <span id="spanSelCount">已選 0 項</span>
-                        </div>
-                        <div class="selectType" id="MemberType">
-                            <span>企業會員</span>
-                        </div>
-                        <div class="selectType" id="AdminType">
-                            <span>管理員</span>
-                        </div>
-                        <div class="selectType" id="resetList">
-                            <span>清空</span>
-                        </div>
-                    </div>
-
-                    <div class="row" style="margin:8px;">
-                        <div id="testView" class="col-9">
-                            @*QuestionList*@
-                        </div>
-                        <div class="col-3 selectQuestList">
-                            <table id="testTable" class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>已選題目</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="selectedQuestionListTb">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row data" id="workExpPage">
-                        <!--<div class="col-6">-->
-                        @*add here*@
-                        <!--<button class="saveworkbtn my-3" id="editWork" onclick="editWork()">儲存修改</button>
-                        </div>-->
-                    </div>
                 </div>
-            </li>
-        </ul>
-
-    </div>
-    <div class="full-width-container">
-        <div class="button-container sized-container">
-            <button class="next">下一步</button>
-            <button class="paperCreate" id="createPaper" style="float:none;margin: 0 0 30px 400px;">新增試卷</button>
-            <button class="previous">上一步</button>
+                <hr />
+                <div id="testView">
+                    @*QuestionList*@
+                </div>
+            </section>
+            <section>
+            </section>
         </div>
     </div>
 </div>
@@ -284,38 +283,101 @@
                 <span aria-hidden="true">&times;</span>
             </div>
             <div class="modal-body">
-                <vc:question-bank-create></vc:question-bank-create>
+                <vc:question-bank-create-ad></vc:question-bank-create-ad>
             </div>
         </div>
     </div>
 </div>
 
-@section Scripts {
+@section Scripts
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="https://your-site-or-cdn.com/fontawesome/v6.1.1/js/all.js" data-auto-replace-svg="nest"></script>
-    <script src="~/js/jquery.barrating.js"></script>
     <script src="~/js/barRating.init.js"></script>
+    <script src="~/js/jquery.barrating.js"></script>
+    <script src="~/js/Pagination.js"></script>
     <script>
-          // 載入課程名稱
+// 難度StarBar
+    $('.quesLevel').each(function () {
+        var i = $(this).val();
+        var temp = "show_rated_" + i;
+        $(this).next().attr("class", temp);
+    })
+    // 題目編輯
+    $('.editQuestion').click(function () {
+                jsondata = JSON.stringify({
+                    Subjects: $(this).parents("tr").find('.subjectId').val(),
+                    questionID: $(this).parents("tr").find('.questionId').val()
+                })
+            $.ajax({
+                url: "@Url.Content("~/QuesBankSysAdmin/EditByVC")",
+                type: "POST",
+                contentType: "application/json",
+                data: jsondata,
+                success: function (result) {
+                    $('#EditModal').html(result);
+                }
+            })
+    })
+
+    // 題目內容
+    $('.detailQuestion').click(function () {
+            jsondata = JSON.stringify({
+                Subjects: $(this).parents("tr").find('.subjectId').val(),
+                questionID: $(this).parents("tr").find('.questionId').val()
+            })
+        $.ajax({
+            url: "@Url.Content("~/QuesBankSysAdmin/DetailByVC")",
+            type: "POST",
+            contentType: "application/json",
+            data: jsondata,
+            success: function (result) {
+                $('#DetailModal').html(result);
+            }
+        })
+    })
+
+    // 題目刪除
+    $('.delQuestion').click(function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var sub = $(this).parents("tr").find('.subjectId').val();
+                var quesId = $(this).parents("tr").find('.questionId').val();
+               async function deleteQues() {
+                   const responseDelete = await fetch("@Url.Content("~/QuesBankSysAdmin/Delete")" + `?subjectID=${sub}&questionID=${quesId}`);
+                   const data = await responseDelete.text()
+                   Swal.fire(data);
+                }
+                deleteQues();
+                $('#testsearch').trigger('click');
+            }
+        })
+    })
+
+
+// 載入課程名稱
         const selSubQuest = document.querySelector('#FSubjectIdSel');
-        const selSubPaper = document.querySelector('#FSubject');
         const selSubSearch = document.querySelector('#FSubjectId');
         async function LoadSubject() {
-            const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
+            const responseSubject = await fetch('@Url.Content("~/QuesBankSysAdmin/Subject")');
             renderSubject(await responseSubject.json());
         }
         function renderSubject(datas) {
             datas.forEach((item) => {
                 const opt = new Option(item.fClassCategory, item.fClassCategory);
-                selSubPaper.options.add(opt);
+                selSubSearch.options.add(opt);
             })
             datas.forEach((item) => {
                 const opt = new Option(item.fClassCategory, item.fClassCategory);
                 selSubQuest.options.add(opt);
-            })
-            datas.forEach((item) => {
-                const opt = new Option(item.fClassCategory, item.fClassCategory);
-                selSubSearch.options.add(opt);
             })
         }
         LoadSubject();
@@ -323,14 +385,14 @@
         // 題目查詢
         var jsondata = null;
         $(document).ready(function () {
-        $('#search').click(function () {
+        $('#testsearch').click(function () {
                 jsondata = JSON.stringify({
                     Subjects: $('#FSubjectId').val(),
                     keyword: $('#keyword').val(),
                     Type: $('#FQuestionTypeId').val()
                 })
             $.ajax({
-                url: "@Url.Content("~/QuestionBank/List")",
+                url: "@Url.Content("~/QuesBankSysAdmin/List")",
                 type: "POST",
                 contentType: "application/json",
                 data: jsondata,
@@ -418,7 +480,7 @@
                 })
                 console.log(jsondata);
                 $.ajax({
-                    url: "/QuestionBank/Create",
+                    url: "/QuesBankSysAdmin/Create",
                     type: "POST",
                     contentType: "application/json",
                     data: jsondata
@@ -447,205 +509,8 @@
         });
 
 //-------------------------------------------Create New Question End--------------------------------
-
-//-----------------------------Create New TestPaper---------------------------------------------
-
-        // 判斷可編輯題目
-        $('#MemberType').click(function () {
-            $('#editGroup').hide();
-            $('.editQButton').hide();
-        })
-        $('#AdminType').click(function () {
-            $('#editGroup').show();
-            $('.editQButton').show();
-        })
-
-    // 題目選取
-        function passToPaper(checkboxid) {
-        var t = $('#' + checkboxid).prop('checked');
-        if (t) {
-            var rowid = "r" + checkboxid;
-            var currentRow = $('#' + checkboxid).closest("tr");
-            var getQuestion = currentRow.find('td').eq(2).html();
-            $('#testTable > tbody').append('<tr id = ' + rowid + '><td>' + getQuestion + '</td></tr>');
-        } else {
-            var rowid = "r" + checkboxid;
-            $('#testTable > tbody').find('#' + rowid).remove();
-            }
-            var currentSelectCount = $('#testTable > tbody > tr').length;
-            $('#spanSelCount').text("已選 " + currentSelectCount + " 項");
-        }
-
-        //清空選單
-        $('#resetList').click(function () {
-            console.log("reset");
-            $('#selectedQuestionListTb').empty();
-            var currentSelectCount = $('#testTable > tbody > tr').length;
-            $('#spanSelCount').text("已選 " + currentSelectCount + " 項");
-            //$('#questionTable').find("input[type='checkbox']").each(function () {
-            $("input[type='checkbox']").each(function () {
-                $(this).prop('checked', false);
-            })
-        })
-
-        // 新增試卷
-        $('#createPaper').click(function () {
-            var selectList = [];
-            var QuestionList = $('#testTable').length;
-            if (QuestionList < 1) {
-                Swal.fire("尚未選取題目");
-            } else if ($('#FpaperName').val() == "") {
-                Swal.fire("請輸入試卷名稱");
-            } else if ($('#FSubject').val() == "") {
-                Swal.fire("請選擇試卷主要測試的技能類別");
-            }
-            else {
-                $('#testTable > tbody > tr').each(function (idx, item) {
-                    var queid = {};
-                    var sub = $(item).find('.subjectId').val();
-                    var que = $(item).find('.questionId').val();
-                    queid.FSubjectId = sub;
-                    queid.fQuestionId = que;
-                    selectList.push(queid);
-                })
-                //console.log(selectList);
-                var newPaperJson = JSON.stringify({
-                    FDesignerAccount: $('#FDesignerAccount').val(),
-                    FTestPaperName: $('#FpaperName').val(),
-                    FBSubjectId: $('#FSubject').val(),
-                    FNote: $('#FPaperNote').val(),
-                    SelectQuestionList: selectList,
-                })
-                //console.log(newPaperJson);
-                $.ajax({
-                    url: "/TestPaperBank/CreatNewPaper",
-                    type: "POST",
-                    contentType: "application/json",
-                    data: newPaperJson
-                }).done(function (data) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '新增成功',
-                        showConfirmButton: true,
-                        timer: 1500
-                    }).then(() => {
-                        window.location.reload();
-                    })
-                })
-            }
-        })
-//-----------------------------Create New TestPaper End---------------------------------------------
-
-        // 刪除不需要的jquery程式
-    var currentSlide = 0,
-        $slideContainer = $('.slide-container'),
-        $slide = $('.slide'),
-        slideCount = $slide.length,
-        animationTime = 300;
-
-    function setSlideDimensions() {
-        var windowWidth = $(window).width();
-        $slideContainer.width(windowWidth * slideCount);
-        $slide.width(windowWidth);
-    }
-
-    function generatePagination() {
-        var $pagination = $('.pagination');
-        for (var i = 0; i < slideCount; i++) {
-            var $indicator = $('<div>').addClass('indicator'),
-                $progressBarContainer = $('<div>').addClass('progress-bar-container'),
-                $progressBar = $('<div>').addClass('progress-bar'),
-                indicatorTagText = $slide.eq(i).attr('data-tag'),
-                $tag = $('<div>').addClass('tag').text(indicatorTagText);
-            $indicator.append($tag);
-            $progressBarContainer.append($progressBar);
-            $pagination.append($indicator).append($progressBarContainer);
-        }
-        $pagination.find('.indicator').eq(0).addClass('active');
-    }
-
-        // 移動按鈕調整
-        if (currentSlide == 0) {
-            $('.previous').hide();
-            $('.paperCreate').hide();
-            $('.next').show();
-        } else {
-            $('.previous').show();
-            $('.next').hide();
-            $('.paperCreate').show();
-        }
-    function goToNextSlide() {
-        if (currentSlide >= slideCount - 1) {
-            $('.previous').show();
-            return;
-        } else {
-            currentSlide++;
-            if (currentSlide == 0) {
-                $('.previous').hide();
-                $('.paperCreate').hide();
-                $('.next').show();
-            } else {
-                $('.previous').show();
-                $('.paperCreate').show();
-                $('.next').hide();
-            }
-            console.log(currentSlide);
-        }
-        var windowWidth = $(window).width();
-        //currentSlide++;
-        $slideContainer.animate({
-            left: -(windowWidth * currentSlide)
-        });
-        setActiveIndicator();
-        $('.progress-bar').eq(currentSlide - 1).animate({
-            width: '100%'
-        }, animationTime);
-    }
-
-    function goToPreviousSlide() {
-        var windowWidth = $(window).width();
-        currentSlide--;
-        $slideContainer.animate({
-            left: -(windowWidth * currentSlide)
-        }, animationTime);
-        setActiveIndicator();
-        $('.progress-bar').eq(currentSlide).animate({
-            width: '0%'
-        }, animationTime);
-        console.log(currentSlide);
-        if (currentSlide <= 0) {
-            $('.previous').hide();
-            $('.paperCreate').hide();
-            $('.next').show();
-            return;
-        } else {
-            $('.previous').show();
-            $('.paperCreate').show();
-            $('.next').hide();
-        }
-    }
-
-    function postitionSlides() {
-        var windowWidth = $(window).width();
-        setSlideDimensions();
-        $slideContainer.css({
-            left: -(windowWidth * currentSlide)
-        }, animationTime);
-    }
-
-    function setActiveIndicator() {
-        var $indicator = $('.indicator');
-        $indicator.removeClass('active').removeClass('complete');
-        $indicator.eq(currentSlide).addClass('active');
-        for (var i = 0; i < currentSlide; i++) {
-            $indicator.eq(i).addClass('complete');
-        }
-    }
-
-    setSlideDimensions();
-    generatePagination();
-    $(window).resize(postitionSlides);
-    $('.next').on('click', goToNextSlide);
-    $('.previous').on('click', goToPreviousSlide);
     </script>
+
 }
+
+

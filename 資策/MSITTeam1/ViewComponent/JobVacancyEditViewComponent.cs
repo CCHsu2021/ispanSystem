@@ -24,6 +24,7 @@ namespace MSITTeam1.ViewComponent
                 if(job != null)
                 {
                     CJobVacancyViewModel c = new CJobVacancyViewModel() { job = job };
+                    ViewBag.fid = id;
                     return View(c);
                 }
             }

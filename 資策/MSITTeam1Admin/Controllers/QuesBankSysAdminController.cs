@@ -29,11 +29,7 @@ namespace MSITTeam1Admin.Controllers
 		[HttpPost]
 		public IActionResult List([FromBody] CQuestionQueryViewModel query)
 		{
-			//ViewBag.Name = CDictionary.username;
-			//ViewBag.Type = CDictionary.memtype;
-			//ViewBag.account = CDictionary.account;
-
-			return ViewComponent("QuestionBankList", new { keyword = query.keyword, Subjects = query.Subjects, Type = query.Type });
+			return ViewComponent("QuestionBankListAd", new { keyword = query.keyword, Subjects = query.Subjects, Type = query.Type });
 		}
 		private IQueryable<CQuestionBankViewModel> FilterByType(IQueryable<CQuestionBankViewModel> table, string level)
 		{
@@ -99,15 +95,6 @@ namespace MSITTeam1Admin.Controllers
 				int lastId = searchLastId.First().FQuestionId;
 				newques.FQuestionId = lastId + 1;
 			}
-
-			//if (CDictionary.account != null)
-			//{
-			//	newques.FSubmitterId = CDictionary.account;
-			//}
-			//else
-			//{
-			//	newques.FSubmitterId = "admin";
-			//}
 			newques.FSubmitterId = "admin";
 			// TODO:8.管理者新增題目可以自己設定題目狀態
 			//newques.FState = 2;
@@ -123,7 +110,9 @@ namespace MSITTeam1Admin.Controllers
 				_context.SaveChanges();
 			}
 			_context.SaveChanges();
-			return Content("新增成功");
+
+			//return Content("新增成功");
+			return RedirectToAction("Index");
 		}
 
 		public IActionResult DetailByVC([FromBody] CQuestionQueryViewModel query)
@@ -133,7 +122,7 @@ namespace MSITTeam1Admin.Controllers
 			{
 				questionID = Convert.ToInt32(query.questionID);
 			}
-			return ViewComponent("QuestionBankDetail", new { subjectID = query.Subjects, questionID = questionID });
+			return ViewComponent("QuestionBankDetailAd", new { subjectID = query.Subjects, questionID = questionID });
 		}
 
 		public IActionResult EditByVC([FromBody] CQuestionQueryViewModel query)
@@ -143,7 +132,7 @@ namespace MSITTeam1Admin.Controllers
 			{
 				questionID = Convert.ToInt32(query.questionID);
 			}
-			return ViewComponent("QuestionBankEdit", new { subjectID = query.Subjects, questionID = questionID });
+			return ViewComponent("QuestionBankEditAd", new { subjectID = query.Subjects, questionID = questionID });
 		}
 
 		[HttpPost]
@@ -202,7 +191,7 @@ namespace MSITTeam1Admin.Controllers
 				}
 				_context.SaveChanges();
 			}
-			return RedirectToAction("List");
+			return RedirectToAction("Index");
 		}
 
 		public IActionResult Delete(string subjectID, int questionID)
@@ -222,7 +211,8 @@ namespace MSITTeam1Admin.Controllers
 					return Content("刪除成功", "text/plain", System.Text.Encoding.UTF8);
 				}
 			}
-			return RedirectToAction("List");
+			//return RedirectToAction("List");
+			return RedirectToAction("Index");
 		}
 
 
