@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-12">
-        <form>
+        <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input asp-for="CompanyRespondId" class="form-control" type="hidden" />
@@ -31,13 +31,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="InterviewAddress" class="control-label"></label>
-                <input asp-for="InterviewAddress" class="form-control" />
+                <input asp-for="InterviewAddress" class="form-control" required/>
                 <span asp-validation-for="InterviewAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="InterviewTime" class="control-label"></label>
-                <input id="InterviewTime" name="InterviewTime" class="form-control" placeholder="EX.0912345678" />
-                <select class="form-control" id="ddlstartTime" name="ddlstartTime">
+                <input id="InterviewTime" name="InterviewTime" class="form-control" placeholder="EX.0912345678" required/>
+                <select class="form-control" id="ddlstartTime" name="ddlstartTime" required>
                     <option value="09:00">09:00</option>
                     <option value="09:30">09:30</option>
                     <option value="10:00">10:00</option>

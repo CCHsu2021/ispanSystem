@@ -52,7 +52,7 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult StudentResumeDetail(string ResumeSendId)
         {
-            var chooseOne = (from p in _context.TMemberResumeSends
+            var chooseTable = from p in _context.TMemberResumeSends
                              join t in _context.TCompanyBasics on p.CompanyTaxid equals t.CompanyTaxid into pt
                              from combin in pt.DefaultIfEmpty()
                              join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
@@ -62,7 +62,8 @@ namespace MSITTeam1.Controllers
                                  memRS = p,
                                  FCompanyName = combin.FName,
                                  FStudentName = combin2.Name
-                             }).FirstOrDefault(p => p.ResumeSendId.Equals(ResumeSendId));
+                             };
+            var chooseOne = chooseTable.FirstOrDefault(p => p.ResumeSendId.Equals(ResumeSendId));
 
             var chooseResume = _context.TMemberResumeSends.FirstOrDefault(p=>p.ResumeSendId.Equals(ResumeSendId));
             chooseResume.ComReadOrNot = "已讀";
@@ -90,129 +91,19 @@ namespace MSITTeam1.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: PostMessage/Details/5
-        public async Task<IActionResult> Details(string id)
+        public IActionResult InterViewDecline(TCompanyRespond companyRespond)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            string CRID = $"CR{companyRespond.ResumeSendId}";
+            string dateTimeNow = DateTime.Now.ToString();
 
-            var tMemberResumeSend = await _context.TMemberResumeSends
-                .FirstOrDefaultAsync(m => m.ResumeSendId == id);
-            if (tMemberResumeSend == null)
-            {
-                return NotFound();
-            }
+            companyRespond.CompanyRespondId = CRID;
+            companyRespond.CreatTime = dateTimeNow;
+            companyRespond.ModifyTime = dateTimeNow;
 
-            return View(tMemberResumeSend);
-        }
+            _context.Add(companyRespond);
+            _context.SaveChanges();
 
-        // GET: PostMessage/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PostMessage/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ResumeSendId,ResumeId,MemberId,CompanyTaxid,JobName,ContactPhone,ContactEmail,ComReadOrNot,TimeToContact,CoverLetter,CreatTime,ModifyTime")] TMemberResumeSend tMemberResumeSend)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(tMemberResumeSend);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tMemberResumeSend);
-        }
-
-        // GET: PostMessage/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tMemberResumeSend = await _context.TMemberResumeSends.FindAsync(id);
-            if (tMemberResumeSend == null)
-            {
-                return NotFound();
-            }
-            return View(tMemberResumeSend);
-        }
-
-        // POST: PostMessage/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ResumeSendId,ResumeId,MemberId,CompanyTaxid,JobName,ContactPhone,ContactEmail,ComReadOrNot,TimeToContact,CoverLetter,CreatTime,ModifyTime")] TMemberResumeSend tMemberResumeSend)
-        {
-            if (id != tMemberResumeSend.ResumeSendId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tMemberResumeSend);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TMemberResumeSendExists(tMemberResumeSend.ResumeSendId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tMemberResumeSend);
-        }
-
-        // GET: PostMessage/Delete/5
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tMemberResumeSend = await _context.TMemberResumeSends
-                .FirstOrDefaultAsync(m => m.ResumeSendId == id);
-            if (tMemberResumeSend == null)
-            {
-                return NotFound();
-            }
-
-            return View(tMemberResumeSend);
-        }
-
-        // POST: PostMessage/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var tMemberResumeSend = await _context.TMemberResumeSends.FindAsync(id);
-            _context.TMemberResumeSends.Remove(tMemberResumeSend);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool TMemberResumeSendExists(string id)
-        {
-            return _context.TMemberResumeSends.Any(e => e.ResumeSendId == id);
+            return RedirectToAction("Index");
         }
     }
 }
