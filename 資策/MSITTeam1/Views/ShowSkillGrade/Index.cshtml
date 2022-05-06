@@ -52,12 +52,19 @@
     </div>
     }
 }
-<select style="display:none" class="form-select form-control" id="selectskill">
-</select>
-<input style="display:none" class="btn-style-two mt-3" type="button" id="skillmap" name="skillmap" value="課程導覽" />
-<form name="memberskill" method="post">
-    <input type="hidden" id="selectmap" name="selectmap" value="@ViewBag.skillname" />
-</form>
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4">
+        <select style="display:none" class="form-select form-control" id="selectskill">
+        </select>
+    </div>
+    <div class="col-md-2">
+            <input style="display:none" class="btn-style-two mt-3 mx-0" type="button" id="skillmap" name="skillmap" value="課程導覽" />
+    </div>
+        <form name="memberskill" method="post">
+            <input type="hidden" id="selectmap" name="selectmap" value="@ViewBag.skillname" />
+        </form>
+</div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 <script>

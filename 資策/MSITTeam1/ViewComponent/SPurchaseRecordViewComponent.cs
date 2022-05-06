@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 namespace MSITTeam1.ViewComponent
 {
     [Microsoft.AspNetCore.Mvc.ViewComponent]
-    public class SPointRecordViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
+    public class SPurchaseRecordViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
         private readonly helloContext hello;
-        public SPointRecordViewComponent(helloContext _hello)
+        public SPurchaseRecordViewComponent(helloContext _hello)
         {
             hello = _hello;
         }
@@ -24,14 +24,21 @@ namespace MSITTeam1.ViewComponent
             ViewBag.Name = CDictionary.username;
             ViewBag.Type = CDictionary.memtype;
             ViewBag.account = CDictionary.account;
-            IEnumerable<TStudentPoint> datas = null;
-            datas = hello.TStudentPoints.Where(p => p.MemberId == CDictionary.account);
-            if (datas != null)
+            IEnumerable<TProductOrder> Odatas = null;
+            Odatas = hello.TProductOrders.Where(p => p.MemberId == CDictionary.account);
+            var OdatasD = from d in hello.TProductOrderDetails
+                          join o in hello.TProductOrders on d.OrderId equals o.OrderId
+                          select d;
+            if (Odatas != null)
             {
-                List<SPointRecordViewModel> list = new List<SPointRecordViewModel>();
-                foreach (TStudentPoint t in datas)
+                OrderAndOrderDetailViewModel list = new OrderAndOrderDetailViewModel();
+                foreach (TProductOrder t in Odatas)
+                {   
+                    list.Order.Add(new CheckOutViewModel { order = t });
+                }
+                foreach (TProductOrderDetail t in OdatasD)
                 {
-                    list.Add(new SPointRecordViewModel { stPoint = t });
+                    list.OrderDetail.Add(new OrderDetailViewModel { orderDetail = t });
                 }
                 return View(list);
             }
