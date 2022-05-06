@@ -14,5 +14,6 @@ namespace MSITTeam1.Models
         public string PayMethod { get; set; }
         public string Invoice { get; set; }
         public string Taxid { get; set; }
+        public int? Discount { get; set; }
     }
 }
