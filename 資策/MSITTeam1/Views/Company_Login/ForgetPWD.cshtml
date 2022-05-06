@@ -37,6 +37,16 @@
 @section Scripts
 { 
     <script>
+        $(function () {
+            if (@ViewData["ErrorMsg"] != null)
+            {
+                Swal.fire("Uh Oh!",@ViewData["ErrorMsg"], "warning").then((result) => {
+                    if (result.isConfirmed) {
+                        window.location="@Url.Content("~/Company_Login")"
+                    }
+                })
+            }
+        })
     $("#resetbtn").click(() => {
         const pwd = $("#RPassword").val();
         const pwd2 = $("#RPassword2").val();
