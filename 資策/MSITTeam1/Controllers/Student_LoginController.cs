@@ -49,7 +49,6 @@ namespace MSITTeam1.Controllers
                 ICryptoTransform DESDecrypt = DES.CreateDecryptor();
                 byte[] Buffer = Convert.FromBase64String(verify);
                 string deCode = UTF8Encoding.UTF8.GetString(DESDecrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
-
                 verify = deCode;
             }
             catch (Exception ex)
@@ -59,10 +58,11 @@ namespace MSITTeam1.Controllers
             }
             string UserID = verify.Split('|')[0];
             StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == UserID);
-            if(stu != null && stu.FCheckStatus == "no")
+            if(stu != null && stu.FCheckStatus.Trim() == "no")
             {
                 stu.FCheckStatus = "yes";
                 ViewData["SucMsg"] = "驗證成功";
+                hello.SaveChanges();
                 return RedirectToAction("Index");
             }           
                 return RedirectToAction("Index");
@@ -81,7 +81,7 @@ namespace MSITTeam1.Controllers
                 byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
                 byte[] passwordhashed = sha.ComputeHash(merged);
                 StudentBasic mem = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
-                if(mem.FCheckStatus == "no")
+                if(mem.FCheckStatus.Trim() == "no")
                 {
                     return "請先至信箱認證信件";
                 }
@@ -137,6 +137,7 @@ namespace MSITTeam1.Controllers
             string webPath = Request.Scheme + "://" + Request.Host + Url.Content("~/");
             string Action = "Student_Login/verifyAccount";
             string path = "<a href='" + webPath + Action + "?verify=" + sVerify + "'>點此連結認證信箱</a>";
+            CMailDelivery.registermail(account,path);
 
             return Content("發送成功");
         }
@@ -163,6 +164,7 @@ namespace MSITTeam1.Controllers
             string webPath = Request.Scheme + "://" + Request.Host + Url.Content("~/");
             string Action = "Student_Login/verifyAccount"; 
             string path = "<a href='" + webPath + Action + "?verify=" + sVerify + "'>點此連結認證信箱</a>";
+            CMailDelivery.registermail(account, path);
 
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
