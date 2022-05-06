@@ -180,6 +180,7 @@ namespace MSITTeam1.Controllers
             {
                 //helloContext h = new helloContext();
                 TNewJobVacancy job = hello.TNewJobVacancies.FirstOrDefault(p => p.Fid == jobedit.Fid);
+                TCityContrast city = hello.TCityContrasts.FirstOrDefault(p => p.FPostCode.ToString() == jobedit.FDistrict);
                 if (job != null)
                 {
                     job.FCity = jobedit.FCity;
@@ -189,7 +190,7 @@ namespace MSITTeam1.Controllers
                     job.FContactPerson = jobedit.FContactPerson;
                     job.FContactPhone = jobedit.FContactPhone;
                     job.FCreatTime = jobedit.FCreatTime;
-                    job.FDistrict = jobedit.FDistrict;
+                    job.FDistrict = city.FDistrictName;
                     job.FEducation = jobedit.FEducation;
                     job.FEmployeeType = jobedit.FEmployeeType;
                     job.Fid = jobedit.Fid;
@@ -208,8 +209,8 @@ namespace MSITTeam1.Controllers
                     job.FWorkHours = jobedit.FWorkHours;
                     job.FModifyTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd tt HH:mm:ss"));
                     hello.SaveChanges();
-                    //return ViewComponent("JobVacancy");
-                    return Json(jobedit);
+                    return ViewComponent("JobVacancy");
+                    //return Json(jobedit);
                     //return Json(new { suc = "更新成功" });
                 }
             }

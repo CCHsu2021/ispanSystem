@@ -186,7 +186,7 @@
         </form>
     </div>
 </div>
-@{  int count = 0; }
+@{ int count = 0; }
 <div id="loadJobVacancyList">
     <div id="JobVacancylist">
         @foreach (var item in Model)
@@ -240,7 +240,7 @@
                         </div>
                         <div id="editBlock" class="row justify-content-center justify-content-md-end mx-0" style="position: relative;">
                             <div id="fModifyTime@(item.Fid)" style="position: absolute; left: 0; bottom: 0;">最後更新時間：@item.FModifyTime</div>
-                            <button class="fas fa-pencil-alt fa-2x joblistbtn" id="@item.FCompanyTaxid@count"  data-toggle="modal" data-target="#JobVacancy-Edit-Modal-@item.FCompanyTaxid@count"></button>
+                            <button class="fas fa-pencil-alt fa-2x joblistbtn" id="@item.FCompanyTaxid@count" data-toggle="modal" data-target="#JobVacancy-Edit-Modal-@item.FCompanyTaxid@count"></button>
                             <button class="fas fa-trash-alt fa-2x joblistbtn" id="JobVacancy-Delete-Btn" onclick="deleteJobVacancy(@item.Fid)"></button>
                             <!-- Modal -->
                             <div class="modal fade" id="JobVacancy-Edit-Modal-@item.FCompanyTaxid@count" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
@@ -266,7 +266,15 @@
         }
     </div>
 </div>
+<div id="JoblistPagination" class="row my-4"></div>
 
-
+<script>
+    if (@count != 0)
+    {
+        $(function () {
+            initPagination('.job-card', 2, '#JoblistPagination')
+        });
+    }
+</script>
 
 

@@ -19,16 +19,15 @@ namespace MSITTeam1.ViewComponent
 		{
 			_context = context;
 		}
-		public async Task<IViewComponentResult> InvokeAsync()
+		public IViewComponentResult Invoke()
 		{
-			//TODO:5.檢查有沒有取得會員資料
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
 			ViewBag.account = CDictionary.account;
-			// TODO:7.試卷只顯示自己賬號生成的試卷
+
 			List<CTestPaperBankViewModel> paperList = new List<CTestPaperBankViewModel>();
 			var paperQuery = from t in _context.TTestPaperBanks
-							 where t.FDesignerAccount == CDictionary.account || t.FDesignerAccount == "admin"
+							 where t.FDesignerAccount == CDictionary.account
 							 select new CTestPaperBankViewModel
 							 {
 								 FTestPaperName = t.FTestPaperName,

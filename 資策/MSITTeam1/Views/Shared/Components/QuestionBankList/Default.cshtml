@@ -14,7 +14,6 @@
             <th style="width:160px">@Html.DisplayNameFor(model => model[0].FSubjectId)</th>
             <th>@Html.DisplayNameFor(model => model[0].FQuestion)</th>
             <th class="text-center">@Html.DisplayNameFor(model => model[0].FLevel)</th>
-            <th class="text-center" style="width:130px;" id="editGroup">編輯</th>
             <th class="text-center" style="width:60px;" id="detailGroup"></th>
         </tr>
     </thead>
@@ -46,11 +45,6 @@
                     <td class="text-center">
                         <input type="hidden" class="quesLevel" value="@Html.DisplayFor(modelItem => item.FLevel)" />
                         <div class="show_rated_3_5"></div>
-                    </td>
-                    <td class="text-center editQButton" style="width:130px;">
-                        <input type="button" data-toggle="modal" data-target="#questionEdit" class="editQuestion" value="編輯" />
-                        <input type="button"  class="delQuestion" value="刪除" />
-                        @*@Html.ActionLink("刪除", "Delete", "QuestionBank", new { subjectID = item.FSubjectId, questionID = (int)item.FQuestionId }, new { onclick = "return confirm('確定要刪除嗎？')" })*@
                     </td>
                     <td class="text-center detailQButton" style="width:60px;">
                         <input type="button" data-toggle="modal" data-target="#questionDetail" class="detailQuestion" value="詳情" />
@@ -110,11 +104,6 @@
         $(this).next().attr("class", temp);
     })
 
-    //$(document).ready(function () {
-    //    $(function () {
-    //        initPagination('.questionTable', 12, '#ProductPagination')
-    //    });
-    //})
     // 題目編輯
     $('.editQuestion').click(function () {
                 jsondata = JSON.stringify({
@@ -152,8 +141,8 @@
     // 題目刪除
     $('.delQuestion').click(function () {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: '確定刪除嗎?',
+            text: "該操作無法撤回",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -181,9 +170,6 @@
         initPagination('.questionRows', 7, '#QuestionPagination');
     })
 
-    //window.onload = function () {
-    //    initPagination('.questionRows', 7, '#QuestionPagination');
-    //}
 
      //分頁套件
     function initPagination(pageEle, showItem, paginationTarget) {

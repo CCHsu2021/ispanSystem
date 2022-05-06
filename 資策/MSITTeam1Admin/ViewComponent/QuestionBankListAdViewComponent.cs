@@ -21,7 +21,7 @@ namespace MSITTeam1Admin.ViewComponent
 		{
 			_context = context;
 		}
-		public IViewComponentResult Invoke(string keyword, string Subjects, string Type)
+		public IViewComponentResult Invoke(string keyword, string Subjects, string Type,string State)
 		{
 			// 從資料庫讀取題目
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
@@ -39,6 +39,7 @@ namespace MSITTeam1Admin.ViewComponent
 															   FLevel = ques.FLevel,
 															   FQuestionTypeId = ques.FQuestionTypeId,
 															   FState = ques.FState,
+															   FSubmitterId = ques.FSubmitterId,
 															   FChoice = choice.FChoice,
 															   FCorrectAnswer = choice.FCorrectAnswer
 														   };
@@ -47,6 +48,7 @@ namespace MSITTeam1Admin.ViewComponent
 			quesQuery = this.FilterByClass(quesQuery, Subjects);
 			quesQuery = this.FilterByKeyWord(quesQuery, keyword);
 			quesQuery = this.FilterByLevel(quesQuery, Type);
+			quesQuery = this.FilterByState(quesQuery, State);
 
 			foreach (var q in quesQuery)
 			{
@@ -54,6 +56,21 @@ namespace MSITTeam1Admin.ViewComponent
 			}
 			return View(quesList);
 		}
+
+		private IQueryable<CQuestionBankViewModel> FilterByState(IQueryable<CQuestionBankViewModel> table, string State)
+		{
+			if (!string.IsNullOrEmpty(State))
+			{
+				int tempState = int.Parse(State);
+				return table.Where(q => q.FState == tempState);
+			}
+			else
+			{
+				return table;
+			}
+		}
+
+
 		private IQueryable<CQuestionBankViewModel> FilterByLevel(IQueryable<CQuestionBankViewModel> table, string questype)
 		{
 			if (!string.IsNullOrEmpty(questype))
