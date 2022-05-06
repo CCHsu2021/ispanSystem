@@ -5,37 +5,42 @@
 
 <div class="auto-container">
     @{
-            <form id="a" name="a" method="post">
-                <div class="row py-4 justify-content-center align-items-center">
-                    <div class="col-md-4">
-                        <div class="row justify-content-center">
-                            <div class="input-group my-2 mx-sm-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">識別碼</div>
-                                </div>
-                                <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" placeholder="請輸入識別碼" value="@ViewBag.txtidentify">
+        <form id="a" name="a" method="post">
+            <div class="row py-4 justify-content-center align-items-center">
+                <div class="col-md-4">
+                    <div class="row justify-content-center">
+                        <div class="input-group my-2 mx-sm-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">識別碼</div>
                             </div>
+                            <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="txtidentify" placeholder="請輸入識別碼" value="@ViewBag.txtidentify">
                         </div>
-                        <div class="row justify-content-center" id="companyselect">
-                            <div class="input-group my-2 mx-sm-2">
-                                    <select id="studentname" name="studentname" class="form-control">
-                                        <option >公司平均</option>
-                                    </select>
-                                <input type="hidden" class="form-control" id="txtaccount" name="txtaccount" value="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ml-0 ml-md-3 ml-lg-3">
-                        <input class="btn-style-two mt-3" type="submit" id="createpaper" name="createpaper" value="確定" />
                     </div>
                 </div>
-            </form>
+                <div class="ml-0 ml-md-3 ml-lg-3">
+                    <input class="btn-style-two mt-3" type="submit" id="createpaper" name="createpaper" value="確定" />
+                </div>
+            </div>
+            <div class="row justify-content-center" id="companyselect">
+                <div class="col-md-3 justify-content-center">
+                    <div class="input-group my-2 mx-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">顯示資料</div>
+                        </div>
+                        <select id="studentname" name="studentname" class="form-control">
+                            <option>公司平均</option>
+                        </select>
+                        <input type="hidden" class="form-control" id="txtaccount" name="txtaccount" value="">
+                    </div>
+                </div>
+            </div>
+        </form>
         }
     @{
         if (@ViewBag.showavg != null)
         {
             <div class="container">
-                <div class="py-4 ">
+                <div class="pb-4 ">
                     <div class="row bg-beige justify-content-center p-1 p-md-3 py-3 text-center">
                         <div class="py-3 col-md-12 ">
                             <h3 class="font-weight-bold">課程名稱 : @ViewBag.classname</h3>

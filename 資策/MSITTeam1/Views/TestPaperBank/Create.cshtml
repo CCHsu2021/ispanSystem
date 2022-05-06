@@ -41,6 +41,7 @@
             height: 500px;
             overflow: auto;
         }
+
         #testTable {
             height: 500px;
             overflow: auto;
@@ -225,12 +226,6 @@
                         <div id="selectCount">
                             <span id="spanSelCount">已選 0 項</span>
                         </div>
-                        <div class="selectType" id="MemberType">
-                            <span>企業會員</span>
-                        </div>
-                        <div class="selectType" id="AdminType">
-                            <span>管理員</span>
-                        </div>
                         <div class="selectType" id="resetList">
                             <span>清空</span>
                         </div>
@@ -295,6 +290,7 @@
     <script src="~/js/jquery.barrating.js"></script>
     <script src="~/js/barRating.init.js"></script>
     <script>
+        
           // 載入課程名稱
         const selSubQuest = document.querySelector('#FSubjectIdSel');
         const selSubPaper = document.querySelector('#FSubject');
@@ -319,15 +315,27 @@
         }
         LoadSubject();
 
+        // 隱藏編輯
+        function hideEdit() {
+            $('#editGroup').hide();
+            $('.editQButton').hide();
+        }
+
         // 題目查詢
         var jsondata = null;
         $(document).ready(function () {
         $('#search').click(function () {
-                jsondata = JSON.stringify({
-                    Subjects: $('#FSubjectId').val(),
-                    keyword: $('#keyword').val(),
-                    Type: $('#FQuestionTypeId').val()
-                })
+            searchQuestion();
+            $('#editGroup').hide();
+            $('.editQButton').hide();
+        })
+        })
+        function searchQuestion() {
+                 jsondata = JSON.stringify({
+                Subjects: $('#FSubjectId').val(),
+                keyword: $('#keyword').val(),
+                Type: $('#FQuestionTypeId').val()
+            })
             $.ajax({
                 url: "@Url.Content("~/QuestionBank/List")",
                 type: "POST",
@@ -337,8 +345,7 @@
                     $('#testView').html(result);
                 }
             })
-        })
-        })
+        }
 
         //-----------------------------Create New Question---------------------------------------------
         // 判斷Checkbox
@@ -392,14 +399,14 @@
             })
             if ($('#FQuestionCre').val() == "") {
                 Swal.fire("請輸入題目");
-            } else if ($('FSubjectIdSel').val() == "") {
+            } else if ($('#FSubjectIdSel').val() == "") {
                 Swal.fire("請選擇此題所屬技能類別");
             }
             else if (selectAns < 1) {
                 Swal.fire("請選擇此題正確答案");
             } else if (emptyChoice > 0) {
                 Swal.fire("選項內容不得為空");
-            } 
+            }
             else {
                 $('#ansListCre > div').each(function (idx, item) {
                     var ans = {}
@@ -428,14 +435,13 @@
                         showConfirmButton: true,
                         timer: 1500
                     })
-                $('.modalCre').modal('hide');
+                    $('.modalCre').modal('hide');
+                    searchQuestion();
                 })
             }
         })
 
         $('.modalCre').on('hidden.bs.modal', function () {
-            console.log("removeCre");
-            //resetData();
             $('#ansListCre .choiceCre:not(:first-child)').remove();
             $('#outdivCre input[type="text"]').each(function () {
                 $(this).val('');
@@ -448,16 +454,6 @@
 //-------------------------------------------Create New Question End--------------------------------
 
 //-----------------------------Create New TestPaper---------------------------------------------
-
-        // 判斷可編輯題目
-        $('#MemberType').click(function () {
-            $('#editGroup').hide();
-            $('.editQButton').hide();
-        })
-        $('#AdminType').click(function () {
-            $('#editGroup').show();
-            $('.editQButton').show();
-        })
 
     // 題目選取
         function passToPaper(checkboxid) {
@@ -528,7 +524,7 @@
                         showConfirmButton: true,
                         timer: 1500
                     }).then(() => {
-                        window.location.reload();
+                        parent.location.href
                     })
                 })
             }
@@ -610,7 +606,7 @@
         setActiveIndicator();
         $('.progress-bar').eq(currentSlide).animate({
             width: '0%'
-        }, animationTime);        
+        }, animationTime);
         console.log(currentSlide);
         if (currentSlide <= 0) {
             $('.previous').hide();

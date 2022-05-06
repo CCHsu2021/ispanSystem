@@ -2,39 +2,30 @@
 @{
     ViewData["Title"] = "ForgetPWD";
 }
+
 <link href="~/css/login.css" rel="stylesheet">
 
 <div class="background">
     <div class="container-fulid px-3 px-md-0">
         <div class="login-wrap my-5">
             <div class="login-html">
-                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">忘記密碼</label>
-                <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">忘記帳號</label>
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab" style="cursor: default;">密碼重設</label>
+                <input id="tab-2" type="radio" name="tab" class="sign-up d-none"><label for="tab-2" class="tab d-none"></label>
                 <div class="login-form">
                     <div class="sign-in-htm">
                         <div class="group">
-                            <label for="user" class="label">帳號</label>
-                            <input id="FAccount" type="text" class="input" name="account" required>
+                            <label for="pass" class="label">密碼(請輸入包含8-16碼英數字)</label>
+                            <input id="RPassword" type="password" class="input" data-type="password">
                         </div>
                         <div class="group">
-                            <label for="pass" class="label">Email</label>
-                            <input id="FEmail" type="text" class="input"  name="email" required>
+                            <label for="pass" class="label">再次輸入密碼</label>
+                            <input id="RPassword2" type="password" class="input" data-type="password">
                         </div>
-                        <div class="group my-4">
-                            <button id="ForgetPasswordBtn" class="button">確定</button>
-                        </div>
-                    </div>
-                    <div class="sign-up-htm">
-                        <div class="group">
-                            <label for="user" class="label">姓名</label>
-                            <input id="FName" type="text" class="input" name="txtAccount" required>
-                        </div>
-                        <div class="group">
-                            <label for="pass" class="label">身分證字號</label>
-                            <input id="FId" name="txtPassword" type="password" class="input" data-type="password" required>
+                        <div class="container">
+                            <span class="text-warning mt-0 mb-0" id="WarningMsg"></span>
                         </div>
                         <div class="group mt-1">
-                            <button id="registerbtn" class="button">確定</button>
+                            <button id="resetbtn" class="button" type="button">確定</button>
                         </div>
                     </div>
                 </div>
@@ -42,21 +33,48 @@
         </div>
     </div>
 </div>
+
 @section Scripts
-{ 
+{
     <script>
-        const account = document.querySelector("#FAccount");
-        const email = document.querySelector("#FEmail");
-        $("#ForgetPasswordBtn").click(() => {
-            const xhr = new XMLHttpRequest();
-            xhr.addEventListener("load", () => {
-                const data = xhr.responseText;
-            })
-            xhr.open("POST","@Url.Content("~/PasswordIdentify")");
-            xhr.send(account.value,email.value);
-
+        $(function () {
+            var ErrorMsg = "@ViewData["ErrorMsg"]";
+            if (ErrorMsg != "")
+            {
+                Swal.fire("Uh Oh!",ErrorMsg, "warning").then((result) => {
+                    if (result.isConfirmed) {
+                        window.location="@Url.Content("~/Company_Login")"
+                    }
+                })
+            }
         })
+    $("#resetbtn").click(() => {
+        const pwd = $("#RPassword").val();
+        const pwd2 = $("#RPassword2").val();
+        if (pwd == pwd2) {
+            $.ajax({
+                type: "Post",
+                url: "@Url.Content("~/Company_Login/ResetPWD")",
+                data: { password: $("#RPassword").val() },
+                dataType: "text",
+                success: function (message) {
+                    if (message == "此帳號已被註冊過") {
+                        Swal.fire("Uh Oh", message, "warning");
+                    } else if (message == "修改成功") {
+                        Swal.fire("密碼已重設請重新登入", message, "success").then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = "@Url.Content("~/Company_Login")";
+                            }
+                        })
+                    }
+                }
+            })
+        }
+        else
+        {
+            Swal.fire("Uh Oh", "密碼不一致請再次輸入", "warning");
+        }
 
-
+    })
     </script>
 }

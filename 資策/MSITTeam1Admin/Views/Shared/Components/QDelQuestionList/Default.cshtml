@@ -6,6 +6,16 @@
 @{
     ViewData["Title"] = "List";
 }
+<style>
+    body{
+        padding-right:0 !important;
+    }
+   *.modal-open {
+
+        padding-right: 0 !important;
+        padding-left:0 !important;
+    }
+</style>
 <link rel="stylesheet" href="~/css/barRating.css" />
 
 <table class="table table-striped table-hover" id="question">
@@ -13,7 +23,6 @@
         <tr>
             <th style="width:160px">@Html.DisplayNameFor(model => model[0].FSubjectId)</th>
             <th>@Html.DisplayNameFor(model => model[0].FQuestion)</th>
-            <th style="width:130px;">@Html.DisplayNameFor(model=> model[0].FSubmitterId)</th>
             <th class="text-center">@Html.DisplayNameFor(model => model[0].FLevel)</th>
             <th class="text-center" style="width:130px;">@Html.DisplayNameFor(model => model[0].FState)</th>
             <th class="text-center" style="width:130px;" id="editGroup">編輯</th>
@@ -33,34 +42,31 @@
                     {
                         subject = item.FSubjectId;
                         quesId = item.FQuestionId;
-                <tr class="questionRows">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FSubjectId)
-                    </td>
-                    <td class="qIdForSearch">
-                        @Html.DisplayFor(modelItem => item.FQuestion)
-                        <input type="hidden" name="sub" class="subjectId" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
-                        <input type="hidden" class="questionId" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FSubmitterId)
-                    </td>
-                    <td class="text-center">
-                        <input type="hidden" class="quesLevel" value="@Html.DisplayFor(modelItem => item.FLevel)" />
-                        <div class="show_rated_3_5"></div>
-                    </td>
-                    <td class="text-center">
-                        <input type="hidden" class="quesState" value="@Html.DisplayFor(modelItem => item.FState)" />
-                        <div>狀態</div>
-                    </td>
-                    <td class="text-center editQButton" style="width:130px;">
-                        <input type="button" data-toggle="modal" data-target="#questionEdit" class="editQuestion" value="編輯" />
-                        <input type="button" class="delQuestion" value="刪除" />
-                    </td>
-                    <td class="text-center detailQButton" style="width:60px;">
-                        <input type="button" data-toggle="modal" data-target="#questionDetail" class="detailQuestion" value="詳情" />
-                    </td>
-                </tr>
+                        <tr class="questionRows">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FSubjectId)
+                            </td>
+                            <td class="qIdForSearch">
+                                @Html.DisplayFor(modelItem => item.FQuestion)
+                                <input type="hidden" name="sub" class="subjectId" value="@Html.DisplayFor(modelItem => item.FSubjectId)" />
+                                <input type="hidden" class="questionId" value="@Html.DisplayFor(modelItem => item.FQuestionId)" />
+                            </td>
+                            <td class="text-center">
+                                <input type="hidden" class="quesLevel" value="@Html.DisplayFor(modelItem => item.FLevel)" />
+                                <div class="show_rated_3_5"></div>
+                            </td>
+                            <td class="text-center">
+                                <input type="hidden" class="quesState" value="@Html.DisplayFor(modelItem => item.FState)" />
+                                <div>狀態</div>
+                            </td>
+                            <td class="text-center editQButton" style="width:130px;">
+                                <input type="button" data-toggle="modal" data-target="#questionEdit" class="editQuestion" value="編輯" />
+                                <input type="button" class="delQuestion" value="刪除" />
+                            </td>
+                            <td class="text-center detailQButton" style="width:60px;">
+                                <input type="button" data-toggle="modal" data-target="#questionDetail" class="detailQuestion" value="詳情" />
+                            </td>
+                        </tr>
                     }
                 }
             }
@@ -72,7 +78,7 @@
 <div id="QuestionPagination" class="row my-4"></div>
 
 <!-- Modal -->
-<div class="modal fade modal-dialog-scrollable" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true">
+<div class="modal fade modal-dialog-scrollable" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -89,7 +95,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade modal-dialog-scrollable" id="questionDetail" tabindex="-1" aria-labelledby="questionDetail" aria-hidden="true">
+<div class="modal fade modal-dialog-scrollable" id="questionDetail" tabindex="-1" aria-labelledby="questionDetail" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -132,7 +138,8 @@
     $('.editQuestion').click(function () {
                 jsondata = JSON.stringify({
                     Subjects: $(this).parents("tr").find('.subjectId').val(),
-                    questionID: $(this).parents("tr").find('.questionId').val()
+                    questionID: $(this).parents("tr").find('.questionId').val(),
+                    State: $(this).parents("tr").find('.quesState').val()
                 })
             $.ajax({
                 url: "@Url.Content("~/QuesBankSysAdmin/EditByVC")",
@@ -240,4 +247,4 @@
 
 </script>
 @*<script src="~/js/barRating.init.js"></script>
-<script src="~/js/jquery.barrating.js"></script>*@
+    <script src="~/js/jquery.barrating.js"></script>*@

@@ -61,12 +61,12 @@ namespace MSITTeam1.ViewModels
             get { return this.order.Taxid; }
             set { this.order.Taxid = value; }
         }
-        public int? PayMethod
+        public string PayMethod
         {
             get { return this.order.PayMethod; }
             set { this.order.PayMethod = value; }
         }
-        public int? ShipBy
+        public string ShipBy
         {
             get { return this.order.ShipBy; }
             set { this.order.ShipBy = value; }
@@ -110,10 +110,13 @@ namespace MSITTeam1.ViewModels
             set { this.product.Name = value; }
         }
         public string ProductId { get { return this.product.ProductId; } set { this.product.ProductId = value; } }
-        public List<TProductOrderDetail> orderDetailList
-        {
-            get; set;
-        }
+     
     }
 }
+
+
+
+
+
+
 

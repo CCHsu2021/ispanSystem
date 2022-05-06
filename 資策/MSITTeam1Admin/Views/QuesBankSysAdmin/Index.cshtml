@@ -14,6 +14,16 @@
     <link rel="stylesheet" href="~/css/StarBar.css" />
     <link rel="stylesheet" href="~/css/barRating.css" />
     <style>
+        body{
+            padding-right:0 !important;
+        }
+        
+        *.modal-open{
+            overflow-y: auto !important;
+            padding-right: 0 !important;
+            padding-left: 0 !important;
+        }
+
         .input-group-btn .btn {
             padding: 8px 12px !important;
         }
@@ -27,7 +37,7 @@
             height: 200px !important;
         }
 
-             #testsearch {
+        #testsearch {
             -webkit-appearance: none;
             -moz-appearance: none;
             border: 0;
@@ -43,7 +53,7 @@
             width: 50px;
         }
 
-/*        #testView {
+        /*        #testView {
             height: 500px;
             overflow: auto;
         }*/
@@ -210,7 +220,7 @@
             }
     </style>
 }
-<h1>試卷及題目管理</h1>
+<h1>題庫系統</h1>
 <div style="margin-bottom:50px">
     <div class="tabs">
         <input type="radio" id="tab1" name="tab-control" checked>
@@ -221,14 +231,14 @@
                 <label for="tab1" role="button">
                     <svg viewBox="0 0 24 24">
                         <path d="M14,2A8,8 0 0,0 6,10A8,8 0 0,0 14,18A8,8 0 0,0 22,10H20C20,13.32 17.32,16 14,16A6,6 0 0,1 8,10A6,6 0 0,1 14,4C14.43,4 14.86,4.05 15.27,4.14L16.88,2.54C15.96,2.18 15,2 14,2M20.59,3.58L14,10.17L11.62,7.79L10.21,9.21L14,13L22,5M4.93,5.82C3.08,7.34 2,9.61 2,12A8,8 0 0,0 10,20C10.64,20 11.27,19.92 11.88,19.77C10.12,19.38 8.5,18.5 7.17,17.29C5.22,16.25 4,14.21 4,12C4,11.7 4.03,11.41 4.07,11.11C4.03,10.74 4,10.37 4,10C4,8.56 4.32,7.13 4.93,5.82Z" />
-                    </svg><br><span>上架中題目</span>
+                    </svg><br><span>題目管理</span>
                 </label>
             </li>
             <li title="QuestionBank">
                 <label for="tab2" role="button">
                     <svg viewBox="0 0 24 24">
                         <path d="M2,10.96C1.5,10.68 1.35,10.07 1.63,9.59L3.13,7C3.24,6.8 3.41,6.66 3.6,6.58L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.66,6.72 20.82,6.88 20.91,7.08L22.36,9.6C22.64,10.08 22.47,10.69 22,10.96L21,11.54V16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V10.96C2.7,11.13 2.32,11.14 2,10.96M12,4.15V4.15L12,10.85V10.85L17.96,7.5L12,4.15M5,15.91L11,19.29V12.58L5,9.21V15.91M19,15.91V12.69L14,15.59C13.67,15.77 13.3,15.76 13,15.6V19.29L19,15.91M13.85,13.36L20.13,9.73L19.55,8.72L13.27,12.35L13.85,13.36Z" />
-                    </svg><br><span>題目回收站</span>
+                    </svg><br><span>檢視</span>
                 </label>
             </li>
         </ul>
@@ -237,25 +247,33 @@
             <section>
                 <div>
                     <div class="row row justify-content-around" id="searchGroup">
-                        <div class="col-3">
+                        <div class="col-lg-2">
                             <select id="FSubjectId" name="FSubjectId" class="form-control">
                                 <option value="">請選擇技能名稱</option>
                             </select>
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-2">
                             <select id="FQuestionTypeId" class="form-control">
                                 <option value="">請選擇題型</option>
                                 <option value="1">單選題</option>
                                 <option value="2">多選題</option>
                             </select>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2">
+                            <select id="FQuestionState" class="form-control">
+                                <option value="">請選擇題目狀態</option>
+                                <option value="1">未公開(僅出題者可見)</option>
+                                <option value="2">公開</option>
+                                <option value="0">鎖定</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
                             <div class="input-group input-group-rounded">
                                 <input type="text" placeholder="查詢關鍵字" name="keyword" class="form-control" id="keyword">
                                 <span class="input-group-btn"><button class="btn btn-primary btn-group-right" type="button" id="testsearch"><i class="fas fa-search"></i></button></span>
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2" style="padding: 0 60px 0 0;">
                             <div class="selectType" id="CreatebtnType">
                                 <span><a data-toggle="modal" data-target="#questionCreate">新增題目</a></span>
                             </div>
@@ -267,11 +285,18 @@
                     @*QuestionList*@
                 </div>
             </section>
-            <section>
+            <section style="text-align:center;">
+                <iframe title="QBSys - 第 1 页" width="1024" height="612" src="https://app.powerbi.com/view?r=eyJrIjoiYzRlYjc4MDgtYzEwMC00NjM2LThkNmYtZjJiZjgxZjRjYzYyIiwidCI6IjZmMGJiNzJmLTUzNzctNGRkZi05MzZhLWI2YzcyYmYyMWFlMiIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
             </section>
         </div>
     </div>
 </div>
+
+
+<div id="testView">
+    @*QuestionList*@
+</div>
+
 
 <!-- Modal -->
 <div class="modal fade modalCre" id="questionCreate" tabindex="-1" aria-labelledby="questionCreate" aria-hidden="true">
@@ -340,13 +365,13 @@
     // 題目刪除
     $('.delQuestion').click(function () {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: '確定要刪除嗎?',
+            text: "該操作無法撤回",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: '刪除'
         }).then((result) => {
             if (result.isConfirmed) {
                 var sub = $(this).parents("tr").find('.subjectId').val();
@@ -389,7 +414,8 @@
                 jsondata = JSON.stringify({
                     Subjects: $('#FSubjectId').val(),
                     keyword: $('#keyword').val(),
-                    Type: $('#FQuestionTypeId').val()
+                    Type: $('#FQuestionTypeId').val(),
+                    State: $('#FQuestionState').val()
                 })
             $.ajax({
                 url: "@Url.Content("~/QuesBankSysAdmin/List")",
@@ -497,7 +523,6 @@
         })
 
         $('.modalCre').on('hidden.bs.modal', function () {
-            console.log("removeCre");
             //resetData();
             $('#ansListCre .choiceCre:not(:first-child)').remove();
             $('#outdivCre input[type="text"]').each(function () {

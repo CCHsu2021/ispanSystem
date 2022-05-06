@@ -37,7 +37,7 @@ namespace MSITTeam1.ViewComponent
             }
             return Content("沒東西");
             //return new HtmlContentViewComponentResult(new HtmlString("<tbody>< tr>< th ></ th >< td colspan='4'></ td ></ tr ></ tbody >"));
-         
+
         }
     }
 }

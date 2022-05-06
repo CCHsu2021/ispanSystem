@@ -268,10 +268,6 @@
                 method: 'POST',
                 body: joblisteditformdata,
             }).then(async function (response) {
-                //$('#JoblistPagination').empty();
-                //$('#JoblistPagination').removeData("twbs-pagination");
-                //$('#JoblistPagination').unbind('.job-card');
-                $('#JoblistPagination').twbsPagination('destroy');
                 return (await response.text());
             }).then(async function (data) {
                 $("#jobVacancy-List-View").html(data);

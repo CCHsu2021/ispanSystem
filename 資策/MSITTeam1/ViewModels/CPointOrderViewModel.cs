@@ -37,10 +37,21 @@ namespace MSITTeam1.ViewModels
             get { return this.Porder.CompanyTaxid; }
             set { this.Porder.CompanyTaxid = value; }
         }
-        public int? PayMethod
+        public string PayMethod
         {
             get { return this.Porder.PayMethod; }
             set { this.Porder.PayMethod = value; }
         }
+        public float? Bonus
+        {
+            get { return this.Porder.Bonus; }
+            set { this.Porder.Bonus = value; }
+        }
+        public int? ToTalGetPoint
+        {
+            get { return this.Porder.ToTalGetPoint; }
+            set { this.Porder.ToTalGetPoint = value; }
+        }
+        
     }
 }

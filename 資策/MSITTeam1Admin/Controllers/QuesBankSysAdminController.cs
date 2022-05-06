@@ -29,7 +29,7 @@ namespace MSITTeam1Admin.Controllers
 		[HttpPost]
 		public IActionResult List([FromBody] CQuestionQueryViewModel query)
 		{
-			return ViewComponent("QuestionBankListAd", new { keyword = query.keyword, Subjects = query.Subjects, Type = query.Type });
+			return ViewComponent("QuestionBankListAd", new { keyword = query.keyword, Subjects = query.Subjects, Type = query.Type, State = query.State });
 		}
 		private IQueryable<CQuestionBankViewModel> FilterByType(IQueryable<CQuestionBankViewModel> table, string level)
 		{
@@ -75,7 +75,7 @@ namespace MSITTeam1Admin.Controllers
 		{
 			return View();
 		}
-
+		// TODO:10.最後要整理QuestionList題目提供者ID
 		[HttpPost]
 		public IActionResult Create([FromBody] CQuestionBankViewModel newques)
 		{
@@ -96,8 +96,7 @@ namespace MSITTeam1Admin.Controllers
 				newques.FQuestionId = lastId + 1;
 			}
 			newques.FSubmitterId = "admin";
-			// TODO:8.管理者新增題目可以自己設定題目狀態
-			//newques.FState = 2;
+			newques.FState = 1;
 			_context.TQuestionLists.Add(newques.question);
 			foreach (var ans in newques.FChoiceList)
 			{
@@ -122,7 +121,7 @@ namespace MSITTeam1Admin.Controllers
 			{
 				questionID = Convert.ToInt32(query.questionID);
 			}
-			return ViewComponent("QuestionBankDetailAd", new { subjectID = query.Subjects, questionID = questionID });
+			return ViewComponent("QuestionBankDetailAd", new { subjectID = query.Subjects, questionID = questionID, State = query.State });
 		}
 
 		public IActionResult EditByVC([FromBody] CQuestionQueryViewModel query)
@@ -132,7 +131,7 @@ namespace MSITTeam1Admin.Controllers
 			{
 				questionID = Convert.ToInt32(query.questionID);
 			}
-			return ViewComponent("QuestionBankEditAd", new { subjectID = query.Subjects, questionID = questionID });
+			return ViewComponent("QuestionBankEditAd", new { subjectID = query.Subjects, questionID = questionID,State = query.State });
 		}
 
 		[HttpPost]
@@ -154,6 +153,7 @@ namespace MSITTeam1Admin.Controllers
 					quesSel.FQuestion = quesList.FQuestion;
 					quesSel.FQuestionTypeId = Convert.ToInt32(quesList.FQuestionTypeId);
 					quesSel.FLevel = quesList.FLevel;
+					quesSel.FState = quesList.FState;
 					foreach (var ans in quesList.FChoiceList)
 					{
 						if (ans.FSN != 0)
@@ -211,7 +211,6 @@ namespace MSITTeam1Admin.Controllers
 					return Content("刪除成功", "text/plain", System.Text.Encoding.UTF8);
 				}
 			}
-			//return RedirectToAction("List");
 			return RedirectToAction("Index");
 		}
 
