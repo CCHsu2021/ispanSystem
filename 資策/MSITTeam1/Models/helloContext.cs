@@ -278,6 +278,8 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.RWorkExp).HasColumnName("rWorkExp");
 
+                entity.Property(e => e.ResumeImage).IsUnicode(false);
+
                 entity.Property(e => e.ResumeName).HasMaxLength(50);
             });
 
@@ -478,6 +480,12 @@ namespace MSITTeam1.Models
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Invoice).HasMaxLength(50);
+
+                entity.Property(e => e.PayMethod).HasMaxLength(50);
+
+                entity.Property(e => e.Taxid)
+                    .HasMaxLength(50)
+                    .HasColumnName("TAXID");
             });
 
             modelBuilder.Entity<TClassOrderDetail>(entity =>
@@ -703,9 +711,7 @@ namespace MSITTeam1.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.PointDescription)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.PointDescription).IsRequired();
 
                 entity.Property(e => e.PointType)
                     .IsRequired()
@@ -719,7 +725,9 @@ namespace MSITTeam1.Models
 
                 entity.ToTable("tCompanyRespond");
 
-                entity.Property(e => e.CompanyRespondId).HasColumnName("CompanyRespondID");
+                entity.Property(e => e.CompanyRespondId)
+                    .HasMaxLength(50)
+                    .HasColumnName("CompanyRespondID");
 
                 entity.Property(e => e.ContactPerson).HasMaxLength(50);
 
@@ -1184,6 +1192,8 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.OrderDate)
                     .HasMaxLength(50)
                     .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.PayMethod).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TProduct>(entity =>
@@ -1217,9 +1227,13 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.Invoice).HasMaxLength(50);
 
+                entity.Property(e => e.PayMethod).HasMaxLength(50);
+
                 entity.Property(e => e.Recipient).HasMaxLength(50);
 
                 entity.Property(e => e.RecipientTel).HasMaxLength(50);
+
+                entity.Property(e => e.ShipBy).HasMaxLength(50);
 
                 entity.Property(e => e.ShipTo).HasMaxLength(50);
 
@@ -1486,8 +1500,6 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.PointDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.PointDescription).HasMaxLength(50);
 
                 entity.Property(e => e.PointType).HasMaxLength(50);
             });

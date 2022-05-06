@@ -385,5 +385,10 @@ namespace MSITTeam1.Controllers
                         select b;
             return Json(datas);
         }
+
+        //public IActionResult saveResume(byte[])
+        //{
+
+        //}
     }
 }
