@@ -215,7 +215,6 @@ namespace MSITTeam1.Controllers
 
         public string PasswordIdentify(CForgetPasswordAccountViewModel fpav)
         {
-            //helloContext hello = new helloContext();
             TMember member = hello.TMembers.FirstOrDefault(p => p.FAccount == fpav.account);
             if (member != null)
             {

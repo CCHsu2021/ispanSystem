@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "PWDidentify";
+}
+
+@section Style{
+<style>
+    .login-wrap{
+        min-height:300px!important;
+}
+</style>
+}
+<link href="~/css/login.css" rel="stylesheet">
+
+<div class="background">
+    <div class="container-fulid px-3 px-md-0">
+        <div class="login-wrap my-5">
+            <div class="login-html">
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+                <label for="tab-1" class="tab" style="cursor: default;">忘記密碼</label>
+                <input id="tab-2" type="radio" name="tab" class="sign-up d-none">
+                <label for="tab-2" class="tab d-none"></label>
+                <div class="login-form">
+                    <div class="sign-in-htm">
+                        <div class="group">
+                            <label for="pass" class="label">請輸入信箱(帳號)</label>
+                            <input id="RfAccount" type="text" class="input" data-type="password">
+                        </div>
+
+                        <div class="container">
+                            <span class="text-warning mt-0 mb-0" id="WarningMsg"></span>
+                        </div>
+                        <div class="group mt-1">
+                            <button id="resetbtn" class="button" type="button">確定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $("#resetbtn").click(() => {
+            const account = $("#RfAccount").val();
+            const email = $("#RfEmail").val();
+            $("#resetbtn").text("Loading");
+            $("#resetbtn").attr("disabled","disabled")
+            $.ajax({
+                type: "Post",
+                url: "@Url.Content("~/Student_Login/MailPWDresetLink")",
+                data: { account: account},
+                dataType: "text",
+                success: function (message) {
+                    console.log(message);
+                    if (message == "已發送郵件至信箱") {
+                        $("#resetbtn").removeAttr("disabled", "disabled")
+                        Swal.fire("已發送認證信件請至信箱查看", "success", "success").then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = "@Url.Content("~/Student_Login")";
+                            }
+                        });
+                    }
+                    else {
+                        Swal.fire("Uh Oh", message.fail, "warning");
+                    }
+                }
+            });
+        });
+    </script>
+}

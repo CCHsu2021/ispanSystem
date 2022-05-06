@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MSITTeam1.Controllers
 {
@@ -27,6 +28,45 @@ namespace MSITTeam1.Controllers
         {
             return View();
         }
+        public IActionResult verifyAccount (String verify)
+        {
+            if (verify == "")
+            {
+                ViewData["ErrorMsg"] = "缺少驗證碼";
+                return RedirectToAction("Index");
+            }
+            string SecretKey = "IspanMsit40";
+            try
+            {
+                TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+                MD5 md5 = new MD5CryptoServiceProvider();
+                byte[] buf = Encoding.UTF8.GetBytes(SecretKey);
+                byte[] md5result = md5.ComputeHash(buf);
+                string md5Key = BitConverter.ToString(md5result).Replace("-", "").ToLower().Substring(0, 24);
+                DES.Key = UTF8Encoding.UTF8.GetBytes(md5Key);
+                DES.Mode = CipherMode.ECB;
+                DES.Padding = PaddingMode.PKCS7;
+                ICryptoTransform DESDecrypt = DES.CreateDecryptor();
+                byte[] Buffer = Convert.FromBase64String(verify);
+                string deCode = UTF8Encoding.UTF8.GetString(DESDecrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+
+                verify = deCode;
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMsg"] = "驗證碼錯誤";
+                return RedirectToAction("Index");
+            }
+            string UserID = verify.Split('|')[0];
+            StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.FAccount == UserID);
+            if(stu != null && stu.FCheckStatus == "no")
+            {
+                stu.FCheckStatus = "yes";
+                ViewData["SucMsg"] = "驗證成功";
+                return RedirectToAction("Index");
+            }           
+                return RedirectToAction("Index");
+        }
         public string login(String account, String password)
         {
             if (password != null)
@@ -41,6 +81,10 @@ namespace MSITTeam1.Controllers
                 byte[] merged = passwordbyte.Concat(saltbyte).ToArray();
                 byte[] passwordhashed = sha.ComputeHash(merged);
                 StudentBasic mem = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
+                if(mem.FCheckStatus == "no")
+                {
+                    return "請先至信箱認證信件";
+                }
                 if (mem != null)
                 {
                     byte[] passwordhash = mem.FPassword.ToArray();
@@ -76,6 +120,26 @@ namespace MSITTeam1.Controllers
             return "帳號密碼錯誤請重新輸入";
         }
 
+        public IActionResult resendEmail(string account)
+        {
+            string sVerify = account + "|" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] buf = Encoding.UTF8.GetBytes("IspanMsit40");
+            byte[] result = md5.ComputeHash(buf);
+            string md5Key = BitConverter.ToString(result).Replace("-", "").ToLower().Substring(0, 24);
+            DES.Key = UTF8Encoding.UTF8.GetBytes(md5Key);
+            DES.Mode = CipherMode.ECB;
+            ICryptoTransform DESEncrypt = DES.CreateEncryptor();
+            byte[] Buffer = UTF8Encoding.UTF8.GetBytes(sVerify);
+            sVerify = Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+            sVerify = HttpUtility.UrlEncode(sVerify);
+            string webPath = Request.Scheme + "://" + Request.Host + Url.Content("~/");
+            string Action = "Student_Login/verifyAccount";
+            string path = "<a href='" + webPath + Action + "?verify=" + sVerify + "'>點此連結認證信箱</a>";
+
+            return Content("發送成功");
+        }
         public string register(String account,String password)
         {
             SHA384Managed sha = new SHA384Managed();
@@ -84,6 +148,22 @@ namespace MSITTeam1.Controllers
             {
                 return "此帳號已被註冊過";
             }
+            string sVerify = account + "|" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] buf = Encoding.UTF8.GetBytes("IspanMsit40");
+            byte[] result = md5.ComputeHash(buf);
+            string md5Key = BitConverter.ToString(result).Replace("-", "").ToLower().Substring(0, 24);
+            DES.Key = UTF8Encoding.UTF8.GetBytes(md5Key);
+            DES.Mode = CipherMode.ECB;
+            ICryptoTransform DESEncrypt = DES.CreateEncryptor();
+            byte[] Buffer = UTF8Encoding.UTF8.GetBytes(sVerify);
+            sVerify = Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+            sVerify = HttpUtility.UrlEncode(sVerify);
+            string webPath = Request.Scheme + "://" + Request.Host + Url.Content("~/");
+            string Action = "Student_Login/verifyAccount"; 
+            string path = "<a href='" + webPath + Action + "?verify=" + sVerify + "'>點此連結認證信箱</a>";
+
             byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
             byte[] saltbyte = new byte[20];
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
@@ -98,6 +178,8 @@ namespace MSITTeam1.Controllers
                 FPassword = passwordhashed,
                 FSalt = saltbyte,
                 FMemberType = 1,
+                FCheckStatus = "no",
+                FGuid = sVerify,
             };
             hello.StudentBasics.Add(viewModel);
             hello.SaveChanges();
@@ -137,73 +219,84 @@ namespace MSITTeam1.Controllers
             {
                 return "false";
             }
-            //bool flag = Regex.IsMatch(tpyein, @"^[A-Za-z]{1}[1-2]{1}[0-9]{8}$");
-            //int[] ID = new int[11];
-            //int count = 0;
-            //string result = "false";
-            //tpyein = tpyein.ToUpper();
-            //if (flag == true)
-            //{
-            //    switch (tpyein.Substring(0, 1))
-            //    {
-            //        case "A": (ID[0], ID[1]) = (1, 0); break;
-            //        case "B": (ID[0], ID[1]) = (1, 1); break;
-            //        case "C": (ID[0], ID[1]) = (1, 2); break;
-            //        case "D": (ID[0], ID[1]) = (1, 3); break;
-            //        case "E": (ID[0], ID[1]) = (1, 4); break;
-            //        case "F": (ID[0], ID[1]) = (1, 5); break;
-            //        case "G": (ID[0], ID[1]) = (1, 6); break;
-            //        case "H": (ID[0], ID[1]) = (1, 7); break;
-            //        case "I": (ID[0], ID[1]) = (3, 4); break;
-            //        case "J": (ID[0], ID[1]) = (1, 8); break;
-            //        case "K": (ID[0], ID[1]) = (1, 9); break;
-            //        case "L": (ID[0], ID[1]) = (2, 0); break;
-            //        case "M": (ID[0], ID[1]) = (2, 1); break;
-            //        case "N": (ID[0], ID[1]) = (2, 2); break;
-            //        case "O": (ID[0], ID[1]) = (3, 5); break;
-            //        case "P": (ID[0], ID[1]) = (2, 3); break;
-            //        case "Q": (ID[0], ID[1]) = (2, 4); break;
-            //        case "R": (ID[0], ID[1]) = (2, 5); break;
-            //        case "S": (ID[0], ID[1]) = (2, 6); break;
-            //        case "T": (ID[0], ID[1]) = (2, 7); break;
-            //        case "U": (ID[0], ID[1]) = (2, 8); break;
-            //        case "V": (ID[0], ID[1]) = (2, 9); break;
-            //        case "W": (ID[0], ID[1]) = (3, 2); break;
-            //        case "X": (ID[0], ID[1]) = (3, 0); break;
-            //        case "Y": (ID[0], ID[1]) = (3, 1); break;
-            //        case "Z": (ID[0], ID[1]) = (3, 3); break;
-            //    }
-            //    for (int i = 2; i < ID.Length; i++)
-            //    {
-            //        ID[i] = Convert.ToInt32(tpyein.Substring(i - 1, 1));
-            //    }
-            //    for (int j = 1; j < ID.Length - 1; j++)
-            //    {
-            //        count += ID[j] * (10 - j);
-            //    }
-            //    count += ID[0] + ID[10];
-            //    if (count % 10 == 0)
-            //    {
-            //        result = "true";
-            //    }
-            //    else
-            //    {
-            //        result = "false";
-            //    }
-            //}
-            //else
-            //{
-            //    result = "false";
-            //}     
-            //return result;
         }
-        public IActionResult ForgetPWD()
+        public IActionResult PWDidentify()
         {
             return View();
         }
+        public IActionResult MailPWDresetLink(string account)
+        {
+            StudentBasic com = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
+            if (com != null)
+            {
+                string sVerify = account + "|" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+                MD5 md5 = new MD5CryptoServiceProvider();
+                byte[] buf = Encoding.UTF8.GetBytes("IspanMsit40");
+                byte[] result = md5.ComputeHash(buf);
+                string md5Key = BitConverter.ToString(result).Replace("-", "").ToLower().Substring(0, 24);
+                DES.Key = UTF8Encoding.UTF8.GetBytes(md5Key);
+                DES.Mode = CipherMode.ECB;
+                ICryptoTransform DESEncrypt = DES.CreateEncryptor();
+                byte[] Buffer = UTF8Encoding.UTF8.GetBytes(sVerify);
+                sVerify = Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+
+                sVerify = HttpUtility.UrlEncode(sVerify);
+                string webPath = Request.Scheme + "://" + Request.Host + Url.Content("~/");
+                string Action = "Student_Login/ForgetPWD";
+                string path = "<a href='" + webPath + Action + "?verify=" + sVerify + "'>點此連結</a>";
+                CMailDelivery.mail(account, com.Name, path);
+                return Content("已發送郵件至信箱");
+            }
+            return Json(new { fail = "找不到用戶" });
+        }
+        public IActionResult ForgetPWD(string verify)
+        {
+
+            if (verify == "")
+            {
+                ViewData["ErrorMsg"] = "缺少驗證碼";
+                return View();
+            }
+            string SecretKey = "IspanMsit40";
+            try
+            {
+                TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+                MD5 md5 = new MD5CryptoServiceProvider();
+                byte[] buf = Encoding.UTF8.GetBytes(SecretKey);
+                byte[] md5result = md5.ComputeHash(buf);
+                string md5Key = BitConverter.ToString(md5result).Replace("-", "").ToLower().Substring(0, 24);
+                DES.Key = UTF8Encoding.UTF8.GetBytes(md5Key);
+                DES.Mode = CipherMode.ECB;
+                DES.Padding = PaddingMode.PKCS7;
+                ICryptoTransform DESDecrypt = DES.CreateDecryptor();
+                byte[] Buffer = Convert.FromBase64String(verify);
+                string deCode = UTF8Encoding.UTF8.GetString(DESDecrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+
+                verify = deCode;
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMsg"] = "驗證碼錯誤";
+                return View();
+            }
+            string UserID = verify.Split('|')[0];
+            string ResetTime = verify.Split('|')[1];
+            DateTime dResetTime = Convert.ToDateTime(ResetTime);
+            TimeSpan TS = new System.TimeSpan(DateTime.Now.Ticks - dResetTime.Ticks);
+            double diff = Convert.ToDouble(TS.TotalMinutes);
+            if (diff > 30)
+            {
+                ViewData["ErrorMsg"] = "超過驗證碼有效時間，請重寄驗證碼";
+                return View();
+            }
+            HttpContext.Session.SetString("ResetPwdUserId", UserID);
+            return View();
+        }
+
         public IActionResult ResetPWD(String password)
         {
-            string account = "111";
+            string account = HttpContext.Session.GetString("ResetPwdUserId");
             StudentBasic com = hello.StudentBasics.FirstOrDefault(p => p.FAccount == account);
             if (com != null)
             {
@@ -223,26 +316,6 @@ namespace MSITTeam1.Controllers
             }
             return Content("修改成功");
         }
-        public string PasswordIdentify(CForgetPasswordAccountViewModel fpav)
-        {
-            TMember member = hello.TMembers.FirstOrDefault(p => p.FAccount == fpav.account);
-            if(member != null)
-            {
 
-                if(member.FMemberType == 1)
-                {
-                    StudentBasic stu = hello.StudentBasics.FirstOrDefault(p => p.Email == fpav.email);
-                }
-                else if (member.FMemberType == 2)
-                {
-                    TCompanyBasic cmp = hello.TCompanyBasics.FirstOrDefault(p => p.FEmail == fpav.email);
-                }
-            }
-            return "查無此帳號或是Email輸入錯誤";
-        }
-        public string AccountIdentify()
-        {
-            return "1";
-        }
     }
 }

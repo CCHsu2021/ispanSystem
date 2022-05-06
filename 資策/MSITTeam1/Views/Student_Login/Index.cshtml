@@ -59,20 +59,16 @@
 @section Scripts
 {
     <script>
-
-        //$("#RPassword2").change(function ()
-        //{
-        //    let Pass1 = $("#RPassword").val();
-        //    let Pass2 = $("#RPassword2").val();
-        //    if (Pass1 != Pass2)
-        //    {
-        //        document.getElementById("WarningMsg").innerText = "密碼不一致請重新確認";
-        //    }
-        //    else
-        //    {
-        //        document.getElementById("WarningMsg").innerText = "";
-        //    }
-        //})
+        $(function () {
+            var ErrorMsg = "@ViewData["ErrorMsg"]";
+            var SucMsg = "@ViewData["SucMsg"]";
+            if (ErrorMsg != "") {
+                 Swal.fire("Uh Oh!",ErrorMsg, "warning")
+            }
+            if (SucMsg != "") {
+                Swal.fire("註冊成功", SucMsg, "success")
+            }
+        })
         const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
         $("#registerbtn").click(function ()
         {
@@ -131,6 +127,29 @@
                 success: function (message) {
                     if (message == "帳號密碼錯誤請重新輸入") {
                         Swal.fire("登入失敗", message, "warning");
+                    } else if (message == "請先至信箱認證信件") {
+                        Swal.fire({
+                            title: '此帳號尚未認證',
+                            text: "點擊確定按鈕重新發送認證信件",
+                            icon: 'info',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: '確定',
+                            cancelButtonText: '取消',
+                        }).then((reuslt) => {
+                            if (reuslt.isConfirmed) {
+                                $.ajax({
+                                    url: '@Url.Content("~/Student_Login/resendEmail")',
+                                    type: 'post',
+                                    data: { account: $("#RAccount").val() },
+                                }).done((result) => {
+                                    if (result == "發送成功") {
+                                        Swal.fire("請至信箱查看郵件", result, "success");
+                                    }
+                                })
+                            }
+                        });
                     }
                     else {
                         Swal.fire(message, "歡迎登入", "success",).then((result) => {

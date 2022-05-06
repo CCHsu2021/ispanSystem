@@ -38,9 +38,10 @@
 { 
     <script>
         $(function () {
-            if (@ViewData["ErrorMsg"] != null)
+            var ErrorMsg = "@ViewData["ErrorMsg"]";
+            if (ErrorMsg != "")
             {
-                Swal.fire("Uh Oh!",@ViewData["ErrorMsg"], "warning").then((result) => {
+                Swal.fire("Uh Oh!",ErrorMsg, "warning").then((result) => {
                     if (result.isConfirmed) {
                         window.location="@Url.Content("~/Company_Login")"
                     }
