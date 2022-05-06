@@ -108,9 +108,9 @@
         btn2.addEventListener('click', (evt) => {
             evt.preventDefault();
             var a = $('input[name=answer]:checked').val();
-            $("#FSubmitAnswer").val($('input[name=answer]:checked').attr('id'));
-            if (1 == a) { anscount++; $('input[name=answer]:checked').next().css("color", "green");}
-            if (1 != a) { $("input[name=answer][value='1']").next().css("color", "red"); }
+            //$("#FSubmitAnswer").val($('input[name=answer]:checked').attr('id'));
+            if (1 == a) { anscount++; $('input[name=answer]:checked').next().css("color", "green"); $("#FSubmitAnswer").val("1");}
+            if (1 != a) { $("input[name=answer][value='1']").next().css("color", "red"); $("#FSubmitAnswer").val("0");}
             count++
 
             $('#Grade').attr({ 'value': Math.round((anscount / count) * 100) });
