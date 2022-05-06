@@ -84,7 +84,7 @@ namespace MSITTeam1.Controllers
             return View(chooseOne);     //todo 尚未將View調整為專案檢視格式。需時一天
         }
 
-        public IActionResult ResumeSend(TMemberResumeSend vModel,string ddlstartTime,string ddlendTime,long ddlResume)
+        public IActionResult ResumeSend(TMemberResumeSend memberResumeSend,string ddlstartTime,string ddlendTime,long ddlResume)
         {
             
             var jobApply = _context.TMemberResumeSends.Max(p => p.ResumeSendId);
@@ -97,28 +97,28 @@ namespace MSITTeam1.Controllers
                 string lastDate = jobApply.Substring(2, 8);
                 if (lastDate != dateNow)
                 {
-                    vModel.ResumeSendId = addNewRS;
+                    memberResumeSend.ResumeSendId = addNewRS;
                 }
                 else
                 {
                     int num = int.Parse(jobApply.Substring(10, 5)) + 1;
-                    vModel.ResumeSendId = $"RS{lastDate + num.ToString("00000")}";
+                    memberResumeSend.ResumeSendId = $"RS{lastDate + num.ToString("00000")}";
                 }
             }
             else
             {
-                vModel.ResumeSendId = addNewRS;
+                memberResumeSend.ResumeSendId = addNewRS;
             }
 
             string contactTime = $"{ddlstartTime}~{ddlendTime}";
 
-            vModel.ComReadOrNot = "未讀";
-            vModel.TimeToContact = contactTime;
-            vModel.ResumeId = ddlResume;
-            vModel.CreatTime = dateTimeNow.ToString();
-            vModel.ModifyTime = dateTimeNow.ToString();
+            memberResumeSend.ComReadOrNot = "未讀";
+            memberResumeSend.TimeToContact = contactTime;
+            memberResumeSend.ResumeId = ddlResume;
+            memberResumeSend.CreatTime = dateTimeNow.ToString();
+            memberResumeSend.ModifyTime = dateTimeNow.ToString();
 
-            _context.Add(vModel);
+            _context.Add(memberResumeSend);
             _context.SaveChanges();
 
             return RedirectToAction("Index");

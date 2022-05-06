@@ -7,7 +7,7 @@ namespace MSITTeam1.Models
 {
     public partial class TCompanyRespond
     {
-        public long CompanyRespondId { get; set; }
+        public string CompanyRespondId { get; set; }
         public string ResumeSendId { get; set; }
         public string ContactPerson { get; set; }
         public string ContactPersonPhone { get; set; }
