@@ -24,24 +24,24 @@ namespace MSITTeam1.ViewComponent
             ViewBag.Name = CDictionary.username;
             ViewBag.Type = CDictionary.memtype;
             ViewBag.account = CDictionary.account;
-            IEnumerable<TProductOrder> Odatas = null;
-            Odatas = hello.TProductOrders.Where(p => p.MemberId == CDictionary.account);
-            var OdatasD = from d in hello.TProductOrderDetails
-                          join o in hello.TProductOrders on d.OrderId equals o.OrderId
-                          select d;
-            if (Odatas != null)
-            {
-                OrderAndOrderDetailViewModel list = new OrderAndOrderDetailViewModel();
-                foreach (TProductOrder t in Odatas)
-                {   
-                    list.Order.Add(new CheckOutViewModel { order = t });
-                }
-                foreach (TProductOrderDetail t in OdatasD)
-                {
-                    list.OrderDetail.Add(new OrderDetailViewModel { orderDetail = t });
-                }
-                return View(list);
-            }
+            //IEnumerable<TProductOrder> Odatas = null;
+            //Odatas = hello.TProductOrders.Where(p => p.MemberId == CDictionary.account);
+            //var OdatasD = from d in hello.TProductOrderDetails
+            //              join o in hello.TProductOrders on d.OrderId equals o.OrderId
+            //              select d;
+            //if (Odatas != null)
+            //{
+            //    OrderAndOrderDetailViewModel list = new OrderAndOrderDetailViewModel();
+            //    foreach (TProductOrder t in Odatas)
+            //    {   
+            //        list.Order.Add(new CheckOutViewModel { order = t });
+            //    }
+            //    foreach (TProductOrderDetail t in OdatasD)
+            //    {
+            //        list.OrderDetail.Add(new OrderDetailViewModel { orderDetail = t });
+            //    }
+            //    return View(list);
+            //}
             return Content("沒東西");
             //return new HtmlContentViewComponentResult(new HtmlString("<tbody>< tr>< th ></ th >< td colspan='4'></ td ></ tr ></ tbody >"));
 
