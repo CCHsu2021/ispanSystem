@@ -18,15 +18,16 @@ namespace MSITTeam1.ViewComponent
         }
         public IViewComponentResult Invoke(int jobId,string resumeSendId)
         {
-            var choooseOne = (from p in _context.TNewJobVacancies
+            var jobInfo = (from p in _context.TNewJobVacancies
                               select p).FirstOrDefault(p => p.Fid == jobId);
 
             TCompanyRespondViewModel vModel = new TCompanyRespondViewModel();
             vModel.ResumeSendId = resumeSendId;
-            vModel.ContactPerson = choooseOne.FContactPerson;
-            vModel.ContactPersonPhone = choooseOne.FContactPhone;
-            vModel.ContactPersonEmail = choooseOne.FContactEmail;
-            vModel.JobName = choooseOne.FJobName;
+            vModel.ContactPerson = jobInfo.FContactPerson;
+            vModel.ContactPersonPhone = jobInfo.FContactPhone;
+            vModel.ContactPersonEmail = jobInfo.FContactEmail;
+            vModel.InterviewAddress = jobInfo.FCity + jobInfo.FDistrict + jobInfo.FWorkAddress;
+            vModel.JobName = jobInfo.FJobName;
             
 
             return View(vModel);

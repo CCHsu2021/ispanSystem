@@ -1,4 +1,4 @@
-﻿@model List<MSITTeam1.ViewModels.CheckOutViewModel>
+﻿@model List<MSITTeam1.ViewModels.ClassCheckOutViewModel>
 @{
     ViewData["Title"] = "Index";
 }
@@ -450,16 +450,18 @@
                 <div class="w-100 row justify-content-between align-items-center">
                     <h3 class="mt-4 mb-3 font-weight-bold h4">授課人員資訊</h3>
                     @*<div>
-                <input id="receivePerson" type="checkbox">
-                <label for="receivePerson">同購買人資料</label>
-            </div>*@
+                            <input id="receivePerson" type="checkbox">
+                            <label for="receivePerson">同購買人資料</label>
+                        </div>*@
                 </div>
                 @{
                     if (ViewBag.Type == "1")
                     {
-                        <div>
-                            <input id="receivePerson" type="checkbox">
-                            <label for="receivePerson">同購買人資料</label>
+                        <div class="row w-100">
+                            <div>
+                                <input id="receivePerson" type="checkbox">
+                                <label for="receivePerson">同購買人資料</label>
+                            </div>
                         </div>
                         <div class="col-md-3 pr-0 mb-3">
                             姓名：
@@ -495,11 +497,11 @@
                             <input type="text" id="productOrderTel" class="form-control" name="StaffEmail">
                         </div>
                         @*<div class="col-md-3 pr-0 mb-3">
-                    統一編號：
-                </div>
-                <div class="col-md-9 pl-0 mb-3">
-                    <input type="text" id="productOrderTAXID" class="form-control" name="TAXID" />
-                </div>*@
+                                統一編號：
+                            </div>
+                            <div class="col-md-9 pl-0 mb-3">
+                                <input type="text" id="productOrderTAXID" class="form-control" name="TAXID" />
+                            </div>*@
                     }
                 }
                 <div class="w-100 row align-items-center">
@@ -532,23 +534,23 @@
                                 <li class="items odd">
                                     <div class="infoWrap">
                                         <div class="cartSection">
-                                            <img src="@item.ImgPath" alt=""
+                                            <img src="@item.imgPath" alt=""
                                                  class="itemImg" />
-                                            <h3>@item.Name</h3>
+                                            <h3>@item.name</h3>
                                             <p>
-                                                <input type="text" class="qty border" value="@item.count" /> x NT$@Html.DisplayFor(modelItem => item.Price, "Money")
+                                                <input type="text" class="qty border" value="@item.count" /> x NT$@Html.DisplayFor(modelItem => item.price, "Money")
                                             </p>
                                         </div>
                                         <div class="prodTotal cartSection">
-                                            <p>NT$@Html.DisplayFor(modelItem => item.SubTotal, "Money")</p>
+                                            <p>NT$@Html.DisplayFor(modelItem => item.subTotal)</p>
                                         </div>
                                         @*<div class="cartSection removeWrap text-right">
                                                 <a href="#" class="remove">x</a>
                                             </div>*@
                                     </div>
                                 </li>
-                                id = item.ProductId;
-                                total += (int)(@item.SubTotal);
+                                id = item.productId;
+                                total += (int)(@item.subTotal);
                             }
                         </ul>
                     </div>

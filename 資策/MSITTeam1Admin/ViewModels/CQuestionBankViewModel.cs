@@ -97,6 +97,7 @@ namespace MSITTeam1Admin.ViewModels
 			get { return this.question.FQuestionTypeId; }
 			set { this.question.FQuestionTypeId = value; }
 		}
+		[DisplayName("提供者")]
 		public string FSubmitterId
 		{
 			get { return this.question.FSubmitterId; }

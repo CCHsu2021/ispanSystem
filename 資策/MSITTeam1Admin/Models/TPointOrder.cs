@@ -11,8 +11,8 @@ namespace MSITTeam1Admin.Models
         public string OrderId { get; set; }
         public string OrderDate { get; set; }
         public int? BuyPoint { get; set; }
-        public int? PayMethod { get; set; }
-        public int? Bonus { get; set; }
+        public string PayMethod { get; set; }
+        public double? Bonus { get; set; }
         public int? ToTalGetPoint { get; set; }
     }
 }

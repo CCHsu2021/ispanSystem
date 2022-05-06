@@ -153,6 +153,7 @@ namespace MSITTeam1Admin.Controllers
 					quesSel.FQuestion = quesList.FQuestion;
 					quesSel.FQuestionTypeId = Convert.ToInt32(quesList.FQuestionTypeId);
 					quesSel.FLevel = quesList.FLevel;
+					quesSel.FState = quesList.FState;
 					foreach (var ans in quesList.FChoiceList)
 					{
 						if (ans.FSN != 0)

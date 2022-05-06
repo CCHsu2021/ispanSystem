@@ -38,6 +38,7 @@ namespace MSITTeam1Admin.ViewComponent
 									FQuestion = ques.FQuestion,
 									FLevel = ques.FLevel,
 									FQuestionTypeId = ques.FQuestionTypeId,
+									FState = ques.FState,
 									FChoice = choice.FChoice,
 									FCorrectAnswer = choice.FCorrectAnswer
 								};
