@@ -16,8 +16,8 @@ namespace MSITTeam1.ViewModels
             _comR = new TCompanyRespond();
         }
         public TCompanyRespond comR { get { return _comR; } set { _comR = value; } }
-        [DisplayName("公司回應ID")]
-        public long CompanyRespondId { get { return this.comR.CompanyRespondId; } set { this.comR.CompanyRespondId = value; } }
+        [DisplayName("公司回應單ID")]
+        public string CompanyRespondId { get { return this.comR.CompanyRespondId; } set { this.comR.CompanyRespondId = value; } }
         [DisplayName("求職單ID")]
         public string ResumeSendId { get { return this.comR.ResumeSendId; } set { this.comR.ResumeSendId = value; } }
         [DisplayName("聯絡人")]
@@ -34,7 +34,7 @@ namespace MSITTeam1.ViewModels
         public string InterviewTime { get { return this.comR.InterviewTime; } set { this.comR.InterviewTime= value; } }
         [DisplayName("面試地點")]
         public string InterviewAddress { get { return this.comR.InterviewAddress; } set { this.comR.InterviewAddress = value; } }
-        [DisplayName("幾天內回應")]
+        [DisplayName("希望回應時間")]
         public string StudentRespondTime { get { return this.comR.StudentRespondTime; } set { this.comR.StudentRespondTime = value; } }
         [DisplayName("邀約面試信內容")]
         public string InterviewContent { get { return this.comR.InterviewContent; } set { this.comR.InterviewContent = value; } }

@@ -30,7 +30,7 @@ namespace MSITTeam1.Controllers
                                        from combin in pt.DefaultIfEmpty()
                                        join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
                                        from combin2 in ps.DefaultIfEmpty()
-                                       where p.CompanyTaxid.Equals(account)
+                                       where (p.CompanyTaxid.Equals(account) && p.ComReadOrNot == "未讀")
                                        orderby p.CreatTime descending
                                        select new
                                        {
@@ -63,10 +63,31 @@ namespace MSITTeam1.Controllers
                                  FCompanyName = combin.FName,
                                  FStudentName = combin2.Name
                              }).FirstOrDefault(p => p.ResumeSendId.Equals(ResumeSendId));
-            chooseOne.ComReadOrNot = "已讀";
+
+            var chooseResume = _context.TMemberResumeSends.FirstOrDefault(p=>p.ResumeSendId.Equals(ResumeSendId));
+            chooseResume.ComReadOrNot = "已讀";
+            _context.Add(chooseResume);
+            _context.SaveChanges();
 
             return View(chooseOne);
-            //todo 尚未做成View的格式，套用檢視職缺頁面
+            //todo 美化頁面
+        }
+
+        public IActionResult InterViewInvitation(TCompanyRespond companyRespond,string ddlstartTime,string InterviewTime)
+        {
+            string CRID = $"CR{companyRespond.ResumeSendId}";
+            DateTime interviewDate = Convert.ToDateTime(InterviewTime);
+            string dateTimeNow = DateTime.Now.ToString();
+
+            companyRespond.CompanyRespondId = CRID;
+            companyRespond.InterviewTime = $"{interviewDate.Year}年{interviewDate.Month}月{interviewDate.Day}日 {ddlstartTime}";
+            companyRespond.CreatTime = dateTimeNow;
+            companyRespond.ModifyTime = dateTimeNow;
+
+            _context.Add(companyRespond);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: PostMessage/Details/5

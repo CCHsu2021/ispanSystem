@@ -11,7 +11,8 @@ namespace MSITTeam1.Models
         public string MemberId { get; set; }
         public DateTime? Date { get; set; }
         public int? TotalPrice { get; set; }
-        public int? PayMethod { get; set; }
+        public string PayMethod { get; set; }
         public string Invoice { get; set; }
+        public string Taxid { get; set; }
     }
 }
