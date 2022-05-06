@@ -127,24 +127,31 @@
 @{ var ClassName = "";
     var ClassCate = "";
     var FSkillselect = "";}
-<form id="a">
-    <select class="form-select form-control" id="selectmap" name="selectmap">
-        @{
-                <option value="所有課程">所有課程</option>
-            foreach (var item in Model.TStudioInformationright)
-            {
-                if (item.FClassName != FSkillselect && item.FClassName != "其他")
-                {
-                    <option value="@item.FClassName">@item.FClassName</option>
-                }
-                FSkillselect = item.FClassName;
-            }
-        }
-    </select>
-    <input class="btn-style-two mt-3" type="submit" id="createpaper" name="createpaper" value="確定" />
-</form>
+
 <div class="container-fluid py-5" style="background-color: #EFEFEF;">
     <div class="naccs container">
+        <form id="a">
+            <div class="row justify-content-center align-items-center mb-3">
+                <div class="col-md-4">
+                    <select class="form-select form-control" id="selectmap" name="selectmap">
+                        @{
+                            <option value="所有課程">所有課程</option>
+                            foreach (var item in Model.TStudioInformationright)
+                            {
+                                if (item.FClassName != FSkillselect && item.FClassName != "其他")
+                                {
+                                    <option value="@item.FClassName">@item.FClassName</option>
+                                }
+                                FSkillselect = item.FClassName;
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input class="btn-style-two mt-3 mx-0" type="submit" id="createpaper" name="createpaper" value="確定" />
+                </div>
+            </div>
+        </form>
         <div class="grid">
             <div class="gc gc--1-of-3">
                 <div class="menu d-block my-0">

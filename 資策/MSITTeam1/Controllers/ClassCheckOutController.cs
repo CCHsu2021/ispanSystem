@@ -12,25 +12,25 @@ using System.Threading.Tasks;
 
 namespace MSITTeam1.Controllers
 {
-    public class CheckOutController : Controller
+    public class ClassCheckOutController : Controller
     {
         private readonly helloContext hello;
-        public CheckOutController(helloContext _hello)
+        public ClassCheckOutController(helloContext _hello)
         {
             hello = _hello;
         }
             
         public IActionResult Index()
         {
-            var oid = hello.TProductOrders.Max(t => t.OrderId);
+            var oid = hello.TClassOrders.Max(t => t.OrderId);
             string now = DateTime.Now.ToString("yyyyMMdd");
-            string newday = now + "00001";
-            var newid = hello.TProductOrders.FirstOrDefault(t => t.OrderId == newday);
+            string newday = "C"+now + "00001";
+            var newid = hello.TClassOrders.FirstOrDefault(t => t.OrderId == newday);
             if (oid != null)
             {
                 if (newid != null) { 
-                int proid = int.Parse(oid.Substring(8, 5)) + 1;
-                ViewBag.OrderId = now + proid.ToString("00000");
+                int proid = int.Parse(oid.Substring(9, 5)) + 1;
+                ViewBag.OrderId = "C"+now + proid.ToString("00000");
                 }
                 else
                 {
@@ -39,7 +39,7 @@ namespace MSITTeam1.Controllers
             }
             else
             {
-                ViewBag.OrderId = now+"00001";
+                ViewBag.OrderId = "C"+now +"00001";
             }
             ViewBag.Name = CDictionary.username;
             ViewBag.Type = CDictionary.memtype;
@@ -84,34 +84,37 @@ namespace MSITTeam1.Controllers
             {
                 ViewBag.Point = 0;
             }
-            string key = CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account;
+            string key = CDictionary.SK_ClASS_PURCHASED_LIST + CDictionary.account;
             if (HttpContext.Session.Keys.Contains(key))
             {
                 string json = HttpContext.Session.GetString(key);
-                List<CheckOutViewModel> list = JsonSerializer.Deserialize<List<CheckOutViewModel>>(json);
+                List<ClassCheckOutViewModel> list = JsonSerializer.Deserialize<List<ClassCheckOutViewModel>>(json);
                 return View(list);
             };
             return RedirectToAction("Index", "Index", null);
         }
         [HttpPost]
-        public IActionResult ComfirmPay(CheckOutViewModel vModel)
+        public IActionResult ComfirmPay(ClassCheckOutViewModel vModel)
         {
 
-            string key = CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account;
+            string key = CDictionary.SK_ClASS_PURCHASED_LIST + CDictionary.account;
             if (HttpContext.Session.Keys.Contains(key))
             {
                 string json = HttpContext.Session.GetString(key);
-                List<CheckOutViewModel> list = JsonSerializer.Deserialize<List<CheckOutViewModel>>(json);
+                List<ClassCheckOutViewModel> list = JsonSerializer.Deserialize<List<ClassCheckOutViewModel>>(json);
                 foreach(var i in list)
                 {
-                    TProductOrderDetail item = new TProductOrderDetail()
+                    TClassOrderDetail item = new TClassOrderDetail()
                     {
+                        MemberId = CDictionary.account,
                         OrderId = vModel.OrderId,
-                        ProductId = i.ProductId,
-                        Price = i.Price,
-                        Qty = i.count,
+                        ClassExponent = i.productId,
+                        Price = i.price,
+                        DepartmentName = vModel.DepartmentName,
+                        StaffEmail= vModel.StaffEmail,
+                        StaffName= vModel.StaffName
                     };
-                hello.TProductOrderDetails.Add(item);
+                    hello.TClassOrderDetails.Add(item);
                 }
                 HttpContext.Session.Remove(key);
             };

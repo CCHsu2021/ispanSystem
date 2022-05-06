@@ -173,7 +173,7 @@
                                         <a class="dropdown-toggle-title" href="#">企業專區</a>
                                         <ul>
                                             <li>
-                                                <a href=#>購買點數</a>
+                                                <a id="buyPoint" href=@Url.Action("Index","BuyPoint")>購買點數</a>
                                             </li>
                                             <li>
                                                 <a href="@Url.Action("classIndex","Products")">在職進修班</a>
@@ -374,7 +374,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/l10n/zh-tw.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
+<script>
         //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
         $(document).ready(function () {
         var onResize = function () {
@@ -462,6 +462,33 @@
             $('#QuestionBankSys > a').attr("href", "../TestPaperBank/Home");
         }
     })
-    </script>
+
+        // 購買點數 登入判斷
+    $('#buyPoint').click(function () {
+        if ("@ViewBag.account" == "") {
+            Swal.fire({
+                icon: 'info',
+                title: '請先登入會員',
+                showConfirmButton: false,
+                timer: 1300
+            }).done(
+                setTimeout(function () {
+                    location = 'https://localhost:44387/Company_Login'
+                }, 1300)
+            );
+        }
+        else if ("@ViewBag.Type" == "1") {
+            Swal.fire({
+                icon: 'info',
+                title: '此系統目前僅對企業會員開放',
+                showConfirmButton: false,
+                timer: 2000
+            })
+            return;
+        } else if ("@ViewBag.Type" == "2") {
+            $('#buyPoint > a').attr("href", "../BuyPoint/Index");
+        }
+    })
+</script>
 </body>
 </html>

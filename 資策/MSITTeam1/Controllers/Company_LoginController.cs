@@ -192,7 +192,7 @@ namespace MSITTeam1.Controllers
 
         public IActionResult ResetPWD(String password)
         {
-            string account = "Max@gmail.com";
+            string account = HttpContext.Session.GetString("ResetPwdUserId");
             TCompanyBasic com = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
             if(com != null)
             {
@@ -215,7 +215,6 @@ namespace MSITTeam1.Controllers
 
         public string PasswordIdentify(CForgetPasswordAccountViewModel fpav)
         {
-            //helloContext hello = new helloContext();
             TMember member = hello.TMembers.FirstOrDefault(p => p.FAccount == fpav.account);
             if (member != null)
             {
