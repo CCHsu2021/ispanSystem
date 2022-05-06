@@ -18,6 +18,7 @@ namespace MSITTeam1.Controllers
         public IActionResult Index(GradeIdentify Grade)
         {
             ViewBag.skillname = "";
+            ViewBag.memtype = CDictionary.memtype;
             var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
             if (account != null)
                 ViewBag.Account = account.FAccount;
@@ -65,7 +66,7 @@ namespace MSITTeam1.Controllers
             }
              else
                 {
-                return RedirectToAction("Index", "Student_Login");
+                 return RedirectToAction("Index", "Student_Login");
             }
         }
     }

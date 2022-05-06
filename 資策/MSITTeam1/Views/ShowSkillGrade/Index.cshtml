@@ -14,6 +14,8 @@
                     <option style="display:none" value="0">選擇技能</option>
                     @{
                         var FSkillCategory = "";
+                       if(ViewBag.memtype != "2")
+                    {
                         foreach (var item in Model)
                         {
                             if (item.FSkillCategory != FSkillCategory)
@@ -22,6 +24,7 @@
                             }
                             FSkillCategory = item.FSkillCategory;
                         }
+                    }
                     }
                 </select>
             </div>
@@ -58,11 +61,11 @@
         </select>
     </div>
     <div class="col-md-2">
-            <input style="display:none" class="btn-style-two mt-3 mx-0" type="button" id="skillmap" name="skillmap" value="課程導覽" />
+        <input style="display:none" class="btn-style-two mt-3 mx-0" type="button" id="skillmap" name="skillmap" value="課程導覽" />
     </div>
-        <form name="memberskill" method="post">
-            <input type="hidden" id="selectmap" name="selectmap" value="@ViewBag.skillname" />
-        </form>
+    <form name="memberskill" method="post">
+        <input type="hidden" id="selectmap" name="selectmap" value="@ViewBag.skillname" />
+    </form>
 </div>
 
 
@@ -104,7 +107,16 @@
         btn.addEventListener('click', (evt) => {
            evt.preventDefault();
             $('#txtidentify').val($('#select').val());
-            if ($('#txtidentify').val() == "0") {
+            if ("@ViewBag.memtype" == "2") {
+                Swal.fire({
+                    icon: 'info',
+                    title: '請先登入學生會員',
+                    showConfirmButton: false,
+                    timer: 1300
+                }).then((result) => {
+                     location = '@Url.Action("Index", "Student_Login")'}
+                )
+            } else if ($('#txtidentify').val() == "0") {
                 Swal.fire({
                     icon: 'info',
                     title: '請選擇技能',

@@ -8,15 +8,15 @@
             <select class="form-select form-control" id="select">
                 @{
                     string FSubjectId = null;
-                    foreach (var item in Model)
-                    {
-                        if (item.FSubjectId != FSubjectId)
+                        foreach (var item in Model)
                         {
+                            if (item.FSubjectId != FSubjectId)
+                            {
                             <option value="@item.FSubjectId">@item.FSubjectId</option>
-                        }
-                        FSubjectId = item.FSubjectId;
+                            }
+                                FSubjectId = item.FSubjectId;
+                         }
                     }
-                }
             </select>
         </div>
         <div class="col-md-2">
@@ -46,7 +46,7 @@
         <input type="hidden" id="FSubjectId" name="FSubjectId" value="" />
         <input type="hidden" id="FQuestionId" name="FQuestionId" value="" />
         <input type="hidden" id="FSubmitAnswer" name="FSubmitAnswer" value="">
-        <input type="text" class="form-control" id="Grade" name="Grade" value="0">
+        <input type="hidden" class="form-control" id="Grade" name="Grade" value="0">
     </form>
 </div>
 @section Scripts{
@@ -59,10 +59,10 @@
 
         btn1.addEventListener('click', (evt) => {
             evt.preventDefault();
-            if ("@ViewBag.Account" == "") {
+            if ("@ViewBag.Account" == "" || "@ViewBag.memtype" == "2") {
                 Swal.fire({
                     icon: 'info',
-                    title: '請先登入會員',
+                    title: '請先登入學生會員',
                 }).then((result) => {
                     if (result.isConfirmed) { location = '@Url.Action("Index", "Student_Login")'}}
                 )
