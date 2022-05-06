@@ -18,5 +18,6 @@ namespace MSITTeam1.Models
         public string Recipient { get; set; }
         public string RecipientTel { get; set; }
         public string Taxid { get; set; }
+        public int? Discount { get; set; }
     }
 }

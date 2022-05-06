@@ -550,7 +550,10 @@
                             {
                                 a = @ViewBag.Cpoint;
                             }
-                            a = ViewBag.point;
+                            else if (ViewBag.Type == "1")
+                            {
+                                a = ViewBag.point;
+                            }
                         }
                         <div class="row">
                             <div>目前持有點數：<input id="showPoint" readonly value="@a" /></div>
@@ -562,7 +565,7 @@
                             </div>
                             <div>
                                 <span class="label">共計：NT$</span>
-                                <input readonly name="TotalPrice" id="TotalPrice" value="@total.ToString("###,###,##0")">
+                                <input readonly name="TotalPrice" id="TotalPrice" value="@total">
                             </div>
                         </div>
                     </div>
@@ -641,9 +644,11 @@
         console.log(total - point);
         $("#usePoint").click(function () {
             if ($("#usePoint").prop("checked") == true) {
-                $("#TotalPrice").val(total - point);
+                total > point ? $("#TotalPrice").val(total - point) : $("#TotalPrice").val(0);
+                total > point ? $("#showPoint").val(0) : $("#showPoint").val(point - total);
             } else {
                 $("#TotalPrice").val(total);
+                $("#showPoint").val(point);
             }
         })
     </script>

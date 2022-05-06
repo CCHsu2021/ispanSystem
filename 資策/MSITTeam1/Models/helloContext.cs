@@ -278,6 +278,8 @@ namespace MSITTeam1.Models
 
                 entity.Property(e => e.RWorkExp).HasColumnName("rWorkExp");
 
+                entity.Property(e => e.ResumeImage).IsUnicode(false);
+
                 entity.Property(e => e.ResumeName).HasMaxLength(50);
             });
 

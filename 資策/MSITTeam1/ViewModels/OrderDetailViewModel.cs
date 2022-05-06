@@ -34,11 +34,5 @@ namespace MSITTeam1.ViewModels
             set { this.orderDetail.Qty = value; }
         }
 
-        public double? Discount
-        {
-            get { return this.orderDetail.Discount; }
-            set { this.orderDetail.Discount = value; }
-        }
-
     }
 }

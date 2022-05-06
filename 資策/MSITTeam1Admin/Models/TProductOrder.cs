@@ -11,12 +11,13 @@ namespace MSITTeam1Admin.Models
         public string MemberId { get; set; }
         public DateTime? Date { get; set; }
         public string TotalPrice { get; set; }
-        public int? PayMethod { get; set; }
-        public int? ShipBy { get; set; }
+        public string PayMethod { get; set; }
+        public string ShipBy { get; set; }
         public string ShipTo { get; set; }
         public string Invoice { get; set; }
         public string Recipient { get; set; }
         public string RecipientTel { get; set; }
         public string Taxid { get; set; }
+        public int? Discount { get; set; }
     }
 }

@@ -11,6 +11,5 @@ namespace MSITTeam1Admin.Models
         public string ProductId { get; set; }
         public int? Price { get; set; }
         public int? Qty { get; set; }
-        public double? Discount { get; set; }
     }
 }
