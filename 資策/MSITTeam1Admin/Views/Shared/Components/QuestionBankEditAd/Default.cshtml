@@ -687,77 +687,86 @@
             @{
                 if (Model != null)
                 {
-                        <form asp-action="Edit" method="post" enctype="multipart/form-data">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                            <div class="form-group" style="text-align:center;">
-                                @*<h3><input type="text" id="FSubjectIdEd" asp-for="@Model[0].FSubjectId" readonly style="text-align:center;" /></h3>*@
-                                <h3>@Html.DisplayFor(model => model[0].FSubjectId)</h3>
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" id="FQuestionIdEd" asp-for="@Model[0].FQuestionId" />
-                                <label id="test1" class="control-label my-2 font-weight-bold h5" asp-for="@Model[0].FQuestion"></label>
-                                <input id="FQuestionEd" asp-for="@Model[0].FQuestion" class="form-control">
-                                <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
-                            </div>
+                        <div class="form-group" style="text-align:center;">
+                            <input type="text" id="FSubjectIdEd" asp-for="@Model[0].FSubjectId" readonly style="text-align: center; border: none; font-size: 28px;" class="form-control bg-white" />
+                            @*<h3>@Html.DisplayFor(model => model[0].FSubjectId)</h3>*@
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" id="FQuestionIdEd" asp-for="@Model[0].FQuestionId" />
+                            <label id="test1" class="control-label my-2 font-weight-bold h5" asp-for="@Model[0].FQuestion"></label>
+                            <input id="FQuestionEd" asp-for="@Model[0].FQuestion" class="form-control">
+                            <span asp-validation-for="@Model[0].FQuestion" class="text-danger"></span>
+                        </div>
 
-                            <div class="form-group">
-                                <label asp-for="@Model[0].FQuestionTypeId" class="control-label my-2 font-weight-bold h5"></label>
-                                <input type="hidden" value="@Model[0].FQuestionTypeId" id="curType" />
-                                <select id="FQuestionTypeIdSelEd" asp-for="@Model[0].FQuestionTypeId" class="form-control">
-                                    <option value="1">單選題</option>
-                                    <option value="2">多選題</option>
-                                </select>
-                                <span asp-validation-for="@Model[0].FQuestionTypeId" class="text-danger"></span>
-                            </div>
-                            <div id="ansListEd">
-                                @for (int i = 0; i < Model.Count; i++)
+                        <div class="form-group">
+                            <label asp-for="@Model[0].FQuestionTypeId" class="control-label my-2 font-weight-bold h5"></label>
+                            <input type="hidden" value="@Model[0].FQuestionTypeId" id="curType" />
+                            <select id="FQuestionTypeIdSelEd" asp-for="@Model[0].FQuestionTypeId" class="form-control">
+                                <option value="1">單選題</option>
+                                <option value="2">多選題</option>
+                            </select>
+                            <span asp-validation-for="@Model[0].FQuestionTypeId" class="text-danger"></span>
+                        </div>
+                        <div id="ansListEd">
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                if (Model[i].FSubjectId == Model[0].FSubjectId && Model[i].FQuestionId == Model[0].FCQuestionId)
                                 {
-                                    if (Model[i].FSubjectId == Model[0].FSubjectId && Model[i].FQuestionId == Model[0].FCQuestionId)
-                                    {
-                                        <div class="form-group choiceEd">
-                                            <input type="hidden" id="FSN" asp-for="@Model[i].FSn" />
-                                            <input type="hidden" id="FCSubjectId" asp-for="@Model[i].FCSubjectId" />
-                                            <input type="hidden" id="FCQuestionId" asp-for="@Model[i].FCQuestionId" />
-                                            <input type="hidden" id="correctAns" asp-for="@Model[i].FCorrectAnswer" />
-                                            <label asp-for="@Model[i].FChoice" class="control-label my-2 font-weight-bold h5"></label>
-                                            <div class="row align-items-center px-3 choicelist" style="flex-wrap:nowrap">
-                                                <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheckEd(this)" style="width:28px;height:25px"/>
-                                                <input asp-for="@Model[i].FChoice" class="form-control txtAnsEd" style="margin:0 20px 0 10px"/>
-                                                <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
-                                                <button class="tableBtn fas fa-trash-alt delBtnEd" type="button" style="border-radius: 5px; width: 60px;"></button>
-                                            </div>
-                                        </div>
-                                    }
-                                    //TODO:9.增加題目狀態調整欄位
-                                }
-                            </div> 
-                            <div style="text-align: center;">
-                                <button id="BtnNewChoiceEdit" type="button" class="tableBtn fas" style="border-radius:5px;width:200px"><i class="fas fa-plus" style="font-size:25px;"></i></button>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="@Model[0].FLevel" class="control-label my-2 font-weight-bold h5"></label>
-                                <input type="hidden" value="@Model[0].FLevel" id="curLevel" />
-                                <div>
-                                    <div class="rating2">
-                                        <div class="br-wrapper br-theme-fontawesome-stars">
-                                            <select class="questionBarRate levelEd" id="example-fontawesome" name="rating" autocomplete="off">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
+                                    <div class="form-group choiceEd">
+                                        <input type="hidden" id="FSN" asp-for="@Model[i].FSn" />
+                                        <input type="hidden" id="FCSubjectId" asp-for="@Model[i].FCSubjectId" />
+                                        <input type="hidden" id="FCQuestionId" asp-for="@Model[i].FCQuestionId" />
+                                        <input type="hidden" id="correctAns" asp-for="@Model[i].FCorrectAnswer" />
+                                        <label asp-for="@Model[i].FChoice" class="control-label my-2 font-weight-bold h5"></label>
+                                        <div class="row align-items-center px-3 choicelist" style="flex-wrap:nowrap">
+                                            <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" onclick="doCheckEd(this)" style="width:28px;height:25px" />
+                                            <input asp-for="@Model[i].FChoice" class="form-control txtAnsEd" style="margin:0 20px 0 10px" />
+                                            <span asp-validation-for="@Model[i].FChoice" class="text-danger"></span>
+                                            <button class="tableBtn fas fa-trash-alt delBtnEd" type="button" style="border-radius: 5px; width: 60px;"></button>
                                         </div>
                                     </div>
+                                }
+                                //TODO:9.增加題目狀態調整欄位
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model[0].FState" class="control-label my-2 font-weight-bold h5"></label>
+                            <input type="hidden" id="CurState" value="@Model[0].FState" />
+                            <select id="FQuestionStateSelEd" asp-for="@Model[0].FState" class="form-control">
+                                <option value="1">僅出題人可見</option>
+                                <option value="2">公開</option>
+                                <option value="0">鎖定</option>
+                            </select>
+                        </div>
+                        <div style="text-align: center;">
+                            <button id="BtnNewChoiceEdit" type="button" class="tableBtn fas" style="border-radius:5px;width:200px"><i class="fas fa-plus" style="font-size:25px;"></i></button>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model[0].FLevel" class="control-label my-2 font-weight-bold h5"></label>
+                            <input type="hidden" value="@Model[0].FLevel" id="curLevel" />
+                            <div>
+                                <div class="rating2">
+                                    <div class="br-wrapper br-theme-fontawesome-stars">
+                                        <select class="questionBarRate levelEd" id="example-fontawesome" name="rating" autocomplete="off">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <span asp-validation-for="@Model[0].FLevel" class="text-danger"></span>
                             </div>
-                            <hr class="my-4" />
-                            <div class="form-group text-center">
-                                <button class="btn btn-primary" type="button" id="saveChangeEd">保存修改</button>
-                            </div>
-                        </form>
+                            <span asp-validation-for="@Model[0].FLevel" class="text-danger"></span>
+                        </div>
+                        <hr class="my-4" />
+                        <div class="form-group text-center">
+                            <button class="btn btn-primary" type="button" id="saveChangeEd">保存修改</button>
+                        </div>
+                    </form>
                 }
             }
         </div>
@@ -779,7 +788,7 @@
     var limit = $('#FQuestionTypeIdSelEd').val();
 
         function doCheckEd(obj) {
-            var quesType = $('#FQuestionTypeIdSelEd').val();            
+            var quesType = $('#FQuestionTypeIdSelEd').val();
             if (quesType === "1") {
                 limit = 1;
             } else if (quesType === "2") {
@@ -796,7 +805,7 @@
             }
         }
 
-        // 根據題型判斷答案輸入欄位及許可正確選項上限 代入當前題目類型和難度等級
+        // 根據題型判斷答案輸入欄位及許可正確選項上限 代入當前難度等級
     $('#FQuestionTypeIdSelEd').change(function () {
         if ($(this).val() === "2") {
                 limit = 100;
@@ -813,6 +822,14 @@
             item.selected = true; return;
         }
     })
+
+    //var stateCur = $('#CurState').val();
+    //console.log(stateCur);
+    //$('#FQuestionStateSelEd').find("option").each(function (i, item) {
+    //    if ((item.value) === stateCur ){
+    //    item.selected = true; return;
+    //    }
+    //})
 
         // 新增選項textbox
         const BtnNewChoiceEdit = document.querySelector('#BtnNewChoiceEdit');
@@ -882,8 +899,10 @@
                 FQuestion: $('#FQuestionEd').val(),
                 FQuestionTypeId: $('#FQuestionTypeIdSelEd').val(),
                 FChoiceList: ansArrEd,
+                FState: $('#FQuestionStateSelEd').val(),
                 FLevel: $('.levelEd').val()
             })
+                console.log(Editjsondata);
             $.ajax({
                 url: "@Url.Content("~/QuesBankSysAdmin/Edit")",
                 type: "POST",
@@ -904,130 +923,130 @@
         })
 </script>
 <script>
-        $(function () {
-            "use strict";
-            function ratingEnable() {
-                $('#example-1to10').barrating('show', {
-                    theme: 'bars-1to10'
-                });
+    $(function () {
+        "use strict";
+        function ratingEnable() {
+            $('#example-1to10').barrating('show', {
+                theme: 'bars-1to10'
+            });
 
-                $('#example-movie').barrating('show', {
-                    theme: 'bars-movie'
-                });
+            $('#example-movie').barrating('show', {
+                theme: 'bars-movie'
+            });
 
-                //        $('#example-movie').barrating('set', 'Mediocre');
+            //        $('#example-movie').barrating('set', 'Mediocre');
 
-                $('#example-square').barrating('show', {
-                    theme: 'bars-square',
-                    showValues: true,
-                    showSelectedRating: false
-                });
+            $('#example-square').barrating('show', {
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false
+            });
 
-                $('#example-pill').barrating('show', {
-                    theme: 'bars-pill',
-                    initialRating: 'A',
-                    showValues: true,
-                    showSelectedRating: false,
-                    allowEmpty: true,
-                    emptyValue: '-- no rating selected --',
-                    onSelect: function (value, text) {
-                        alert('Selected rating: ' + value);
-                    }
-                });
+            $('#example-pill').barrating('show', {
+                theme: 'bars-pill',
+                initialRating: 'A',
+                showValues: true,
+                showSelectedRating: false,
+                allowEmpty: true,
+                emptyValue: '-- no rating selected --',
+                onSelect: function (value, text) {
+                    alert('Selected rating: ' + value);
+                }
+            });
 
-                $('#example-reversed').barrating('show', {
-                    theme: 'bars-reversed',
-                    showSelectedRating: true,
-                    reverse: true
-                });
+            $('#example-reversed').barrating('show', {
+                theme: 'bars-reversed',
+                showSelectedRating: true,
+                reverse: true
+            });
 
-                $('#example-horizontal').barrating('show', {
-                    theme: 'bars-horizontal',
-                    reverse: true,
-                    hoverState: false
-                });
+            $('#example-horizontal').barrating('show', {
+                theme: 'bars-horizontal',
+                reverse: true,
+                hoverState: false
+            });
 
-                $('#example-fontawesome').barrating({
-                    theme: 'fontawesome-stars',
-                    showSelectedRating: false
-                });
+            $('#example-fontawesome').barrating({
+                theme: 'fontawesome-stars',
+                showSelectedRating: false
+            });
 
-                $('#example-css').barrating({
-                    theme: 'css-stars',
-                    showSelectedRating: false
-                });
+            $('#example-css').barrating({
+                theme: 'css-stars',
+                showSelectedRating: false
+            });
 
-                $('#example-bootstrap').barrating({
-                    theme: 'bootstrap-stars',
-                    showSelectedRating: false
-                });
+            $('#example-bootstrap').barrating({
+                theme: 'bootstrap-stars',
+                showSelectedRating: false
+            });
 
-                var currentRating = $('#example-fontawesome-o').data('current-rating');
+            var currentRating = $('#example-fontawesome-o').data('current-rating');
 
-                $('.stars-example-fontawesome-o .current-rating')
-                    .find('span')
-                    .html(currentRating);
+            $('.stars-example-fontawesome-o .current-rating')
+                .find('span')
+                .html(currentRating);
 
-                $('.stars-example-fontawesome-o .clear-rating').on('click', function (event) {
-                    event.preventDefault();
+            $('.stars-example-fontawesome-o .clear-rating').on('click', function (event) {
+                event.preventDefault();
 
-                    $('#example-fontawesome-o')
-                        .barrating('clear');
-                });
+                $('#example-fontawesome-o')
+                    .barrating('clear');
+            });
 
-                $('#example-fontawesome-o').barrating({
-                    theme: 'fontawesome-stars-o',
-                    showSelectedRating: false,
-                    initialRating: currentRating,
-                    onSelect: function (value, text) {
-                        if (!value) {
-                            $('#example-fontawesome-o')
-                                .barrating('clear');
-                        } else {
-                            $('.stars-example-fontawesome-o .current-rating')
-                                .addClass('hidden');
-
-                            $('.stars-example-fontawesome-o .your-rating')
-                                .removeClass('hidden')
-                                .find('span')
-                                .html(value);
-                        }
-                    },
-                    onClear: function (value, text) {
-                        $('.stars-example-fontawesome-o')
-                            .find('.current-rating')
-                            .removeClass('hidden')
-                            .end()
-                            .find('.your-rating')
+            $('#example-fontawesome-o').barrating({
+                theme: 'fontawesome-stars-o',
+                showSelectedRating: false,
+                initialRating: currentRating,
+                onSelect: function (value, text) {
+                    if (!value) {
+                        $('#example-fontawesome-o')
+                            .barrating('clear');
+                    } else {
+                        $('.stars-example-fontawesome-o .current-rating')
                             .addClass('hidden');
+
+                        $('.stars-example-fontawesome-o .your-rating')
+                            .removeClass('hidden')
+                            .find('span')
+                            .html(value);
                     }
-                });
-            }
-
-            function ratingDisable() {
-                $('select').barrating('destroy');
-            }
-
-            $('.rating-enable').on("click", function (event) {
-                event.preventDefault();
-
-                ratingEnable();
-
-                $(this).addClass('deactivated');
-                $('.rating-disable').removeClass('deactivated');
+                },
+                onClear: function (value, text) {
+                    $('.stars-example-fontawesome-o')
+                        .find('.current-rating')
+                        .removeClass('hidden')
+                        .end()
+                        .find('.your-rating')
+                        .addClass('hidden');
+                }
             });
+        }
 
-            $('.rating-disable').on("click", function (event) {
-                event.preventDefault();
+        function ratingDisable() {
+            $('select').barrating('destroy');
+        }
 
-                ratingDisable();
-
-                $(this).addClass('deactivated');
-                $('.rating-enable').removeClass('deactivated');
-            });
+        $('.rating-enable').on("click", function (event) {
+            event.preventDefault();
 
             ratingEnable();
+
+            $(this).addClass('deactivated');
+            $('.rating-disable').removeClass('deactivated');
         });
+
+        $('.rating-disable').on("click", function (event) {
+            event.preventDefault();
+
+            ratingDisable();
+
+            $(this).addClass('deactivated');
+            $('.rating-enable').removeClass('deactivated');
+        });
+
+        ratingEnable();
+    });
 
 
     (function (factory) {
