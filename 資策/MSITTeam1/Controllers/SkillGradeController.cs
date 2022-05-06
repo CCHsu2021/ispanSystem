@@ -17,6 +17,7 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.memtype = CDictionary.memtype;
             var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
             if(account != null)
             ViewBag.Account = account.FAccount;

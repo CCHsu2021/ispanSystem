@@ -30,16 +30,19 @@ namespace MSITTeam1.Controllers
                 }
                 else {
                     account = hello.StudentBasics.FirstOrDefault(c => c.FAccount == Grade.txtaccount);
+                    ViewBag.txtAccount = Grade.txtaccount;
                 }
                 TCompanyBasic comaccount = null;
                 if (account == null)
                 {
                     comaccount = hello.TCompanyBasics.FirstOrDefault(c => c.CompanyTaxid == CDictionary.account);
                     ViewBag.Account = comaccount.CompanyTaxid;
+                    ViewBag.name = comaccount.FName;
                 }
                 else
                 {
                     ViewBag.Account = account.FAccount;
+                    ViewBag.name = account.Name;
                 }
                 ViewBag.Identify = Grade.txtidentify;
                 if (account != null)
