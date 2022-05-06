@@ -52,29 +52,29 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult StudentResumeDetail(string ResumeSendId)
         {
-            var chooseTable = from p in _context.TMemberResumeSends
-                             join t in _context.TCompanyBasics on p.CompanyTaxid equals t.CompanyTaxid into pt
-                             from combin in pt.DefaultIfEmpty()
-                             join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
-                             from combin2 in ps.DefaultIfEmpty()
-                             select new TCompanyResumeReceiveViewModel
-                             {
-                                 memRS = p,
-                                 FCompanyName = combin.FName,
-                                 FStudentName = combin2.Name
-                             };
-            var chooseOne = chooseTable.FirstOrDefault(p => p.ResumeSendId.Equals(ResumeSendId));
+            
+            var chooseOne = (from p in _context.TMemberResumeSends
+                              where p.ResumeSendId == ResumeSendId
+                              join t in _context.TCompanyBasics on p.CompanyTaxid equals t.CompanyTaxid into pt
+                              from combin in pt.DefaultIfEmpty()
+                              join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
+                              from combin2 in ps.DefaultIfEmpty()
+                              select new TCompanyResumeReceiveViewModel
+                              {
+                                  memRS = p,
+                                  FCompanyName = combin.FName,
+                                  FStudentName = combin2.Name
+                              }).ToList().FirstOrDefault();
 
             var chooseResume = _context.TMemberResumeSends.FirstOrDefault(p=>p.ResumeSendId.Equals(ResumeSendId));
             chooseResume.ComReadOrNot = "已讀";
-            _context.Add(chooseResume);
             _context.SaveChanges();
 
             return View(chooseOne);
             //todo 美化頁面
         }
 
-        public IActionResult InterViewInvitation(TCompanyRespond companyRespond,string ddlstartTime,string InterviewTime)
+        public IActionResult InterviewInvitation(TCompanyRespond companyRespond,string ddlstartTime,string InterviewTime)
         {
             string CRID = $"CR{companyRespond.ResumeSendId}";
             DateTime interviewDate = Convert.ToDateTime(InterviewTime);
@@ -91,7 +91,7 @@ namespace MSITTeam1.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult InterViewDecline(TCompanyRespond companyRespond)
+        public IActionResult InterviewDecline(TCompanyRespond companyRespond)
         {
             string CRID = $"CR{companyRespond.ResumeSendId}";
             string dateTimeNow = DateTime.Now.ToString();
