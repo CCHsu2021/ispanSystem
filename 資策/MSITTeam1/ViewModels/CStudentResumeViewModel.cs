@@ -342,10 +342,10 @@ namespace MSITTeam1.ViewModels
             get { return this.resume.ResumeName; }
             set { this.resume.ResumeName = value; }
         }
-        //public byte[] FileData
-        //{
-        //    get { return this.resume.re; }
-        //    set { this.student.BirthDate = value; }
-        //}
+        public byte[] ResumeImage
+        {
+            get { return this.resume.ResumeImage; }
+            set { this.resume.ResumeImage = value; }
+        }
     }
 }
