@@ -142,7 +142,7 @@
                                 $.ajax({
                                     url: '@Url.Content("~/Student_Login/resendEmail")',
                                     type: 'post',
-                                    data: { account: $("#RAccount").val() },
+                                    data: { account: $("#LAccount").val() },
                                 }).done((result) => {
                                     if (result == "發送成功") {
                                         Swal.fire("請至信箱查看郵件", result, "success");

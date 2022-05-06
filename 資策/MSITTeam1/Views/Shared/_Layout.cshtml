@@ -172,8 +172,8 @@
                                     <li class="dropdown">
                                         <a class="dropdown-toggle-title" href="#">企業專區</a>
                                         <ul>
-                                            <li>
-                                                <a id="buyPoint" href=@Url.Action("Index","BuyPoint")>購買點數</a>
+                                            <li id="buyPoint">
+                                                <a >購買點數</a>
                                             </li>
                                             <li>
                                                 <a href="@Url.Action("classIndex","Products")">在職進修班</a>
@@ -457,7 +457,6 @@
                 showConfirmButton: false,
                 timer: 2000
             })
-            return;
         } else if ("@ViewBag.Type" == "2") {
             $('#QuestionBankSys > a').attr("href", "../TestPaperBank/Home");
         }
@@ -484,7 +483,6 @@
                 showConfirmButton: false,
                 timer: 2000
             })
-            return;
         } else if ("@ViewBag.Type" == "2") {
             $('#buyPoint > a').attr("href", "../BuyPoint/Index");
         }
