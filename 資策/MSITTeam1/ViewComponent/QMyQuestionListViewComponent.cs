@@ -31,7 +31,7 @@ namespace MSITTeam1.ViewComponent
 			List<CQuestionBankViewModel> quesList = new List<CQuestionBankViewModel>();
 			IQueryable<CQuestionBankViewModel> quesQuery = from choice in _context.TQuestionDetails
 														   join ques in _context.TQuestionLists on new { choice.FSubjectId, choice.FQuestionId } equals new { ques.FSubjectId, ques.FQuestionId }
-														   where ques.FSubmitterId == CDictionary.account
+														   where ques.FSubmitterId == CDictionary.account && (ques.FState == 1 || ques.FState == 2)
 														   //where ques.FSubmitterId == "222"
 														   orderby ques.FSubjectId
 														   select new CQuestionBankViewModel
