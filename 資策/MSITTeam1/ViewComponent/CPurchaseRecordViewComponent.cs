@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 namespace MSITTeam1.ViewComponent
 {
     [Microsoft.AspNetCore.Mvc.ViewComponent]
-    public class SPurchaseRecordViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
+    public class CPurchaseRecordViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
         private readonly helloContext hello;
-        public SPurchaseRecordViewComponent(helloContext _hello)
+        public CPurchaseRecordViewComponent(helloContext _hello)
         {
             hello = _hello;
         }

@@ -575,6 +575,7 @@
         <div class="row w-100">
             <input type="submit" class="btn-style-three" value="確定付款">
         </div>
+        <input name="Discount" id="ProDiscount" type="hidden" />
     </form>
 </div>
 @section Scripts{
@@ -646,9 +647,10 @@
             if ($("#usePoint").prop("checked") == true) {
                 total > point ? $("#TotalPrice").val(total - point) : $("#TotalPrice").val(0);
                 total > point ? $("#showPoint").val(0) : $("#showPoint").val(point - total);
+                total > point ? $("#ProDiscount").val(point) : $("#ProDiscount").val(total);
             } else {
                 $("#TotalPrice").val(total);
-                $("#showPoint").val(point);
+                $("#ProDiscount").val(point);
             }
         })
     </script>

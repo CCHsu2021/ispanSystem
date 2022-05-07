@@ -94,12 +94,37 @@ namespace MSITTeam1.Controllers
             return RedirectToAction("Index", "Index", null);
         }
         [HttpPost]
-        public IActionResult ComfirmPay(CheckOutViewModel vModel)
+        public IActionResult ComfirmPay(CheckOutViewModel vModel )
         {
 
             string key = CDictionary.SK_PRODUCTS_PURCHASED_LIST + CDictionary.account;
+
             if (HttpContext.Session.Keys.Contains(key))
             {
+                if (CDictionary.memtype == "1")
+                {
+                    TStudentPoint item = new TStudentPoint
+                    {
+                        MemberId = CDictionary.account,
+                        PointType = "使用點數",
+                        PointDescription = $"訂單號碼：{vModel.OrderId}，使用點數{vModel.Discount}點",
+                        PointRecord = (vModel.Discount)*-1,
+                        OrderId = vModel.OrderId
+                    };
+                    hello.TStudentPoints.Add(item);
+                }
+                else if(CDictionary.memtype == "2")
+                {
+                    TCompanyPoint item = new TCompanyPoint
+                    {
+                        CompanyTaxid = CDictionary.account,
+                        PointType = "使用點數",
+                        PointDescription = $"訂單號碼：{vModel.OrderId}，使用點數{vModel.Discount}點",
+                        PointRecord = (vModel.Discount)*-1,
+                        OrderId = vModel.OrderId
+                    };
+                    hello.TCompanyPoints.Add(item);
+                }
                 string json = HttpContext.Session.GetString(key);
                 List<CheckOutViewModel> list = JsonSerializer.Deserialize<List<CheckOutViewModel>>(json);
                 foreach(var i in list)

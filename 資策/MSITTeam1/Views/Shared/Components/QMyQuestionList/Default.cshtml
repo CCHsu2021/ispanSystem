@@ -60,7 +60,7 @@
 </table>
 
 <!-- Modal -->
-<div class="modal fade modal-dialog-scrollable" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade modal-dialog-scrollable" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true">
     <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -78,7 +78,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade modal-dialog-scrollable" id="questionDetail" tabindex="-1" aria-labelledby="questionDetail" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade modal-dialog-scrollable" id="questionDetail" tabindex="-1" aria-labelledby="questionDetail" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -94,3 +94,72 @@
     </div>
 </div>
 
+<script>
+    // 難度StarBar
+    $('.quesLevel').each(function () {
+        var i = $(this).val();
+        var temp = "show_rated_" + i;
+        $(this).next().attr("class", temp);
+    })
+
+        // 題目編輯
+    $('.editQuestion').click(function () {
+                jsondata = JSON.stringify({
+                    Subjects: $(this).parents("tr").find('.subjectId').val(),
+                    questionID: $(this).parents("tr").find('.questionId').val()
+                })
+            $.ajax({
+                url: "@Url.Content("~/QuestionBank/EditByVC")",
+                type: "POST",
+                contentType: "application/json",
+                data: jsondata,
+                success: function (result) {
+                    $('#EditModal').html(result);
+                }
+            })
+    })
+
+        // 題目內容
+    $('.detailQuestion').click(function () {
+            jsondata = JSON.stringify({
+                Subjects: $(this).parents("tr").find('.subjectId').val(),
+                questionID: $(this).parents("tr").find('.questionId').val()
+            })
+        $.ajax({
+            url: "@Url.Content("~/QuestionBank/DetailByVC")",
+            type: "POST",
+            contentType: "application/json",
+            data: jsondata,
+            success: function (result) {
+                $('#DetailModal').html(result);
+            }
+        })
+    })
+
+    // 題目刪除
+    var jsondataDel = null;
+    $('.delQuestion').click(function () {
+        Swal.fire({
+            title: '確定刪除嗎?',
+            text: "刪除操作無法撤銷",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '刪除',
+            cancelButtonText: '取消'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var sub = $(this).parents("tr").find('.subjectId').val();
+                var quesId = $(this).parents("tr").find('.questionId').val();
+                async function deleteQues() {
+                    const responseDelete = await fetch("@Url.Content("~/QuestionBank/Delete")" + `?subjectID=${sub}&questionID=${quesId}`);
+                    const data = await responseDelete.text()
+                    Swal.fire(data);
+                    $('#testre').trigger('click');
+                }
+                deleteQues();
+            } 
+        })
+    })
+</script>
