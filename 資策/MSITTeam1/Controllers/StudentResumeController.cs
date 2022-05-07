@@ -386,7 +386,7 @@ namespace MSITTeam1.Controllers
             return Json(datas);
         }
 
-        public IActionResult saveResume([FromBody] CStudentResumeViewModel p ,IFormFile data)
+        public IActionResult saveResume([FromBody] CStudentResumeViewModel p )
         {
             hello.StudentResumes.Add(p.resume);
             hello.SaveChanges();
