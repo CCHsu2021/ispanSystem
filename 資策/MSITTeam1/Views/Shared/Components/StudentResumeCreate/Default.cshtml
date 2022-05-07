@@ -462,7 +462,8 @@
 
                 function SaveScreen() {
                     html2canvas($("#kanban")[0]).then(function(canvas) {
-                     var dataURL = canvas.toDataURL();
+                     var dataURL = canvas.toDataURL("image/png");
+                     dataURL = dataURL.replace('data:image/png;base64,','');
                      //window.open(dataURL);
                      console.log(dataURL);
                     $.ajax({
@@ -470,9 +471,10 @@
                         type: 'post',
                         data: {
                             ResumeImage:dataURL
+                            
                         },
-                        contentType:"application/json",
-                        dataType: 'json',
+                        
+                        //dataType: 'text',
                         success: function (response) {
                         console.log(response);
                                 }
