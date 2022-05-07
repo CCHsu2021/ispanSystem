@@ -4,8 +4,8 @@
 @*<link rel="stylesheet" type="text/css" href="/css/result-light.css">*@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
 <style>
-    hr{
-        margin:5px;
+    hr {
+        margin: 5px;
     }
 
     .gu-mirror {
@@ -23,7 +23,6 @@
 
     .basicCss {
         padding-top: 5px;
-        
     }
 
     .basicImage {
@@ -31,11 +30,13 @@
         background-color: whitesmoke;
         border-radius: 0;
         padding-bottom: 25px;
-        border: 0 ;
+        border: 0;
     }
-    .basicImage:hover{
-        box-shadow: 5px 10px 18px #888888; 
-    }
+
+        .basicImage:hover {
+            box-shadow: 5px 10px 18px #888888;
+        }
+
     .toolImage {
         text-align: center;
         background-color: whitesmoke;
@@ -56,16 +57,16 @@
         background-color: whitesmoke;
         margin: 0px;
         border-radius: 0;
-        border:0;
-        text-align:center;
+        border: 0;
+        text-align: center;
     }
 
-    .cardBody:hover{
-        box-shadow: 5px 10px 18px #888888; 
-    }
+        .cardBody:hover {
+            box-shadow: 5px 10px 18px #888888;
+        }
 
-    .panelbodyfordata > .cardBody{
-        margin:1px;
+    .panelbodyfordata > .cardBody {
+        margin: 1px;
     }
 
     .BigCard {
@@ -80,41 +81,41 @@
 
     .basiccard {
         height: 318.44px;
-        
     }
 
 
-    .previewBtn{
-        margin-left:-10px;
-        transition:0;
-        margin-top:20px;
+    .previewBtn {
+        margin-left: -10px;
+        transition: 0;
+        margin-top: 20px;
         margin-bottom: 20px;
     }
-    .contiBtn{
-         margin-left:60px;
-         transition:0;
-         margin-top:20px;
-         margin-bottom: 20px;
+
+    .contiBtn {
+        margin-left: 60px;
+        transition: 0;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
-    .PrintBtn{
-        margin-left:763px;
+    .PrintBtn {
+        margin-left: 415px;
         margin-bottom: 20px;
         margin-top: 20px;
     }
 
 
     /*    .panelbigcard {
-        
-    }*/
+
+                    }*/
 
     /*    .toolcard{
-        margin-right:5px;
-    }
+                        margin-right:5px;
+                    }
 
-    .datacard{
-        margin-left:5px;
-    }*/
+                    .datacard{
+                        margin-left:5px;
+                    }*/
 </style>
 
 
@@ -140,86 +141,79 @@
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>技能</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>作品</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>自我介紹</h4></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert" ><hr /></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" >
+
+@*                        <div class="alert alert-success kanban-card cardBody " id="tool">
                             <img class="toolImage" src="~/images/Resume/book.jpg" width="300" style="text-align:center" />
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4  BigCard">
+            <div class="panel panel-info ">
+                <div class="panel-heading kanban-card">
+                    <h3 class="panel-title" id="paneltitle">製作履歷</h3>
+                </div>
+                <div class="panel-body" id="mainView1">
+                    <div id="todo" class="bodybackground">
+                        &nbsp;
+                        <div class="alert alert-success kanban-card cardBody basiccard " id="basic" role="alert">
+                            <h4>基本資料</h4>
+                            <br/>
+                            <div class="basicCss">
+
+                                <div class="inputstyle">
+                                    <label>@Html.DisplayNameFor(model => model.fName)</label>
+                                    <span>@Html.DisplayFor(modelItem => item.fName)</span>
+                                </div>
+                                <div class="inputstyle">
+                                    <label> @Html.DisplayNameFor(model => model.fGender)</label>
+                                    <span>@Html.DisplayFor(modelItem => item.fGender)</span>
+                                </div>
+                                <div class="inputstyle">
+                                    <label> @Html.DisplayNameFor(model => model.fBirthDate)</label>
+                                    <span>@Html.DisplayFor(modelItem => item.fBirthDate)</span>
+                                </div>
+                                <div class="inputstyle">
+                                    <label> @Html.DisplayNameFor(model => model.fEmail)</label>
+                                    <span>@Html.DisplayFor(modelItem => item.fEmail)</span>
+                                </div>
+                                <div class="inputstyle">
+                                    <label> @Html.DisplayNameFor(model => model.fPhone)</label>
+                                    <span>@Html.DisplayFor(modelItem => item.fPhone)</span>
+                                </div>
+                                <div class="inputstyle">
+                                    <label> @Html.DisplayNameFor(model => model.fAddress)</label>
+                                    <span>
+                                        @Html.DisplayFor(modelItem => item.fCity)
+                                        @Html.DisplayFor(modelItem => item.fDistrict)
+                                        @Html.DisplayFor(modelItem => item.fAddress)
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            <div class="col-4  BigCard">
-                <div class="panel panel-info ">
-                    <div class="panel-heading kanban-card">
-                        <h3 class="panel-title" id="paneltitle">製作履歷</h3>
+        <div class="col-4 BigCard" id="mainView2">
+            <div class="panel panel-info ">
+                <div class="panel-heading kanban-card">
+                    <h3 class="panel-title invisible">111</h3>
+                </div>
+                <div class="panel-body ">
+                    <div id="mid" class="bodybackground">
+                        &nbsp;
+                        <div class="">
+                            <div class="basicImage">
+                                <img class="mt-5 mb-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="panel-body" id="mainView1">
-                        <div id="todo" class="bodybackground" >
-                            &nbsp;
-                            <div class="alert alert-success kanban-card cardBody basiccard " id="basic" role="alert">
-                                <h4>基本資料</h4>
-                                <hr />
-                                <div class="basicCss">
+                </div>
+            </div>
+        </div>
 
-                                    <div class="inputstyle">
-                                        <label>@Html.DisplayNameFor(model => model.fName)</label>
-                                        <span>@Html.DisplayFor(modelItem => item.fName)</span>
-                                    </div>
-                                    <div class="inputstyle">
-                                        <label> @Html.DisplayNameFor(model => model.fGender)</label>
-                                        <span>@Html.DisplayFor(modelItem => item.fGender)</span>
-                                    </div>
-                                    <div class="inputstyle">
-                                        <label> @Html.DisplayNameFor(model => model.fBirthDate)</label>
-                                        <span>@Html.DisplayFor(modelItem => item.fBirthDate)</span>
-                                    </div>
-                                    <div class="inputstyle">
-                                        <label> @Html.DisplayNameFor(model => model.fEmail)</label>
-                                        <span>@Html.DisplayFor(modelItem => item.fEmail)</span>
-                                    </div>
-                                    <div class="inputstyle">
-                                        <label> @Html.DisplayNameFor(model => model.fPhone)</label>
-                                        <span>@Html.DisplayFor(modelItem => item.fPhone)</span>
-                                    </div>
-                                    <div class="inputstyle">
-                                        <label> @Html.DisplayNameFor(model => model.fAddress)</label>
-                                        <span>
-                                            @Html.DisplayFor(modelItem => item.fCity)
-                                            @Html.DisplayFor(modelItem => item.fDistrict)
-                                            @Html.DisplayFor(modelItem => item.fAddress)
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4 BigCard" id="mainView2">
-                <div class="panel panel-info ">
-                    <div class="panel-heading kanban-card">
-                        <h3 class="panel-title invisible">111</h3>
-                    </div>
-                    <div class="panel-body ">
-                        <div id="mid" class="bodybackground">
-                            &nbsp;
-                            <div class="">
-                                <div class="basicImage">
-                                    <img class="mt-5 mb-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
     }
 
     <div class="col-2 BigCard datacard pl-5" id="data">
@@ -236,243 +230,294 @@
         </div>
     </div>
 </div>
-<button class="previewBtn" id="btnPreview" >預覽</button>
-<button class="contiBtn" id="btnEdit" >繼續編輯</button>
+<button class="previewBtn" id="btnPreview">預覽</button>
+<button class="contiBtn" id="btnEdit">繼續編輯</button>
 <button class="PrintBtn" id="btnPrint" onclick="printScreen()">匯出</button>
+<button class="SaveResumeBtn" id="btnResumeSave" onclick="SaveScreen()">儲存</button>
 
 
-
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js">
     import { data } from "jquery";
 </script>
 <script>
-      var dragulaCards = dragula([
-      document.querySelector('#todo'),
-      document.querySelector('#mid'),
-      document.querySelector('#done'),
-      document.querySelector('#tool')
-    ]);
+              var dragulaCards = dragula([
+              document.querySelector('#todo'),
+              document.querySelector('#mid'),
+              document.querySelector('#done'),
+              document.querySelector('#tool')
+            ]);
 
-    dragulaCards.on('drop', function(el, target, source, sibling){
-      console.log(source); // from
-      console.log(target); // to
-      console.log(sibling); // next card
-    });
-
-    var dragulaKanban = dragula([
-      document.querySelector('#kanban')
-    ], {
-      moves: function(el, container, handle) {
-        return handle.classList.contains('panel-title');
-      }
-    });
-
-    var parent = document.querySelector('#done');
-
-    $.ajax({
-            url: '@Url.Content("~/StudentResume/ReturnWorkCount")',
-            method:'post',
-            dataType:'json',
-            success: function (datas) {
-                for(var row in datas){
-
-                    var div = document.createElement("div");
-                    div.id = "WorkIdforCard";
-                    div.role="alert";
-                    div.innerHTML= "公司名稱 : "+ datas[row].companyName + "  工作部門 : "+ datas[row].companyDepartment +"<br/>"
-                                   +"職位名稱 : "+ datas[row].jobTitle +"<br/>"+ "開始時間 : "+ datas[row].employmentFrom
-                                   +"  結束時間 :"+ datas[row].employmentTo  +"<br/>"+ "內容描述 :"+ datas[row].jobDescription ;
-
-                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
-                    parent.appendChild(div);
-
-                }
-                ;
-            }
-        }).done((data) => {
-            console.log(data)
-        })
-
-     $.ajax({
-            url: '@Url.Content("~/StudentResume/ReturnBasicdata")',
-            method:'post',
-            dataType:'json',
-            success: function (datas) {
-                for(var row in datas){
-
-                    var div = document.createElement("div");
-                    
-                    div.role="alert";
-                    div.innerHTML = datas[row].autobiography;
-
-                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
-                    parent.appendChild(div);
-
-                }
-                ;
-            }
-        }).done((data) => {
-            console.log(data)
-        })
-
-    $.ajax({
-            url: '@Url.Content("~/StudentResume/ReturnEduData")',
-            method:'post',
-            dataType:'json',
-            success: function (datas) {
-                for(var row in datas){
-
-                    var div = document.createElement("div");
-                    div.id = "EduIdforCard";
-                    div.role="alert";
-                    div.innerHTML = "畢業學校 : " + datas[row].graduateSchool + "  畢業系所 : " + datas[row].graduateDepartment + "<br/>"
-                        + "就讀時間 : " + datas[row].studyFrom + "  畢業時間 : " + datas[row].studyTo ;
-
-                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
-                    parent.appendChild(div);
-
-                }
-                ;
-            }
-        }).done((data) => {
-            console.log(data)
-        })
-
-    $.ajax({
-            url: '@Url.Content("~/StudentResume/ReturnLanData")',
-            method:'post',
-            dataType:'json',
-            success: function (datas) {
-                for(var row in datas){
-
-                    var div = document.createElement("div");
-                    div.id = "LanguageIdforCard";
-                    div.role="alert";
-                    div.innerHTML = "語言名稱 : " + datas[row].languageName + "  聽力程度 : " + datas[row].listening + "<br/>"
-                        + "口說程度 : " + datas[row].speaking + "  閱讀程度 : " + datas[row].reading ;
-
-                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
-                    parent.appendChild(div);
-
-                }
-                ;
-            }
-        }).done((data) => {
-            console.log(data)
-        })
-
-    $.ajax({
-            url: '@Url.Content("~/StudentResume/ReturnSkillData")',
-            method:'post',
-            dataType:'json',
-            success: function (datas) {
-                for(var row in datas){
-
-                    var div = document.createElement("div");
-                    div.id = "SkillIdforCard";
-                    div.role="alert";
-                    div.innerHTML = "技能名稱 : " + datas[row].skillName + "<br/>" + "技能說明 : " + datas[row].skillDescription;
-
-
-                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
-                    parent.appendChild(div);
-
-                }
-                ;
-            }
-        }).done((data) => {
-            console.log(data)
-        })
-
-    $.ajax({
-            url: '@Url.Content("~/StudentResume/ReturnPortData")',
-            method:'post',
-            dataType:'json',
-            success: function (datas) {
-                for(var row in datas){
-
-                    var div = document.createElement("div");
-                    div.id = "PortfolioIdforCard"
-                    div.role="alert";
-                    div.innerHTML = "作品名稱 : " + datas[row].portfolioTitle + "<br/>" + " 作品介紹 : " + datas[row].portfolioDescription + "<br/>" + "作品網址 : " +"<br/>"+ datas[row].portfolioUrl;
-
-
-                    div.setAttribute("class", "alert alert-success kanban-card cardBody");
-                    parent.appendChild(div);
-
-                }
-                ;
-            }
-        }).done((data) => {
-            console.log(data)
-        })
-
-    const btnEdit = document.querySelector("#btnEdit");
-    const btnPreview = document.querySelector("#btnPreview");
-    const btnPrint = document.querySelector("#btnPrint");
-    const paneltitle = document.querySelector("#paneltitle");
-    const toolpanel = document.getElementById("toolpanel");
-    const datapanel = document.getElementById("data");
-    //const todo = document.getElementById("todo");
-    //const mid = document.getElementById("mid");
-
-    btnPrint.style.visibility="hidden";
-    btnEdit.style.visibility="hidden";
-    btnPreview.addEventListener('click', (evt) => {
-        evt.preventDefault();
-        toolpanel.style.visibility="hidden";
-        datapanel.style.visibility="hidden";
-        btnPreview.style.visibility="hidden";
-        btnEdit.style.visibility="visible";
-        btnPrint.style.visibility="visible";
-        paneltitle.style.visibility="hidden";
-        console.log($("#todo #WorkIdforCard").text());
-        console.log($("#todo #EduIdforCard").text());
-        console.log($("#todo #LanguageIdforCard").text());
-        console.log($("#todo #SkillIdforCard").text());
-        console.log($("#todo #PortfolioIdforCard").text());
-        console.log($("#mid #WorkIdforCard").text());
-        console.log($("#mid #EduIdforCard").text());
-        console.log($("#mid #LanguageIdforCard").text());
-        console.log($("#mid #SkillIdforCard").text());
-        console.log($("#mid #PortfolioIdforCard").text());
-        //console.log($("#mid").text());
-        });
-
-    btnEdit.addEventListener('click', (evt) => {
-        evt.preventDefault();
-        toolpanel.style.visibility="visible";
-        datapanel.style.visibility="visible";
-        btnEdit.style.visibility="hidden";
-        btnPrint.style.visibility="hidden";
-        btnPreview.style.visibility="visible";
-        paneltitle.style.visibility="visible";
-
-        });
-
-     function printScreen() {
-         
-            $("#kanban").print({
-                globalStyles: true,
-                mediaPrint: false,
-                stylesheet: null,
-                noPrintSelector: ".no-print",
-                iframe: true,
-                append: null,
-                prepend: null,
-                manuallyCopyFormValues: true,
-                deferred: $.Deferred(),
-                timeout: 750,
-                title: null,
-                doctype: '<!doctype html>'
+            dragulaCards.on('drop', function(el, target, source, sibling){
+              console.log(source); // from
+              console.log(target); // to
+              console.log(sibling); // next card
             });
-        }
+
+            var dragulaKanban = dragula([
+              document.querySelector('#kanban')
+            ], {
+              moves: function(el, container, handle) {
+                return handle.classList.contains('panel-title');
+              }
+            });
+
+            var parent = document.querySelector('#done');
+
+            $.ajax({
+                    url: '@Url.Content("~/StudentResume/ReturnWorkCount")',
+                    method:'post',
+                    dataType:'json',
+                    success: function (datas) {
+                        for(var row in datas){
+
+                            var div = document.createElement("div");
+                            div.id = "WorkIdforCard";
+                            div.role="alert";
+                            div.innerHTML= "公司名稱 : "+ datas[row].companyName + "  工作部門 : "+ datas[row].companyDepartment +"<br/>"
+                                           +"職位名稱 : "+ datas[row].jobTitle +"<br/>"+ "開始時間 : "+ datas[row].employmentFrom
+                                           +"  結束時間 :"+ datas[row].employmentTo  +"<br/>"+ "內容描述 :"+ datas[row].jobDescription ;
+
+                            div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                            parent.appendChild(div);
+
+                        }
+                        ;
+                    }
+                }).done((data) => {
+                    console.log(data)
+                })
+
+             $.ajax({
+                    url: '@Url.Content("~/StudentResume/ReturnBasicdata")',
+                    method:'post',
+                    dataType:'json',
+                    success: function (datas) {
+                        for(var row in datas){
+
+                            var div = document.createElement("div");
+
+                            div.role="alert";
+                            div.innerHTML = datas[row].autobiography;
+
+                            div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                            parent.appendChild(div);
+
+                        }
+                        ;
+                    }
+                }).done((data) => {
+                    console.log(data)
+                })
+
+            $.ajax({
+                    url: '@Url.Content("~/StudentResume/ReturnEduData")',
+                    method:'post',
+                    dataType:'json',
+                    success: function (datas) {
+                        for(var row in datas){
+
+                            var div = document.createElement("div");
+                            div.id = "EduIdforCard";
+                            div.role="alert";
+                            div.innerHTML = "畢業學校 : " + datas[row].graduateSchool + "  畢業系所 : " + datas[row].graduateDepartment + "<br/>"
+                                + "就讀時間 : " + datas[row].studyFrom + "  畢業時間 : " + datas[row].studyTo ;
+
+                            div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                            parent.appendChild(div);
+
+                        }
+                        ;
+                    }
+                }).done((data) => {
+                    console.log(data)
+                })
+
+            $.ajax({
+                    url: '@Url.Content("~/StudentResume/ReturnLanData")',
+                    method:'post',
+                    dataType:'json',
+                    success: function (datas) {
+                        for(var row in datas){
+
+                            var div = document.createElement("div");
+                            div.id = "LanguageIdforCard";
+                            div.role="alert";
+                            div.innerHTML = "語言名稱 : " + datas[row].languageName + "  聽力程度 : " + datas[row].listening + "<br/>"
+                                + "口說程度 : " + datas[row].speaking + "  閱讀程度 : " + datas[row].reading ;
+
+                            div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                            parent.appendChild(div);
+
+                        }
+                        ;
+                    }
+                }).done((data) => {
+                    console.log(data)
+                })
+
+            $.ajax({
+                    url: '@Url.Content("~/StudentResume/ReturnSkillData")',
+                    method:'post',
+                    dataType:'json',
+                    success: function (datas) {
+                        for(var row in datas){
+
+                            var div = document.createElement("div");
+                            div.id = "SkillIdforCard";
+                            div.role="alert";
+                            div.innerHTML = "技能名稱 : " + datas[row].skillName + "<br/>" + "技能說明 : " + datas[row].skillDescription;
 
 
-    //div.addClass('alert alert-success kanban-card')
-    //div.class="alert alert-success kanban-card";
-    //a="<div class=\"alert alert-success kanban-card\" >Card20</div>"
-    //parent.html(a);
+                            div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                            parent.appendChild(div);
+
+                        }
+                        ;
+                    }
+                }).done((data) => {
+                    console.log(data)
+                })
+
+            $.ajax({
+                    url: '@Url.Content("~/StudentResume/ReturnPortData")',
+                    method:'post',
+                    dataType:'json',
+                    success: function (datas) {
+                        for(var row in datas){
+
+                            var div = document.createElement("div");
+                            div.id = "PortfolioIdforCard"
+                            div.role="alert";
+                            div.innerHTML = "作品名稱 : " + datas[row].portfolioTitle + "<br/>" + " 作品介紹 : " + datas[row].portfolioDescription + "<br/>" + "作品網址 : " +"<br/>"+ datas[row].portfolioUrl;
+
+
+                            div.setAttribute("class", "alert alert-success kanban-card cardBody");
+                            parent.appendChild(div);
+
+                        }
+                        ;
+                    }
+                }).done((data) => {
+                    console.log(data)
+                })
+
+            const btnEdit = document.querySelector("#btnEdit");
+            const btnPreview = document.querySelector("#btnPreview");
+            const btnResumeSave = document.querySelector("#btnResumeSave");
+            const btnPrint = document.querySelector("#btnPrint");
+            const paneltitle = document.querySelector("#paneltitle");
+            const toolpanel = document.getElementById("toolpanel");
+            const datapanel = document.getElementById("data");
+
+
+            //const todo = document.getElementById("todo");
+            //const mid = document.getElementById("mid");
+
+            btnPrint.style.visibility="hidden";
+            btnEdit.style.visibility="hidden";
+            btnResumeSave.style.visibility="hidden";
+            btnPreview.addEventListener('click', (evt) => {
+                evt.preventDefault();
+                toolpanel.style.visibility="hidden";
+                datapanel.style.visibility="hidden";
+                btnPreview.style.visibility="hidden";
+                btnEdit.style.visibility="visible";
+                btnPrint.style.visibility="visible";
+                paneltitle.style.visibility="hidden";
+                btnResumeSave.style.visibility="visible";
+                //console.log($("#mid").text());
+                });
+
+            btnEdit.addEventListener('click', (evt) => {
+                evt.preventDefault();
+                toolpanel.style.visibility="visible";
+                datapanel.style.visibility="visible";
+                btnEdit.style.visibility="hidden";
+                btnPrint.style.visibility="hidden";
+                btnPreview.style.visibility="visible";
+                paneltitle.style.visibility="visible";
+                btnResumeSave.style.visibility="hidden";
+
+                });
+
+             function printScreen() {
+
+                    $("#kanban").print({
+                        globalStyles: true,
+                        mediaPrint: false,
+                        stylesheet: null,
+                        noPrintSelector: ".no-print",
+                        iframe: true,
+                        append: null,
+                        prepend: null,
+                        manuallyCopyFormValues: true,
+                        deferred: $.Deferred(),
+                        timeout: 750,
+                        title: null,
+                        doctype: '<!doctype html>'
+                    });
+                }
+
+                function SaveScreen() {
+                    html2canvas($("#kanban")).then(function(canvas) {
+                     var dataURL = canvas.toDataURL();
+                    $.ajax({
+                        url: '@Url.Content("~/StudentResume/saveResume")',
+                        type: 'post',
+                        data: {
+                            ResumeImage: dataURL
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                        console.log(response);
+                                }
+                            });
+                        });
+                    }
+
+
+            //function SaveScreen() {
+            //       html2canvas($('#kanban'), {
+            //        onrendered: function (canvas) {
+            //            var imagedata = canvas.toDataURL('image/png');
+            //            var imgdata = imagedata.replace(/^data:image\/(png|jpg);base64,/, "");
+            //            $.ajax({
+            //                url: '@Url.Content("~/StudentResume/saveResume")',
+            //                data: {
+            //                        ResumeImage:imgdata
+            //                        },
+            //                type: 'post',
+            //                success: function (response) {
+            //                console.log(response);
+            //                    }
+            //                })
+            //            }
+            //        })
+            //    }
+            //    html2canvas(document.getElementById('kanban').then(function(canvas) {
+
+            //var imagedata = canvas.toDataURL('image/png');
+            //var imgdata = imagedata.replace(/^data:image\/(png|jpg);base64,/, "");
+                //$.ajax({
+                //    url: '@Url.Content("~/StudentResume/saveResume")',
+                //    data: {
+                //           ResumeImage:imgdata
+                //           },
+                //    type: 'post',
+                //    success: function (response) {
+                //       console.log(response);
+                //                                  }
+                //        });
+            //    }))
+                //}
+
+
+
+            //div.addClass('alert alert-success kanban-card')
+            //div.class="alert alert-success kanban-card";
+            //a="<div class=\"alert alert-success kanban-card\" >Card20</div>"
+            //parent.html(a);
 
 </script>
 

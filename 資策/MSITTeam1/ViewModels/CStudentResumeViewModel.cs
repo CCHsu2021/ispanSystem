@@ -13,6 +13,7 @@ namespace MSITTeam1.ViewModels
         private StudentLanguage _language = null;
         private StudentSkill _skill = null;
         private StudentPortfolio _portfolio = null;
+        private StudentResume _resume = null;
         public IFormFile photo { get; set; }
         public CStudentResumeViewModel()
         {
@@ -22,6 +23,7 @@ namespace MSITTeam1.ViewModels
             _language = new StudentLanguage();
             _skill = new StudentSkill();
             _portfolio = new StudentPortfolio();
+            _resume = new StudentResume();
         }
         public StudentBasic student
         {
@@ -52,6 +54,11 @@ namespace MSITTeam1.ViewModels
         {
             get { return _portfolio; }
             set { _portfolio = value; }
+        }
+        public StudentResume resume
+        {
+            get { return _resume; }
+            set { _resume = value; }
         }
         public string MemberId
         {
@@ -316,6 +323,29 @@ namespace MSITTeam1.ViewModels
         {
             get { return this.portfolio.PortfolioUrl; }
             set { this.portfolio.PortfolioUrl = value; }
+        }
+
+        //
+        public long RusumeId
+        {
+            get { return this.resume.ResumeId; }
+            set { this.resume.ResumeId = value; }
+        }
+        public string ResumeMemberId
+        {
+            get { return this.resume.MemberId; }
+            set { this.resume.MemberId = value; }
+        }
+        [DisplayName("履歷名稱:")]
+        public string ResumeName
+        {
+            get { return this.resume.ResumeName; }
+            set { this.resume.ResumeName = value; }
+        }
+        public byte[] ResumeImage
+        {
+            get { return this.resume.ResumeImage; }
+            set { this.resume.ResumeImage = value; }
         }
     }
 }

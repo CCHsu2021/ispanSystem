@@ -61,6 +61,11 @@ namespace MSITTeam1.ViewModels
             get { return this.order.Taxid; }
             set { this.order.Taxid = value; }
         }
+        public int? Discount
+        {
+            get { return this.order.Discount; }
+            set { this.order.Discount = value; }
+        }
         public string PayMethod
         {
             get { return this.order.PayMethod; }

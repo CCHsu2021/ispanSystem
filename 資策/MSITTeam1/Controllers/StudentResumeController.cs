@@ -385,5 +385,12 @@ namespace MSITTeam1.Controllers
                         select b;
             return Json(datas);
         }
+
+        public IActionResult saveResume([FromBody] CStudentResumeViewModel p)
+        {
+            hello.StudentResumes.Add(p.resume);
+            hello.SaveChanges();
+            return Content("新增成功");
+        }
     }
 }

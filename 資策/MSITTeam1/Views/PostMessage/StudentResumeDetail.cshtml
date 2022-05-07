@@ -5,68 +5,67 @@
     ViewData["Title"] = "StudentResumeDetail";
 }
 
-<section class="message">
-    <h2><span class="icon icon-star-large"></span> 應徵職缺：@Model.JobName <span class="icon icon-reply-large"></span><span class="icon icon-delete-large"></span></h2>
-    <div class="meta-data">
-        <p>
-            @Model.FStudentName 寄來的求職信
-            <span class="date">@(Convert.ToDateTime(Model.CreatTime).ToString("yyyy-MM-dd"))</span>
-        </p>
-    </div>
-    <div class="body">
-        <div class="form-group">
-            <label asp-for="ContactPhone" class="control-label"></label>
-            <label class="col-form-label">@Model.ContactPhone</label>
+    <section class="message">
+        <h2><span class="icon icon-star-large"></span> 應徵職缺：@Model.JobName <span class="icon icon-reply-large"></span><span class="icon icon-delete-large"></span></h2>
+        <div class="meta-data">
+            <p>
+                @Model.FStudentName 寄來的求職信
+                <span class="date">@(Convert.ToDateTime(Model.CreatTime).ToString("yyyy-MM-dd"))</span>
+            </p>
         </div>
-        <div class="form-group">
-            <label asp-for="ContactEmail" class="control-label"></label>
-            <label class="col-form-label">@Model.ContactEmail</label>
-        </div>
-        <div class="form-group">
-            <label class="control-label">可聯絡時間</label>
-            <label class="col-form-label">@Model.TimeToContact</label>
-        </div>
-        <div class="form-group">
-            <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.CoverLetter</pre>
-        </div>
-    </div>
-</section>
-<button class="btn-style-two" type="button" asp-action="ReturnToInbox">回上一頁</button>
-<button class="btn-style-two" type="button" data-toggle="modal" data-target="#interViewDeclineModal" onclick="">婉拒面試</button>
-<button class="btn-style-two" type="button" data-toggle="modal" data-target="#interViewInvitationModal" onclick="">邀約面試</button>
-<!--邀約面試Modal-->
-<div class="modal fade" id="interViewInvitationModal" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ProductEditModalLabel">邀約面試</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="body">
+            <div class="form-group">
+                <label asp-for="ContactPhone" class="control-label"></label>
+                <label class="col-form-label">@Model.ContactPhone</label>
             </div>
-            <div class="modal-body">
-                <vc:interview-invitation job-id="@Model.JobId" resume-send-id="@Model.ResumeSendId"></vc:interview-invitation>
+            <div class="form-group">
+                <label asp-for="ContactEmail" class="control-label"></label>
+                <label class="col-form-label">@Model.ContactEmail</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">可聯絡時間</label>
+                <label class="col-form-label">@Model.TimeToContact</label>
+            </div>
+            <div class="form-group">
+                <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.CoverLetter</pre>
             </div>
         </div>
-    </div>
-</div>
-<!--婉拒面試Modal-->
-<div class="modal fade" id="interViewDeclineModal" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ProductEditModalLabel">婉拒面試</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <vc:interview-decline job-id="@Model.JobId" resume-send-id="@Model.ResumeSendId"></vc:interview-decline>
+    </section>
+    <button class="btn-style-two" type="button" asp-action="ReturnToInbox">回上一頁</button>
+    <button class="btn-style-two" type="button" data-toggle="modal" data-target="#interviewDeclineModal" onclick="">婉拒面試</button>
+    <button class="btn-style-two" type="button" data-toggle="modal" data-target="#interviewInvitationModal" onclick="">邀約面試</button>
+    <!--邀約面試Modal-->
+    <div class="modal fade" id="interviewInvitationModal" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ProductEditModalLabel">邀約面試</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <vc:interview-invitation job-id="@Model.JobId" resume-send-id="@Model.ResumeSendId"></vc:interview-invitation>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+    <!--婉拒面試Modal-->
+    <div class="modal fade" id="interviewDeclineModal" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ProductEditModalLabel">婉拒面試</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <vc:interview-decline job-id="@Model.JobId" resume-send-id="@Model.ResumeSendId"></vc:interview-decline>
+                </div>
+            </div>
+        </div>
+    </div>
 @*@foreach (var item in Model) {
             <tr>
                 <td>
