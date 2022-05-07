@@ -42,7 +42,7 @@ namespace MSITTeam1.ViewModels
         public string CreatTime { get { return this.comR.CreatTime; } set { this.comR.CreatTime = value; } }
         [DisplayName("修改時間")]
         public string ModifyTime { get { return this.comR.ModifyTime; } set { this.comR.ModifyTime = value; } }
-        [DisplayName("工作名稱")]
+        [DisplayName("職缺名稱")]
         public string JobName { get; set; }
     }
 }

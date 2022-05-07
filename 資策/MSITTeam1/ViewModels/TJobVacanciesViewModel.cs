@@ -51,7 +51,7 @@ namespace MSITTeam1.ViewModels
         public string FWorkExp { get { return this.jobV.FWorkExp; } set { jobV.FWorkExp = value; } }
         [DisplayName("教育程度")]
         public string FEducation { get { return this.jobV.FEducation; } set { jobV.FEducation = value; } }
-        [DisplayName("職缺敘述")]
+        [DisplayName("工作介紹")]
         public string FOther { get { return this.jobV.FOther; } set { jobV.FOther = value; } }
         [DisplayName("職缺狀態")]
         public string FJobStatus { get { return this.jobV.FJobStatus; } set { jobV.FJobStatus = value; } }

@@ -1,0 +1,230 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.TCompanyResumeReceiveViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section Style{
+    <link href="~/css/PM/font-awesome.min.css" rel="stylesheet">
+    <link href="~/css/PM/themify-icons.css" rel="stylesheet">
+    <link href="~/css/PM/sidebar.css" rel="stylesheet">
+    <link href="~/css/PM/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/PM/helper.css" rel="stylesheet">
+    <link href="~/css/PM/style.css" rel="stylesheet">
+}
+
+
+<div class="content-wrap">
+    <div class="main">
+        <div class="container-fluid">
+            <!-- /# row -->
+            <div class="main-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="compose-email">
+                                    <div class="mail-box">
+                                        <aside class="sm-side">
+                                            <div class="user-head">
+                                                <a class="inbox-avatar" href="javascript:;">
+                                                    <img src="assets/images/user.jpg" alt="">
+                                                </a>
+                                                <div class="user-name">
+                                                    <h5>
+                                                        <a href="#">john doe</a>
+                                                    </h5>
+                                                    <span><a href="#">example@gmail.com</a></span>
+                                                </div>
+                                            </div>
+                                            <ul class="inbox-nav inbox-divider">
+                                                <li class="breadcrumb-item active">
+                                                    <a href="@Url.Content("~/PostMessage/Index")"><i class="fa fa-inbox"></i> 收件匣 <span class="badge badge-success pull-right m-t-12">2</span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><i class="fa fa-envelope-o"></i> 寄件匣</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><i class="fa fa-bookmark-o"></i> 確定面試郵件匣</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><i class=" fa fa-external-link"></i> 婉拒面試郵件匣 <span class="badge badge-info pull-right m-t-12">30</span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
+                                                </li>
+                                            </ul>
+
+
+                                            <div class="inbox-body text-center">
+                                                <div class="btn-group">
+                                                    <a class="btn mini btn-primary" href="javascript:;">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <a class="btn mini btn-success" href="javascript:;">
+                                                        <i class="fa fa-phone"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <a class="btn mini btn-info" href="javascript:;">
+                                                        <i class="fa fa-cog"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </aside>
+                                        <aside class="lg-side">
+                                            <div class="inbox-head">
+                                                <h3 class="input-text">Inbox</h3>
+                                                <form action="#" class="pull-right position">
+                                                    <div class="input-append inner-append">
+                                                        <input type="text" class="sr-input" placeholder="Search Mail">
+                                                        <button class="btn sr-btn append-btn" type="button"><i class="fa fa-search"></i></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="mail-option">
+                                                <div class="chk-all chk-group">
+                                                    <input type="checkbox" class="mail-checkbox mail-group-checkbox" id="checkAll" />
+                                                    <div class="btn-group">
+                                                        <a data-toggle="dropdown" href="#" class="btn mini all m-l-10" aria-expanded="false">All<i class="fa fa-angle-down "></i></a>
+                                                        <ul class="card-option-dropdown dropdown-menu">
+                                                            <li>
+                                                                <a href="#"> None</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#"> Read</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#"> Unread</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="btn-group">
+                                                    <a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" href="#" class="btn mini tooltips">
+                                                        <i class=" fa fa-refresh"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="btn-group hidden-phone">
+                                                    <a data-toggle="dropdown" href="#" class="btn mini blue" aria-expanded="false"> More<i class="fa fa-angle-down "></i></a>
+
+                                                    <ul class="card-option-dropdown dropdown-menu">
+                                                        <li>
+                                                            <a href="#"><i class="ti-pencil"></i> Mark as Read</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#"><i class="ti-menu-alt"></i>Spam</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#"><i class="ti-trash"></i>Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <a data-toggle="dropdown" href="#" class="btn mini blue">Move to<i class="fa fa-angle-down "></i></a>
+                                                    <ul class="card-option-dropdown dropdown-menu">
+                                                        <li>
+                                                            <a href="#">Draft</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">Spam</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#"> Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <ul class="unstyled inbox-pagination pagination-list">
+                                                    <li>
+                                                        <span>1-50 of 234</span>
+                                                    </li>
+                                                    <li>
+                                                        <a class="np-btn" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="np-btn" href="#"><i class="fa fa-angle-right pagination-right"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="table-responsive">
+                                                @if (Model != null)
+                                                {
+                                                    <form method="post" id="getOneResumeDetail"></form>
+                                                    <table class="table table-inbox table-hover table-responsive">
+                                                        <tbody>
+                                                            @{
+                                                                int rowCount = 0;
+                                                                foreach (var item in Model)
+                                                                {
+                                                                    rowCount++;
+                                                                    int rowNumber = rowCount;
+                                                                    <tr class="">
+                                                                        <td class="inbox-small-cells">
+                                                                            <input type="checkbox" class="mail-checkbox">
+                                                                        </td>
+                                                                        <td class="inbox-small-cells">
+                                                                            <i class="ti-star"></i>
+                                                                        </td>
+                                                                        <td class="view-message dont-show">@item.FStudentName</td>
+                                                                        <td class="view-message ">應徵職缺：@item.JobName</td>
+                                                                        <td class="view-message inbox-small-cells">@item.ComReadOrNot</td>
+                                                                        <td class="view-message text-right">@(Convert.ToDateTime(item.CreatTime).ToString("yyyy-MM-dd"))</td>
+                                                                        <td>
+                                                                            <input type="hidden" form="getOneResumeDetail" asp-for="@item.ResumeSendId" name="ResumeSendId" />
+                                                                            <button type="submit" form="getOneResumeDetail" asp-action="StudentResumeDetail" class="btn btn-info m-b-10 m-l-5 applyButton">檢視</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            @*@foreach (var item in Model)
+                                                                {
+                                                                    rowCount++;
+                                                                    int rowNumber = rowCount;
+                                                                    <tr class="">
+                                                                        <td class="inbox-small-cells">
+                                                                            <input type="checkbox" class="mail-checkbox">
+                                                                        </td>
+                                                                        <td class="inbox-small-cells"><i class="ti-star"></i></td>
+                                                                        <td class="view-message dont-show">@item.FStudentName</td>
+                                                                        <td class="view-message ">應徵職缺：@item.JobName</td>
+                                                                        <td class="view-message inbox-small-cells">@item.ComReadOrNot</td>
+                                                                        <td class="view-message text-right">@(Convert.ToDateTime(item.CreatTime).ToString("yyyy-MM-dd"))</td>
+                                                                        <td>
+                                                                            <input type="hidden" form="getOneResumeDetail" asp-for="@item.ResumeSendId" name="ResumeSendId" />
+                                                                            <button type="submit" form="getOneResumeDetail" asp-action="StudentResumeDetail" class="btn btn-info m-b-10 m-l-5 applyButton">檢視</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                }*@
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                else
+                                                {
+                                                    <h2>目前尚無任何資料</h2>
+                                                }
+                                            </div>
+                                        </aside>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/PM/bootstrap.min.js"></script>
+    <script src="~/js/PM/jquery.min.js"></script>
+    <script src="~/js/PM/jquery.nanoscroller.min.js"></script>
+    <script src="~/js/PM/pace.min.js"></script>
+    <script src="~/js/PM/scripts.js"></script>
+    <script src="~/js/PM/sidebar.js"></script>
+}
