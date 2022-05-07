@@ -59,7 +59,9 @@ namespace MSITTeam1.Controllers
         [AllowAnonymous]
         public IActionResult Create()
         {
-
+            ViewBag.account = CDictionary.account;
+            ViewBag.name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
             string account = CDictionary.account;
             if (account != null)
             {

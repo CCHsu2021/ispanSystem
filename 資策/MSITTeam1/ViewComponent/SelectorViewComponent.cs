@@ -16,7 +16,7 @@ namespace MSITTeam1.ViewComponent
         {
             hello = _hello;
         }
-        public IViewComponentResult Invoke(string city,string district)
+        public IViewComponentResult Invoke(string city="",string district="")
         {
             ViewBag.ID = Guid.NewGuid();
             ViewBag.FCity = SetDropDown1(city);
