@@ -23,6 +23,11 @@ namespace MSITTeam1.ViewModels
             get { return this.orderDetail.OrderId; }
             set { this.orderDetail.OrderId = value; } 
         }
+        public string ProductId
+        {
+            get { return this.orderDetail.ProductId; }
+            set { this.orderDetail.ProductId = value; }
+        }
         public int? Price
         {
             get { return this.orderDetail.Price; }
