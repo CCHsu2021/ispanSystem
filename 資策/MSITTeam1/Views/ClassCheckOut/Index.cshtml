@@ -450,9 +450,9 @@
                 <div class="w-100 row justify-content-between align-items-center">
                     <h3 class="mt-4 mb-3 font-weight-bold h4">授課人員資訊</h3>
                     @*<div>
-                            <input id="receivePerson" type="checkbox">
-                            <label for="receivePerson">同購買人資料</label>
-                        </div>*@
+                <input id="receivePerson" type="checkbox">
+                <label for="receivePerson">同購買人資料</label>
+            </div>*@
                 </div>
                 @{
                     if (ViewBag.Type == "1")
@@ -467,13 +467,13 @@
                             姓名：
                         </div>
                         <div class="col-md-9 pl-0 mb-3">
-                            <input type="text" id="productOrderName" class="form-control" name="StaffName">
+                            <input type="text" id="productOrderName" class="form-control">
                         </div>
                         <div class="col-md-3 pr-0 mb-3">
                             信箱：
                         </div>
                         <div class="col-md-9 pl-0 mb-3">
-                            <input type="text" id="productOrderTel" class="form-control" name="StaffEmail">
+                            <input type="text" id="productOrderTel" class="form-control">
                         </div>
                         <div class="col-md-3 pr-0 mb-3">
                             統一編號：
@@ -484,24 +484,33 @@
                     }
                     else if (ViewBag.Type == "2")
                     {
+                        int count = 0;
+                        foreach(var item in Model) {
+                        <h5 class="w-100 mb-3">@item.name</h5>
+                            for (int i = 1; i <= item.count; i++){
                         <div class="col-md-3 pr-0 mb-3">
                             姓名：
                         </div>
-                        <div class="col-md-9 pl-0 mb-3">
-                            <input type="text" id="productOrderName" class="form-control" name="StaffName">
-                        </div>
-                        <div class="col-md-3 pr-0 mb-3">
+                        <div class="col-md-6 pr-0 mb-3">
                             信箱：
                         </div>
-                        <div class="col-md-9 pl-0 mb-3">
-                            <input type="text" id="productOrderTel" class="form-control" name="StaffEmail">
+                        <div class="col-md-3 pr-0 mb-3">
+                            部門：
                         </div>
-                        @*<div class="col-md-3 pr-0 mb-3">
-                                統一編號：
+                        <div class="row" id="addStaff">
+                            <div class="col-md-3 pl-0 mb-3">
+                                <input type="text"  class="form-control" name="[@count].StaffName">
                             </div>
                             <div class="col-md-9 pl-0 mb-3">
-                                <input type="text" id="productOrderTAXID" class="form-control" name="TAXID" />
-                            </div>*@
+                                <input type="text" class="form-control" name="[@count].StaffEmail">
+                            </div>
+                            <div class="col-md-9 pl-0 mb-3">
+                                <input type="text"  class="form-control" name="[@count].DepartmentName">
+                            </div>
+                        </div>
+                                count++;
+                            }
+                        }
                     }
                 }
                 <div class="w-100 row align-items-center">
@@ -554,8 +563,8 @@
                             }
                         </ul>
                     </div>
-                    <input type="hidden" name="OrderId" value="@ViewBag.OrderId" />
-                    <input type="hidden" name="MemberId" value="@ViewBag.Account" />
+                    <input type="hidden" name="[0].OrderId" value="@ViewBag.OrderId" />
+                    <input type="hidden" name="[0].MemberId" value="@ViewBag.Account" />
                     <div class="text-right py-3 font-weight-bold">
                         @{
                             int a = 0;
@@ -595,6 +604,8 @@
 </div>
 @section Scripts{
     <script>
+
+
         // Remove Items From Cart
         $('a.remove').click(function () {
             event.preventDefault();
@@ -658,11 +669,35 @@
         console.log(total);
         console.log(point);
         console.log(total - point);
+        if (point == 0) {
+            $("#usePoint").attr("disabled", "disabled");
+        }
         $("#usePoint").click(function () {
+            if (point == 0) {
+                $("#usePoint").attr("disabled", "disabled");
+            }
             if ($("#usePoint").prop("checked") == true) {
-                $("#TotalPrice").val(total - point);
+
+                if (total - point < 0) {
+                    $("#TotalPrice").val(0);
+                    $("#showPoint").val(point - total);
+                    $("#ProDiscount").val(total);
+                } else if (total - point > 0) {
+                    $("#TotalPrice").val(total - point);
+                    $("#showPoint").val(0);
+                    $("#ProDiscount").val(point);
+
+                } else if (total - point == 0) {
+                    $("#TotalPrice").val(0);
+                    $("#showPoint").val(0);
+                    $("#ProDiscount").val(point);
+                }
+                //total > point ? $("#TotalPrice").val(total - point) : $("#TotalPrice").val(0);
+                //total > point ? $("#showPoint").val(0) : $("#showPoint").val(point - total);
+                //total > point ? $("#ProDiscount").val(point) : $("#ProDiscount").val(total);
             } else {
                 $("#TotalPrice").val(total);
+                $("#showPoint").val(point);
             }
         })
     </script>

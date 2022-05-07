@@ -123,8 +123,7 @@
 
 
 
-
-<div id="kanban" class="row ">
+    <div id="kanban" class="row ">
     @foreach (var item in Model)
     {
         <div class="col-2 BigCard toolcard pr-5" id="toolpanel">
@@ -224,12 +223,14 @@
             <div class="panel-body panelbodyfordata">
                 <div id="done">
                     &nbsp;
-
+                
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <button class="previewBtn" id="btnPreview">預覽</button>
 <button class="contiBtn" id="btnEdit">繼續編輯</button>
 <button class="PrintBtn" id="btnPrint" onclick="printScreen()">匯出</button>
@@ -460,15 +461,20 @@
                 }
 
                 function SaveScreen() {
-                    html2canvas($("#kanban")).then(function(canvas) {
-                     var dataURL = canvas.toDataURL();
+                    html2canvas($("#kanban")[0]).then(function(canvas) {
+                     var dataURL = canvas.toDataURL("image/png");
+                     dataURL = dataURL.replace('data:image/png;base64,','');
+                     //window.open(dataURL);
+                     console.log(dataURL);
                     $.ajax({
                         url: '@Url.Content("~/StudentResume/saveResume")',
                         type: 'post',
                         data: {
-                            ResumeImage: dataURL
+                            ResumeImage:dataURL
+                            
                         },
-                        dataType: 'json',
+                        
+                        //dataType: 'text',
                         success: function (response) {
                         console.log(response);
                                 }

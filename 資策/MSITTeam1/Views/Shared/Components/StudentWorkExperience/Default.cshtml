@@ -126,5 +126,15 @@
                         })
             $("#workPage").load(location.href + " #workPage");})
         }
+
+      if("@ViewBag.account"==""){
+          Swal.fire({
+                        icon: 'warning',
+                        title: '請先登入',
+                        timer: 1500
+                        }).then((result)=>{
+                            window.location('@Url.Content("~/Student_Login/Index")')
+                        })
+     }
 </script>
 

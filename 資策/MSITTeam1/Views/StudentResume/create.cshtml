@@ -1,4 +1,6 @@
-﻿@using static MSITTeam1.ViewModels.CStudentResumeViewModel
+﻿@*import { viewport } from "@popperjs/core"*@
+
+@using static MSITTeam1.ViewModels.CStudentResumeViewModel
 @addTagHelper *, MSITTeam1
 @model MSITTeam1.ViewModels.CStudentResumeViewModel
 
@@ -56,8 +58,7 @@
                                 <div class="form-group">
                                     <label asp-for="fAddress" class="control-label"></label>
                                     <div>
-
-                                        <vc:selector city="@Model.fCity" district="@Model.fDistrict"></vc:selector>
+                                        <vc:selector city="@Model.fCity" district="@Model.fDistrict"></vc:selector>    
                                     </div>
                                     <input id="fAddress" asp-for="fAddress" class="form-control" name="fAddress" />
                                     <span asp-validation-for="fAddress" class="text-danger"></span>
@@ -303,6 +304,7 @@
 {
 
 <script>
+
     var currentSlide = 0,
         $slideContainer = $('.slide-container'),
         $slide = $('.slide'),
@@ -771,6 +773,16 @@
         })
      }
 
+     if("@ViewBag.account"==""){
+          Swal.fire({
+                        icon: 'warning',
+                        title: '請先登入',
+                        timer: 1500
+                        }).then((result)=>{
+                            window.location('@Url.Content("~/Student_Login/Index")')
+                        })
+     }
+       
     // //flatpicker
     //$("#basicDate").flatpickr({
     //enableTime: true,

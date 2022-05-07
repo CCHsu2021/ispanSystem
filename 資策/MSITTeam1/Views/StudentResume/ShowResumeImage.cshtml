@@ -1,0 +1,21 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+@{
+    ViewData["Title"] = "ShowResumeImage";
+}
+
+<h1>ShowResumeImage</h1>
+
+<div class="container">
+    
+    <div >
+        @foreach (var item in Model) {
+        <h5  class="my-3">確認基本資料</h5> 
+        <hr />
+        <p>@Html.DisplayNameFor(model => model.ResumeImage)   @Html.DisplayFor(modelItem=> item.ResumeImage)</p>
+
+        }
+    
+    </div>
+</div>
+
+

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
+@{
+    ViewData["Title"] = "ShowResumeImage";
+}
+
+<style>
+     .resumeflip {
+        margin: 0px;
+        padding: 5px;
+        text-align: center;
+        background: #1e3c84;
+        color: white;
+        cursor: pointer;
+    }
+
+    .resumepanel {
+        margin: 0px;
+        padding: 5px;
+        background: #EEE;
+        border: solid 1px #c3c3c3;
+        display: none;
+    }
+</style>
+<h1>履歷瀏覽</h1>
+
+<div class="container">
+    
+    <div >
+        @foreach (var item in Model) {
+
+        <div class="resumeflip">
+        <span>履歷</span>
+        </div>
+        <div class="resumepanel" style="display:none;">
+        
+            <img src="data:image/gif;base64,@item.ResumeImage"/>
+      
+        </div>
+        }
+    
+    </div>
+</div>
+
+<script src="~/js/jquery.js"></script>
+    <script>
+    $(".resumeflip").click(function () {
+        $(".resumepanel").slideToggle("fast");
+    });
+    </script>
+
