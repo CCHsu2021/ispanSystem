@@ -30,6 +30,11 @@ namespace MSITTeam1.Controllers
 
 			return ViewComponent("QuestionBankList", new { keyword = query.keyword, Subjects = query.Subjects, Type = query.Type });
 		}
+
+		public IActionResult MyQuesList([FromBody] CQuestionQueryViewModel query)
+		{
+			return ViewComponent("QMyQuestionList");
+		}
 		private IQueryable<CQuestionBankViewModel> FilterByType(IQueryable<CQuestionBankViewModel> table, string level)
 		{
 			if (!string.IsNullOrEmpty(level))
@@ -195,7 +200,7 @@ namespace MSITTeam1.Controllers
 				}
 				_context.SaveChanges();
 			}
-			return RedirectToAction("List");
+			return Content("修改完成");
 		}
 
 		public IActionResult Delete(string subjectID, int questionID)
@@ -215,7 +220,7 @@ namespace MSITTeam1.Controllers
 					return Content("刪除成功", "text/plain", System.Text.Encoding.UTF8);
 				}
 			}
-			return RedirectToAction("List");
+			return Content("刪除成功");
 		}
 
 		public IActionResult DeleteTest(string subjectID, int questionID)
@@ -230,6 +235,14 @@ namespace MSITTeam1.Controllers
 				s.FClassCategory
 			}).Distinct().OrderBy(s => s.FClassCategory);
 			return Json(subjects);
+		}
+		public IActionResult SubjectEsitQuestion()
+		{
+			var sub = _context.TQuestionLists.Select(s => new
+			{
+				s.FSubjectId
+			}).Distinct().OrderBy(s => s.FSubjectId);
+			return Json(sub);
 		}
 
 		public IActionResult Classes()

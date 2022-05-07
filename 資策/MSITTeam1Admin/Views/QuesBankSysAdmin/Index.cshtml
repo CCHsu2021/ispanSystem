@@ -14,11 +14,11 @@
     <link rel="stylesheet" href="~/css/StarBar.css" />
     <link rel="stylesheet" href="~/css/barRating.css" />
     <style>
-        body{
-            padding-right:0 !important;
+        body {
+            padding-right: 0 !important;
         }
-        
-        *.modal-open{
+
+        *.modal-open {
             overflow-y: auto !important;
             padding-right: 0 !important;
             padding-left: 0 !important;
@@ -277,6 +277,8 @@
                             <div class="selectType" id="CreatebtnType">
                                 <span><a data-toggle="modal" data-target="#questionCreate">新增題目</a></span>
                             </div>
+                            <button id="testForQL">測試</button>
+                            <button id="testForTrigQ">測試2</button>
                         </div>
                     </div>
                 </div>
@@ -291,12 +293,6 @@
         </div>
     </div>
 </div>
-
-
-<div id="testView">
-    @*QuestionList*@
-</div>
-
 
 <!-- Modal -->
 <div class="modal fade modalCre" id="questionCreate" tabindex="-1" aria-labelledby="questionCreate" aria-hidden="true">
@@ -314,6 +310,39 @@
     </div>
 </div>
 
+<!-- Modal -->
+<!--<div class="modal fade modal-dialog-scrollable" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">題目修改</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="EditModal">
+
+            </div>
+        </div>
+    </div>
+</div>-->
+<!-- Modal -->
+<!--<div class="modal fade modal-dialog-scrollable" id="questionDetail" tabindex="-1" aria-labelledby="questionDetail" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">題目內容</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="DetailModal">
+
+            </div>
+        </div>
+    </div>
+</div>-->
+
 @section Scripts
 {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -322,18 +351,29 @@
     <script src="~/js/jquery.barrating.js"></script>
     <script src="~/js/Pagination.js"></script>
     <script>
+
+        $('#testForQL').click(function () {
+            console.log("OKindex");
+            $('#testForTrigQ').trigger('click');
+        })
+        $('#testForTrigQ').click(function () {
+            console.log("btn2onclick");
+        })
+
 // 難度StarBar
     $('.quesLevel').each(function () {
         var i = $(this).val();
         var temp = "show_rated_" + i;
         $(this).next().attr("class", temp);
     })
+
     // 題目編輯
-    $('.editQuestion').click(function () {
+        @*$('.editQuestion').click(function () {
                 jsondata = JSON.stringify({
                     Subjects: $(this).parents("tr").find('.subjectId').val(),
                     questionID: $(this).parents("tr").find('.questionId').val()
                 })
+        console.log(jsondata);
             $.ajax({
                 url: "@Url.Content("~/QuesBankSysAdmin/EditByVC")",
                 type: "POST",
@@ -343,10 +383,28 @@
                     $('#EditModal').html(result);
                 }
             })
-    })
+    })*@
+
+         @*$('.editQuestion').click(function () {
+            jsondata = JSON.stringify({
+                Subjects: $(this).parents("tr").find('.subjectId').val(),
+                questionID: $(this).parents("tr").find('.questionId').val()
+            })
+            $.ajax({
+                url: "@Url.Content("~/QuesBankSysAdmin/EditByVC")",
+                type: "POST",
+                contentType: "application/json",
+                data: jsondata,
+                success: function (result) {
+                    $('#EditModal').html(result);
+                }
+            })
+    })*@
+
+
 
     // 題目內容
-    $('.detailQuestion').click(function () {
+    @*$('.detailQuestion').click(function () {
             jsondata = JSON.stringify({
                 Subjects: $(this).parents("tr").find('.subjectId').val(),
                 questionID: $(this).parents("tr").find('.questionId').val()
@@ -360,10 +418,10 @@
                 $('#DetailModal').html(result);
             }
         })
-    })
+    })*@
 
     // 題目刪除
-    $('.delQuestion').click(function () {
+    @*$('.delQuestion').click(function () {
         Swal.fire({
             title: '確定要刪除嗎?',
             text: "該操作無法撤回",
@@ -385,7 +443,7 @@
                 $('#testsearch').trigger('click');
             }
         })
-    })
+    })*@
 
 
 // 載入課程名稱
@@ -411,7 +469,12 @@
         var jsondata = null;
         $(document).ready(function () {
         $('#testsearch').click(function () {
-                jsondata = JSON.stringify({
+            searchQuesListAdmin();
+        })
+        })
+
+        function searchQuesListAdmin() {
+                 jsondata = JSON.stringify({
                     Subjects: $('#FSubjectId').val(),
                     keyword: $('#keyword').val(),
                     Type: $('#FQuestionTypeId').val(),
@@ -426,8 +489,7 @@
                     $('#testView').html(result);
                 }
             })
-        })
-        })
+        }
 
         //-----------------------------Create New Question---------------------------------------------
         // 判斷Checkbox

@@ -100,14 +100,13 @@
         }
 
         .selectQuestList {
-            height: 450px;
+            height: 500px;
             overflow: auto;
         }
 
         #outdivCre button {
             -webkit-appearance: none;
             -moz-appearance: none;
-            appearance: none;
             border: 0;
             border: solid 1px transparent;
             padding: 14px 14px;
@@ -290,11 +289,10 @@
     <script src="~/js/jquery.barrating.js"></script>
     <script src="~/js/barRating.init.js"></script>
     <script>
-        
+
           // 載入課程名稱
         const selSubQuest = document.querySelector('#FSubjectIdSel');
         const selSubPaper = document.querySelector('#FSubject');
-        const selSubSearch = document.querySelector('#FSubjectId');
         async function LoadSubject() {
             const responseSubject = await fetch('@Url.Content("~/QuestionBank/Subject")');
             renderSubject(await responseSubject.json());
@@ -308,26 +306,27 @@
                 const opt = new Option(item.fClassCategory, item.fClassCategory);
                 selSubQuest.options.add(opt);
             })
+        }       
+
+       const selSubSearch = document.querySelector('#FSubjectId');
+        async function LoadSubjectEsitQuestion() {
+            const responseSubjectEsitQuestion = await fetch('@Url.Content("~/QuestionBank/SubjectEsitQuestion")');
+            renderSubjectEsitQuestion(await responseSubjectEsitQuestion.json());
+        }
+        function renderSubjectEsitQuestion(datas) {
             datas.forEach((item) => {
-                const opt = new Option(item.fClassCategory, item.fClassCategory);
+                const opt = new Option(item.fSubjectId, item.fSubjectId);
                 selSubSearch.options.add(opt);
             })
         }
+        LoadSubjectEsitQuestion();
         LoadSubject();
-
-        // 隱藏編輯
-        function hideEdit() {
-            $('#editGroup').hide();
-            $('.editQButton').hide();
-        }
-
         // 題目查詢
         var jsondata = null;
         $(document).ready(function () {
+            searchQuestion();
         $('#search').click(function () {
             searchQuestion();
-            $('#editGroup').hide();
-            $('.editQButton').hide();
         })
         })
         function searchQuestion() {
@@ -344,8 +343,19 @@
                 success: function (result) {
                     $('#testView').html(result);
                 }
+            }).done(function () {
+                $('#editGroup').hide();
+                $('.editQButton').hide();
             })
         }
+
+        // TODO:12.選擇即更新，翻頁插件會失效
+        $('#FSubjectId').on('change', function () {
+            searchQuestion();
+        });
+        $('#FQuestionTypeId').on('change', function () {
+            searchQuestion();
+        });
 
         //-----------------------------Create New Question---------------------------------------------
         // 判斷Checkbox
@@ -432,11 +442,12 @@
                     Swal.fire({
                         icon: 'success',
                         title: '新增成功',
-                        showConfirmButton: true,
+                        showConfirmButton: false,
                         timer: 1500
+                    }).done(() => {
+                        $('.modalCre').modal('hide');
+                        searchQuestion();
                     })
-                    $('.modalCre').modal('hide');
-                    searchQuestion();
                 })
             }
         })
@@ -524,7 +535,7 @@
                         showConfirmButton: true,
                         timer: 1500
                     }).then(() => {
-                        parent.location.href
+                        window.location.replace("https://localhost:44387/TestPaperBank/Home");
                     })
                 })
             }
