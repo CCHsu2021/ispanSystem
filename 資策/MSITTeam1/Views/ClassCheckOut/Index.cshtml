@@ -669,11 +669,35 @@
         console.log(total);
         console.log(point);
         console.log(total - point);
+        if (point == 0) {
+            $("#usePoint").attr("disabled", "disabled");
+        }
         $("#usePoint").click(function () {
+            if (point == 0) {
+                $("#usePoint").attr("disabled", "disabled");
+            }
             if ($("#usePoint").prop("checked") == true) {
-                $("#TotalPrice").val(total - point);
+
+                if (total - point < 0) {
+                    $("#TotalPrice").val(0);
+                    $("#showPoint").val(point - total);
+                    $("#ProDiscount").val(total);
+                } else if (total - point > 0) {
+                    $("#TotalPrice").val(total - point);
+                    $("#showPoint").val(0);
+                    $("#ProDiscount").val(point);
+
+                } else if (total - point == 0) {
+                    $("#TotalPrice").val(0);
+                    $("#showPoint").val(0);
+                    $("#ProDiscount").val(point);
+                }
+                //total > point ? $("#TotalPrice").val(total - point) : $("#TotalPrice").val(0);
+                //total > point ? $("#showPoint").val(0) : $("#showPoint").val(point - total);
+                //total > point ? $("#ProDiscount").val(point) : $("#ProDiscount").val(total);
             } else {
                 $("#TotalPrice").val(total);
+                $("#showPoint").val(point);
             }
         })
     </script>
