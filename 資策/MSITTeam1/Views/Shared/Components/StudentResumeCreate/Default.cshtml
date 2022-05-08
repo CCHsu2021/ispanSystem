@@ -148,15 +148,24 @@
                 </div>
             </div>
         </div>
+
+        
         <div class="col-4  BigCard">
             <div class="panel panel-info ">
                 <div class="panel-heading kanban-card">
-                    <h3 class="panel-title" id="paneltitle">製作履歷</h3>
+                    <div class="row">
+                         <div class="col-4">
+                        <h3 class="panel-title" id="paneltitle">履歷名稱</h3>
+                    </div>
+                    <div class="col-8">
+                        <input id="resumeName"  class="form-control">
+                    </div>
+                    </div>
                 </div>
                 <div class="panel-body" id="mainView1">
                     <div id="todo" class="bodybackground">
                         &nbsp;
-                        <div class="alert alert-success kanban-card cardBody basiccard " id="basic" role="alert">
+                        <div class="alert alert-success kanban-card cardBody basiccard "  style="margin-top:-5px" id="basic" role="alert">
                             <h4>基本資料</h4>
                             <br/>
                             <div class="basicCss">
@@ -403,6 +412,7 @@
                     console.log(data)
                 })
 
+            
             const btnEdit = document.querySelector("#btnEdit");
             const btnPreview = document.querySelector("#btnPreview");
             const btnResumeSave = document.querySelector("#btnResumeSave");
@@ -425,9 +435,9 @@
                 btnPreview.style.visibility="hidden";
                 btnEdit.style.visibility="visible";
                 btnPrint.style.visibility="visible";
-                paneltitle.style.visibility="hidden";
+                
                 btnResumeSave.style.visibility="visible";
-                //console.log($("#mid").text());
+                console.log($("#resumeName").val());
                 });
 
             btnEdit.addEventListener('click', (evt) => {
@@ -437,7 +447,6 @@
                 btnEdit.style.visibility="hidden";
                 btnPrint.style.visibility="hidden";
                 btnPreview.style.visibility="visible";
-                paneltitle.style.visibility="visible";
                 btnResumeSave.style.visibility="hidden";
 
                 });

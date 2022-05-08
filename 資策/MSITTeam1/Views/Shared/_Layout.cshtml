@@ -155,8 +155,8 @@
                                             <li>
                                                 <a href="https://www.ispan.com.tw/studentnotice">學員須知</a>
                                             </li>
-                                            <li>
-                                                <a href="@Url.Content("~/StudentResume/create")">履歷製作</a>
+                                            <li id="ResumeClick" >
+                                                <a>履歷製作</a>
                                             </li>
                                             <li>
                                                 <a href="@Url.Content("~/TJobVacancies/Index")">職缺搜尋</a>
@@ -488,6 +488,31 @@
             $('#buyPoint > a').attr("href", "../BuyPoint/Index");
         }
     })
+
+    //ResumeClick
+    $('#ResumeClick').click(function () {
+        if ("@ViewBag.account" == "") {
+            Swal.fire({
+                icon: 'info',
+                title: '請先登入會員',
+                showConfirmButton: false,
+                timer: 1300
+            }).done(
+                setTimeout(function () {
+                    location = 'https://localhost:44387/Student_Login'
+                }, 1300)
+            );
+        }        else if ("@ViewBag.Type" == "2") {
+            Swal.fire({
+                icon: 'info',
+                title: '此系統目前僅對學生會員開放',
+                showConfirmButton: false,
+                timer: 2000
+            })
+        } else if ("@ViewBag.Type" == "1") {
+            $('#ResumeClick > a').attr("href", "../StudentResume/create");
+        }
+        });
 </script>
 </body>
 </html>
