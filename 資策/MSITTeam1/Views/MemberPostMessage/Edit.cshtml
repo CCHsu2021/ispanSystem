@@ -1,0 +1,89 @@
+﻿@model MSITTeam1.Models.TMemberResumeSend
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>TMemberResumeSend</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ResumeSendId" />
+            <div class="form-group">
+                <label asp-for="JobId" class="control-label"></label>
+                <input asp-for="JobId" class="form-control" />
+                <span asp-validation-for="JobId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResumeId" class="control-label"></label>
+                <input asp-for="ResumeId" class="form-control" />
+                <span asp-validation-for="ResumeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MemberId" class="control-label"></label>
+                <input asp-for="MemberId" class="form-control" />
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyTaxid" class="control-label"></label>
+                <input asp-for="CompanyTaxid" class="form-control" />
+                <span asp-validation-for="CompanyTaxid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JobName" class="control-label"></label>
+                <input asp-for="JobName" class="form-control" />
+                <span asp-validation-for="JobName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactPhone" class="control-label"></label>
+                <input asp-for="ContactPhone" class="form-control" />
+                <span asp-validation-for="ContactPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactEmail" class="control-label"></label>
+                <input asp-for="ContactEmail" class="form-control" />
+                <span asp-validation-for="ContactEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComReadOrNot" class="control-label"></label>
+                <input asp-for="ComReadOrNot" class="form-control" />
+                <span asp-validation-for="ComReadOrNot" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeToContact" class="control-label"></label>
+                <input asp-for="TimeToContact" class="form-control" />
+                <span asp-validation-for="TimeToContact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoverLetter" class="control-label"></label>
+                <input asp-for="CoverLetter" class="form-control" />
+                <span asp-validation-for="CoverLetter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatTime" class="control-label"></label>
+                <input asp-for="CreatTime" class="form-control" />
+                <span asp-validation-for="CreatTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifyTime" class="control-label"></label>
+                <input asp-for="ModifyTime" class="form-control" />
+                <span asp-validation-for="ModifyTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

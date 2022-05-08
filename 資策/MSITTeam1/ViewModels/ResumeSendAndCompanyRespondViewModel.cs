@@ -82,5 +82,6 @@ namespace MSITTeam1.ViewModels
         public string ResumeSendModifyTime { get { return this.memRS.ModifyTime; } set { memRS.ModifyTime = value; } }
         [DisplayName("學員姓名")]
         public string StudentName { get; set; }
+        public string CompanyName { get; set; }
     }
 }

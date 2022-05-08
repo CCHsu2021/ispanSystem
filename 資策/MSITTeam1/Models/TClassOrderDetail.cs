@@ -16,5 +16,6 @@ namespace MSITTeam1.Models
         public string DepartmentName { get; set; }
         public string StaffName { get; set; }
         public string StaffEmail { get; set; }
+        public int? Qty { get; set; }
     }
 }
