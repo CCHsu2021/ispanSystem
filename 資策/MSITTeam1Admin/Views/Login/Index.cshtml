@@ -39,21 +39,14 @@
                         <form>
                             <div class="form-group">
                                 <label>帳號</label>
-                                <input type="email" class="form-control" placeholder="請輸入帳號">
+                                <input type="text" id="LAccount" name="LAccount" class="form-control" placeholder="請輸入帳號">
                             </div>
                             <div class="form-group">
                                 <label>密碼</label>
-                                <input type="password" class="form-control" placeholder="請輸入密碼">
+                                <input type="password" id="LPassword" name="LPassword" class="form-control" placeholder="請輸入密碼">
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> 記住我
-                                </label>
-                                <label class="pull-right">
-                                    <a href="#">忘記密碼</a>
-                                </label>
-                            </div>
-                            <button type="button" onclick="location.href='@Url.Action("Index","Home")'" class="btn btn-primary btn-flat m-b-30 m-t-30">登入</button>
+
+                            <button type="submit" asp-action="Login" class="btn btn-primary btn-flat m-b-30 m-t-30">登入</button>
                             @*<div class="register-link m-t-15 text-center">
             <p>Don't have account ? <a href="#"> Sign Up Here</a></p>
         </div>*@
@@ -64,4 +57,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    if ("@ViewBag.Error" != "") {
+        Swal.fire("帳密輸入錯誤", "@ViewBag.Error","error")
+    }
+</script>
+
 
