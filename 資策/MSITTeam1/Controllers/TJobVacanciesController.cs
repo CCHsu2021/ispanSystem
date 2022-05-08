@@ -24,10 +24,13 @@ namespace MSITTeam1.Controllers
         // GET: TJobVacancies
         public IActionResult Index(JobVacanciesSearchBarViewModel vModel)
         {
-            ViewBag.Account = CDictionary.account;
+            ViewBag.account = CDictionary.account;
+            ViewBag.type = CDictionary.memtype;
+            ViewBag.name = CDictionary.username;
 
             IEnumerable<TJobVacanciesViewModel> data = GetLeftJoinJobVacancies();
             List<TJobVacanciesViewModel> list = new List<TJobVacanciesViewModel>();
+
             if (vModel.txtSearchText != null)
             {
                 string lowerSearchText = vModel.txtSearchText.ToLower();
@@ -47,6 +50,7 @@ namespace MSITTeam1.Controllers
                 data = data.Where(p => p.FCity.Contains(vModel.ddlCity));
             }
 
+
             foreach (var item in data)
             {
                 list.Add(item);
@@ -58,6 +62,9 @@ namespace MSITTeam1.Controllers
 
         public IEnumerable<TJobVacanciesViewModel> GetLeftJoinJobVacancies()
         {
+            ViewBag.account = CDictionary.account;
+            ViewBag.type = CDictionary.memtype;
+            ViewBag.name = CDictionary.username;
             IEnumerable<TJobVacanciesViewModel> data = null;
             //LINQ，TNewJobVacancies left join TCompanyBasics left join TJobDirects
             data = from p in _context.TNewJobVacancies
@@ -77,7 +84,9 @@ namespace MSITTeam1.Controllers
 
         public IActionResult Detail(int txtJobId)
         {
-            ViewBag.Account = CDictionary.account;
+            ViewBag.account = CDictionary.account;
+            ViewBag.type = CDictionary.memtype;
+            ViewBag.name = CDictionary.username;
 
             var chooseOne = GetLeftJoinJobVacancies().FirstOrDefault(p=>p.Fid.Equals(txtJobId));
             
@@ -86,7 +95,9 @@ namespace MSITTeam1.Controllers
 
         public IActionResult ResumeSend(TMemberResumeSend memberResumeSend,string ddlstartTime,string ddlendTime,long ddlResume)
         {
-            
+            ViewBag.account = CDictionary.account;
+            ViewBag.type = CDictionary.memtype;
+            ViewBag.name = CDictionary.username;
             var jobApply = _context.TMemberResumeSends.Max(p => p.ResumeSendId);
             DateTime dateTimeNow = DateTime.Now;
             string dateNow = dateTimeNow.ToString("yyyyMMdd");

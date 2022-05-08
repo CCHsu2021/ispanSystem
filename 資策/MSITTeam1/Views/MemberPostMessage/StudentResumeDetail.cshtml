@@ -9,8 +9,9 @@
         <h2><span class="icon icon-star-large"></span> 應徵職缺：@Model.JobName <span class="icon icon-reply-large"></span><span class="icon icon-delete-large"></span></h2>
         <div class="meta-data">
             <p>
-                @Model.FStudentName 寄來的求職信
-                <span class="date">@(Convert.ToDateTime(Model.CreatTime).ToString("yyyy-MM-dd"))</span>
+                向 @Model.FCompanyName 寄出的求職信
+                <span class="date">建立時間：@(Convert.ToDateTime(Model.CreatTime).ToString("yyyy-MM-dd"))</span>
+                <span class="date">最後修改時間：@(Convert.ToDateTime(Model.ModifyTime).ToString("yyyy-MM-dd"))</span>
             </p>
         </div>
         <div class="body">
@@ -31,48 +32,14 @@
             </div>
         </div>
     </section>
-    <button class="btn-style-two" type="button" data-toggle="modal" data-target="#interviewDeclineModal" onclick="">婉拒面試</button>
-    <button class="btn-style-two" type="button" data-toggle="modal" data-target="#interviewInvitationModal" onclick="">邀約面試</button>
-    <!--邀約面試Modal-->
-    <div class="modal fade" id="interviewInvitationModal" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ProductEditModalLabel">邀約面試</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <vc:interview-invitation job-id="@Model.JobId" resume-send-id="@Model.ResumeSendId"></vc:interview-invitation>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--婉拒面試Modal-->
-    <div class="modal fade" id="interviewDeclineModal" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ProductEditModalLabel">婉拒面試</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <vc:interview-decline job-id="@Model.JobId" resume-send-id="@Model.ResumeSendId"></vc:interview-decline>
-                </div>
-            </div>
-        </div>
-    </div>
+    <button class="btn-style-two" type="button" asp-controller="MemberPostMessage" asp-action="OutboxIndex">回上一頁</button>
+    
 @section Scripts{ 
     <script>
         flatpickr('#InterviewTime', {
             minDate: 'today',
             dateFormat: 'Y-m-d'
         });
-
-
     </script>
 }
 @*@foreach (var item in Model) {
