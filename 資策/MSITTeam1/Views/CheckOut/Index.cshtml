@@ -525,7 +525,7 @@
                                                  class="itemImg" />
                                             <h3>@item.Name</h3>
                                             <p>
-                                                <input type="text" class="qty border" value="@item.count" /> x NT$@Html.DisplayFor(modelItem => item.Price, "Money")
+                                                <input type="text" class="qty" disabled value="@item.count" /> x NT$@Html.DisplayFor(modelItem => item.Price, "Money")
                                             </p>
                                         </div>
                                         <div class="prodTotal cartSection">
@@ -676,6 +676,7 @@
             } else {
                 $("#TotalPrice").val(total);
                 $("#showPoint").val(point);
+                $("#ProDiscount").val(0);
             }
         })
     </script>
