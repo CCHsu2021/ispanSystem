@@ -21,7 +21,7 @@ namespace MSITTeam1.ViewComponent
 		{
 			_context = context;
 		}
-		public async Task<IViewComponentResult> InvokeAsync(string keyword, string Subjects, string Type)
+		public IViewComponentResult Invoke(string keyword, string Subjects, string Type)
 		{
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;

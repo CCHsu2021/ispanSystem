@@ -20,7 +20,7 @@ namespace MSITTeam1.ViewComponent
 			_context = context;
 		}
 
-		public async Task<IViewComponentResult> InvokeAsync(string subjectID,int questionID)
+		public IViewComponentResult Invoke(string subjectID,int questionID)
 		{
 			if (subjectID != null && questionID > 0)
 			{

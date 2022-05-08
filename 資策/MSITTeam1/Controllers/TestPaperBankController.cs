@@ -57,7 +57,7 @@ namespace MSITTeam1.Controllers
         public IActionResult CreatNewPaper([Bind("FTestPaperId,FDesignerAccount,FTestPaperName,FSubjectId,FNote")][FromBody] CTestPaperBankViewModel newpaper)
 		{
             // 試卷總覽新增
-            // TODO1:加入身份判斷
+
             ViewBag.Name = CDictionary.username;
             ViewBag.Type = CDictionary.memtype;
             ViewBag.account = CDictionary.account;
@@ -67,7 +67,7 @@ namespace MSITTeam1.Controllers
 			}
 			else
 			{
-                newpaper.FDesignerAccount = "admin";
+                return RedirectToAction("Index", "Student_Login");
             }
             newpaper.FBTestPaperId = 0;
             _context.TTestPaperBanks.Add(newpaper.paperBank);
@@ -96,7 +96,6 @@ namespace MSITTeam1.Controllers
             ViewBag.Type = CDictionary.memtype;
             ViewBag.account = CDictionary.account;
 
-            // TODO:4.迴圈要拆開 There is already an open DataReader associated with this Connection which must be closed first.
             if (paperID == null || paperID == 0)
 			{
                 return Content($"查無ID為{paperID}的考卷資料");
@@ -177,7 +176,7 @@ namespace MSITTeam1.Controllers
                 _context.TTestPapers.Remove(q);
 			}
             _context.SaveChanges();
-            //TODO:4.刪除後不整頁刷新
+
 			return Content("刪除成功", "text/plain", System.Text.Encoding.UTF8);
 		}
 
