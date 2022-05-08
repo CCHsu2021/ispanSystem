@@ -1,0 +1,109 @@
+﻿@addTagHelper *, MSITTeam1
+@model MSITTeam1.ViewModels.ResumeSendAndCompanyRespondViewModel
+
+@{
+    ViewData["Title"] = "StudentResumeDetail";
+}
+
+<section class="message">
+    <h2><span class="icon icon-star-large"></span> 應徵職缺：@Model.JobName <span class="icon icon-reply-large"></span><span class="icon icon-delete-large"></span></h2>
+    <div class="meta-data">
+        <p>
+            @Model.StudentName 寄來的求職信
+            <span class="date">建立日期：@(Convert.ToDateTime(Model.ResumeSendCreatTime).ToString("yyyy-MM-dd"))</span>
+            <span class="date">最後修改日期：@(Convert.ToDateTime(Model.ResumeSendModifyTime).ToString("yyyy-MM-dd"))</span>
+        </p>
+    </div>
+    <div class="body">
+        <div class="form-group">
+            <label asp-for="ContactPhone" class="control-label"></label>
+            <label class="col-form-label">@Model.ContactPhone</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactEmail" class="control-label"></label>
+            <label class="col-form-label">@Model.ContactEmail</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="TimeToContact" class="control-label"></label>
+            <label class="col-form-label">@Model.TimeToContact</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="CoverLetter" class="control-label"></label>
+            <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.CoverLetter</pre>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="meta-data">
+        <p>
+            我司的回覆信
+            <span class="date">建立日期：@(Convert.ToDateTime(Model.CreatTime).ToString("yyyy-MM-dd"))</span>
+            <span class="date">最後修改日期：@(Convert.ToDateTime(Model.ModifyTime).ToString("yyyy-MM-dd"))</span>
+        </p>
+    </div>
+    <div class="body">
+        <div class="form-group">
+            <label asp-for="InterviewState" class="control-label"></label>
+            <label class="col-form-label">@Model.InterviewState</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactPerson" class="control-label"></label>
+            <label class="col-form-label">@Model.ContactPerson</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactPersonPhone" class="control-label"></label>
+            <label class="col-form-label">@Model.ContactPersonPhone</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactPersonEmail" class="control-label"></label>
+            <label class="col-form-label">@Model.ContactPersonEmail</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="InterviewTime" class="control-label"></label>
+            <label class="col-form-label">@Model.InterviewTime</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="InterviewAddress" class="control-label"></label>
+            <label class="col-form-label">@Model.InterviewAddress</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="StudentRespondTime" class="control-label"></label>
+            <label class="col-form-label">@Model.StudentRespondTime 天內</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="InterviewContent" class="control-label"></label>
+            <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.InterviewContent</pre>
+        </div>
+    </div>
+</section>
+<button class="btn-style-two" type="button" asp-action="ReturnToInbox">回上一頁</button>
+<button class="btn-style-two" type="button" data-toggle="modal" data-target="#interviewInfoEditModal" onclick="">修改</button>
+<!--修改回覆Modal-->
+<div class="modal fade" id="interviewInfoEditModal" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ProductEditModalLabel">修改回覆</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <vc:interview-invitation job-id="@Model.JobId" resume-send-id="@Model.ResumeSendId"></vc:interview-invitation>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        flatpickr('#InterviewTime', {
+            minDate: 'today',
+            dateFormat: 'Y-m-d'
+        });
+    </script>
+    <script>
+        var forddlTimeUse = $("#for-ddlTimeUse").val(); //hidden 隱藏框的資料
+        $("#ddlstartTime option[value = '" + forddlTimeUse + "']").attr("selected", true);
+    </script>
+}

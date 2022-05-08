@@ -1,4 +1,4 @@
-﻿@model MSITTeam1.ViewModels.TCompanyRespondViewModel
+﻿@model MSITTeam1.ViewModels.ResumeSendAndCompanyRespondViewModel
 
 <div class="row">
     <div class="col-12">
@@ -7,12 +7,21 @@
             <div class="form-group">
                 <input asp-for="CompanyRespondId" class="form-control" type="hidden" />
                 <input asp-for="ResumeSendId" class="form-control" type="hidden" />
-                <input asp-for="InterviewState" class="form-control" type="hidden" value="未讀" />
+                <input id="for-ddlTimeUse" type="hidden" value="@(Model.InterviewTime.Substring(12,5))"/>
             </div>
+            
             <div class="form-group">
                 <label asp-for="JobName" class="control-label"></label>
                 <input asp-for="JobName" class="form-control" readonly />
                 <span asp-validation-for="JobName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InterviewState" class="control-label"></label>
+                <select asp-for="InterviewState" class="form-control" name="ddlInterviewState" required>
+                    <option value="接受">接受</option>
+                    <option value="婉拒">婉拒</option>
+                </select>
+                <span asp-validation-for="InterviewState" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ContactPerson" class="control-label"></label>
@@ -31,12 +40,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="InterviewAddress" class="control-label"></label>
-                <input asp-for="InterviewAddress" class="form-control" required/>
+                <input asp-for="InterviewAddress" class="form-control" required />
                 <span asp-validation-for="InterviewAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="InterviewTime" class="control-label"></label>
-                <input id="InterviewTime" name="InterviewTime" class="form-control" required/>
+                <input value="@(Convert.ToDateTime(Model.InterviewTime).Date)" id="InterviewTime" name="InterviewTime" class="form-control" required />
                 <select class="form-control" id="ddlstartTime" name="ddlstartTime" required>
                     <option value="09:00">09:00</option>
                     <option value="09:30">09:30</option>
@@ -73,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button asp-action="InterviewInvitation" asp-controller="PostMessage" type="submit" class="btn btn-primary">送出</button>  @*data-dismiss="modal"*@
+                <button asp-action="InterviewInfoEdit" asp-controller="PostMessage" type="submit" class="btn btn-primary">儲存</button>  @*data-dismiss="modal"*@
             </div>
         </form>
     </div>

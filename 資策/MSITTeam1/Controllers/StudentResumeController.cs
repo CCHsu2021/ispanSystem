@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MSITTeam1.Controllers
 {
@@ -58,7 +59,9 @@ namespace MSITTeam1.Controllers
         [AllowAnonymous]
         public IActionResult Create()
         {
-
+            ViewBag.account = CDictionary.account;
+            ViewBag.name = CDictionary.username;
+            ViewBag.Type = CDictionary.memtype;
             string account = CDictionary.account;
             if (account != null)
             {
@@ -386,11 +389,38 @@ namespace MSITTeam1.Controllers
             return Json(datas);
         }
 
-        public IActionResult saveResume([FromBody] CStudentResumeViewModel p)
+        public IActionResult saveResume()
         {
-            hello.StudentResumes.Add(p.resume);
-            hello.SaveChanges();
+            string Image = Request.Form["ResumeImage"].ToString();
+            string account = CDictionary.account;
+            if (Image != null)
+            {
+                byte[] data = Convert.FromBase64String(Image);
+                //string filePath = Path.Combine(_enviroment.WebRootPath, "uploads", "haha.png");
+                StudentResume stu = new StudentResume();
+
+                stu.ResumeImage = data;
+                stu.MemberId = account;
+                hello.StudentResumes.Add(stu);
+                hello.SaveChanges();
+            }
+            
             return Content("新增成功");
+        }
+
+        public IActionResult ShowResumeImage()
+        {
+            
+            byte[] ri = null;
+            StudentResume sr = hello.StudentResumes.FirstOrDefault(a => a.MemberId == CDictionary.account);
+            if (sr != null)
+            {
+                ri= sr.ResumeImage;
+                return View(Convert.ToBase64String(ri));
+            }
+
+
+                return View();
         }
     }
 }
