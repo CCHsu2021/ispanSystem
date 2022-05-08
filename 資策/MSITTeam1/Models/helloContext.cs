@@ -1188,7 +1188,7 @@ namespace MSITTeam1.Models
                 entity.Property(e => e.OrderId).HasMaxLength(50);
 
                 entity.Property(e => e.OrderDate)
-                    .HasMaxLength(50)
+                    .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.PayMethod).HasMaxLength(50);
