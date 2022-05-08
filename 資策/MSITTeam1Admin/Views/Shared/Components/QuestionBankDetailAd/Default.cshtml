@@ -13,7 +13,8 @@
                     <form asp-action="Edit" method="post" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group" style="text-align:center;">
-                            <h3><input style="text-align:center;" type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" disabled="disabled" /></h3>
+                            @*<h3><input style="text-align:center;" type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" disabled="disabled" /></h3>*@
+                            <input type="text" id="FSubjectIdV" asp-for="@Model[0].FSubjectId" readonly style="text-align: center; border: none; font-size: 28px;" class="form-control bg-white" />
                         </div>
                         <div class="form-group">
                             <input type="hidden" id="FQuestionId" asp-for="@Model[0].FQuestionId" />

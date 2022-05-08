@@ -205,7 +205,7 @@ namespace MSITTeam1.Controllers
                     hello.SaveChanges();
                 }
             }
-            return Redirect("");
+            return Redirect("ShowSkillGrade");
         }
 
     }
