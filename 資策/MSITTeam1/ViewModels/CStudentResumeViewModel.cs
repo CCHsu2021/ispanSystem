@@ -336,7 +336,7 @@ namespace MSITTeam1.ViewModels
             get { return this.resume.MemberId; }
             set { this.resume.MemberId = value; }
         }
-        [DisplayName("履歷名稱:")]
+        [DisplayName("履歷名稱")]
         public string ResumeName
         {
             get { return this.resume.ResumeName; }

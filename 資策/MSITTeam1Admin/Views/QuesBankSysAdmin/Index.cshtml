@@ -323,15 +323,6 @@
     <script src="~/js/jquery.barrating.js"></script>
     <script src="~/js/Pagination.js"></script>
     <script>
-
-        $('#testForQL').click(function () {
-            console.log("OKindex");
-            $('#testForTrigQ').trigger('click');
-        })
-        $('#testForTrigQ').click(function () {
-            console.log("btn2onclick");
-        })
-
 // 難度StarBar
     $('.quesLevel').each(function () {
         var i = $(this).val();
@@ -436,7 +427,7 @@
             })
             if ($('#FQuestionCre').val() == "") {
                 Swal.fire("請輸入題目");
-            } else if ($('FSubjectIdSel').val() == "") {
+            } else if ($('#FSubjectIdSel').val() == "") {
                 Swal.fire("請選擇此題所屬技能類別");
             }
             else if (selectAns < 1) {

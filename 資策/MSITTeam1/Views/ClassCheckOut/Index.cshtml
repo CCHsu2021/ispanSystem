@@ -501,10 +501,10 @@
                             <div class="col-md-3 pl-0 mb-3">
                                 <input type="text"  class="form-control" name="[@count].StaffName">
                             </div>
-                            <div class="col-md-9 pl-0 mb-3">
+                            <div class="col-md-6 pl-0 mb-3">
                                 <input type="text" class="form-control" name="[@count].StaffEmail">
                             </div>
-                            <div class="col-md-9 pl-0 mb-3">
+                            <div class="col-md-3 pl-0 mb-3">
                                 <input type="text"  class="form-control" name="[@count].DepartmentName">
                             </div>
                         </div>
@@ -520,13 +520,13 @@
                     付款方式：
                 </div>
                 <div class="col-md-9 pl-0 mb-3">
-                    <select class="form-control" name="PayMethod">
-                        <option value="1">信用卡付款</option>
-                        <option value="2">Web ATM</option>
-                        <option value="3">ATM 櫃員機</option>
-                        <option value="4">超商代碼</option>
-                        <option value="5">超商條碼</option>
-                        <option value="6">Apple Pay</option>
+                    <select class="form-control" name="[0].PayMethod">
+                        <option value="信用卡付款">信用卡付款</option>
+                        <option value="Web ATM">Web ATM</option>
+                        <option value="ATM 櫃員機">ATM 櫃員機</option>
+                        <option value="超商代碼">超商代碼</option>
+                        <option value="超商條碼">超商條碼</option>
+                        <option value="Apple Pay">Apple Pay</option>
                     </select>
                 </div>
             </div>
@@ -590,7 +590,7 @@
                             </div>
                             <div>
                                 <span class="label">共計：NT$</span>
-                                <input readonly name="TotalPrice" id="TotalPrice" value="@total">
+                                <input readonly name="[0].TotalPrice" id="TotalPrice" value="@total">
                             </div>
                         </div>
                     </div>

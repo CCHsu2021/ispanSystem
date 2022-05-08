@@ -96,7 +96,6 @@ namespace MSITTeam1.Controllers
         [HttpPost]
         public IActionResult ComfirmPay(List<ClassCheckOutViewModel> vModel)
         {
-
             string key = CDictionary.SK_ClASS_PURCHASED_LIST + CDictionary.account;
             if (HttpContext.Session.Keys.Contains(key))
             {
@@ -106,37 +105,53 @@ namespace MSITTeam1.Controllers
                 
                 foreach(var i in list)
                 {
-
                     for (int x = a; x <a+ i.count; x++)
                     {
+                        if (CDictionary.memtype == "2") {
                         TClassOrderDetail item = new TClassOrderDetail()
                         {
                             MemberId = CDictionary.account,
                             OrderId = vModel[0].OrderId,
                             ClassExponent = i.productId,
                             Price = i.price,
+                            Qty = i.count,
                             DepartmentName = vModel[x].DepartmentName,
                             StaffEmail = vModel[x].StaffEmail,
                             StaffName = vModel[x].StaffName
                         };
-                        var checkstudent = hello.StudentBasics.FirstOrDefault(c => c.FAccount == vModel[x].StaffEmail);
-                        if (checkstudent == null)
-                        {
-                            StudentBasic addstudent = new StudentBasic()
+                            var checkstudent = hello.StudentBasics.FirstOrDefault(c => c.FAccount == vModel[x].StaffEmail);
+                            if (checkstudent == null)
                             {
-                                FAccount = vModel[x].StaffEmail,
-                                FMemberType = 1,
-                                FCheckStatus = "no",
-                            };
-                            hello.StudentBasics.Add(addstudent);
+                                StudentBasic addstudent = new StudentBasic()
+                                {
+                                    FAccount = vModel[x].StaffEmail,
+                                    FMemberType = 1,
+                                    FCheckStatus = "no",
+                                };
+                                hello.StudentBasics.Add(addstudent);
+                                hello.SaveChanges();
+                            }
+                            hello.TClassOrderDetails.Add(item);
+
                         }
-                        hello.TClassOrderDetails.Add(item);
+                        else if (CDictionary.memtype == "1")
+                        {
+                            TClassOrderDetail item = new TClassOrderDetail()
+                            {
+                                MemberId = CDictionary.account,
+                                OrderId = vModel[0].OrderId,
+                                ClassExponent = i.productId,
+                                Price = i.price,
+                                Qty = i.count,
+                            };
+                            hello.TClassOrderDetails.Add(item);
+                        }
                      }
                     a = i.count;
                 }
                 HttpContext.Session.Remove(key);
             };
-            hello.Add(vModel[0].order);
+            hello.Add(vModel[0].classOrder);
             hello.SaveChanges();
             return RedirectToAction("OrderCompleted", "CheckOut", new { id = vModel[0].OrderId });
         }

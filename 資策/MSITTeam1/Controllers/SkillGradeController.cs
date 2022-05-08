@@ -17,6 +17,7 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.account = CDictionary.account;
             ViewBag.memtype = CDictionary.memtype;
             var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
             if(account != null)
@@ -46,7 +47,7 @@ namespace MSITTeam1.Controllers
             if (topic.Grade < 50)
             {
                 var chose = (from d in hello.TQuestionLists
-                             where d.FLevel == 1 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1
+                             where d.FLevel == 1 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1 && d.FQuestionTypeId == 1
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 string a = chose[0].ToString().Substring(14);
@@ -67,7 +68,7 @@ namespace MSITTeam1.Controllers
             else if (topic.Grade >= 50 && topic.Grade < 60)
             {
                     var chose = (from d in hello.TQuestionLists
-                                 where d.FLevel == 2 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1
+                                 where d.FLevel == 2 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1 && d.FQuestionTypeId == 1
                                  orderby Guid.NewGuid()
                                  select new { d.FQuestion }).Take(1).ToArray();
                 int x = 2;
@@ -96,7 +97,7 @@ namespace MSITTeam1.Controllers
             else if (topic.Grade >= 60 && topic.Grade < 70)
             {
                 var chose = (from d in hello.TQuestionLists
-                             where d.FLevel == 3 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1
+                             where d.FLevel == 3 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1 && d.FQuestionTypeId == 1
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 int x = 3;
@@ -104,7 +105,7 @@ namespace MSITTeam1.Controllers
                 {
                     x--;
                     chose = (from d in hello.TQuestionLists
-                             where d.FLevel == x && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1
+                             where d.FLevel == x && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1 && d.FQuestionTypeId == 1
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 }
@@ -125,7 +126,7 @@ namespace MSITTeam1.Controllers
             else if (topic.Grade >= 70 && topic.Grade < 90)
             {
                 var chose = (from d in hello.TQuestionLists
-                             where d.FLevel == 4 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1
+                             where d.FLevel == 4 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1 && d.FQuestionTypeId == 1
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 int x = 4;
@@ -133,7 +134,7 @@ namespace MSITTeam1.Controllers
                 {
                     x--;
                     chose = (from d in hello.TQuestionLists
-                             where d.FLevel == x && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1
+                             where d.FLevel == x && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1 && d.FQuestionTypeId == 1
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 }
@@ -154,7 +155,7 @@ namespace MSITTeam1.Controllers
             else
             {
                 var chose = (from d in hello.TQuestionLists
-                             where d.FLevel == 5 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1
+                             where d.FLevel == 5 && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1 && d.FQuestionTypeId == 1
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 int x = 5;
@@ -162,7 +163,7 @@ namespace MSITTeam1.Controllers
                 {
                     x--;
                     chose = (from d in hello.TQuestionLists
-                             where d.FLevel == x && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1
+                             where d.FLevel == x && d.FSubjectId == topic.FSubjectId && d.FQuestionTypeId == 1 && d.FQuestionTypeId == 1
                              orderby Guid.NewGuid()
                              select new { d.FQuestion }).Take(1).ToArray();
                 }
@@ -205,7 +206,7 @@ namespace MSITTeam1.Controllers
                     hello.SaveChanges();
                 }
             }
-            return Redirect("");
+            return RedirectToAction("Index","ShowSkillGrade");
         }
 
     }
