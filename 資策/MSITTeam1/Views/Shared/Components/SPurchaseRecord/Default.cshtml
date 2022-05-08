@@ -119,7 +119,7 @@
                                         int p = (int)(item2.Price);
                                         int q = (int)(item2.Qty);
                                         int t = p * q;
-                                        <div class="col-md-2 my-2">NT$@Html.DisplayFor(modelItem => item2.Price,"Money")</div>
+                                        <div class="col-md-2 my-2">NT$@Html.DisplayFor(modelItem => item2.Price, "Money")</div>
                                         <div class="col-md-3 my-2">@item2.Qty 個</div>
                                         <div class="col-md-2 my-2">NT$@t.ToString("###,###,##0")</div>
                                     }
@@ -135,16 +135,75 @@
                     }
                     <div id="POrderPagination" class="row my-4"></div>
                 </div>
-            }
+                <div data-content id="skills">
+                    @foreach (var item in Model.classOrder)
+                    {
+                        pid = item.OrderId;
+                        pidDetail = $"POrder{item.OrderId}";
+                        <div class="ConeOrder border px-3 my-3">
+                            <div class="row bg-light p-3 align-items-center">
+                                <div class="col-md-4">
+                                    <span class="font-weight-bold">訂單號碼：</span>@item.OrderId
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="font-weight-bold">日期：</span>@Html.DisplayFor(modelItem => item.Date, "Date")
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="font-weight-bold">總額：</span>@item.TotalPrice
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="@item.OrderId" class="btn btn-info">詳情</button>
+                                </div>
+                            </div>
+                            <div id="@pidDetail" class="row align-items-center  p-3 d-none">
+                                @*<div class="col-md-4 py-2">
+                                    <span class="font-weight-bold">付款方式：</span>@item.PayMethod
+                                </div>*@ 
+                                <div class="col-12">
+                                    <h5 class="my-3 mb-2 font-weight-bold pb-2" style="border-bottom: solid  lightgray 2px ">課程清單</h5>
+                                </div>
+                                @foreach (var item2 in Model.classOrderDetail)
+                                {
+                                    if (item2.OrderId == item.OrderId)
+                                    {
 
-            <div data-content id="skills">
-                <h2>Skills</h2>
-            </div>
+                                        @foreach (var item3 in Model.ClassInfo)
+                                        {
+
+                                            if (item3.FClassExponent == item2.ClassExponent && proID != item3.FClassExponent)
+                                            {
+                                                <div class="col-md-2 my-2">
+                                                    <img src="@item3.FClassPhotoPath" />
+                                                </div>
+                                                <div class="col-md-6 my-2">@item3.FClassname</div>
+                                            }
+                                            proID = item3.FClassExponent;
+                                        }
+                                        int p = (int)(item2.Price);
+                                        int q = (int)(item2.Qty);
+                                        //int t = p * q;
+                                        <div class="col-md-4 my-2">NT$@Html.DisplayFor(modelItem => item2.Price, "Money")</div>
+                                        @*<div class="col-md-2 my-2">NT$@t.ToString("###,###,##0")</div>*@
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <script src="~/js/jquery.js"></script>
+                        <script>
+                                   $("#@pid").click(function () {
+                                   $(this).parents().find("#@pidDetail").toggleClass("d-none");
+                                   })
+                        </script>
+                    }
+                    <div id="COrderPagination" class="row my-4"></div>
+                </div>
+            }
         </div>
     </section>
 </div>
 <script>
     $(function () {
         initPagination('.oneOrder', 5, '#POrderPagination')
+        initPagination('.ConeOrder', 5, '#CPOrderPagination')
     });
 </script>
