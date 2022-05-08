@@ -18,14 +18,15 @@ namespace MSITTeam1.ViewComponent
         public IViewComponentResult Invoke()
         {
 
-            CStudentResumeViewModel SBvModel = new CStudentResumeViewModel();
+            
             List<CStudentResumeViewModel> sb = new List<CStudentResumeViewModel>();
             
-            StudentResume sr = hello.StudentResumes.FirstOrDefault(a => a.MemberId == CDictionary.account);
+            var sr = hello.StudentResumes.Where(a => a.MemberId == CDictionary.account).ToList();
             if (sr != null)
             {
-                SBvModel.ResumeImage = Convert.ToBase64String(sr.ResumeImage);
-                sb.Add(SBvModel);
+                foreach (var t in sr)
+                    sb.Add(new CStudentResumeViewModel() { resume = t , ResumeImage= Convert.ToBase64String(t.ResumeImage) });
+ 
                 return View(sb);
             }
 

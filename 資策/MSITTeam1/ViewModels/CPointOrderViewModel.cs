@@ -30,7 +30,11 @@ namespace MSITTeam1.ViewModels
         public int? BuyPoint
         {
             get { return this.Porder.BuyPoint; }
-            set { this.Porder.BuyPoint = value; }
+        }
+        public DateTime OrderDate
+        {
+            get { return this.Porder.OrderDate; }
+            set { this.Porder.OrderDate = value; }
         }
         public string CompanyTAXID
         {
@@ -42,7 +46,7 @@ namespace MSITTeam1.ViewModels
             get { return this.Porder.PayMethod; }
             set { this.Porder.PayMethod = value; }
         }
-        public float? Bonus
+        public double? Bonus
         {
             get { return this.Porder.Bonus; }
             set { this.Porder.Bonus = value; }

@@ -10,6 +10,7 @@ namespace MSITTeam1.Models
         public string OrderId { get; set; }
         public int Id { get; set; }
         public int? Price { get; set; }
+        public int? Qty { get; set; }
         public string ClassExponent { get; set; }
         public string MemberId { get; set; }
         public int? Discount { get; set; }

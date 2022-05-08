@@ -21,30 +21,38 @@
         display: none;
     }
 </style>
-<h1>履歷瀏覽</h1>
+<h3>履歷瀏覽</h3>
+<br/>
 
-<div class="container">
+<div class="container mt-3">
     
     <div >
-        @foreach (var item in Model) {
-
-        <div class="resumeflip">
-        <span>履歷</span>
-        </div>
-        <div class="resumepanel" style="display:none;">
         
-            <img src="data:image/gif;base64,@item.ResumeImage"/>
+        @{int count=0;
+            foreach (var item in Model) 
+            {
+            count++;
+        
+            <div class="resumeflip" id="flip@(count)" onclick="togglefunction(@count)" style="margin-bottom: 1rem;">
+            <label > @Html.DisplayNameFor(model => model.ResumeName)：</label>
+            <span>@Html.DisplayFor(modelItem => item.ResumeName)</span>
+            </div>
+            <div class="resumepanel" id="panel@(count)" style="display:none;">
+        
+                <img src="data:image/gif;base64,@item.ResumeImage"/>
       
-        </div>
+            </div>
+            }
         }
-    
     </div>
 </div>
 
 <script src="~/js/jquery.js"></script>
     <script>
-    $(".resumeflip").click(function () {
-        $(".resumepanel").slideToggle("fast");
-    });
+
+    function togglefunction (id) {
+        $("#panel"+id).slideToggle("fast");
+    };
+
     </script>
 
