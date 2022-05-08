@@ -18,8 +18,13 @@
             padding-right: 0 !important;
         }
 
+        *.modal-header{
+            display:-ms-flexbox !important;
+            -ms-flex-align:start !important;
+            -ms-flex-pack:justify !important ;
+        }
+
         *.modal-open {
-            overflow-y: auto !important;
             padding-right: 0 !important;
             padding-left: 0 !important;
         }
@@ -277,8 +282,6 @@
                             <div class="selectType" id="CreatebtnType">
                                 <span><a data-toggle="modal" data-target="#questionCreate">新增題目</a></span>
                             </div>
-                            <button id="testForQL">測試</button>
-                            <button id="testForTrigQ">測試2</button>
                         </div>
                     </div>
                 </div>
@@ -288,7 +291,7 @@
                 </div>
             </section>
             <section style="text-align:center;">
-                <iframe title="QBSys - 第 1 页" width="1024" height="612" src="https://app.powerbi.com/view?r=eyJrIjoiYzRlYjc4MDgtYzEwMC00NjM2LThkNmYtZjJiZjgxZjRjYzYyIiwidCI6IjZmMGJiNzJmLTUzNzctNGRkZi05MzZhLWI2YzcyYmYyMWFlMiIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
+                <iframe title="QBSys" width="1024" height="612" src="https://app.powerbi.com/view?r=eyJrIjoiYzRlYjc4MDgtYzEwMC00NjM2LThkNmYtZjJiZjgxZjRjYzYyIiwidCI6IjZmMGJiNzJmLTUzNzctNGRkZi05MzZhLWI2YzcyYmYyMWFlMiIsImMiOjF9&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
             </section>
         </div>
     </div>
@@ -301,7 +304,8 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">題目新增</h5>
                 <input type="button" class="close" data-dismiss="modal" aria-label="Close" />
-                <span aria-hidden="true">&times;</span>
+                @*<span aria-hidden="true">&times;</span>*@
+                <span aria-hidden="true"></span>
             </div>
             <div class="modal-body">
                 <vc:question-bank-create-ad></vc:question-bank-create-ad>
@@ -310,38 +314,6 @@
     </div>
 </div>
 
-<!-- Modal -->
-<!--<div class="modal fade modal-dialog-scrollable" id="questionEdit" tabindex="-1" aria-labelledby="questionEdit" aria-hidden="true">
-    <div class="modal-dialog  modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">題目修改</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="EditModal">
-
-            </div>
-        </div>
-    </div>
-</div>-->
-<!-- Modal -->
-<!--<div class="modal fade modal-dialog-scrollable" id="questionDetail" tabindex="-1" aria-labelledby="questionDetail" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">題目內容</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="DetailModal">
-
-            </div>
-        </div>
-    </div>
-</div>-->
 
 @section Scripts
 {
@@ -366,85 +338,6 @@
         var temp = "show_rated_" + i;
         $(this).next().attr("class", temp);
     })
-
-    // 題目編輯
-        @*$('.editQuestion').click(function () {
-                jsondata = JSON.stringify({
-                    Subjects: $(this).parents("tr").find('.subjectId').val(),
-                    questionID: $(this).parents("tr").find('.questionId').val()
-                })
-        console.log(jsondata);
-            $.ajax({
-                url: "@Url.Content("~/QuesBankSysAdmin/EditByVC")",
-                type: "POST",
-                contentType: "application/json",
-                data: jsondata,
-                success: function (result) {
-                    $('#EditModal').html(result);
-                }
-            })
-    })*@
-
-         @*$('.editQuestion').click(function () {
-            jsondata = JSON.stringify({
-                Subjects: $(this).parents("tr").find('.subjectId').val(),
-                questionID: $(this).parents("tr").find('.questionId').val()
-            })
-            $.ajax({
-                url: "@Url.Content("~/QuesBankSysAdmin/EditByVC")",
-                type: "POST",
-                contentType: "application/json",
-                data: jsondata,
-                success: function (result) {
-                    $('#EditModal').html(result);
-                }
-            })
-    })*@
-
-
-
-    // 題目內容
-    @*$('.detailQuestion').click(function () {
-            jsondata = JSON.stringify({
-                Subjects: $(this).parents("tr").find('.subjectId').val(),
-                questionID: $(this).parents("tr").find('.questionId').val()
-            })
-        $.ajax({
-            url: "@Url.Content("~/QuesBankSysAdmin/DetailByVC")",
-            type: "POST",
-            contentType: "application/json",
-            data: jsondata,
-            success: function (result) {
-                $('#DetailModal').html(result);
-            }
-        })
-    })*@
-
-    // 題目刪除
-    @*$('.delQuestion').click(function () {
-        Swal.fire({
-            title: '確定要刪除嗎?',
-            text: "該操作無法撤回",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '刪除'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                var sub = $(this).parents("tr").find('.subjectId').val();
-                var quesId = $(this).parents("tr").find('.questionId').val();
-               async function deleteQues() {
-                   const responseDelete = await fetch("@Url.Content("~/QuesBankSysAdmin/Delete")" + `?subjectID=${sub}&questionID=${quesId}`);
-                   const data = await responseDelete.text()
-                   Swal.fire(data);
-                }
-                deleteQues();
-                $('#testsearch').trigger('click');
-            }
-        })
-    })*@
-
 
 // 載入課程名稱
         const selSubQuest = document.querySelector('#FSubjectIdSel');
@@ -576,10 +469,15 @@
                     Swal.fire({
                         icon: 'success',
                         title: '新增成功',
-                        showConfirmButton: true,
+                        showConfirmButton: false,
                         timer: 1500
+                    }).then(() => {
+                        $('#questionCreate').modal('hide');
+                        $('.modal-backdrop').remove();
+                        $('#questionCreate').on('hidden.bs.modal', function () {
+                            $('#testsearch').trigger('click');
+                        })
                     })
-                $('.modalCre').modal('hide');
                 })
             }
         })
