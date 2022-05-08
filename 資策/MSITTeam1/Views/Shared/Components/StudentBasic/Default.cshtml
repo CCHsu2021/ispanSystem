@@ -1,10 +1,12 @@
-﻿@addTagHelper *, MSITTeam1
+﻿
+@addTagHelper *, MSITTeam1
+
 @model IEnumerable<MSITTeam1.ViewModels.CStudentResumeViewModel>
 
     @foreach (var item in Model)
 {   
-    
-         <div class="col-md-6">
+       <div class="row">
+           <div class="col-md-8">
             <h3>基本資料</h3>
             <hr/>
             <div class="inputstyle">
@@ -26,28 +28,45 @@
                 <label> @Html.DisplayNameFor(model => model.fEmail)</label>
                 <span>@Html.DisplayFor(modelItem => item.fEmail)</span>
             </div>
-            <hr />
+         
+        </div>
+
+         <div class="col-md-4 text-center ">
+            <div class="inputstyle">
+                <label for="file-input">
+                <img  id="blah" class="mt-5 mb-3 img-thumbnail" style="margin-bottom: 0 !important;" src="~/images/student/@item.fPortrait" width="200" height="150" title="變更圖片" alt="您的圖片"/>
+                </label>
+                <input style="display:none" id="file-input" type="file" name="photo" />
+            </div>
+        </div>
+       </div>
+         
+
+        <div class="row">
+            <div class="col-12">
+                   <hr />
             <div class="inputstyle">
                 <label> @Html.DisplayNameFor(model => model.fPhone)</label>
                 <span>@Html.DisplayFor(modelItem => item.fPhone)</span>
             </div>
             <hr />
             <div class="inputstyle">
+@*                 <div>
+                    <vc:selector city="@Model" district="@Model.fDistrict"></vc:selector>    
+                </div>*@
                 <label> @Html.DisplayNameFor(model => model.fAddress)</label>
                 <span>@Html.DisplayFor(modelItem => item.fAddress)</span>
             </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="inputstyle">
-                <img class="mt-5 mb-3" src="~/images/student/@item.fPortrait" width="200" height="150" />
-            </div>
-            <div class="inputstyle">
+            <hr/>
+            <div class="inputstyle ">
                 <label> @Html.DisplayNameFor(model => model.fAutobiography)</label>
                 <br/>
                 <span>@Html.DisplayFor(modelItem => item.fAutobiography)</span>
             </div>
+            </div>
+            
         </div>
+
 
         <div class="btnflex w-100">
         <button class="btn-style-two" type="button" data-toggle="modal" data-target="#staticBackdrop">資料修改</button>

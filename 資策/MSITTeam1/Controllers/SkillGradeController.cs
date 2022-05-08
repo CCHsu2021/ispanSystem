@@ -17,6 +17,7 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.account = CDictionary.account;
             ViewBag.memtype = CDictionary.memtype;
             var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
             if(account != null)
@@ -205,7 +206,7 @@ namespace MSITTeam1.Controllers
                     hello.SaveChanges();
                 }
             }
-            return Redirect("");
+            return Redirect("ShowSkillGrade");
         }
 
     }

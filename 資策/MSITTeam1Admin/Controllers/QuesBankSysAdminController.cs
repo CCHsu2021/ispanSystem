@@ -203,10 +203,15 @@ namespace MSITTeam1Admin.Controllers
 				{
 					return Content("當前有試卷引用此題，無法刪除", "text/plain", System.Text.Encoding.UTF8);
 				}
-				var ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);
+				var ques = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(subjectID) && q.FQuestionId == questionID);				
 				if (ques != null)
 				{
-					ques.FState = 0;
+					var quesDetail = _context.TQuestionDetails.Where(c => c.FSubjectId.Equals(subjectID) && c.FQuestionId == questionID);
+					foreach(var c in quesDetail)
+					{
+						_context.TQuestionDetails.Remove(c);
+					}
+					_context.TQuestionLists.Remove(ques);
 					_context.SaveChanges();
 					return Content("刪除成功", "text/plain", System.Text.Encoding.UTF8);
 				}
@@ -223,6 +228,22 @@ namespace MSITTeam1Admin.Controllers
 			}).Distinct().OrderBy(s => s.FClassCategory);
 			return Json(subjects);
 		}
+		public IActionResult SubjectExistQuestion()
+		{
+			var subject = _context.TQuestionLists.Select(s => new
+			{
+				s.FSubjectId
+			}).Distinct().OrderBy(s => s.FSubjectId);
+			return Json(subject);
+		}
 
+		public IActionResult TypeExist(string subjectID)
+		{
+			var type = _context.TQuestionLists.Where(t => t.FSubjectId == subjectID).Select(t => new
+			{
+				t.FQuestionTypeId
+			}).Distinct();
+			return Json(type);
+		}
 	}
 }

@@ -19,7 +19,7 @@ namespace MSITTeam1.ViewComponent
         {
             _context = context;
         }
-        public IViewComponentResult Invoke(int jobId,string jobName,string companyTaxid,string rowCount)
+        public IViewComponentResult Invoke(int jobId,string jobName,string companyTaxid,string rowCount)  
         {
             //todo 必須判斷是否已登入
             //假設登入帳號是學員：111

@@ -36,13 +36,13 @@ namespace MSITTeam1.ViewModels
         public string InterviewAddress { get { return this.comR.InterviewAddress; } set { this.comR.InterviewAddress = value; } }
         [DisplayName("希望回應時間")]
         public string StudentRespondTime { get { return this.comR.StudentRespondTime; } set { this.comR.StudentRespondTime = value; } }
-        [DisplayName("邀約面試信內容")]
+        [DisplayName("回覆信內容")]
         public string InterviewContent { get { return this.comR.InterviewContent; } set { this.comR.InterviewContent = value; } }
         [DisplayName("建立時間")]
         public string CreatTime { get { return this.comR.CreatTime; } set { this.comR.CreatTime = value; } }
         [DisplayName("修改時間")]
         public string ModifyTime { get { return this.comR.ModifyTime; } set { this.comR.ModifyTime = value; } }
-        [DisplayName("工作名稱")]
+        [DisplayName("職缺名稱")]
         public string JobName { get; set; }
     }
 }
