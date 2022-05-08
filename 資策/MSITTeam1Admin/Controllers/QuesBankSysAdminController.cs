@@ -95,21 +95,24 @@ namespace MSITTeam1Admin.Controllers
 				int lastId = searchLastId.First().FQuestionId;
 				newques.FQuestionId = lastId + 1;
 			}
+			// TODO:12.後台管理員賬號 修改
 			newques.FSubmitterId = "admin";
 			newques.FState = 1;
-			_context.TQuestionLists.Add(newques.question);
-			foreach (var ans in newques.FChoiceList)
+			if(newques.question.FQuestionId >= 1 && !string.IsNullOrEmpty(newques.question.FSubjectId))
 			{
-				newques.FCSubjectId = newques.FSubjectId;
-				newques.FCQuestionId = newques.FQuestionId;
-				newques.FChoice = ans.Fchoice;
-				newques.FCorrectAnswer = ans.FCorrect;
-				newques.FSn = 0;
-				_context.TQuestionDetails.Add(newques.choice);
+				_context.TQuestionLists.Add(newques.question);
+				foreach (var ans in newques.FChoiceList)
+				{
+					newques.FCSubjectId = newques.FSubjectId;
+					newques.FCQuestionId = newques.FQuestionId;
+					newques.FChoice = ans.Fchoice;
+					newques.FCorrectAnswer = ans.FCorrect;
+					newques.FSn = 0;
+					_context.TQuestionDetails.Add(newques.choice);
+					_context.SaveChanges();
+				}
 				_context.SaveChanges();
 			}
-			_context.SaveChanges();
-
 			//return Content("新增成功");
 			return RedirectToAction("Index");
 		}

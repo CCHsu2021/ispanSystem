@@ -130,7 +130,8 @@
     })
 
     // 題目編輯
-    $('.editQuestion').click(function () {        
+    $('.editQuestion').click(function () {
+        console.log("edit");
                 jsondata = JSON.stringify({
                     Subjects: $(this).parents("tr").find('.subjectId').val(),
                     questionID: $(this).parents("tr").find('.questionId').val()
