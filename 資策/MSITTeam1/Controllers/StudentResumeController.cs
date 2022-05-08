@@ -389,8 +389,9 @@ namespace MSITTeam1.Controllers
             return Json(datas);
         }
 
-        public IActionResult saveResume()
+        public IActionResult saveResume(string resumeName)
         {
+            
             string Image = Request.Form["ResumeImage"].ToString();
             string account = CDictionary.account;
             if (Image != null)
@@ -398,7 +399,7 @@ namespace MSITTeam1.Controllers
                 byte[] data = Convert.FromBase64String(Image);
                 //string filePath = Path.Combine(_enviroment.WebRootPath, "uploads", "haha.png");
                 StudentResume stu = new StudentResume();
-
+                stu.ResumeName = resumeName;
                 stu.ResumeImage = data;
                 stu.MemberId = account;
                 hello.StudentResumes.Add(stu);

@@ -140,6 +140,11 @@
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>技能</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>作品</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>自我介紹</h4></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
 
 @*                        <div class="alert alert-success kanban-card cardBody " id="tool">
                             <img class="toolImage" src="~/images/Resume/book.jpg" width="300" style="text-align:center" />
@@ -418,6 +423,7 @@
             const btnResumeSave = document.querySelector("#btnResumeSave");
             const btnPrint = document.querySelector("#btnPrint");
             const paneltitle = document.querySelector("#paneltitle");
+            const resumeName = document.querySelector("#resumeName");
             const toolpanel = document.getElementById("toolpanel");
             const datapanel = document.getElementById("data");
 
@@ -435,9 +441,10 @@
                 btnPreview.style.visibility="hidden";
                 btnEdit.style.visibility="visible";
                 btnPrint.style.visibility="visible";
-                
+                paneltitle.style.visibility="hidden";
+                resumeName.style.visibility="hidden";
                 btnResumeSave.style.visibility="visible";
-                console.log($("#resumeName").val());
+                //console.log($("#resumeName").val());
                 });
 
             btnEdit.addEventListener('click', (evt) => {
@@ -448,7 +455,8 @@
                 btnPrint.style.visibility="hidden";
                 btnPreview.style.visibility="visible";
                 btnResumeSave.style.visibility="hidden";
-
+                paneltitle.style.visibility="visible";
+                resumeName.style.visibility="visible";
                 });
 
              function printScreen() {
@@ -469,7 +477,10 @@
                     });
                 }
 
+                
+
                 function SaveScreen() {
+                    var resumeName = $("#resumeName").val();
                     html2canvas($("#kanban")[0]).then(function(canvas) {
                      var dataURL = canvas.toDataURL("image/png");
                      dataURL = dataURL.replace('data:image/png;base64,','');
@@ -479,14 +490,20 @@
                         url: '@Url.Content("~/StudentResume/saveResume")',
                         type: 'post',
                         data: {
-                            ResumeImage:dataURL
-                            
-                        },
+                            ResumeImage:dataURL ,
+                            resumeName:resumeName
+                            }
                         
-                        //dataType: 'text',
-                        success: function (response) {
-                        console.log(response);
-                                }
+                        
+                            }).done(function (data) {
+                            Swal.fire({
+                                        icon: 'success',
+                                        title: '新增成功',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                        })
+                            $('.next').hide();
+
                             });
                         });
                     }
