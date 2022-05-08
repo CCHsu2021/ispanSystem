@@ -204,8 +204,8 @@
                         <div class="col-3">
                             <select id="FQuestionTypeId" class="form-control">
                                 <option value="">請選擇題型</option>
-                                <option value="1">單選題</option>
-                                <option value="2">多選題</option>
+                                @*<option value="1">單選題</option>
+                                <option value="2">多選題</option>*@
                             </select>
                         </div>
                         <div class="col-3">
@@ -290,7 +290,7 @@
     <script src="~/js/barRating.init.js"></script>
     <script>
 
-          // 載入課程名稱
+          // 載入全部課程名稱
         const selSubQuest = document.querySelector('#FSubjectIdSel');
         const selSubPaper = document.querySelector('#FSubject');
         async function LoadSubject() {
@@ -308,19 +308,45 @@
             })
         }       
 
+        // 載入目前有題目的課程名稱
        const selSubSearch = document.querySelector('#FSubjectId');
-        async function LoadSubjectEsitQuestion() {
-            const responseSubjectEsitQuestion = await fetch('@Url.Content("~/QuestionBank/SubjectEsitQuestion")');
-            renderSubjectEsitQuestion(await responseSubjectEsitQuestion.json());
+        async function LoadSubjectExistQuestion() {
+            const responseSubjectExistQuestion = await fetch('@Url.Content("~/QuestionBank/SubjectExistQuestion")');
+            renderSubjectExistQuestion(await responseSubjectExistQuestion.json());
+
+            const subject = selSubSearch.options[selSubSearch.selectedIndex].value;
+            await LoadType(subject);
         }
-        function renderSubjectEsitQuestion(datas) {
+
+        function renderSubjectExistQuestion(datas) {
             datas.forEach((item) => {
                 const opt = new Option(item.fSubjectId, item.fSubjectId);
                 selSubSearch.options.add(opt);
             })
         }
-        LoadSubjectEsitQuestion();
+        LoadSubjectExistQuestion();
         LoadSubject();
+
+        // 根據題目顯示當前已有題型
+        const selQuestionType = document.querySelector('#FQuestionTypeId');
+        async function LoadType(subject) {
+            const responseType = await fetch("@Url.Content("~/QuestionBank/TypeExist")" + `?subjectID=${subject}`)
+            renderType(await responseType.json());
+        }
+        function renderType(datas) {
+            selQuestionType.options.length = 1;
+            datas.forEach((item) => {
+                var typeText = "";
+                if (item.fQuestionTypeId == "1") {
+                    typeText = "單選題";
+                } else if (item.fQuestionTypeId == "2") {
+                    typeText = "多選題";
+                }
+                console.log(typeText);
+                const opt = new Option(typeText, item.fQuestionTypeId);
+                selQuestionType.options.add(opt);
+            })            
+        }
         // 題目查詢
         var jsondata = null;
         $(document).ready(function () {
@@ -346,11 +372,14 @@
             }).done(function () {
                 $('#editGroup').hide();
                 $('.editQButton').hide();
+                initPagination('.questionRows', 7, '#QuestionPagination');
             })
         }
 
-        // TODO:12.選擇即更新，翻頁插件會失效
-        $('#FSubjectId').on('change', function () {
+        // TODO:12.選擇即更新
+        $('#FSubjectId').on('change',async function () {
+            const subject = selSubSearch.options[selSubSearch.selectedIndex].value;
+            await LoadType(subject);
             searchQuestion();
         });
         $('#FQuestionTypeId').on('change', function () {
@@ -432,7 +461,6 @@
                     FChoiceList: ansArr,
                     FLevel: $('.levelCre').val()
                 })
-                console.log(jsondata);
                 $.ajax({
                     url: "/QuestionBank/Create",
                     type: "POST",
@@ -444,7 +472,7 @@
                         title: '新增成功',
                         showConfirmButton: false,
                         timer: 1500
-                    }).done(() => {
+                    }).then(() => {
                         $('.modalCre').modal('hide');
                         searchQuestion();
                     })
@@ -497,7 +525,7 @@
         // 新增試卷
         $('#createPaper').click(function () {
             var selectList = [];
-            var QuestionList = $('#testTable').length;
+            var QuestionList = $('#testTable > tbody > tr').length;
             if (QuestionList < 1) {
                 Swal.fire("尚未選取題目");
             } else if ($('#FpaperName').val() == "") {
@@ -514,7 +542,6 @@
                     queid.fQuestionId = que;
                     selectList.push(queid);
                 })
-                //console.log(selectList);
                 var newPaperJson = JSON.stringify({
                     FDesignerAccount: $('#FDesignerAccount').val(),
                     FTestPaperName: $('#FpaperName').val(),
@@ -522,7 +549,6 @@
                     FNote: $('#FPaperNote').val(),
                     SelectQuestionList: selectList,
                 })
-                //console.log(newPaperJson);
                 $.ajax({
                     url: "/TestPaperBank/CreatNewPaper",
                     type: "POST",
@@ -532,7 +558,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: '新增成功',
-                        showConfirmButton: true,
+                        showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
                         window.location.replace("https://localhost:44387/TestPaperBank/Home");

@@ -18,7 +18,6 @@
         </tr>
     </thead>
     <tbody class="questionTable">
-
         @{
             if (Model != null)
             {
@@ -142,12 +141,13 @@
     $('.delQuestion').click(function () {
         Swal.fire({
             title: '確定刪除嗎?',
-            text: "該操作無法撤回",
+            text: "刪除操作無法撤銷",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: '刪除',
+            cancelButtonText: '取消'
         }).then((result) => {
             if (result.isConfirmed) {                
                 var sub = $(this).parents("tr").find('.subjectId').val();
@@ -166,9 +166,9 @@
 </script>
 <script>
 
-    $(document).ready(function () {
-        initPagination('.questionRows', 7, '#QuestionPagination');
-    })
+    //$(document).ready(function () {
+    //    initPagination('.questionRows', 7, '#QuestionPagination');
+    //})
 
 
      //分頁套件

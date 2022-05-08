@@ -22,7 +22,7 @@ namespace MSITTeam1.Controllers
 			return View();
 		}
 		[HttpPost]
-		public IActionResult List([FromBody]CQuestionQueryViewModel query)
+		public IActionResult List([FromBody] CQuestionQueryViewModel query)
 		{
 			ViewBag.Name = CDictionary.username;
 			ViewBag.Type = CDictionary.memtype;
@@ -63,7 +63,7 @@ namespace MSITTeam1.Controllers
 			}
 		}
 
-		private IQueryable<CQuestionBankViewModel> FilterByClass(IQueryable<CQuestionBankViewModel> table,string className)
+		private IQueryable<CQuestionBankViewModel> FilterByClass(IQueryable<CQuestionBankViewModel> table, string className)
 		{
 			if (!string.IsNullOrEmpty(className))
 			{
@@ -100,7 +100,7 @@ namespace MSITTeam1.Controllers
 				newques.FQuestionId = lastId + 1;
 			}
 			// TODO:6.題目創建者修改
-			if(CDictionary.account != null)
+			if (CDictionary.account != null)
 			{
 				newques.FSubmitterId = CDictionary.account;
 			}
@@ -137,11 +137,11 @@ namespace MSITTeam1.Controllers
 		public IActionResult EditByVC([FromBody] CQuestionQueryViewModel query)
 		{
 			int questionID = 0;
-			if(query != null)
+			if (query != null)
 			{
 				questionID = Convert.ToInt32(query.questionID);
 			}
-			return ViewComponent("QuestionBankEdit", new { subjectID = query.Subjects, questionID = questionID});
+			return ViewComponent("QuestionBankEdit", new { subjectID = query.Subjects, questionID = questionID });
 		}
 
 		[HttpPost]
@@ -165,13 +165,13 @@ namespace MSITTeam1.Controllers
 					quesSel.FLevel = quesList.FLevel;
 					foreach (var ans in quesList.FChoiceList)
 					{
-						if(ans.FSN != 0)
+						if (ans.FSN != 0)
 						{
-						// 原有選項修改
-						choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSN);
-						choSel.FChoice = ans.Fchoice;
-						choSel.FCorrectAnswer = ans.FCorrect;
-						editChoiceSnList.Add(ans.FSN);
+							// 原有選項修改
+							choSel = _context.TQuestionDetails.FirstOrDefault(c => c.FSn == ans.FSN);
+							choSel.FChoice = ans.Fchoice;
+							choSel.FCorrectAnswer = ans.FCorrect;
+							editChoiceSnList.Add(ans.FSN);
 						}
 						else
 						{
@@ -236,13 +236,23 @@ namespace MSITTeam1.Controllers
 			}).Distinct().OrderBy(s => s.FClassCategory);
 			return Json(subjects);
 		}
-		public IActionResult SubjectEsitQuestion()
+		public IActionResult SubjectExistQuestion()
 		{
-			var sub = _context.TQuestionLists.Select(s => new
+			var subject = _context.TQuestionLists.Where(s => s.FState == 2 ||
+			(s.FState == 1 && s.FSubmitterId == CDictionary.account)).Select(s => new
 			{
 				s.FSubjectId
 			}).Distinct().OrderBy(s => s.FSubjectId);
-			return Json(sub);
+			return Json(subject);
+		}
+
+		public IActionResult TypeExist(string subjectID)
+		{
+			var type = _context.TQuestionLists.Where(t => t.FSubjectId == subjectID).Select(t => new
+			{
+				t.FQuestionTypeId
+			}).Distinct();
+			return Json(type);
 		}
 
 		public IActionResult Classes()
