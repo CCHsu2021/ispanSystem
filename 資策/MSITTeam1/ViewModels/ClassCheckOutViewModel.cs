@@ -20,7 +20,7 @@ namespace MSITTeam1.ViewModels
             _orderDetail = new TClassOrderDetail();
             _classInfo = new TClassInfo();
         }
-        public TClassOrder order
+        public TClassOrder classOrder
         {
             get { return _order; }
             set { _order = value; }
@@ -39,14 +39,14 @@ namespace MSITTeam1.ViewModels
 
         public string OrderId
         {
-            get { return this.order.OrderId; }
-            set { this.order.OrderId = value; }
+            get { return this.classOrder.OrderId; }
+            set { this.classOrder.OrderId = value; }
         }
 
         public string MemberId
         {
-            get { return this.order.MemberId; }
-            set { this.order.MemberId = value; }
+            get { return this.classOrder.MemberId; }
+            set { this.classOrder.MemberId = value; }
         }
         public string DepartmentName
         {
@@ -66,13 +66,13 @@ namespace MSITTeam1.ViewModels
 
         public DateTime? Date
         {
-            get { return this.order.Date; }
-            set { this.order.Date = value; }
+            get { return this.classOrder.Date; }
+            set { this.classOrder.Date = value; }
         }
         public int? TotalPrice
         {
-            get { return this.order.TotalPrice; }
-            set { this.order.TotalPrice = value; }
+            get { return this.classOrder.TotalPrice; }
+            set { this.classOrder.TotalPrice = value; }
         }
         //public string TAXID
         //{
@@ -81,8 +81,8 @@ namespace MSITTeam1.ViewModels
         //}
         public string PayMethod
         {
-            get { return this.order.PayMethod; }
-            set { this.order.PayMethod = value; }
+            get { return this.classOrder.PayMethod; }
+            set { this.classOrder.PayMethod = value; }
         }
        
         public string imgPath

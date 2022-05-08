@@ -96,7 +96,6 @@ namespace MSITTeam1.Controllers
         [HttpPost]
         public IActionResult ComfirmPay(List<ClassCheckOutViewModel> vModel)
         {
-
             string key = CDictionary.SK_ClASS_PURCHASED_LIST + CDictionary.account;
             if (HttpContext.Session.Keys.Contains(key))
             {
@@ -115,6 +114,7 @@ namespace MSITTeam1.Controllers
                             OrderId = vModel[0].OrderId,
                             ClassExponent = i.productId,
                             Price = i.price,
+                            Qty = i.count,
                             DepartmentName = vModel[x].DepartmentName,
                             StaffEmail = vModel[x].StaffEmail,
                             StaffName = vModel[x].StaffName
@@ -129,6 +129,7 @@ namespace MSITTeam1.Controllers
                                 FCheckStatus = "no",
                             };
                             hello.StudentBasics.Add(addstudent);
+                            hello.SaveChanges();
                         }
                         hello.TClassOrderDetails.Add(item);
                      }
@@ -136,7 +137,7 @@ namespace MSITTeam1.Controllers
                 }
                 HttpContext.Session.Remove(key);
             };
-            hello.Add(vModel[0].order);
+            hello.Add(vModel[0].classOrder);
             hello.SaveChanges();
             return RedirectToAction("OrderCompleted", "CheckOut", new { id = vModel[0].OrderId });
         }

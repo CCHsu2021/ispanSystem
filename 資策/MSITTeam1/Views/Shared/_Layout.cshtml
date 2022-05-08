@@ -155,7 +155,7 @@
                                             <li>
                                                 <a href="https://www.ispan.com.tw/studentnotice">學員須知</a>
                                             </li>
-                                            <li id="ResumeClick" >
+                                            <li id="ResumeClick">
                                                 <a>履歷製作</a>
                                             </li>
                                             <li>
@@ -173,7 +173,7 @@
                                         <a class="dropdown-toggle-title" href="#">企業專區</a>
                                         <ul>
                                             <li id="buyPoint">
-                                                <a >購買點數</a>
+                                                <a>購買點數</a>
                                             </li>
                                             <li>
                                                 <a href="@Url.Action("classIndex","Products")">在職進修班</a>
@@ -206,13 +206,13 @@
                                         <ul>
                                             <li>@Html.ActionLink("前後課堂測試", "Index", "Grade")</li>
                                             <li>
-                                                @Html.ActionLink("前後測驗檢視", "Index", "ShowClassGrade")
+                                                <a id="ViewGrade">前後測驗檢視</a>
                                             </li>
                                             <li>
                                                 @Html.ActionLink("技能綜合測試", "Index", "SkillGrade")
                                             </li>
                                             <li>
-                                                @Html.ActionLink("技能測驗檢視", "Index", "ShowSkillGrade")
+                                                <a id="ViewSkillGrade">技能測驗檢視</a>
                                             </li>
                                         </ul>
                                         <div class="dropdown-btn">
@@ -372,10 +372,10 @@
     <script src="~/js/jQuery.print.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/flatpickr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/l10n/zh-tw.js"></script>
-    
+
     @await RenderSectionAsync("Scripts", required: false)
 
-<script>
+    <script>
         //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
         $(document).ready(function () {
         var onResize = function () {
@@ -447,7 +447,7 @@
                 timer: 1300
             }).done(
                 setTimeout(function () {
-                    location = 'https://localhost:44387/Company_Login'
+                    location = '@Url.Content("~/TestPaperBank/Home")'
                 }, 1300)
             );
         }
@@ -459,7 +459,7 @@
                 timer: 2000
             })
         } else if ("@ViewBag.Type" == "2") {
-            $('#QuestionBankSys > a').attr("href", "../TestPaperBank/Home");
+            $('#QuestionBankSys > a').attr("href", "@Url.Content("~/TestPaperBank/Home")");
         }
     })
 
@@ -473,7 +473,7 @@
                 timer: 1300
             }).done(
                 setTimeout(function () {
-                    location = 'https://localhost:44387/Company_Login'
+                    location = '@Url.Content("~/Company_Login")'
                 }, 1300)
             );
         }
@@ -485,7 +485,7 @@
                 timer: 2000
             })
         } else if ("@ViewBag.Type" == "2") {
-            $('#buyPoint > a').attr("href", "../BuyPoint/Index");
+            $('#buyPoint > a').attr("href", "@Url.Content("~/BuyPoint/Index")");
         }
     })
 
@@ -499,7 +499,7 @@
                 timer: 1300
             }).done(
                 setTimeout(function () {
-                    location = 'https://localhost:44387/Student_Login'
+                    location = '@Url.Content("~/Student_Login")'
                 }, 1300)
             );
         }        else if ("@ViewBag.Type" == "2") {
@@ -510,9 +510,50 @@
                 timer: 2000
             })
         } else if ("@ViewBag.Type" == "1") {
-            $('#ResumeClick > a').attr("href", "../StudentResume/create");
+            $('#ResumeClick > a').attr("href", "@Url.Content("~/StudentResume/create")");
         }
-        });
-</script>
+    });
+    $("#ViewGrade").click(() => {
+        if ("@ViewBag.account" == "")
+        {
+            Swal.fire({
+                icon: 'info',
+                title: '請先登入會員',
+                showConfirmButton: false,
+                timer: 1300
+            }).done(
+                setTimeout(function () {
+                    location = '@Url.Content("~/Student_Login")'
+                }, 1300)
+            ); 
+        }else {
+            $("#ViewGrade").attr("href", "@Url.Content("~/ShowClassGrade/Index")");
+        }
+    })
+    $("#ViewSkillGrade").click(() => {
+          if ("@ViewBag.account" == "")
+        {
+            Swal.fire({
+                icon: 'info',
+                title: '請先登入會員',
+                showConfirmButton: false,
+                timer: 1300
+            }).done(
+                setTimeout(function () {
+                    location = '@Url.Content("~/Student_Login")'
+                }, 1300)
+            );
+        }        else if ("@ViewBag.Type" == "2") {
+            Swal.fire({
+                icon: 'info',
+                title: '此系統目前僅對學生會員開放',
+                showConfirmButton: false,
+                timer: 2000
+            })
+        }else if ("@ViewBag.Type" == "1") {
+            $(this).attr("href", "@Url.Content("~/ShowSkillGrade/Index")");
+        }
+    })
+    </script>
 </body>
 </html>

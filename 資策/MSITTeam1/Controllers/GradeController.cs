@@ -17,6 +17,8 @@ namespace MSITTeam1.Controllers
         }
         public IActionResult Index(GradeIdentify Grade)
         {
+            ViewBag.account = CDictionary.account;
+            ViewBag.type = CDictionary.memtype;
             IEnumerable<CTestPaperViewModel> list = null;
             ViewBag.MemberId = CDictionary.account;
             var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
