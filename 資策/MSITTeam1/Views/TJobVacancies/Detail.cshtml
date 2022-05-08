@@ -1,4 +1,5 @@
-﻿@model MSITTeam1.ViewModels.TJobVacanciesViewModel
+﻿@addTagHelper *, MSITTeam1
+@model MSITTeam1.ViewModels.TJobVacanciesViewModel
 
 @{
     ViewData["Title"] = "Detail";
@@ -31,77 +32,91 @@
 }
 <div class="container-fluid p-3" style="background: #f3f3f3; position: static;">
     <div class="container" style="position:static;">
-        @{int number = 0;}
-            @if (number < 1)
-            {
-                number++;
-                <!-- Main -->
-                <div class="row p-3 my-3 shadow border rounded bg-white align-items-end">
-                    <div class="col-md-3 text-center">
-                        <img class="w-50" src="~/images/company/@Model.FCompanyLogo" />
-                    </div>
-                    <div class="col-md-9">
-                        <h3>@Model.FJobName</h3>
+        <!-- Main -->
+        <div class="row p-3 my-3 shadow border rounded bg-white align-items-end">
+            <div class="col-md-3 text-center">
+                <img class="w-50" src="~/images/company/@Model.FCompanyLogo" />
+            </div>
+            <div class="col-md-9">
+                <h3>@Model.FJobName</h3>
+            </div>
+        </div>
+        <div id="company-intro-content" class="row p-3 my-3 shadow-sm border rounded bg-white">
+            <h3 class="w-100 col-12 font-weight-bold">工作介紹</h3>
+            <br />
+            <div class="col-md-6 py-2" style="line-height:2rem;">
+                <div>
+                    <span class="font-weight-bold">公司名稱：</span>@Model.FCompanyName
+                </div>
+                <div>
+                    <span class="font-weight-bold">職缺類型：</span>@Model.FJobDirect
+                </div>
+                <div>
+                    <span class="font-weight-bold">薪水制度：</span>@Model.FSalaryMode
+                </div>
+                <div>
+                    <span class="font-weight-bold">薪水：</span>@(Convert.ToInt32(Model.FSalaryMin)/1000)K ~ @(Convert.ToInt32(Model.FSalaryMax)/1000)K TWD/月
+                </div>
+                <div>
+                    <span class="font-weight-bold">工作地點：</span>@(Model.FCity + Model.FDistrict + Model.FWorkAddress)
+                </div>
+                <div>
+                    <span class="font-weight-bold">工作經驗：</span>@Model.FWorkExp
+                </div>
+                <div>
+                    <span class="font-weight-bold">工作型態：</span>@Model.FEmployeeType
+                </div>
+                <div>
+                    <span class="font-weight-bold">工作時數：</span>@Model.FWorkHours 小時
+                </div>
+                <div>
+                    <span class="font-weight-bold">教育程度：</span>@Model.FEducation
+                </div>
+                <div>
+                    <span class="font-weight-bold">休假制度：</span>@Model.FLeaveSystem
+                </div>
+                <div>
+                    <span class="font-weight-bold">需求人數：</span>@Model.FNeedPerson 人
+                </div>
+                <div>
+                    <span class="font-weight-bold">創建時間：</span>@Convert.ToDateTime(Model.FCreatTime).ToString("yyyy-MM-dd")
+                </div>
+            </div>
+            <div class="col-md-6  py-2" style="line-height:2rem;">
+                <div>
+                    <span class="font-weight-bold">聯絡人：</span>@Model.FContactPerson
+                </div>
+                <div>
+                    <span class="font-weight-bold">聯絡電話：</span>@Model.FContactPhone
+                </div>
+                <div>
+                    <span class="font-weight-bold">聯絡信箱：</span>@Model.FContactEmail
+                </div>
+            </div>
+            <div class="w-100">
+                <hr class="w-100" />
+            </div>
+            <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.FOther</pre>
+            <div>
+                <button class="btn-style-two" type="button" data-toggle="modal" data-target="#jobModal" onclick="GetResumeData(0)">我要應徵</button>
+            </div>
+            <!-- 修改Modal -->
+            <div class="modal fade" id="jobModal" tabindex="-1" aria-labelledby="ProductEditModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ProductEditModalLabel">學員求職信</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <vc:job-apply job-id="@Model.Fid" job-name="@Model.FJobName" company-taxid="@Model.FCompanyTaxid" row-count="0"></vc:job-apply>
+                        </div>
                     </div>
                 </div>
-                <div id="company-intro-content" class="row p-3 my-3 shadow-sm border rounded bg-white">
-                    <h3 class="w-100 col-12 font-weight-bold">工作介紹</h3>
-                    <br />
-                    <div class="col-md-6 py-2" style="line-height:2rem;">
-                        <div>
-                            <span class="font-weight-bold">公司名稱：</span>@Model.FCompanyName
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">職缺類型：</span>@Model.FJobDirect
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">薪水制度：</span>@Model.FSalaryMode
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">薪水：</span>@(Convert.ToInt32(Model.FSalaryMin)/1000)K ~ @(Convert.ToInt32(Model.FSalaryMax)/1000)K TWD/月
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">工作地點：</span>@(Model.FCity + Model.FDistrict + Model.FWorkAddress)
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">工作經驗：</span>@Model.FWorkExp
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">工作型態：</span>@Model.FEmployeeType
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">工作時數：</span>@Model.FWorkHours 小時
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">教育程度：</span>@Model.FEducation
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">休假制度：</span>@Model.FLeaveSystem
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">需求人數：</span>@Model.FNeedPerson 人
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">創建時間：</span>@Convert.ToDateTime(Model.FCreatTime).ToString("yyyy-MM-dd")
-                        </div>
-                    </div>
-                    <div class="col-md-6  py-2" style="line-height:2rem;">
-                        <div>
-                            <span class="font-weight-bold">聯絡人：</span>@Model.FContactPerson
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">聯絡電話：</span>@Model.FContactPhone
-                        </div>
-                        <div>
-                            <span class="font-weight-bold">聯絡信箱：</span>@Model.FContactEmail
-                        </div>
-                    </div>
-                    <div class="w-100">
-                        <hr class="w-100" />
-                    </div>
-                    <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.FOther</pre>
-                </div>
-            }
+            </div>
+        </div>
     </div>
 </div>
 @section Scripts{
@@ -209,170 +224,190 @@
         }
         new StickyNavigation();
     </script>
+    <script>
+        function GetResumeData(rowNumber) {
+            let selectResume = document.querySelector(`#selectResume${rowNumber}`);
+            selectResume.options.length = 0;
+                $.ajax({
+                    url: "@Url.Content("~/TJobVacancies/ResumeDropDownList")",
+                    method: 'post',
+                    dataType: 'json',
+                    success: function (datas) {
+                        datas.forEach((item) => {
+                            let opt = new Option(item.resumeName, item.resumeId);
+                            selectResume.options.add(opt);
+                        });
+                    }
+                }).done((data) => {
+                    console.log(data);
+                })
+                console.log(rowNumber);
+        }
+    </script>
 }
 @*<div>
-    <h4>TJobVacanciesViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FCompanyTaxid)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FCompanyTaxid)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FJobName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FJobName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FJobSkill)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FJobSkill)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FCity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FCity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FDistrict)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FDistrict)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FWorkAddress)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FWorkAddress)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FSalaryMode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FSalaryMode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FSalaryMin)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FSalaryMin)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FEmployeeType)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FEmployeeType)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FWorkHours)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FWorkHours)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FLeaveSystem)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FLeaveSystem)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FWorkExp)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FWorkExp)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FEducation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FEducation)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FOther)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FOther)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FJobStatus)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FJobStatus)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FJobListId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FJobListId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FContactPerson)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FContactPerson)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FContactPhone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FContactPhone)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FContactFax)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FContactFax)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FContactEmail)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FContactEmail)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FCreatTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FCreatTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FModifyTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FModifyTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FNeedPerson)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FNeedPerson)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FCompanyName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FCompanyName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FCompanyLogo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FCompanyLogo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FJobDirect)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FJobDirect)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>*@
+        <h4>TJobVacanciesViewModel</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FCompanyTaxid)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FCompanyTaxid)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FJobName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FJobName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FJobSkill)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FJobSkill)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FCity)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FCity)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FDistrict)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FDistrict)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FWorkAddress)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FWorkAddress)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FSalaryMode)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FSalaryMode)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FSalaryMin)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FSalaryMin)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FEmployeeType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FEmployeeType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FWorkHours)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FWorkHours)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FLeaveSystem)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FLeaveSystem)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FWorkExp)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FWorkExp)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FEducation)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FEducation)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FOther)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FOther)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FJobStatus)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FJobStatus)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FJobListId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FJobListId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FContactPerson)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FContactPerson)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FContactPhone)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FContactPhone)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FContactFax)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FContactFax)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FContactEmail)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FContactEmail)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FCreatTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FCreatTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FModifyTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FModifyTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FNeedPerson)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FNeedPerson)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FCompanyName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FCompanyName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FCompanyLogo)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FCompanyLogo)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FJobDirect)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FJobDirect)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        <a asp-action="Index">Back to List</a>
+    </div>*@
