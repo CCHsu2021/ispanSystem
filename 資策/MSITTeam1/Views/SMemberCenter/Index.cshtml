@@ -16,6 +16,7 @@
                     <li class=" nav-item">
                         <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu1">我的點數</a>
                     </li>
+                    
                     <li class="nav-item">
                         <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu3">個人履歷</a>
                     </li>
@@ -23,7 +24,7 @@
                         <a class="vertical-tabs-member mb-1" data-toggle="pill" href="#menu5">購買紀錄</a>
                     </li>
                     <li class="nav-item">
-                        <a class="vertical-tabs-member last-vertical-tabs" data-toggle="pill" href="#menu7">訊息通知</a>
+                        <a class="vertical-tabs-member last-vertical-tabs" href="@Url.Content("~/MemberPostMessage/InboxIndex")">訊息通知</a>
                     </li>
                 </ul>
             </div>
@@ -32,22 +33,21 @@
             <div class="col-sm-9">
                 <div class="tab-content shadow-sm">
                     <div id="home" class="container tab-pane active">
-
                             <vc:student-basic></vc:student-basic>
-
                     </div>
                     <div id="menu1" class="container tab-pane fade">
                         <div class="row about-box">
                             <vc:s-point-record></vc:s-point-record>
                         </div>
                         </div>
-
+                        
                         <div id="menu3" class="container tab-pane fade">
                             <div class="row about-box">
                                 
                                 <vc:student-resume-image></vc:student-resume-image>
                             </div>
                         </div>
+                        
                         <div id="menu5" class="container tab-pane fade">
                             <div class="row about-box">
                              <vc:s-purchase-record></vc:s-purchase-record>

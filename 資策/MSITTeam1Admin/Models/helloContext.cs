@@ -278,8 +278,6 @@ namespace MSITTeam1Admin.Models
 
                 entity.Property(e => e.RWorkExp).HasColumnName("rWorkExp");
 
-                entity.Property(e => e.ResumeImage).IsUnicode(false);
-
                 entity.Property(e => e.ResumeName).HasMaxLength(50);
             });
 
@@ -1190,7 +1188,7 @@ namespace MSITTeam1Admin.Models
                 entity.Property(e => e.OrderId).HasMaxLength(50);
 
                 entity.Property(e => e.OrderDate)
-                    .HasMaxLength(50)
+                    .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.PayMethod).HasMaxLength(50);

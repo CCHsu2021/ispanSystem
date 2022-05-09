@@ -204,8 +204,6 @@
                         <div class="col-3">
                             <select id="FQuestionTypeId" class="form-control">
                                 <option value="">請選擇題型</option>
-                                @*<option value="1">單選題</option>
-                                <option value="2">多選題</option>*@
                             </select>
                         </div>
                         <div class="col-3">
@@ -248,10 +246,7 @@
                     </div>
                     <br />
                     <div class="row data" id="workExpPage">
-                        <!--<div class="col-6">-->
-                        @*add here*@
-                        <!--<button class="saveworkbtn my-3" id="editWork" onclick="editWork()">儲存修改</button>
-                        </div>-->
+
                     </div>
                 </div>
             </li>
@@ -306,7 +301,7 @@
                 const opt = new Option(item.fClassCategory, item.fClassCategory);
                 selSubQuest.options.add(opt);
             })
-        }       
+        }
 
         // 載入目前有題目的課程名稱
        const selSubSearch = document.querySelector('#FSubjectId');
@@ -345,7 +340,7 @@
                 console.log(typeText);
                 const opt = new Option(typeText, item.fQuestionTypeId);
                 selQuestionType.options.add(opt);
-            })            
+            })
         }
         // 題目查詢
         var jsondata = null;
@@ -462,7 +457,7 @@
                     FLevel: $('.levelCre').val()
                 })
                 $.ajax({
-                    url: "/QuestionBank/Create",
+                    url: "@Url.Content("~/QuestionBank/Create")",
                     type: "POST",
                     contentType: "application/json",
                     data: jsondata
@@ -550,7 +545,7 @@
                     SelectQuestionList: selectList,
                 })
                 $.ajax({
-                    url: "/TestPaperBank/CreatNewPaper",
+                    url: "@Url.Content("~/TestPaperBank/CreatNewPaper")",
                     type: "POST",
                     contentType: "application/json",
                     data: newPaperJson
@@ -561,7 +556,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        window.location.replace("https://localhost:44387/TestPaperBank/Home");
+                        window.location.replace("@Url.Content("~/TestPaperBank/Home")");
                     })
                 })
             }
