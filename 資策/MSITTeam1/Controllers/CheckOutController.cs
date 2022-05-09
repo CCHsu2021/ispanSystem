@@ -101,29 +101,32 @@ namespace MSITTeam1.Controllers
 
             if (HttpContext.Session.Keys.Contains(key))
             {
-                if (CDictionary.memtype == "1")
+                if (vModel.Discount != null&&vModel.Discount!=0)
                 {
-                    TStudentPoint item = new TStudentPoint
+                    if (CDictionary.memtype == "1")
                     {
-                        MemberId = CDictionary.account,
-                        PointType = "使用點數",
-                        PointDescription = $"訂單號碼：{vModel.OrderId}，使用點數{vModel.Discount}點",
-                        PointRecord = (vModel.Discount)*-1,
-                        OrderId = vModel.OrderId
-                    };
-                    hello.TStudentPoints.Add(item);
-                }
-                else if(CDictionary.memtype == "2")
-                {
-                    TCompanyPoint item = new TCompanyPoint
+                        TStudentPoint item = new TStudentPoint
+                        {
+                            MemberId = CDictionary.account,
+                            PointType = "使用點數",
+                            PointDescription = $"訂單號碼：{vModel.OrderId}，使用點數{vModel.Discount}點",
+                            PointRecord = (vModel.Discount) * -1,
+                            OrderId = vModel.OrderId
+                        };
+                        hello.TStudentPoints.Add(item);
+                    }
+                    else if (CDictionary.memtype == "2")
                     {
-                        CompanyTaxid = CDictionary.account,
-                        PointType = "使用點數",
-                        PointDescription = $"訂單號碼：{vModel.OrderId}，使用點數{vModel.Discount}點",
-                        PointRecord = (vModel.Discount)*-1,
-                        OrderId = vModel.OrderId
-                    };
-                    hello.TCompanyPoints.Add(item);
+                        TCompanyPoint item = new TCompanyPoint
+                        {
+                            CompanyTaxid = CDictionary.account,
+                            PointType = "使用點數",
+                            PointDescription = $"訂單號碼：{vModel.OrderId}，使用點數{vModel.Discount}點",
+                            PointRecord = (vModel.Discount) * -1,
+                            OrderId = vModel.OrderId
+                        };
+                        hello.TCompanyPoints.Add(item);
+                    }
                 }
                 string json = HttpContext.Session.GetString(key);
                 List<CheckOutViewModel> list = JsonSerializer.Deserialize<List<CheckOutViewModel>>(json);

@@ -99,6 +99,33 @@ namespace MSITTeam1.Controllers
             string key = CDictionary.SK_ClASS_PURCHASED_LIST + CDictionary.account;
             if (HttpContext.Session.Keys.Contains(key))
             {
+                if (vModel[0].Discount != null && vModel[0].Discount != 0)
+                {
+                    if (CDictionary.memtype == "1")
+                    {
+                        TStudentPoint item = new TStudentPoint
+                        {
+                            MemberId = CDictionary.account,
+                            PointType = "使用點數",
+                            PointDescription = $"訂單號碼：{vModel[0].OrderId}，使用點數{vModel[0].Discount}點",
+                            PointRecord = (vModel[0].Discount) * -1,
+                            OrderId = vModel[0].OrderId
+                        };
+                        hello.TStudentPoints.Add(item);
+                    }
+                    else if (CDictionary.memtype == "2")
+                    {
+                        TCompanyPoint item = new TCompanyPoint
+                        {
+                            CompanyTaxid = CDictionary.account,
+                            PointType = "使用點數",
+                            PointDescription = $"訂單號碼：{vModel[0].OrderId}，使用點數{vModel[0].Discount}點",
+                            PointRecord = (vModel[0].Discount) * -1,
+                            OrderId = vModel[0].OrderId
+                        };
+                        hello.TCompanyPoints.Add(item);
+                    }
+                }
                 string json = HttpContext.Session.GetString(key);
                 List<ClassCheckOutViewModel> list = JsonSerializer.Deserialize<List<ClassCheckOutViewModel>>(json);
                 var a = 0;
