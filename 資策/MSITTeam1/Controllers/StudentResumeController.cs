@@ -297,7 +297,7 @@ namespace MSITTeam1.Controllers
             if (sw != null)
             {
                 sw.PortfolioTitle = p.PortfolioTitle;
-                sw.PortfolioDescription = p.PortfolioTitle;
+                sw.PortfolioDescription = p.PortfolioDescription;
                 sw.PortfolioUrl = p.PortfolioURL;
                 hello.SaveChanges();
             }
@@ -314,6 +314,16 @@ namespace MSITTeam1.Controllers
                 hello.SaveChanges();
             }
 
+            return Content("刪除成功");
+        }
+        public IActionResult DeleteResume(String resumeId)
+        {
+            StudentResume sr = hello.StudentResumes.FirstOrDefault(c => c.ResumeId.ToString() == resumeId);
+            if (sr != null)
+            {
+                hello.StudentResumes.Remove(sr);
+                hello.SaveChanges();
+            }
             return Content("刪除成功");
         }
 
@@ -389,8 +399,9 @@ namespace MSITTeam1.Controllers
             return Json(datas);
         }
 
-        public IActionResult saveResume()
+        public IActionResult saveResume(string resumeName)
         {
+            
             string Image = Request.Form["ResumeImage"].ToString();
             string account = CDictionary.account;
             if (Image != null)
@@ -398,7 +409,7 @@ namespace MSITTeam1.Controllers
                 byte[] data = Convert.FromBase64String(Image);
                 //string filePath = Path.Combine(_enviroment.WebRootPath, "uploads", "haha.png");
                 StudentResume stu = new StudentResume();
-
+                stu.ResumeName = resumeName;
                 stu.ResumeImage = data;
                 stu.MemberId = account;
                 hello.StudentResumes.Add(stu);
@@ -421,6 +432,20 @@ namespace MSITTeam1.Controllers
 
 
                 return View();
+        }
+
+        public IActionResult CreatePoint()
+        {
+            TStudentPoint item = new TStudentPoint
+            {
+                MemberId = CDictionary.account,
+                PointType = "點數回饋",
+                PointDescription = "填寫履歷，回饋300點",
+                PointRecord = 300
+            };
+            hello.TStudentPoints.Add(item);
+            hello.SaveChanges();
+            return Content("得到點數");
         }
     }
 }

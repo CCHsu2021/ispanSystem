@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MSITTeam1.ViewModels.TCompanyResumeReceiveViewModel>
+﻿@model List<MSITTeam1.ViewModels.ResumeSendAndCompanyRespondViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -26,7 +26,7 @@
                                     <div class="compose-email">
                                         <div class="mail-box">
                                             <aside class="sm-side">
-                                                <div class="user-head">
+                                                @*<div class="user-head">
                                                     <a class="inbox-avatar" href="javascript:;">
                                                         <img src="assets/images/user.jpg" alt="">
                                                     </a>
@@ -36,27 +36,27 @@
                                                         </h5>
                                                         <span><a href="#">example@gmail.com</a></span>
                                                     </div>
-                                                </div>
+                                                </div>*@
                                                 <ul class="inbox-nav inbox-divider">
                                                     <li class="breadcrumb-item active">
-                                                        <a href="@Url.Content("~/CompanyPostMessage/Index")"><i class="fa fa-inbox"></i> 收件匣 <span class="badge badge-success pull-right m-t-12">2</span></a>
+                                                        <a href="@Url.Content("~/MemberPostMessage/InboxIndex")"> 收件匣 </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#"><i class="fa fa-envelope-o"></i> 寄件匣</a>
+                                                        <a href="@Url.Content("~/MemberPostMessage/OutboxIndex")"> 寄件匣 </a>
                                                     </li>
                                                     <li>
-                                                        <a href="@Url.Content("~/CompanyPostMessage/InterviewConfirm")"><i class="fa fa-bookmark-o"></i> 確定面試郵件匣</a>
+                                                        <a href="#"> 確定面試郵件匣 </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#"><i class=" fa fa-external-link"></i> 婉拒面試郵件匣 <span class="badge badge-info pull-right m-t-12">30</span></a>
+                                                        <a href="#"> 婉拒面試郵件匣 </a>
                                                     </li>
-                                                    <li>
+                                                    @*<li>
                                                         <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
-                                                    </li>
+                                                    </li>*@
                                                 </ul>
 
 
-                                                <div class="inbox-body text-center">
+                                                @*<div class="inbox-body text-center">
                                                     <div class="btn-group">
                                                         <a class="btn mini btn-primary" href="javascript:;">
                                                             <i class="fa fa-plus"></i>
@@ -72,11 +72,11 @@
                                                             <i class="fa fa-cog"></i>
                                                         </a>
                                                     </div>
-                                                </div>
+                                                </div>*@
 
                                             </aside>
                                             <aside class="lg-side">
-                                                <div class="inbox-head">
+                                                @*<div class="inbox-head">
                                                     <h3 class="input-text">Inbox</h3>
                                                     <form action="#" class="pull-right position">
                                                         <div class="input-append inner-append">
@@ -150,11 +150,10 @@
                                                             <a class="np-btn" href="#"><i class="fa fa-angle-right pagination-right"></i></a>
                                                         </li>
                                                     </ul>
-                                                </div>
+                                                </div>*@
                                                 <div class="table-responsive">
                                                     @if (Model != null)
                                                     {
-                                                        <form method="post" id="getOneResumeDetail"></form>
                                                         <table class="table table-inbox table-hover table-responsive">
                                                             <thead>
                                                                 <tr class="justify-content-center align-items-center">
@@ -164,7 +163,7 @@
                                                                     <td class="inbox-small-cells">
                                                                         <i class="ti-star"></i>
                                                                     </td>
-                                                                    <td class="dont-show">應徵者姓名</td>
+                                                                    <td class="dont-show">公司名稱</td>
                                                                     <td class="">應徵職缺</td>
                                                                     <td class="inbox-small-cells">狀態</td>
                                                                     <td class="text-right">寄件時間</td>
@@ -185,36 +184,19 @@
                                                                             <td class="inbox-small-cells">
                                                                                 <i class="ti-star"></i>
                                                                             </td>
-                                                                            <td class="view-message dont-show">@item.FStudentName</td>
+                                                                            <td class="view-message dont-show">@item.CompanyName</td>
                                                                             <td class="view-message ">應徵職缺：@item.JobName</td>
-                                                                            <td class="view-message inbox-small-cells">@item.ComReadOrNot</td>
+                                                                            <td class="view-message inbox-small-cells">@item.InterviewState</td>
                                                                             <td class="view-message text-right">@(Convert.ToDateTime(item.CreatTime).ToString("yyyy-MM-dd"))</td>
                                                                             <td class="view-message">
-                                                                                <input type="hidden" form="getOneResumeDetail" asp-for="@item.ResumeSendId" name="ResumeSendId" />
-                                                                                <button type="submit" form="getOneResumeDetail" asp-action="StudentResumeDetail" class="btn btn-info m-b-10 m-l-5 applyButton">檢視</button>
+                                                                                <form>
+                                                                                    <input type="hidden" asp-for="@item.CompanyRespondId" name="CompanyRespondId" />
+                                                                                    <button type="submit" asp-action="CompanyRespondDetail" class="btn btn-info m-b-10 m-l-5 applyButton">檢視</button>
+                                                                                </form>
                                                                             </td>
                                                                         </tr>
                                                                     }
                                                                 }
-                                                                @*@foreach (var item in Model)
-                                                                    {
-                                                                        rowCount++;
-                                                                        int rowNumber = rowCount;
-                                                                        <tr class="">
-                                                                            <td class="inbox-small-cells">
-                                                                                <input type="checkbox" class="mail-checkbox">
-                                                                            </td>
-                                                                            <td class="inbox-small-cells"><i class="ti-star"></i></td>
-                                                                            <td class="view-message dont-show">@item.FStudentName</td>
-                                                                            <td class="view-message ">應徵職缺：@item.JobName</td>
-                                                                            <td class="view-message inbox-small-cells">@item.ComReadOrNot</td>
-                                                                            <td class="view-message text-right">@(Convert.ToDateTime(item.CreatTime).ToString("yyyy-MM-dd"))</td>
-                                                                            <td>
-                                                                                <input type="hidden" form="getOneResumeDetail" asp-for="@item.ResumeSendId" name="ResumeSendId" />
-                                                                                <button type="submit" form="getOneResumeDetail" asp-action="StudentResumeDetail" class="btn btn-info m-b-10 m-l-5 applyButton">檢視</button>
-                                                                            </td>
-                                                                        </tr>
-                                                                    }*@
                                                             </tbody>
                                                         </table>
                                                     }

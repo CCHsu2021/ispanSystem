@@ -12,7 +12,6 @@
                 {
                     <form asp-action="Edit" method="post" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                         <div class="form-group" style="text-align:center;">
                             <input type="text" id="FSubjectIdEd" asp-for="@Model[0].FSubjectId" readonly style="text-align: center; border: none; font-size: 28px;" class="form-control bg-white" />
                         </div>
@@ -106,10 +105,12 @@
 
         // 判斷Checkbox
     var currentSelectEd = $("#ansListEd input[type='checkbox']:checked").length;
-    var limit = $('#FQuestionTypeIdSelEd').val();
+    console.log(currentSelectEd);
+    var limit;
 
         function doCheckEd(obj) {
             var quesType = $('#FQuestionTypeIdSelEd').val();
+            currentSelectEd = $("#ansListEd input[type='checkbox']:checked").length;
             if (quesType === "1") {
                 limit = 1;
             } else if (quesType === "2") {
@@ -117,7 +118,7 @@
             } else if (quesType === "3") {
                 limit = 1;
             }
-            obj.checked ? currentSelectEd++ : currentSelectEd--;
+            //obj.checked ? currentSelectEd++ : currentSelectEd--;
             //console.log("ED" + currentSelectEd);
             if (currentSelectEd > limit) {
                 obj.checked = false;

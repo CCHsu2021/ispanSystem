@@ -86,24 +86,33 @@
 
     .previewBtn {
         margin-left: -10px;
-        transition: 0;
-        margin-top: 20px;
+        transition: none !important;
+        margin-top: 50px;
         margin-bottom: 20px;
     }
 
     .contiBtn {
-        margin-left: 60px;
-        transition: 0;
-        margin-top: 20px;
+        margin-left: -50px;
+        transition: none !important;
+        margin-top: 50px;
         margin-bottom: 20px;
     }
 
     .PrintBtn {
-        margin-left: 415px;
+        transition: none !important;
+        margin-left: 633px;
         margin-bottom: 20px;
-        margin-top: 20px;
+        margin-top: 50px;
     }
 
+    .SaveResumeBtn{
+         transition: none !important;
+    }
+
+    .textarea:empty:before {
+    content: attr(aria-placeholder);
+    color: #bbb;
+}
 
     /*    .panelbigcard {
 
@@ -140,6 +149,11 @@
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>技能</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>作品</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>自我介紹</h4></div>
+                        <div class="alert alert-success kanban-card cardBody seltitle" id="tool" role="alert"><div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="自訂標題"></div></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><div style="font-size:0.85rem" class="textarea" contenteditable="true" aria-placeholder="自訂內文"></div></div>
+                       
+                        <div class="alert alert-success kanban-card cardBody hr" id="tool" role="alert"><hr/></div>
+
 
 @*                        <div class="alert alert-success kanban-card cardBody " id="tool">
                             <img class="toolImage" src="~/images/Resume/book.jpg" width="300" style="text-align:center" />
@@ -150,7 +164,7 @@
         </div>
 
         
-        <div class="col-4  BigCard">
+        <div class="col-4  BigCard" id="mainView1">
             <div class="panel panel-info ">
                 <div class="panel-heading kanban-card">
                     <div class="row">
@@ -162,10 +176,10 @@
                     </div>
                     </div>
                 </div>
-                <div class="panel-body" id="mainView1">
+                <div class="panel-body" >
                     <div id="todo" class="bodybackground">
                         &nbsp;
-                        <div class="alert alert-success kanban-card cardBody basiccard "  style="margin-top:-5px" id="basic" role="alert">
+                        <div class="alert alert-success kanban-card cardBody basiccard pt-4"  style="margin-top:-5px" id="basic" role="alert">
                             <h4>基本資料</h4>
                             <br/>
                             <div class="basicCss">
@@ -245,7 +259,7 @@
 <button class="PrintBtn" id="btnPrint" onclick="printScreen()">匯出</button>
 <button class="SaveResumeBtn" id="btnResumeSave" onclick="SaveScreen()">儲存</button>
 
-
+<script src="~/js/jquery.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js">
     import { data } from "jquery";
@@ -262,6 +276,26 @@
               console.log(source); // from
               console.log(target); // to
               console.log(sibling); // next card
+
+              const tool = document.querySelector("#tool");
+              const seltitle = document.querySelector(".seltitle");
+
+              //console.log($("#tool").children(".seltitle").length);
+              if($("#tool").children(".seltitle").length<1)
+              {
+                  var div = document.createElement("div");
+                  div.id = "tool";
+                  div.role="alert";
+                  div.innerHTML= `<div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="自訂標題"></div>` ;
+                  div.setAttribute("class", "alert alert-success kanban-card cardBody seltitle");
+                  tool.appendChild(div);
+              }
+              //if($("#tool").children(".seltitle").length>1){
+              //      console.log($("#tool div[class='seltitle']:not(:first-child)").length)
+                    
+              //   $("#tool div[class='seltitle']:not(:first-child)").remove();
+              //}
+
             });
 
             var dragulaKanban = dragula([
@@ -418,8 +452,12 @@
             const btnResumeSave = document.querySelector("#btnResumeSave");
             const btnPrint = document.querySelector("#btnPrint");
             const paneltitle = document.querySelector("#paneltitle");
+            const resumeName = document.querySelector("#resumeName");
             const toolpanel = document.getElementById("toolpanel");
             const datapanel = document.getElementById("data");
+            const mainpanel = document.getElementById("kanban");
+            const mainView1 = document.getElementById("mainView1");
+            const mainView2 = document.getElementById("mainView2");
 
 
             //const todo = document.getElementById("todo");
@@ -430,14 +468,23 @@
             btnResumeSave.style.visibility="hidden";
             btnPreview.addEventListener('click', (evt) => {
                 evt.preventDefault();
-                toolpanel.style.visibility="hidden";
-                datapanel.style.visibility="hidden";
+                toolpanel.style.display="none";
+                datapanel.style.display="none";
+
+                mainpanel.classList.add("justify-content-center");
+                mainView1.classList.remove("col-4");
+                mainView1.classList.add("col-5");
+                mainView2.classList.remove("col-4");
+                mainView2.classList.add("col-5");
+                
+
                 btnPreview.style.visibility="hidden";
                 btnEdit.style.visibility="visible";
                 btnPrint.style.visibility="visible";
-                
+                paneltitle.style.visibility="hidden";
+                resumeName.style.visibility="hidden";
                 btnResumeSave.style.visibility="visible";
-                console.log($("#resumeName").val());
+                //console.log($("#resumeName").val());
                 });
 
             btnEdit.addEventListener('click', (evt) => {
@@ -448,7 +495,15 @@
                 btnPrint.style.visibility="hidden";
                 btnPreview.style.visibility="visible";
                 btnResumeSave.style.visibility="hidden";
-
+                paneltitle.style.visibility="visible";
+                resumeName.style.visibility="visible";
+                toolpanel.style.display="block";
+                datapanel.style.display="block";
+                mainpanel.classList.remove("justify-content-center");
+                mainView1.classList.remove("col-5");
+                mainView1.classList.add("col-4");
+                mainView2.classList.remove("col-5");
+                mainView2.classList.add("col-4");
                 });
 
              function printScreen() {
@@ -469,9 +524,25 @@
                     });
                 }
 
+                
+
                 function SaveScreen() {
-                    html2canvas($("#kanban")[0]).then(function(canvas) {
-                     var dataURL = canvas.toDataURL("image/png");
+                    var w = $("#kanban")[0].offsetWidth;
+                    var h = $("#kanban")[0].offsetHeight;
+                    var canvas = document.createElement('canvas');
+                    var scale = 1;
+                    var resumeName = $("#resumeName").val();
+
+                    canvas.width = w * scale ;
+                    canvas.height = h * scale ;
+
+                    var context = canvas.getContext('2d');
+                    console.log("width=" + w + ", height=" + h)
+
+                    context.scale(scale,scale);
+
+                    html2canvas($("#kanban")[0],{canvas:canvas,scale:scale,useCORS:true}).then(function(canvas) {
+                     var dataURL = canvas.toDataURL("image/png",1.0);
                      dataURL = dataURL.replace('data:image/png;base64,','');
                      //window.open(dataURL);
                      console.log(dataURL);
@@ -479,16 +550,30 @@
                         url: '@Url.Content("~/StudentResume/saveResume")',
                         type: 'post',
                         data: {
-                            ResumeImage:dataURL
-                            
-                        },
+                            ResumeImage:dataURL ,
+                            resumeName:resumeName
+                            }
                         
-                        //dataType: 'text',
-                        success: function (response) {
-                        console.log(response);
-                                }
+                        
+                            }).done(function (data) {
+                            Swal.fire({
+                                        icon: 'success',
+                                        title: '新增成功，因填寫履歷回饋300點',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                        })
+                            $('.next').hide();
+
                             });
                         });
+                    $.ajax({
+                        url: '@Url.Content("~/StudentResume/CreatePoint")',
+                        type: 'post',
+                        
+                        
+                        
+                            })
+                        
                     }
 
 

@@ -11,6 +11,8 @@
         background: #1e3c84;
         color: white;
         cursor: pointer;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
     }
 
     .resumepanel {
@@ -20,31 +22,84 @@
         border: solid 1px #c3c3c3;
         display: none;
     }
+
+    .tableBtn{
+            border: 0;
+            padding: 0px 5px;
+            background-color: #1e3c84;
+            color: #FFFFFF;
+            text-transform: capitalize;
+            font-size: 18px;
+            line-height: 22px;
+            width: 50px;
+            height: 50px;
+            margin-right: 3px;
+            text-align: center;
+            line-height: 50px;
+            float: right;
+            margin-top: 0;
+    }
+
+     button:hover {
+
+        color: #1e3c84;
+        z-index: 4;
+        background-color: #ffffff;
+        border: #1e3c84 solid 1px;
+        cursor: pointer;
+    }
 </style>
-<h1>履歷瀏覽</h1>
+<h3>履歷瀏覽</h3>
+<br/>
 
-<div class="container">
+<div class="container mt-3">
     
-    <div >
-        @foreach (var item in Model) {
-
-        <div class="resumeflip">
-        <span>履歷</span>
-        </div>
-        <div class="resumepanel" style="display:none;">
+    <div id="resumePage">
         
-            <img src="data:image/gif;base64,@item.ResumeImage"/>
-      
-        </div>
+        @{int count=0;
+            foreach (var item in Model) 
+            {
+            count++;
+        
+            <div class="resumeflip" id="flip@(count)" onclick="togglefunction(@count)" >
+            <label > @Html.DisplayNameFor(model => model.ResumeName)：</label>
+            <span>@Html.DisplayFor(modelItem => item.ResumeName)</span>
+            </div>
+            <div class="resumepanel" id="panel@(count)" style="display:none;">
+                <button class="tableBtn fas fa-trash-alt " id="Resume-Delete-Btn" onclick="deleteResume(@item.RusumeId)"></button>
+                <img src="data:image/gif;base64,@item.ResumeImage"/>
+            </div>
+             
+            }
         }
-    
     </div>
 </div>
 
 <script src="~/js/jquery.js"></script>
     <script>
-    $(".resumeflip").click(function () {
-        $(".resumepanel").slideToggle("fast");
-    });
+
+    function togglefunction (id) {
+        $("#panel"+id).slideToggle("fast");
+    };
+
+    //刪除
+    function deleteResume(dd)
+     {    
+         var num = dd;
+        $.ajax({
+            url:"@Url.Content("~/StudentResume/DeleteResume")",
+            type:"POST",
+            data:{'resumeId':num},
+
+        }).done(function (data) {
+            Swal.fire({
+                        icon: 'success',
+                        title: '刪除成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+            $("#resumePage").load(location.href + " #resumePage");})
+        }
+
     </script>
 

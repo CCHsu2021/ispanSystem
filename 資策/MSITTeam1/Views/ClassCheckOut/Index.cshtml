@@ -450,9 +450,9 @@
                 <div class="w-100 row justify-content-between align-items-center">
                     <h3 class="mt-4 mb-3 font-weight-bold h4">授課人員資訊</h3>
                     @*<div>
-                <input id="receivePerson" type="checkbox">
-                <label for="receivePerson">同購買人資料</label>
-            </div>*@
+                        <input id="receivePerson" type="checkbox">
+                        <label for="receivePerson">同購買人資料</label>
+                    </div>*@
                 </div>
                 @{
                     if (ViewBag.Type == "1")
@@ -479,35 +479,39 @@
                             統一編號：
                         </div>
                         <div class="col-md-9 pl-0 mb-3">
-                            <input type="text" id="productOrderTAXID" class="form-control" name="TAXID" />
+                            <input type="text" id="productOrderTAXID" class="form-control" name="[0].TAXID" />
                         </div>
                     }
                     else if (ViewBag.Type == "2")
                     {
                         int count = 0;
-                        foreach(var item in Model) {
-                        <h5 class="w-100 mb-3">@item.name</h5>
-                            for (int i = 1; i <= item.count; i++){
-                        <div class="col-md-3 pr-0 mb-3">
-                            姓名：
-                        </div>
-                        <div class="col-md-6 pr-0 mb-3">
-                            信箱：
-                        </div>
-                        <div class="col-md-3 pr-0 mb-3">
-                            部門：
-                        </div>
-                        <div class="row" id="addStaff">
-                            <div class="col-md-3 pl-0 mb-3">
-                                <input type="text"  class="form-control" name="[@count].StaffName">
-                            </div>
-                            <div class="col-md-6 pl-0 mb-3">
-                                <input type="text" class="form-control" name="[@count].StaffEmail">
-                            </div>
-                            <div class="col-md-3 pl-0 mb-3">
-                                <input type="text"  class="form-control" name="[@count].DepartmentName">
-                            </div>
-                        </div>
+                        foreach (var item in Model)
+                        {
+                            <h5 class="w-100 mb-3">@item.name</h5>
+                            for (int i = 1; i <= item.count; i++)
+                            {
+                                <div class="row w-100">
+                                    <div class="col-md-3 pr-0 mb-3">
+                                        姓名：
+                                    </div>
+                                    <div class="col-md-6 pr-0 mb-3">
+                                        信箱：
+                                    </div>
+                                    <div class="col-md-3 pr-0 mb-3">
+                                        部門：
+                                    </div>
+                                </div>
+                                <div class="row" id="addStaff">
+                                    <div class="col-md-3 pl-0 mb-3">
+                                        <input type="text" class="form-control" name="[@count].StaffName">
+                                    </div>
+                                    <div class="col-md-6 pl-0 mb-3">
+                                        <input type="text" class="form-control" name="[@count].StaffEmail">
+                                    </div>
+                                    <div class="col-md-3 pl-0 mb-3">
+                                        <input type="text" class="form-control" name="[@count].DepartmentName">
+                                    </div>
+                                </div>
                                 count++;
                             }
                         }
@@ -547,15 +551,15 @@
                                                  class="itemImg" />
                                             <h3>@item.name</h3>
                                             <p>
-                                                <input type="text" class="qty border" value="@item.count" /> x NT$@Html.DisplayFor(modelItem => item.price, "Money")
+                                                <input type="text" class="qty" disabled value="@item.count" /> x NT$@Html.DisplayFor(modelItem => item.price, "Money")
                                             </p>
                                         </div>
                                         <div class="prodTotal cartSection">
                                             <p>NT$@Html.DisplayFor(modelItem => item.subTotal)</p>
                                         </div>
                                         @*<div class="cartSection removeWrap text-right">
-                                                <a href="#" class="remove">x</a>
-                                            </div>*@
+                                            <a href="#" class="remove">x</a>
+                                        </div>*@
                                     </div>
                                 </li>
                                 id = item.productId;
@@ -600,6 +604,7 @@
         <div class="row w-100">
             <input type="submit" class="btn-style-three" value="確定付款">
         </div>
+        <input name="[0].Discount" id="ProDiscount" type="hidden" />
     </form>
 </div>
 @section Scripts{
@@ -668,13 +673,16 @@
         var point = $("#showPoint").val();
         console.log(total);
         console.log(point);
-        console.log(total - point);
+        console.log(point);
+        
         if (point == 0) {
             $("#usePoint").attr("disabled", "disabled");
+            $("#ProDiscount").val(0);
         }
         $("#usePoint").click(function () {
             if (point == 0) {
                 $("#usePoint").attr("disabled", "disabled");
+                $("#ProDiscount").val(0);
             }
             if ($("#usePoint").prop("checked") == true) {
 
@@ -698,7 +706,9 @@
             } else {
                 $("#TotalPrice").val(total);
                 $("#showPoint").val(point);
+                $("#ProDiscount").val(0);
             }
         })
+        console.log($("#ProDiscount").val());
     </script>
 }

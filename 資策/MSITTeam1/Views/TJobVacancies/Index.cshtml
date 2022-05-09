@@ -43,9 +43,9 @@
                 </div>
                 <div class="form-group justify-content-center py-4 col-4" style="margin-bottom: 0;">
                     <div class="">
-                        <div class="input-group input-group-rounded" >
+                        <div class="input-group input-group-rounded">
                             <input type="text" placeholder="Java, C#, BigData..." name="txtSearchText" class="form-control" style="border-radius:.25rem">
-                            <span class="input-group-btn"><button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button></span>
+                            <span class="input-group-btn"><button class="btn btn-primary" type="submit" id="SearchButton"><i class="fas fa-search"></i></button></span>
                         </div>
                     </div>
                 </div>
@@ -118,9 +118,9 @@
                             </div>
                             <div class="justify-content-end">
                                 <form>
-                                    <input type="hidden" name="txtJobId" asp-for="@item.Fid"/>
+                                    <input type="hidden" name="txtJobId" asp-for="@item.Fid" />
                                     @*<input type="hidden" name="txtJobName" asp-for="@item.FJobName" />
-                                    <input type="hidden" name="txtCompanyTaxid" asp-for="@item.FCompanyTaxid" />*@
+                                        <input type="hidden" name="txtCompanyTaxid" asp-for="@item.FCompanyTaxid" />*@
                                     <button type="submit" asp-action="Detail" class="btn btn-info m-b-10 m-l-5 btn-for-Detail">檢視職缺</button>
                                     <button type="button" class="btn btn-info m-b-10 m-l-5 applyButton" data-toggle="modal" data-target="#jobModel@(rowNumber)" onclick="GetResumeData(@(rowNumber))">我要應徵</button>
                                 </form>
@@ -178,15 +178,9 @@
             //dateFormat: "h:i",
         });
 
-        
+
     </script>
 
-    @*頁面底部換頁*@
-    <script>
-        $(function () {
-            initPagination('.job-card', 10, '#ProductPagination')
-        });
-    </script>
 
     @*透過ajax載入DropDownList*@
     <script>
@@ -221,7 +215,7 @@
             console.log(data);
         })
     </script>
-    
+
     @*.applyButton的履歷DropDownList載入*@
     <script>
         function GetResumeData(rowNumber) {
@@ -242,19 +236,29 @@
                 })
                 console.log(rowNumber);
         }
+
+    </script>
+
+    @*頁面底部換頁*@
+    <script>
+        if (@Model.FirstOrDefault() != null) {
+            $(function () {
+                initPagination('.job-card', 10, '#ProductPagination')
+            });
+        }
     </script>
 
     @*以下為程式碼設定結束時間不得晚於開始時間，未成功待研究*@
     @*<script>
-        let maxIndex = $("#ddlendTime option:last").attr("index");
-        let checkIndex = $("#ddlstartTime").get(0).selectedIndex;
-        $("#ddlstartTime").change(function () {
-            console.log(maxIndex);
-            for (let i = 0; i <= maxIndex; i++) {
-                let eachOptionIndex = $(`#ddlendTime option[index=${i}]`).attr("index");
-                console.log(eachOptionIndex);
-                //if ()
-            }
-        })
-    </script>*@
+            let maxIndex = $("#ddlendTime option:last").attr("index");
+            let checkIndex = $("#ddlstartTime").get(0).selectedIndex;
+            $("#ddlstartTime").change(function () {
+                console.log(maxIndex);
+                for (let i = 0; i <= maxIndex; i++) {
+                    let eachOptionIndex = $(`#ddlendTime option[index=${i}]`).attr("index");
+                    console.log(eachOptionIndex);
+                    //if ()
+                }
+            })
+        </script>*@
 }

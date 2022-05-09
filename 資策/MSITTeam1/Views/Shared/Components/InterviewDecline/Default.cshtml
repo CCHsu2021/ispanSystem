@@ -8,6 +8,7 @@
                 <input asp-for="CompanyRespondId" class="form-control" type="hidden" />
                 <input asp-for="ResumeSendId" class="form-control" type="hidden" />
                 <input asp-for="InterviewState" class="form-control" type="hidden" value="婉拒" />
+                
             </div>
             <div class="form-group">
                 <label asp-for="JobName" class="control-label"></label>
@@ -36,7 +37,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button asp-action="InterviewDecline" type="submit" class="btn btn-primary">送出</button>  @*data-dismiss="modal"*@
+                <button asp-controller="CompanyPostMessage" asp-action="InterviewDecline" type="submit" class="btn btn-primary">送出</button>  @*data-dismiss="modal"*@
             </div>
         </form>
     </div>

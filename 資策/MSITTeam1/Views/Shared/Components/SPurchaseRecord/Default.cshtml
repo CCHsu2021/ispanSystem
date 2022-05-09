@@ -93,7 +93,10 @@
                                 <div class="col-md-4 py-2">
                                     <span class="font-weight-bold">收件人：</span>@item.Recipient
                                 </div>
-                                <div class="col-md-5 py-2">
+                                <div class="col-md-4 py-2">
+                                    <span class="font-weight-bold">折扣：</span>@item.Discount
+                                </div>
+                                <div class="col-md-8 py-2">
                                     <span class="font-weight-bold">地址：</span>@item.ShipTo
                                 </div>
                                 <div class="col-12">
@@ -156,9 +159,9 @@
                                 </div>
                             </div>
                             <div id="@pidDetail" class="row align-items-center  p-3 d-none">
-                                @*<div class="col-md-4 py-2">
-                                    <span class="font-weight-bold">付款方式：</span>@item.PayMethod
-                                </div>*@ 
+                                <div class="col-12 py-2">
+                                    <span class="font-weight-bold">折扣：</span>@item.Discount
+                                </div> 
                                 <div class="col-12">
                                     <h5 class="my-3 mb-2 font-weight-bold pb-2" style="border-bottom: solid  lightgray 2px ">課程清單</h5>
                                 </div>
@@ -195,7 +198,7 @@
                                    })
                         </script>
                     }
-                    <div id="COrderPagination" class="row my-4"></div>
+                    <div id="CPOrderPagination" class="row my-4"></div>
                 </div>
             }
         </div>
@@ -204,6 +207,8 @@
 <script>
     $(function () {
         initPagination('.oneOrder', 5, '#POrderPagination')
+    });
+    $(function () {
         initPagination('.ConeOrder', 5, '#CPOrderPagination')
     });
 </script>

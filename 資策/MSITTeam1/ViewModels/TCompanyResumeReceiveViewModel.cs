@@ -57,6 +57,8 @@ namespace MSITTeam1.ViewModels
         [DisplayName("學員名稱")]
         public string FStudentName { get { return this._stuB.Name; } set { _stuB.Name = value; } }
 
+        public string ResumeImage { get; set; }
+
 
         //public virtual ICollection<TCompanyRespond> TCompanyResponds { get { return this.memRS.TCompanyResponds; } set { memRS.TCompanyResponds = value; } }
 
