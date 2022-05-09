@@ -120,7 +120,7 @@
 
              }
           }
-        divAlert.style.display = "block"
+        //divAlert.style.display = "block"
         divAlert.innerHTML = Math.round((anscount / count) * 100)
         document.querySelector("#FBeforeClassGrade").value = Math.round((anscount / count) * 100)
         $('input').hide();
@@ -154,6 +154,11 @@
                 }
             }
         )
+
+        sessionStorage.setItem("classEX", $('#FClassCode').val());
+
+        location = '@Url.Action("Index", "ShowClassGrade")';
+
     })
 </script>
 
