@@ -27,7 +27,8 @@ namespace MSITTeam1Admin.Controllers
             {
                 if(p.FPassword == info.LPassword)
                 {
-                    return Redirect(Url.Content("~/Home/Index"));
+                    ViewBag.userName = p.FName;
+                    return Redirect(Url.Content("~/Home/Index"));                    
                 }
             }
             return RedirectToAction("Index");
