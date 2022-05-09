@@ -17,12 +17,12 @@
                 <div class="login-form">
                     <div class="sign-in-htm">
                         <div class="group">
-                            <label for="pass" class="label">請輸入帳號(統編)</label>
-                            <input id="RfAccount" type="text" class="input" data-type="password">
+                            <label for="RfAccount" class="label">請輸入帳號(統編)</label>
+                            <input id="RfAccount" type="text" class="input"  name="RfAccount">
                         </div>
                         <div class="group">
-                            <label for="pass" class="label">請輸入信箱(Email)</label>
-                            <input id="RfEmail" type="text" class="input" data-type="password">
+                            <label for="RfEmail" class="label">請輸入信箱(Email)</label>
+                            <input id="RfEmail" type="text" class="input" name="RfEmail" >
                         </div>
                         <div class="container">
                             <span class="text-warning mt-0 mb-0" id="WarningMsg"></span>
@@ -39,10 +39,15 @@
 @section Scripts
 {
     <script>
+    
         $("#resetbtn").click(() => {
+          
             const account = $("#RfAccount").val();
             const email = $("#RfEmail").val();
-
+            if (account == "" || email == "") {
+                Swal.fire("資料輸入不完整", "請再次輸入", "error");
+                return;
+            }
             $.ajax({
                 type: "Post",
                 url: "@Url.Content("~/Company_Login/MailPWDresetLink")",
