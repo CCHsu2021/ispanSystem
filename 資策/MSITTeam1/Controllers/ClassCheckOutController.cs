@@ -52,9 +52,10 @@ namespace MSITTeam1.Controllers
                 var Sadr = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account).ContactAddress;
                 ViewBag.SAddress = Scity + Sdis + Sadr;
                 var Spoint = from o in hello.TStudentPoints
-                            join i in hello.StudentBasics
-                           on o.MemberId equals i.MemberId
-                           select o.PointRecord;
+                             join i in hello.StudentBasics
+                             on o.MemberId equals i.MemberId
+                             where o.MemberId == CDictionary.account
+                             select o.PointRecord;
                 if (Spoint != null)
                 {
                 ViewBag.Point = Spoint.AsEnumerable().Sum();
@@ -74,7 +75,8 @@ namespace MSITTeam1.Controllers
             }
             var point = from o in hello.TCompanyPoints
                         join i in hello.TCompanyBasics
-                       on o.CompanyTaxid equals i.CompanyTaxid
+                        on o.CompanyTaxid equals i.CompanyTaxid
+                        where o.CompanyTaxid == CDictionary.account
                         select o.PointRecord;
             if (point != null)
             {

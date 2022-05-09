@@ -59,6 +59,7 @@ namespace MSITTeam1.Controllers
 
             var totalCost = from p in hello.TPointOrders
                             join c in hello.TCompanyBasics on p.CompanyTaxid equals c.CompanyTaxid
+                            where p.CompanyTaxid == CDictionary.account
                             select p.ToTalGetPoint;
             var levelUp = totalCost.AsEnumerable().Sum();
             var mem = hello.TCompanyBasics.FirstOrDefault(m => m.CompanyTaxid == CDictionary.account);
@@ -68,15 +69,15 @@ namespace MSITTeam1.Controllers
                 {
                     mem.FLevel = 1;
                 }
-                if (levelUp > 200000 && levelUp < 300000)
+                if (levelUp >= 200000 && levelUp < 300000)
                 {
                     mem.FLevel = 2;
                 }
-                if (levelUp > 300000 && levelUp < 500000)
+                if (levelUp >= 300000 && levelUp < 500000)
                 {
                     mem.FLevel = 3;
                 }
-                if (levelUp > 500000 )
+                if (levelUp >= 500000 )
                 {
                     mem.FLevel = 4;
                 }
