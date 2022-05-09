@@ -25,6 +25,7 @@ namespace MSITTeam1.Controllers
             ViewBag.account = CDictionary.account;
             ViewBag.type = CDictionary.memtype;
             ViewBag.name = CDictionary.username;
+            
             var companyResumeReceive = from p in _context.TMemberResumeSends
                                        join t in _context.TCompanyBasics on p.CompanyTaxid equals t.CompanyTaxid into pt
                                        from combin in pt.DefaultIfEmpty()
@@ -58,22 +59,28 @@ namespace MSITTeam1.Controllers
             ViewBag.account = CDictionary.account;
             ViewBag.type = CDictionary.memtype;
             ViewBag.name = CDictionary.username;
+            var jobOpen = _context.TNewJobVacancies.FirstOrDefault(t => t.Fid == (_context.TMemberResumeSends.FirstOrDefault(p => p.ResumeSendId == ResumeSendId).JobId));
+            if (jobOpen == null)
+            {
+                return View();
+            }
+
             var chooseOne = (from p in _context.TMemberResumeSends
-                              where p.ResumeSendId == ResumeSendId
-                              join t in _context.TCompanyBasics on p.CompanyTaxid equals t.CompanyTaxid into pt
-                              from combin in pt.DefaultIfEmpty()
-                              join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
-                              from combin2 in ps.DefaultIfEmpty()
-                              join c in _context.StudentResumes on p.ResumeId equals c.ResumeId into pc
-                              from combin3 in pc.DefaultIfEmpty()
-                              select new 
-                              {
-                                  p,
-                                  combin.FName,
-                                  combin2.Name,
-                              }).FirstOrDefault();
-            var chooseResume = _context.TMemberResumeSends.FirstOrDefault(p=>p.ResumeSendId.Equals(ResumeSendId));
-            if(chooseResume.ComReadOrNot == "未讀")
+                             where p.ResumeSendId == ResumeSendId
+                             join t in _context.TCompanyBasics on p.CompanyTaxid equals t.CompanyTaxid into pt
+                             from combin in pt.DefaultIfEmpty()
+                             join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
+                             from combin2 in ps.DefaultIfEmpty()
+                             join c in _context.StudentResumes on p.ResumeId equals c.ResumeId into pc
+                             from combin3 in pc.DefaultIfEmpty()
+                             select new
+                             {
+                                 p,
+                                 combin.FName,
+                                 combin2.Name,
+                             }).FirstOrDefault();
+            var chooseResume = _context.TMemberResumeSends.FirstOrDefault(p => p.ResumeSendId.Equals(ResumeSendId));
+            if (chooseResume.ComReadOrNot == "未讀")
             {
                 chooseResume.ComReadOrNot = "已讀";
                 _context.SaveChanges();
@@ -84,13 +91,12 @@ namespace MSITTeam1.Controllers
             vModel.FCompanyName = chooseOne.FName;
             vModel.FStudentName = chooseOne.Name;
             var resumeImg = _context.StudentResumes.FirstOrDefault(p => p.ResumeId == chooseOne.p.ResumeId);
-            if(resumeImg != null)
+            if (resumeImg != null)
             {
                 vModel.ResumeImage = Convert.ToBase64String(resumeImg.ResumeImage);
             }
 
             return View(vModel);
-            //todo 美化頁面
         }
 
         public IActionResult InterviewInvitation(TCompanyRespond companyRespond,string ddlstartTime,string InterviewTime)
@@ -105,20 +111,21 @@ namespace MSITTeam1.Controllers
             var resume = _context.TMemberResumeSends.FirstOrDefault(p => p.ResumeSendId == companyRespond.ResumeSendId);
             if (overRespond == null)
             {
-                overRespond.CompanyRespondId = CRID;
-                overRespond.ResumeSendId = companyRespond.ResumeSendId;
-                overRespond.ContactPerson = companyRespond.ContactPerson;
-                overRespond.ContactPersonPhone = companyRespond.ContactPersonPhone;
-                overRespond.ContactPersonEmail = companyRespond.ContactPersonEmail;
-                overRespond.InterviewState = companyRespond.InterviewState;
-                overRespond.InterviewTime = $"{interviewDate} {ddlstartTime}";
-                overRespond.InterviewAddress = companyRespond.InterviewAddress;
-                overRespond.StudentRespondTime = companyRespond.StudentRespondTime;
-                overRespond.InterviewContent = companyRespond.InterviewContent;
-                overRespond.CreatTime = dateTimeNow;
-                overRespond.ModifyTime = dateTimeNow;
+                TCompanyRespond newData = new TCompanyRespond();
+                newData.CompanyRespondId = CRID;
+                newData.ResumeSendId = companyRespond.ResumeSendId;
+                newData.ContactPerson = companyRespond.ContactPerson;
+                newData.ContactPersonPhone = companyRespond.ContactPersonPhone;
+                newData.ContactPersonEmail = companyRespond.ContactPersonEmail;
+                newData.InterviewState = companyRespond.InterviewState;
+                newData.InterviewTime = $"{interviewDate} {ddlstartTime}";
+                newData.InterviewAddress = companyRespond.InterviewAddress;
+                newData.StudentRespondTime = companyRespond.StudentRespondTime;
+                newData.InterviewContent = companyRespond.InterviewContent;
+                newData.CreatTime = dateTimeNow;
+                newData.ModifyTime = dateTimeNow;
 
-                _context.TCompanyResponds.Add(overRespond);
+                _context.TCompanyResponds.Add(newData);
 
                 //resume.ComReadOrNot = companyRespond.InterviewState;
             }
@@ -152,21 +159,21 @@ namespace MSITTeam1.Controllers
             var resume = _context.TMemberResumeSends.FirstOrDefault(p => p.ResumeSendId == companyRespond.ResumeSendId);
             if(overRespond == null)
             {
-                
-                overRespond.CompanyRespondId = CRID;
-                overRespond.ResumeSendId = companyRespond.ResumeSendId;
-                overRespond.ContactPerson = companyRespond.ContactPerson;
-                overRespond.ContactPersonEmail = companyRespond.ContactPersonEmail;
-                overRespond.ContactPersonPhone = companyRespond.ContactPersonPhone;
-                overRespond.InterviewContent = companyRespond.InterviewContent;
-                overRespond.InterviewState = companyRespond.InterviewState;
-                overRespond.InterviewTime = companyRespond.InterviewTime;
-                overRespond.InterviewAddress = companyRespond.InterviewAddress;
-                overRespond.StudentRespondTime = companyRespond.StudentRespondTime;
-                overRespond.CreatTime = dateTimeNow;
-                overRespond.ModifyTime = dateTimeNow;
+                TCompanyRespond newData = new TCompanyRespond();
+                newData.CompanyRespondId = CRID;
+                newData.ResumeSendId = companyRespond.ResumeSendId;
+                newData.ContactPerson = companyRespond.ContactPerson;
+                newData.ContactPersonEmail = companyRespond.ContactPersonEmail;
+                newData.ContactPersonPhone = companyRespond.ContactPersonPhone;
+                newData.InterviewContent = companyRespond.InterviewContent;
+                newData.InterviewState = companyRespond.InterviewState;
+                newData.InterviewTime = companyRespond.InterviewTime;
+                newData.InterviewAddress = companyRespond.InterviewAddress;
+                newData.StudentRespondTime = companyRespond.StudentRespondTime;
+                newData.CreatTime = dateTimeNow;
+                newData.ModifyTime = dateTimeNow;
 
-                _context.TCompanyResponds.Add(overRespond);
+                _context.TCompanyResponds.Add(newData);
                 
                 resume.ComReadOrNot = companyRespond.InterviewState;
             }

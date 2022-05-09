@@ -111,21 +111,21 @@ namespace MSITTeam1.Controllers
                 {
                     var maxcount = 0;
                     var comselfSQL = from p in hello.TClassGrades
-                                     join i in hello.StudentBasics on p.FAccountId equals i.FAccount
-                                     join od in hello.TClassOrderDetails on i.MemberId equals od.MemberId
+                                     join od in hello.TClassOrderDetails on p.FAccountId equals od.StaffEmail
                                      join o in hello.TClassOrders on od.OrderId equals o.OrderId
+
                                      where o.MemberId == comaccount.CompanyTaxid && p.FClassCode == Grade.txtidentify
-                                     group p by i.FCompany into g
+                                     group p by new { od.MemberId } into g
                                      select new
                                      {
-                                         FBeforeClassGrade = g.Sum(c => c.FBeforeClassGrade),
-                                         FAfterClassGrade = g.Sum(c => c.FAfterClassGrade)
+                                         FBeforeClassGrade = g.Average(c => c.FBeforeClassGrade),
+                                         FAfterClassGrade = g.Average(c => c.FAfterClassGrade)
                                      };
                     var comself = comselfSQL.FirstOrDefault();
                     if (comself != null)
                     {
                         ViewBag.classname = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassname;
-                        ViewBag.showavgself = (comself.FBeforeClassGrade + comself.FAfterClassGrade) / 2;
+                        ViewBag.showavgself = (int)(comself.FBeforeClassGrade + comself.FAfterClassGrade) / 2;
                         int list = 0;
                         for (int i = 5; i <= 100; i += 10)
                         {
@@ -139,7 +139,7 @@ namespace MSITTeam1.Controllers
                             else
                                 ViewBag.showavg += list + ",";
                         }
-                        ViewBag.showbeforeself = comself.FBeforeClassGrade;
+                        ViewBag.showbeforeself = (int)comself.FBeforeClassGrade;
                         int list2 = 0;
                         for (int i = 5; i <= 100; i += 10)
                         {
@@ -153,7 +153,7 @@ namespace MSITTeam1.Controllers
                             else
                                 ViewBag.showbefore += list2 + ",";
                         }
-                        ViewBag.showAfterself = comself.FAfterClassGrade;
+                        ViewBag.showAfterself = (int)comself.FAfterClassGrade;
                         int list3 = 0;
                         for (int i = 5; i <= 100; i += 10)
                         {
@@ -182,14 +182,13 @@ namespace MSITTeam1.Controllers
             if (CDictionary.memtype == "2")
             {
                 var select = from p in hello.TClassGrades
-                             join i in hello.StudentBasics on p.FAccountId equals i.FAccount
-                             join od in hello.TClassOrderDetails on i.MemberId equals od.MemberId
+                             join od in hello.TClassOrderDetails on p.FAccountId equals od.StaffEmail
                              join o in hello.TClassOrders on od.OrderId equals o.OrderId
                              where o.MemberId == CDictionary.account && p.FClassCode == Grade.txtidentify
                              select new classgradeselect
                              {
-                                 account = i.FAccount,
-                                 Name = i.Name
+                                 account = od.StaffEmail,
+                                 Name = od.StaffName
                              };
                 return Json(select);
             }

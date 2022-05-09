@@ -27,12 +27,12 @@
             <label asp-for="TimeToContact" class="control-label"></label>
             <label class="col-form-label">@Model.TimeToContact</label>
         </div>
-        <div>
-            <img src="data:image/gif;base64,@Model.ResumeImage" />
-        </div>
         <div class="form-group">
             <label asp-for="CoverLetter" class="control-label"></label>
             <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.CoverLetter</pre>
+        </div>
+        <div>
+            <img src="data:image/gif;base64,@Model.ResumeImage" />
         </div>
     </div>
 </div>
@@ -91,7 +91,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <vc:interview-info-edit job-id="@Model.JobId" resume-send-id="@Model.ResumeSendId"></vc:interview-info-edit>
+                <vc:interview-info-edit job-id="@Model.JobId" company-respond-id="@Model.CompanyRespondId"></vc:interview-info-edit>
             </div>
         </div>
     </div>

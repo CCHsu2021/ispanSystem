@@ -21,10 +21,7 @@ namespace MSITTeam1.ViewComponent
         }
         public IViewComponentResult Invoke(int jobId,string jobName,string companyTaxid,string rowCount)  
         {
-            //todo 必須判斷是否已登入
-            //假設登入帳號是學員：111
-            //CDictionary.account = "111";
-            
+
             ViewBag.rowCount = rowCount;
             TMemberResumeSendViewModel memberResumeSend = new TMemberResumeSendViewModel();
 

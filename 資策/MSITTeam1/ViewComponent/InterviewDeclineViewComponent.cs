@@ -18,6 +18,7 @@ namespace MSITTeam1.ViewComponent
         }
         public IViewComponentResult Invoke(int jobId,string resumeSendId)
         {
+
             var jobInfo = (from p in _context.TNewJobVacancies
                               select p).FirstOrDefault(p => p.Fid == jobId);
 

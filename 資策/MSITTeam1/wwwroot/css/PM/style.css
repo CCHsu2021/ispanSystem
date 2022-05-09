@@ -1355,9 +1355,9 @@ a.dt-button.active:not(.disabled) {
  * FOOTER
  */
 footer {
-  display: block;
-  margin: 1rem 0;
-  padding: 1rem 0 0;
+    display: block;
+    /*margin: 1rem 0;*/
+    padding: 1rem 0 0;
 }
 footer p {
   font-size: 12px;
