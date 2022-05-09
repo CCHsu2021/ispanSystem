@@ -172,6 +172,15 @@ namespace MSITTeam1.Controllers
                                 Qty = i.count,
                             };
                             hello.TClassOrderDetails.Add(item);
+                            TStudentPoint item2 = new TStudentPoint
+                            { 
+                                MemberId = CDictionary.account,
+                                PointType = "點數回饋",
+                                PointDescription = $"購買課程(訂單號碼：{vModel[0].OrderId})，獲得回饋點數{(i.price) *0.1}點",
+                                PointRecord = (int)(i.price * 0.1),
+                                OrderId = vModel[0].OrderId
+                            };
+                            hello.TStudentPoints.Add(item2);
                         }
                      }
                     a = i.count;
