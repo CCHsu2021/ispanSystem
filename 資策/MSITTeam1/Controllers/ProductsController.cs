@@ -208,6 +208,7 @@ namespace MSITTeam1.Controllers
             if (string.IsNullOrEmpty(keyword))
             {
                 datas = from t in hello.TClassInfos
+                        orderby t.FClassCode
                         select t;
             }
             else
