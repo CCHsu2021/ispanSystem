@@ -162,8 +162,11 @@
                         <div>
                             <div id="@pidDetail" class="row align-items-center  p-3 d-none">
                                 <div class="col-12 py-2">
-                <span class="font-weight-bold">課程清單：</span>@item.PayMethod
-            </div>
+                                    <span class="font-weight-bold">折扣：</span>@item.Discount
+                                </div>
+                                <div class="col-12">
+                                    <h5 class="my-3 mb-2 font-weight-bold pb-2" style="border-bottom: solid  lightgray 2px ">課程清單</h5>
+                                </div>
                                 @foreach (var item2 in Model.classOrderDetail)
                                 {
                                     if (item2.OrderId == item.OrderId)
@@ -275,7 +278,11 @@
     });
     $(function () {
         initPagination('.oneOrder', 5, '#POrderPagination')
+    });
+    $(function () {
         initPagination('.pointOrder', 5, '#PointPagination')
-        initPagination('.CpointOrder', 5, '#COrderPagination')
+    });
+    $(function () {
+        initPagination('.ConeOrder', 5, '#COrderPagination')
     });
 </script>

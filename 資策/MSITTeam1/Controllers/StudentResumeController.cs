@@ -316,6 +316,16 @@ namespace MSITTeam1.Controllers
 
             return Content("刪除成功");
         }
+        public IActionResult DeleteResume(String resumeId)
+        {
+            StudentResume sr = hello.StudentResumes.FirstOrDefault(c => c.ResumeId.ToString() == resumeId);
+            if (sr != null)
+            {
+                hello.StudentResumes.Remove(sr);
+                hello.SaveChanges();
+            }
+            return Content("刪除成功");
+        }
 
         public IActionResult ReturnWorkCount()
         {

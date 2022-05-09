@@ -86,24 +86,33 @@
 
     .previewBtn {
         margin-left: -10px;
-        transition: 0;
-        margin-top: 20px;
+        transition: none !important;
+        margin-top: 50px;
         margin-bottom: 20px;
     }
 
     .contiBtn {
-        margin-left: 60px;
-        transition: 0;
-        margin-top: 20px;
+        margin-left: -50px;
+        transition: none !important;
+        margin-top: 50px;
         margin-bottom: 20px;
     }
 
     .PrintBtn {
-        margin-left: 415px;
+        transition: none !important;
+        margin-left: 633px;
         margin-bottom: 20px;
-        margin-top: 20px;
+        margin-top: 50px;
     }
 
+    .SaveResumeBtn{
+         transition: none !important;
+    }
+
+    .textarea:empty:before {
+    content: attr(aria-placeholder);
+    color: #bbb;
+}
 
     /*    .panelbigcard {
 
@@ -140,7 +149,9 @@
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>技能</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>作品</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>自我介紹</h4></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="自訂標題"></div></div>
+                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><div style="font-size:0.85rem" class="textarea" contenteditable="true" aria-placeholder="自訂內文"></div></div>
+                       
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
@@ -155,7 +166,7 @@
         </div>
 
         
-        <div class="col-4  BigCard">
+        <div class="col-4  BigCard" id="mainView1">
             <div class="panel panel-info ">
                 <div class="panel-heading kanban-card">
                     <div class="row">
@@ -167,10 +178,10 @@
                     </div>
                     </div>
                 </div>
-                <div class="panel-body" id="mainView1">
+                <div class="panel-body" >
                     <div id="todo" class="bodybackground">
                         &nbsp;
-                        <div class="alert alert-success kanban-card cardBody basiccard "  style="margin-top:-5px" id="basic" role="alert">
+                        <div class="alert alert-success kanban-card cardBody basiccard pt-4"  style="margin-top:-5px" id="basic" role="alert">
                             <h4>基本資料</h4>
                             <br/>
                             <div class="basicCss">
@@ -426,6 +437,9 @@
             const resumeName = document.querySelector("#resumeName");
             const toolpanel = document.getElementById("toolpanel");
             const datapanel = document.getElementById("data");
+            const mainpanel = document.getElementById("kanban");
+            const mainView1 = document.getElementById("mainView1");
+            const mainView2 = document.getElementById("mainView2");
 
 
             //const todo = document.getElementById("todo");
@@ -436,8 +450,16 @@
             btnResumeSave.style.visibility="hidden";
             btnPreview.addEventListener('click', (evt) => {
                 evt.preventDefault();
-                toolpanel.style.visibility="hidden";
-                datapanel.style.visibility="hidden";
+                toolpanel.style.display="none";
+                datapanel.style.display="none";
+
+                mainpanel.classList.add("justify-content-center");
+                mainView1.classList.remove("col-4");
+                mainView1.classList.add("col-5");
+                mainView2.classList.remove("col-4");
+                mainView2.classList.add("col-5");
+                
+
                 btnPreview.style.visibility="hidden";
                 btnEdit.style.visibility="visible";
                 btnPrint.style.visibility="visible";
@@ -457,6 +479,13 @@
                 btnResumeSave.style.visibility="hidden";
                 paneltitle.style.visibility="visible";
                 resumeName.style.visibility="visible";
+                toolpanel.style.display="block";
+                datapanel.style.display="block";
+                mainpanel.classList.remove("justify-content-center");
+                mainView1.classList.remove("col-5");
+                mainView1.classList.add("col-4");
+                mainView2.classList.remove("col-5");
+                mainView2.classList.add("col-4");
                 });
 
              function printScreen() {
@@ -480,9 +509,22 @@
                 
 
                 function SaveScreen() {
+                    var w = $("#kanban")[0].offsetWidth;
+                    var h = $("#kanban")[0].offsetHeight;
+                    var canvas = document.createElement('canvas');
+                    var scale = 1;
                     var resumeName = $("#resumeName").val();
-                    html2canvas($("#kanban")[0]).then(function(canvas) {
-                     var dataURL = canvas.toDataURL("image/png");
+
+                    canvas.width = w * scale ;
+                    canvas.height = h * scale ;
+
+                    var context = canvas.getContext('2d');
+                    console.log("width=" + w + ", height=" + h)
+
+                    context.scale(scale,scale);
+
+                    html2canvas($("#kanban")[0],{canvas:canvas,scale:scale,useCORS:true}).then(function(canvas) {
+                     var dataURL = canvas.toDataURL("image/png",1.0);
                      dataURL = dataURL.replace('data:image/png;base64,','');
                      //window.open(dataURL);
                      console.log(dataURL);
