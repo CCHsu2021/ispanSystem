@@ -57,6 +57,7 @@
             <br />
             <div class="sec-title text-center">
                 <button class="btn-style-two mt-3" type="button" id="button1">送出</button>
+                <button class="btn-style-two mt-3" type="button" id="button2" style="display:none">成績檢視</button>
             </div>
         }
     }
@@ -70,6 +71,7 @@
 
 <script>
     const btn = document.querySelector("#button1");
+    const btn3 = document.querySelector("#button2");
     const btn1 = document.querySelector("#createpaper");
     const divAlert = document.querySelector("#div1");
     if ("@Model" == "") {} else {
@@ -120,7 +122,7 @@
 
              }
           }
-        divAlert.style.display = "block"
+        //divAlert.style.display = "block"
         divAlert.innerHTML = Math.round((anscount / count) * 100)
         document.querySelector("#FBeforeClassGrade").value = Math.round((anscount / count) * 100)
         $('input').hide();
@@ -151,9 +153,48 @@
                             }
                         }
                      }
+                    btn3.style.display = 'block';
+                    btn3.addEventListener('click', (evt) => {
+                        evt.preventDefault();
+                        sessionStorage.setItem("classEX", $('#FClassCode').val());
+
+                        location = '@Url.Action("Index", "ShowClassGrade")';
+
+                    })
+                } else if (j == "before") {
+                    sessionStorage.setItem("classEX", $('#FClassCode').val());
+
+                    location = '@Url.Action("Index", "ShowClassGrade")';
+                }
+                else {
+                     @{
+                        if (Model != null)
+                        {
+                            int fid = 0;
+                            foreach (var item in Model)
+                            {
+                                if (fid != item.fQuestionID)
+                                {
+                                @:var b = $('input[name=@item.fQuestionID]:checked').val();
+                                @:if (1 == b) { anscount++; $('input[name=@item.fQuestionID]:checked').next().css("color", "green"); }
+                                @:if (1 != b) { $("input[name=@item.fQuestionID][value='1']").next().css("color", "red"); }
+                                fid = item.fQuestionID;
+                                }
+                            }
+                        }
+                     }
+                     btn3.style.display = 'block';
+                    btn3.addEventListener('click', (evt) => {
+                        evt.preventDefault();
+                        sessionStorage.setItem("classEX", $('#FClassCode').val());
+
+                        location = '@Url.Action("Index", "ShowClassGrade")';
+                    })
                 }
             }
         )
+
+
     })
 </script>
 
