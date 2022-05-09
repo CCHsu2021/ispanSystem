@@ -30,8 +30,9 @@ namespace MSITTeam1.ViewModels
         public int? BuyPoint
         {
             get { return this.Porder.BuyPoint; }
+            set {this.Porder.BuyPoint = value; }
         }
-        public DateTime OrderDate
+        public DateTime? OrderDate
         {
             get { return this.Porder.OrderDate; }
             set { this.Porder.OrderDate = value; }
