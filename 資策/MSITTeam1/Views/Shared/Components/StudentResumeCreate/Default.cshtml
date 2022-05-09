@@ -149,13 +149,11 @@
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>技能</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>作品</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>自我介紹</h4></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="自訂標題"></div></div>
+                        <div class="alert alert-success kanban-card cardBody seltitle" id="tool" role="alert"><div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="自訂標題"></div></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><div style="font-size:0.85rem" class="textarea" contenteditable="true" aria-placeholder="自訂內文"></div></div>
                        
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><hr/></div>
+                        <div class="alert alert-success kanban-card cardBody hr" id="tool" role="alert"><hr/></div>
+
 
 @*                        <div class="alert alert-success kanban-card cardBody " id="tool">
                             <img class="toolImage" src="~/images/Resume/book.jpg" width="300" style="text-align:center" />
@@ -261,7 +259,7 @@
 <button class="PrintBtn" id="btnPrint" onclick="printScreen()">匯出</button>
 <button class="SaveResumeBtn" id="btnResumeSave" onclick="SaveScreen()">儲存</button>
 
-
+<script src="~/js/jquery.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js">
     import { data } from "jquery";
@@ -278,6 +276,26 @@
               console.log(source); // from
               console.log(target); // to
               console.log(sibling); // next card
+
+              const tool = document.querySelector("#tool");
+              const seltitle = document.querySelector(".seltitle");
+
+              //console.log($("#tool").children(".seltitle").length);
+              if($("#tool").children(".seltitle").length<1)
+              {
+                  var div = document.createElement("div");
+                  div.id = "tool";
+                  div.role="alert";
+                  div.innerHTML= `<div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="自訂標題"></div>` ;
+                  div.setAttribute("class", "alert alert-success kanban-card cardBody seltitle");
+                  tool.appendChild(div);
+              }
+              //if($("#tool").children(".seltitle").length>1){
+              //      console.log($("#tool div[class='seltitle']:not(:first-child)").length)
+                    
+              //   $("#tool div[class='seltitle']:not(:first-child)").remove();
+              //}
+
             });
 
             var dragulaKanban = dragula([
