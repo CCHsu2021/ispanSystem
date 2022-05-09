@@ -144,6 +144,9 @@
                 margin: auto;
                 width: 150px;
             }
+        .createLabel{
+            font-size:1.2rem;
+        }
     </style>
 }
 
@@ -159,34 +162,42 @@
             <li class="slide" data-tag="建立考卷資料">
                 <form name="basic">
                     <div class="sized-container basic">
-                        <h1>歡迎使用資展題庫系統</h1>
-                        <h2>請填寫考卷名稱及考卷介紹，您可以依照喜好從題庫挑選想要的題目，您也可以設計屬於自己的題目。</h2>
+                        <br />
+                        <h1>歡迎使用iSpan題庫系統</h1>
+                        <h2 style="color:gray;">請填寫考卷名稱及考卷介紹，您可以從題庫挑所需題目，也可以設計新的試題。</h2>
                         <hr />
+                        <br />
                         <div class="row data justify-content-center">
                             <div class="col-5">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="FDesignerAccount" value="@ViewBag.account" />
                                 <div class="form-group">
-                                    <label asp-for="FTestPaperName" class="control-label"></label>
+                                    <label asp-for="FTestPaperName" class="control-label createLabel"></label>
                                     <input asp-for="FTestPaperName" class="form-control" id="FpaperName" />
                                     <span asp-validation-for="FTestPaperName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-5">
                                 <div class="form-group">
-                                    <label asp-for="FBSubjectId" class="control-label">技能名稱</label>
+                                    <label asp-for="FBSubjectId" class="control-label createLabel">技能名稱</label>
                                     <select id="FSubject" name="FSubjectId" class="form-control">
                                         <option value="">請選擇技能名稱</option>
                                     </select>
                                     <span asp-validation-for="FBSubjectId" class="text-danger"></span>
                                 </div>
                             </div>
+                            <br />
                             <div class="col-10">
                                 <div class="form-group">
-                                    <label asp-for="FNote" class="control-label"></label>
+                                    <label asp-for="FNote" class="control-label createLabel"></label>
                                     <textarea id="FPaperNote" asp-for="FNote" class="form-control"></textarea>
                                     <span asp-validation-for="FNote" class="text-danger"></span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-2">
+                                <button type="button" id="quickFill">DEMO</button>
                             </div>
                         </div>
                     </div>
@@ -284,6 +295,13 @@
     <script src="~/js/jquery.barrating.js"></script>
     <script src="~/js/barRating.init.js"></script>
     <script>
+
+        // DEMO填入資料
+        $('#quickFill').click(function () {
+            $('#FpaperName').attr("value","信義房屋後端工程師 入職測驗卷");
+            $('#FPaperNote').text("信義企業集團的各項產品與計畫正融入大數據、機器學習與人工智慧等應用，我們的數位團隊也持續致力於「房地產科技創新」與「數位居住生活」兩大面向，以創新智能工具，為使用者提供超乎想像的服務體驗。 1.需熟悉MVC5、Web API開發架構佳。 2.熟悉HTML、CSS、JavaScript、JQuery、AJAX、WebForm佳。");
+            $('#FSubject').find("option[value='後端開發技術']").attr("selected", true);
+        })
 
           // 載入全部課程名稱
         const selSubQuest = document.querySelector('#FSubjectIdSel');
