@@ -30,6 +30,7 @@ namespace MSITTeam1.ViewModels
         public int? BuyPoint
         {
             get { return this.Porder.BuyPoint; }
+            set {this.Porder.BuyPoint = value; }
         }
         public DateTime? OrderDate
         {
