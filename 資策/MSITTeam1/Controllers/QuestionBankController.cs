@@ -83,6 +83,15 @@ namespace MSITTeam1.Controllers
 		[HttpPost]
 		public IActionResult Create([FromBody] CQuestionBankViewModel newques)
 		{
+			if (CDictionary.account != null)
+			{
+				newques.FSubmitterId = CDictionary.account;
+			}
+			else
+			{
+				return RedirectToAction("Index", "Student_Login");
+			}
+
 			TQuestionList quesQuery = _context.TQuestionLists.FirstOrDefault(q => q.FSubjectId.Equals(newques.FSubjectId));
 			if (quesQuery == null)
 			{
@@ -100,14 +109,6 @@ namespace MSITTeam1.Controllers
 				newques.FQuestionId = lastId + 1;
 			}
 
-			if (CDictionary.account != null)
-			{
-				newques.FSubmitterId = CDictionary.account;
-			}
-			else
-			{
-				return RedirectToAction("Index", "Student_Login");
-			}
 			newques.FState = 1;
 			_context.TQuestionLists.Add(newques.question);
 			if (newques.question.FQuestionId >= 1 && !string.IsNullOrEmpty(newques.question.FSubjectId))

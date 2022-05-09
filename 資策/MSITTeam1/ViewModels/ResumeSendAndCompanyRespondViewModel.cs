@@ -83,5 +83,6 @@ namespace MSITTeam1.ViewModels
         [DisplayName("學員姓名")]
         public string StudentName { get; set; }
         public string CompanyName { get; set; }
+        public string ResumeImage { get; set; }
     }
 }

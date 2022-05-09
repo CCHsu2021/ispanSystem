@@ -58,18 +58,28 @@ namespace MSITTeam1.Controllers
             ViewBag.type = CDictionary.memtype;
             ViewBag.name = CDictionary.username;
             var chooseOne = (from p in _context.TMemberResumeSends
-                             where p.ResumeSendId == ResumeSendId
-                             join t in _context.TCompanyBasics on p.CompanyTaxid equals t.CompanyTaxid into pt
-                             from combin in pt.DefaultIfEmpty()
-                             join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
-                             from combin2 in ps.DefaultIfEmpty()
-                             select new TCompanyResumeReceiveViewModel
-                             {
-                                 memRS = p,
-                                 FCompanyName = combin.FName,
-                                 FStudentName = combin2.Name
-                             }).ToList().FirstOrDefault();
-            return View(chooseOne);
+                            where p.ResumeSendId == ResumeSendId
+                            join t in _context.TCompanyBasics on p.CompanyTaxid equals t.CompanyTaxid into pt
+                            from combin in pt.DefaultIfEmpty()
+                            join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
+                            from combin2 in ps.DefaultIfEmpty()
+                            select new
+                            {
+                                p,
+                                combin.FName,
+                                combin2.Name
+                            }).FirstOrDefault();
+            var resumeImg = _context.StudentResumes.FirstOrDefault(p => p.ResumeId == chooseOne.p.ResumeId);
+            TCompanyResumeReceiveViewModel vModel = new TCompanyResumeReceiveViewModel();
+            vModel.memRS = chooseOne.p;
+            vModel.FCompanyName = chooseOne.FName;
+            vModel.FStudentName = chooseOne.Name;
+            if (resumeImg != null)
+            {
+                vModel.ResumeImage = Convert.ToBase64String(resumeImg.ResumeImage);
+            }
+
+            return View(vModel);
             //todo 美化頁面
         }
 
@@ -112,16 +122,25 @@ namespace MSITTeam1.Controllers
                                  join t in _context.TMemberResumeSends on p.ResumeSendId equals t.ResumeSendId
                                  join s in _context.TCompanyBasics on t.CompanyTaxid equals s.CompanyTaxid into ps
                                  from combin in ps.DefaultIfEmpty()
-                                 select new ResumeSendAndCompanyRespondViewModel
+                                 select new 
                                  {
-                                     comR = p,
-                                     memRS = t,
-                                     CompanyName = combin.FName
+                                     p,
+                                     t,
+                                     combin.FName
                                  }).ToList().FirstOrDefault();
-            companyRespond.InterviewState = "已讀";
-            _context.SaveChanges();
+            var CR = _context.TCompanyResponds.FirstOrDefault(p => p.CompanyRespondId == CompanyRespondId);
+            if(CR.InterviewState == "未讀")
+            {
+                CR.InterviewState = "已讀";
+                _context.SaveChanges();
+            }
+            ResumeSendAndCompanyRespondViewModel vModel = new ResumeSendAndCompanyRespondViewModel();
+            vModel.comR = companyRespond.p;
+            vModel.memRS = companyRespond.t;
+            vModel.CompanyName = companyRespond.FName;
 
-            return View(companyRespond);
+            
+            return View(vModel);
         }
         public IActionResult AcceptInterview(string CompanyRespondId)
         {

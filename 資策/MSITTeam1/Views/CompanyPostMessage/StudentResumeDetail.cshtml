@@ -5,12 +5,12 @@
     ViewData["Title"] = "StudentResumeDetail";
 }
 
-    <section class="message">
+    <div class="container">
         <h2><span class="icon icon-star-large"></span> 應徵職缺：@Model.JobName <span class="icon icon-reply-large"></span><span class="icon icon-delete-large"></span></h2>
         <div class="meta-data">
             <p>
                 @Model.FStudentName 寄來的求職信
-                <span class="date">@(Convert.ToDateTime(Model.CreatTime).ToString("yyyy-MM-dd"))</span>
+                <span class="date">收件時間：@(Convert.ToDateTime(Model.CreatTime).ToString("yyyy-MM-dd"))</span>
             </p>
         </div>
         <div class="body">
@@ -26,11 +26,14 @@
                 <label class="control-label">可聯絡時間</label>
                 <label class="col-form-label">@Model.TimeToContact</label>
             </div>
+            <div>
+                <img src="data:image/gif;base64,@Model.ResumeImage"/>
+            </div>
             <div class="form-group">
                 <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.CoverLetter</pre>
             </div>
         </div>
-    </section>
+    </div>
     <button class="btn-style-two" type="button" data-toggle="modal" data-target="#interviewDeclineModal" onclick="">婉拒面試</button>
     <button class="btn-style-two" type="button" data-toggle="modal" data-target="#interviewInvitationModal" onclick="">邀約面試</button>
     <!--邀約面試Modal-->

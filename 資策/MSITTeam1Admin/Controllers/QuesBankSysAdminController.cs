@@ -75,7 +75,7 @@ namespace MSITTeam1Admin.Controllers
 		{
 			return View();
 		}
-		// TODO:10.最後要整理QuestionList題目提供者ID
+
 		[HttpPost]
 		public IActionResult Create([FromBody] CQuestionBankViewModel newques)
 		{
@@ -96,7 +96,7 @@ namespace MSITTeam1Admin.Controllers
 				newques.FQuestionId = lastId + 1;
 			}
 			// TODO:12.後台管理員賬號 修改
-			newques.FSubmitterId = "admin";
+			newques.FSubmitterId = "ispan";
 			newques.FState = 1;
 			if(newques.question.FQuestionId >= 1 && !string.IsNullOrEmpty(newques.question.FSubjectId))
 			{
