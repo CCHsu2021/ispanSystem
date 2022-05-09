@@ -648,11 +648,13 @@
         console.log(total - point);
         if (point == 0) {
             $("#usePoint").attr("disabled", "disabled");
+            $("#ProDiscount").val(0);
         }
         $("#usePoint").click(function () {
              if (point == 0)
                 {
-                    $("#usePoint").attr("disabled", "disabled");
+                 $("#usePoint").attr("disabled", "disabled");
+                 $("#ProDiscount").val(0);
                 }
             if ($("#usePoint").prop("checked") == true) {
 
@@ -679,5 +681,6 @@
                 $("#ProDiscount").val(0);
             }
         })
+        console.log($("#ProDiscount").val());
     </script>
 }

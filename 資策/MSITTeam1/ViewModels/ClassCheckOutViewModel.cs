@@ -74,11 +74,16 @@ namespace MSITTeam1.ViewModels
             get { return this.classOrder.TotalPrice; }
             set { this.classOrder.TotalPrice = value; }
         }
-        //public string TAXID
-        //{
-        //    get { return this.order.Taxid; }
-        //    set { this.order.Taxid = value; }
-        //}
+        public string TAXID
+        {
+            get { return this.classOrder.Taxid; }
+            set { this.classOrder.Taxid = value; }
+        }
+        public int? Discount
+        {
+            get { return this.classOrder.Discount; }
+            set { this.classOrder.Discount = value; }
+        }
         public string PayMethod
         {
             get { return this.classOrder.PayMethod; }

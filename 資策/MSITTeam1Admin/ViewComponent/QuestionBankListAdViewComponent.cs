@@ -91,7 +91,8 @@ namespace MSITTeam1Admin.ViewComponent
 				return table.Where(q =>
 						q.FQuestion.Contains(keyword)
 						|| q.FChoice.Contains(keyword)
-						|| q.FSubjectId.Contains(keyword));
+						|| q.FSubjectId.Contains(keyword)
+						|| q.FSubmitterId.Contains(keyword));
 			}
 			else
 			{
