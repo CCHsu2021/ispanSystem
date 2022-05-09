@@ -76,16 +76,16 @@
 
                                             </aside>
                                             <aside class="lg-side">
-                                                @*<div class="inbox-head">
-                                                    <h3 class="input-text">Inbox</h3>
-                                                    <form action="#" class="pull-right position">
+                                                <div class="inbox-head">
+                                                    <h3 class="input-text">收件匣</h3>
+                                                    @*<form action="#" class="pull-right position">
                                                         <div class="input-append inner-append">
                                                             <input type="text" class="sr-input" placeholder="Search Mail">
                                                             <button class="btn sr-btn append-btn" type="button"><i class="fa fa-search"></i></button>
                                                         </div>
-                                                    </form>
+                                                    </form>*@
                                                 </div>
-                                                <div class="mail-option">
+                                                @*<div class="mail-option">
                                                     <div class="chk-all chk-group">
                                                         <input type="checkbox" class="mail-checkbox mail-group-checkbox" id="checkAll" />
                                                         <div class="btn-group">
@@ -152,17 +152,17 @@
                                                     </ul>
                                                 </div>*@
                                                 <div class="table-responsive">
-                                                    @if (Model != null)
+                                                    @if (Model.Count() != 0)
                                                     {
                                                         <table class="table table-inbox table-hover table-responsive">
                                                             <thead>
                                                                 <tr class="justify-content-center align-items-center">
-                                                                    <td class="inbox-small-cells">
+                                                                    @*<td class="inbox-small-cells">
                                                                         <input type="checkbox" class="mail-checkbox">
                                                                     </td>
                                                                     <td class="inbox-small-cells">
                                                                         <i class="ti-star"></i>
-                                                                    </td>
+                                                                    </td>*@
                                                                     <td class="dont-show">公司名稱</td>
                                                                     <td class="">應徵職缺</td>
                                                                     <td class="inbox-small-cells">狀態</td>
@@ -178,12 +178,12 @@
                                                                         rowCount++;
                                                                         int rowNumber = rowCount;
                                                                         <tr class="">
-                                                                            <td class="inbox-small-cells">
+                                                                            @*<td class="inbox-small-cells">
                                                                                 <input type="checkbox" class="mail-checkbox">
                                                                             </td>
                                                                             <td class="inbox-small-cells">
                                                                                 <i class="ti-star"></i>
-                                                                            </td>
+                                                                            </td>*@
                                                                             <td class="view-message dont-show">@item.CompanyName</td>
                                                                             <td class="view-message ">應徵職缺：@item.JobName</td>
                                                                             <td class="view-message inbox-small-cells">@item.InterviewState</td>

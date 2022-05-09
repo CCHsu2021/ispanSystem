@@ -59,6 +59,7 @@
         border-radius: 0;
         border: 0;
         text-align: center;
+        color:black;
     }
 
         .cardBody:hover {
@@ -92,7 +93,7 @@
     }
 
     .contiBtn {
-        margin-left: -50px;
+        margin-left: -153px;
         transition: none !important;
         margin-top: 50px;
         margin-bottom: 20px;
@@ -100,7 +101,7 @@
 
     .PrintBtn {
         transition: none !important;
-        margin-left: 633px;
+        margin-left: 820px;
         margin-bottom: 20px;
         margin-top: 50px;
     }
@@ -112,7 +113,12 @@
     .textarea:empty:before {
     content: attr(aria-placeholder);
     color: #bbb;
-}
+    }
+
+    .kanban{
+        background-color:whitesmoke;
+        border-radius:20px;
+    }
 
     /*    .panelbigcard {
 
@@ -132,7 +138,7 @@
 
 
 
-    <div id="kanban" class="row ">
+    <div id="kanban" class="row kanban">
     @foreach (var item in Model)
     {
         <div class="col-2 BigCard toolcard pr-5" id="toolpanel">
@@ -149,8 +155,8 @@
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>技能</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>作品</h4></div>
                         <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><h4>自我介紹</h4></div>
-                        <div class="alert alert-success kanban-card cardBody seltitle" id="tool" role="alert"><div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="自訂標題"></div></div>
-                        <div class="alert alert-success kanban-card cardBody " id="tool" role="alert"><div style="font-size:0.85rem" class="textarea" contenteditable="true" aria-placeholder="自訂內文"></div></div>
+                        <div class="alert alert-success kanban-card cardBody seltitle" id="tool" role="alert"><div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="(自訂標題)"></div></div>
+                        <div class="alert alert-success kanban-card cardBody selcontent" id="tool" role="alert"><div style="font-size:0.85rem" class="textarea" contenteditable="true" aria-placeholder="(自訂內文)"></div></div>
                        
                         <div class="alert alert-success kanban-card cardBody hr" id="tool" role="alert"><hr/></div>
 
@@ -286,8 +292,26 @@
                   var div = document.createElement("div");
                   div.id = "tool";
                   div.role="alert";
-                  div.innerHTML= `<div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="自訂標題"></div>` ;
+                  div.innerHTML= `<div style="font-size:1.6rem" class="textarea" contenteditable="true" aria-placeholder="(自訂標題)"></div>` ;
                   div.setAttribute("class", "alert alert-success kanban-card cardBody seltitle");
+                  tool.appendChild(div);
+              }
+               if($("#tool").children(".selcontent").length<1)
+              {
+                  var div = document.createElement("div");
+                  div.id = "tool";
+                  div.role="alert";
+                  div.innerHTML= `<div style="font-size:0.85rem" class="textarea" contenteditable="true" aria-placeholder="(自訂內文)"></div>` ;
+                  div.setAttribute("class", "alert alert-success kanban-card cardBody selcontent");
+                  tool.appendChild(div);
+              }
+              if($("#tool").children(".hr").length<1)
+              {
+                  var div = document.createElement("div");
+                  div.id = "tool";
+                  div.role="alert";
+                  div.innerHTML= "<hr/>" ;
+                  div.setAttribute("class", "alert alert-success kanban-card cardBody hr");
                   tool.appendChild(div);
               }
               //if($("#tool").children(".seltitle").length>1){
@@ -438,7 +462,7 @@
 
                             div.setAttribute("class", "alert alert-success kanban-card cardBody");
                             parent.appendChild(div);
-
+                            
                         }
                         ;
                     }

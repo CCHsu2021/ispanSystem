@@ -6,6 +6,9 @@
 
 <div class="container" id="outdivCre">
     <div class="row">
+        <button type="button" id="demoCreQues">DEMO</button>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -37,6 +40,15 @@
                             <input id="checkBox1" type="checkbox" name="FCorrectAnswer" class="mr-1" style="width: 28px; height: 25px" onclick="doCheckCre(this)" />
                             <input type="text" asp-for="FChoice" class="form-control txtAns" id="demoChoice" style="margin:0 20px 0 10px" />
                             <span asp-validation-for="FChoice" class="text-danger"></span>
+                            <button class="tableBtn fas fa-trash-alt delBtnCre" type="button" style="border-radius: 5px; width: 60px;"></button>
+                        </div>
+                    </div>
+                    <div class="form-group choiceCre">
+                        <label class="control-label my-2 font-weight-bold h5"></label>
+                        <div class="row align-items-center px-3 choicelistCre" style="flex-wrap:nowrap;">
+                            <input type="checkbox" name="FCorrectAnswer" class="mr-1" style="width: 28px; height: 25px" onclick="doCheckCre(this)" />
+                            <input type="text" class="form-control txtAns" id="demoChoice2" style="margin:0 20px 0 10px" />
+                            <span class="text-danger"></span>
                             <button class="tableBtn fas fa-trash-alt delBtnCre" type="button" style="border-radius: 5px; width: 60px;"></button>
                         </div>
                     </div>
