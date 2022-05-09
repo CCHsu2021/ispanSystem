@@ -47,11 +47,15 @@
             </div>
         </div>
     </section>
-    <div class="row">
-        <form method="post">
-            <input type="hidden" asp-for="CompanyRespondId" name="CompanyRespondId" />
-            <button class="btn-style-two col-3" type="submit" asp-controller="MemberPostMessage" asp-action="InterviewDecline">婉拒</button>
-            <button class="btn-style-two col-3" type="submit" asp-controller="MemberPostMessage" asp-action="AcceptInterview">接受</button>
-        </form>
-    </div>
+    @if (Model.InterviewState == "接受" || Model.InterviewState == "婉拒")
+    {
+
+        <div class="row">
+            <form method="post">
+                <input type="hidden" asp-for="CompanyRespondId" name="CompanyRespondId" />
+                <button class="btn-style-two col-3" type="submit" asp-controller="MemberPostMessage" asp-action="InterviewDecline">婉拒</button>
+                <button class="btn-style-two col-3" type="submit" asp-controller="MemberPostMessage" asp-action="AcceptInterview">接受</button>
+            </form>
+        </div>
+    }
 </div>

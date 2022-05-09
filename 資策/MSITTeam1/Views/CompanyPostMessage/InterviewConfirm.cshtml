@@ -190,8 +190,8 @@
                                                                             <td class="view-message text-right">@(Convert.ToDateTime(item.CreatTime).ToString("yyyy-MM-dd"))</td>
                                                                             <td>
                                                                                 <form>
-                                                                                    <input type="hidden" form="getOneResumeDetail" asp-for="@item.CompanyRespondId" name="CompanyRespondId" />
-                                                                                    <button type="submit" form="getOneResumeDetail" asp-action="ConfirmInfo" class="btn btn-info m-b-10 m-l-5 applyButton">檢視</button>
+                                                                                    <input type="hidden" asp-for="@item.CompanyRespondId" name="CompanyRespondId" />
+                                                                                    <button type="submit" asp-action="ConfirmInfo" class="btn btn-info m-b-10 m-l-5 applyButton">檢視</button>
                                                                                 </form>
                                                                             </td>
                                                                         </tr>
