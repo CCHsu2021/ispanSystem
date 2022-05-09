@@ -297,7 +297,7 @@ namespace MSITTeam1.Controllers
             if (sw != null)
             {
                 sw.PortfolioTitle = p.PortfolioTitle;
-                sw.PortfolioDescription = p.PortfolioTitle;
+                sw.PortfolioDescription = p.PortfolioDescription;
                 sw.PortfolioUrl = p.PortfolioURL;
                 hello.SaveChanges();
             }
