@@ -46,10 +46,10 @@ namespace MSITTeam1.Controllers
             ViewBag.account = CDictionary.account;
             if (CDictionary.memtype == "1")
             {
-                ViewBag.STel = hello.StudentBasics.FirstOrDefault(c => c.FAccount == CDictionary.account).Phone;
-                var Scity = hello.StudentBasics.FirstOrDefault(c => c.FAccount == CDictionary.account).FCity;
-                var Sdis = hello.StudentBasics.FirstOrDefault(c => c.FAccount == CDictionary.account).FDistrict;
-                var Sadr = hello.StudentBasics.FirstOrDefault(c => c.FAccount == CDictionary.account).ContactAddress;
+                ViewBag.STel = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account).Phone;
+                var Scity = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account).FCity;
+                var Sdis = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account).FDistrict;
+                var Sadr = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account).ContactAddress;
                 ViewBag.SAddress = Scity + Sdis + Sadr;
                 var Spoint = from o in hello.TStudentPoints
                             join i in hello.StudentBasics
