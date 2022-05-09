@@ -604,7 +604,7 @@
         <div class="row w-100">
             <input type="submit" class="btn-style-three" value="確定付款">
         </div>
-        <input name="[0].Discount" id="ProDiscount" type="hidden" />
+        <input name="[0].Discount" id="ProDiscount" type="hidden"  value="0"/>
     </form>
 </div>
 @section Scripts{
@@ -674,7 +674,8 @@
         console.log(total);
         console.log(point);
         console.log(point);
-        
+        console.log($("#ProDiscount").val());
+
         if (point == 0) {
             $("#usePoint").attr("disabled", "disabled");
             $("#ProDiscount").val(0);
@@ -709,6 +710,5 @@
                 $("#ProDiscount").val(0);
             }
         })
-        console.log($("#ProDiscount").val());
     </script>
 }
