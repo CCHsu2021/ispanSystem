@@ -72,8 +72,11 @@ namespace MSITTeam1.Controllers
                               }).ToList().FirstOrDefault();
 
             var chooseResume = _context.TMemberResumeSends.FirstOrDefault(p=>p.ResumeSendId.Equals(ResumeSendId));
-            chooseResume.ComReadOrNot = "已讀";
-            _context.SaveChanges();
+            if(chooseResume.ComReadOrNot == "未讀")
+            {
+                chooseResume.ComReadOrNot = "已讀";
+                _context.SaveChanges();
+            }
 
             return View(chooseOne);
             //todo 美化頁面
