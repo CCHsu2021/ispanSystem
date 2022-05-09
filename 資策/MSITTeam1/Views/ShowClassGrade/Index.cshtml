@@ -87,6 +87,14 @@
 
         window.onload = function () {
 
+            var classEX = sessionStorage.getItem("classEX");
+            console.log(type);
+            if (classEX != '') {
+                document.getElementById('inlineFormInputGroupUsername2').value = classEX;
+
+                sessionStorage.setItem("classEX", "");
+                $('#createpaper').click();
+            }
 
         fetch('@Url.Action("Employee", "ShowClassGrade")', {
             method: 'POST',
