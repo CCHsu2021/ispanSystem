@@ -3,59 +3,65 @@
 @{
     ViewData["Title"] = "CompanyRespondDetail";
 }
-<div class="container">
-    <section>
-        <div class="meta-data">
-            <p>
-                @Model.CompanyName 的回覆信<br />
-                <span class="date pr-3">建立日期：@(Convert.ToDateTime(Model.CreatTime).ToString("yyyy-MM-dd"))</span>
-                <span class="date">最後修改日期：@(Convert.ToDateTime(Model.ModifyTime).ToString("yyyy-MM-dd"))</span>
-            </p>
-        </div>
-        <div class="body p-3 h5 border">
-            <div class="form-group">
-                <label asp-for="InterviewState" class="control-label"></label>：
-                <label class="col-form-label">@Model.InterviewState</label>
+<div class="container-fluid" style="background:#EFEFEF">
+    <div class="container">
+        <section>
+            <div class="meta-data p-3">
+                <p class="">
+                    <span class="font-weight-bold color-blue">
+                        @Model.CompanyName 的回覆信
+                    </span><br />
+                                        <span class="date pr-3">建立日期：@(Convert.ToDateTime(Model.CreatTime).ToString("yyyy-MM-dd"))</span>
+                                        <span class="date">最後修改日期：@(Convert.ToDateTime(Model.ModifyTime).ToString("yyyy-MM-dd"))</span>
+</p>
             </div>
-            <div class="form-group">
-                <label asp-for="ContactPerson" class="control-label"></label>：
-                <label class="col-form-label">@Model.ContactPerson</label>
+            <div class="body p-3 h6 border bg-white shadow" style="border-radius:1.25rem;">
+                <div class="form-group">
+                    <label asp-for="InterviewState" class="control-label font-weight-bold"></label>：
+                    <label class="col-form-label">@Model.InterviewState</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactPerson" class="control-label font-weight-bold"></label>：
+                    <label class="col-form-label">@Model.ContactPerson</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactPersonPhone" class="control-label font-weight-bold"></label>：
+                    <label class="col-form-label">@Model.ContactPersonPhone</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactPersonEmail" class="control-label font-weight-bold"></label>：
+                    <label class="col-form-label">@Model.ContactPersonEmail</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InterviewTime" class="control-label font-weight-bold"></label>：
+                    <label class="col-form-label">@Model.InterviewTime</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InterviewAddress" class="control-label font-weight-bold"></label>：
+                    <label class="col-form-label">@Model.InterviewAddress</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StudentRespondTime" class="control-label font-weight-bold"></label>：
+                    <label class="col-form-label">@Model.StudentRespondTime 天內</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InterviewContent" class="control-label font-weight-bold"></label>：
+                    <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.InterviewContent</pre>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ContactPersonPhone" class="control-label"></label>：
-                <label class="col-form-label">@Model.ContactPersonPhone</label>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContactPersonEmail" class="control-label"></label>：
-                <label class="col-form-label">@Model.ContactPersonEmail</label>
-            </div>
-            <div class="form-group">
-                <label asp-for="InterviewTime" class="control-label"></label>：
-                <label class="col-form-label">@Model.InterviewTime</label>
-            </div>
-            <div class="form-group">
-                <label asp-for="InterviewAddress" class="control-label"></label>：
-                <label class="col-form-label">@Model.InterviewAddress</label>
-            </div>
-            <div class="form-group">
-                <label asp-for="StudentRespondTime" class="control-label"></label>：
-                <label class="col-form-label">@Model.StudentRespondTime 天內</label>
-            </div>
-            <div class="form-group">
-                <label asp-for="InterviewContent" class="control-label"></label>：
-                <pre class="col-12  py-2" style="line-height:1.5rem;">@Model.InterviewContent</pre>
-            </div>
-        </div>
-    </section>
-    @if (Model.InterviewState == "接受" || Model.InterviewState == "婉拒")
-    {
+        </section>
+        @if (Model.InterviewState != "接受" || Model.InterviewState != "婉拒")
+        {
 
-        <div class="row">
-            <form method="post">
+            <form method="post" class="row justify-content-center">
                 <input type="hidden" asp-for="CompanyRespondId" name="CompanyRespondId" />
-                <button class="btn-style-two col-3" type="submit" asp-controller="MemberPostMessage" asp-action="InterviewDecline">婉拒</button>
-                <button class="btn-style-two col-3" type="submit" asp-controller="MemberPostMessage" asp-action="AcceptInterview">接受</button>
+                <div class=" mx-2">
+                    <button class="btn-style-two col-3" type="submit" asp-controller="MemberPostMessage" asp-action="InterviewDecline">婉拒</button>
+                </div>
+                <div class=" mx-2">
+                    <button class="btn-style-two col-3" type="submit" asp-controller="MemberPostMessage" asp-action="AcceptInterview">接受</button>
+                </div>
             </form>
-        </div>
-    }
+        }
+    </div>
 </div>
