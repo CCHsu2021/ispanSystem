@@ -152,6 +152,7 @@ namespace MSITTeam1.Controllers
                                 StudentBasic addstudent = new StudentBasic()
                                 {
                                     FAccount = vModel[x].StaffEmail,
+                                    Name = vModel[x].StaffName,
                                     FMemberType = 1,
                                     FCheckStatus = "no",
                                 };

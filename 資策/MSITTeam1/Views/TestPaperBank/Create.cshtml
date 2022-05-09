@@ -298,9 +298,19 @@
 
         // DEMO填入資料
         $('#quickFill').click(function () {
-            $('#FpaperName').attr("value","信義房屋後端工程師 入職測驗卷");
-            $('#FPaperNote').text("信義企業集團的各項產品與計畫正融入大數據、機器學習與人工智慧等應用，我們的數位團隊也持續致力於「房地產科技創新」與「數位居住生活」兩大面向，以創新智能工具，為使用者提供超乎想像的服務體驗。 1.需熟悉MVC5、Web API開發架構佳。 2.熟悉HTML、CSS、JavaScript、JQuery、AJAX、WebForm佳。");
+            $('#FpaperName').attr("value","資展國際後端工程師 入職測驗卷");
+            $('#FPaperNote').text("資展國際以傳承資策會的優良傳統，開創嶄新的人才創新加值服務，我們重視每一位員工，除了有良好工作環境、也提供學習及成長的空間。 1.需熟悉MVC5、Web API開發架構佳。 2.熟悉HTML、CSS、JavaScript、JQuery、AJAX、WebForm佳。");
             $('#FSubject').find("option[value='後端開發技術']").attr("selected", true);
+        })
+
+        //DEMO
+        $('#demoCreQues').click(function () {
+            $('#FSubjectIdSel').find("option[value='其他']").attr("selected", true);
+            $('#FQuestionTypeIdSelCre').find("option[value='1']").attr("selected", true);
+            $('#FQuestionCre').attr("value", "開創優質之科技與管理培訓服務，傳播多元之專業知識 是我們公司的經營理念");
+            $('#demoChoice').attr("value", "正確");
+            $('#demoChoice2').attr("value", "錯誤");
+            $('#checkBox1').attr("checked", true);
         })
 
           // 載入全部課程名稱

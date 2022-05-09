@@ -69,9 +69,9 @@
                 Swal.fire("Uh Oh!", "請再次檢查是否有空白", "warning")
                 return;
             }
-            if (document.getElementById("WarningMsg").innerText == "密碼不一致請重新確認")
+            if ($("#RPassword").val() != $("#RPassword2").val())
             {
-                Swal.fire("Uh Oh!", "密碼輸入不一致請重新確認", "warning");
+                Swal.fire("Uh Oh!", "密碼輸入不一致請重新確認", "warning")
                 return;
             }
             $.ajax({
