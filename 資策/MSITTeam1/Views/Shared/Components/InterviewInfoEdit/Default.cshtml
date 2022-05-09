@@ -72,8 +72,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="StudentRespondTime" class="control-label"></label>
-                <label class="control-label"><input asp-for="StudentRespondTime" class="form-control" /> 天內</label>
-                <span asp-validation-for="StudentRespondTime" class="text-danger"></span>
+                <div class="row mx-0 align-items-center"  style="flex-wrap: nowrap;">
+                    <input asp-for="StudentRespondTime" class="form-control" /> <span style="min-width:3rem;"> 天內</span>
+                    <span asp-validation-for="StudentRespondTime" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="InterviewContent" class="control-label"></label>
