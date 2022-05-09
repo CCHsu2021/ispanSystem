@@ -64,13 +64,14 @@ namespace MSITTeam1.Controllers
                               from combin in pt.DefaultIfEmpty()
                               join s in _context.StudentBasics on p.MemberId equals s.MemberId into ps
                               from combin2 in ps.DefaultIfEmpty()
-                              select new TCompanyResumeReceiveViewModel
+                              join c in _context.StudentResumes on p.ResumeId equals c.ResumeId into pc
+                              from combin3 in pc.DefaultIfEmpty()
+                              select new 
                               {
-                                  memRS = p,
-                                  FCompanyName = combin.FName,
-                                  FStudentName = combin2.Name
-                              }).ToList().FirstOrDefault();
-
+                                  p,
+                                  combin.FName,
+                                  combin2.Name,
+                              }).FirstOrDefault();
             var chooseResume = _context.TMemberResumeSends.FirstOrDefault(p=>p.ResumeSendId.Equals(ResumeSendId));
             if(chooseResume.ComReadOrNot == "未讀")
             {
@@ -78,7 +79,17 @@ namespace MSITTeam1.Controllers
                 _context.SaveChanges();
             }
 
-            return View(chooseOne);
+            TCompanyResumeReceiveViewModel vModel = new TCompanyResumeReceiveViewModel();
+            vModel.memRS = chooseOne.p;
+            vModel.FCompanyName = chooseOne.FName;
+            vModel.FStudentName = chooseOne.Name;
+            var resumeImg = _context.StudentResumes.FirstOrDefault(p => p.ResumeId == chooseOne.p.ResumeId);
+            if(resumeImg != null)
+            {
+                vModel.ResumeImage = Convert.ToBase64String(resumeImg.ResumeImage);
+            }
+
+            return View(vModel);
             //todo 美化頁面
         }
 
@@ -109,7 +120,7 @@ namespace MSITTeam1.Controllers
 
                 _context.TCompanyResponds.Add(overRespond);
 
-                resume.ComReadOrNot = companyRespond.InterviewState;
+                //resume.ComReadOrNot = companyRespond.InterviewState;
             }
             else
             {
@@ -263,14 +274,27 @@ namespace MSITTeam1.Controllers
                                  //from combin in ts.DefaultIfEmpty()
                                  join c in _context.StudentBasics on t.MemberId equals c.MemberId into tc
                                  from combin2 in tc.DefaultIfEmpty()
-                                 select new ResumeSendAndCompanyRespondViewModel
+                                 select new 
                                  {
-                                     comR = p,
-                                     memRS = t,
-                                     StudentName = combin2.Name
+                                     p,
+                                     t,
+                                     combin2.Name
                                  }).ToList().FirstOrDefault();
+            ResumeSendAndCompanyRespondViewModel vModel = new ResumeSendAndCompanyRespondViewModel();
+            vModel.comR = confirmDetail.p;
+            vModel.memRS = confirmDetail.t;
+            vModel.StudentName = confirmDetail.Name;
 
-            return View(confirmDetail);
+            var resumeImg = _context.StudentResumes.FirstOrDefault(
+                p => p.ResumeId == (_context.TMemberResumeSends.FirstOrDefault(
+                    t => t.ResumeSendId == (_context.TCompanyResponds.FirstOrDefault(
+                        s => s.CompanyRespondId == CompanyRespondId).ResumeSendId))).ResumeId);
+            if (resumeImg != null)
+            {
+                vModel.ResumeImage = Convert.ToBase64String(resumeImg.ResumeImage);
+            }
+
+            return View(vModel);
             //todo 美化頁面
         }
 

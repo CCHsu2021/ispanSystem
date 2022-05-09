@@ -65,7 +65,7 @@
                     int rowCount = 0;
 
                 }
-                @if (Model.FirstOrDefault() != null)
+                @if (Model.Count != 0)
                 {
 
                     @foreach (var item in Model)
@@ -148,6 +148,15 @@
                         </li>
                     }
                 }
+            else
+            {
+
+                <li>
+                    <div class="justify-content-center">
+                        <h2>無任何相符的職缺</h2>
+                    </div>
+                </li>
+            }
             </ul>
         </div>
         <div id="ProductPagination" class="row my-4"></div>
@@ -244,13 +253,14 @@
     </script>
 
     @*頁面底部換頁*@
-    <script>
-        if (@Model.FirstOrDefault() != null) {
+    @if (@Model.FirstOrDefault() != null)
+    {
+        <script>
             $(function () {
                 initPagination('.job-card', 10, '#ProductPagination')
             });
-        }
-    </script>
+        </script>
+    }
 
     @*以下為程式碼設定結束時間不得晚於開始時間，未成功待研究*@
     @*<script>

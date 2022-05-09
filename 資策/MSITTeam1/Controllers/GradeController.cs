@@ -48,7 +48,7 @@ namespace MSITTeam1.Controllers
         public IActionResult Grade(TClassGrade grade)
         {
             var account = hello.StudentBasics.FirstOrDefault(c => c.MemberId == CDictionary.account);
-            TClassGrade classGrade = hello.TClassGrades.FirstOrDefault(c => c.FAccountId == account.FAccount);
+            TClassGrade classGrade = hello.TClassGrades.FirstOrDefault(c => c.FAccountId == account.FAccount && c.FClassCode == grade.FClassCode);
             if (classGrade == null)
             {
                 classGrade = new TClassGrade
