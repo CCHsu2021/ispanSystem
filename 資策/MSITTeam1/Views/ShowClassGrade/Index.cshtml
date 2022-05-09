@@ -88,23 +88,25 @@
         window.onload = function () {
 
             var classEX = sessionStorage.getItem("classEX");
+            console.log(classEX);
             if (classEX != '') {
                 document.getElementById('inlineFormInputGroupUsername2').value = classEX;
 
                 sessionStorage.setItem("classEX", "");
                 $('#createpaper').click();
             }
-
-        fetch('@Url.Action("Employee", "ShowClassGrade")', {
-            method: 'POST',
-            body: formData
-        }).then(Response => Response.json())
-            .then(function (j) {
-                console.log(j);
-                for (var row in j) {
-                    $("#studentname").append("<option value='" + j[row].account + "'>" + j[row].name+"</option>");
-                }
-            });
+            if ('@ViewBag.memType' == '2') {
+                fetch('@Url.Action("Employee", "ShowClassGrade")', {
+                    method: 'POST',
+                    body: formData
+                }).then(Response => Response.json())
+                    .then(function (j) {
+                        console.log(j);
+                        for (var row in j) {
+                            $("#studentname").append("<option value='" + j[row].account + "'>" + j[row].name + "</option>");
+                        }
+                    });
+            }
 
     }
     //const b = document.querySelector('#createpaper');

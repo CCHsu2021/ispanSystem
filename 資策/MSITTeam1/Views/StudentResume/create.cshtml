@@ -284,8 +284,8 @@
                      <div class="card portdata"><vc:student-portfolio></vc:student-portfolio></div>
                 </div>
             </li>
-            <li class="slide" data-tag="產生履歷與匯出">
-                <div class="sized-container">
+            <li class="slide" data-tag="產生履歷與匯出" >
+                <div class="sized-container" >
                     <vc:student-resume-create></vc:student-resume-create>
                 </div>
             </li>
@@ -335,6 +335,9 @@
     if (currentSlide==0){
     $('.previous').hide();
     }
+
+
+
     function goToNextSlide() {
         if (currentSlide >= slideCount - 1) {
             $('.previous').show();
@@ -355,6 +358,7 @@
     }
 
     function goToPreviousSlide() {
+
         if (currentSlide <= 0) {
              $('.previous').hide();
             return
@@ -392,6 +396,8 @@
     $(window).resize(postitionSlides);
     $('.next').on('click', goToNextSlide);
     $('.previous').on('click', goToPreviousSlide);
+
+
 
     // 最大値
     flatpickr('#flatpickr-maxDate', {
