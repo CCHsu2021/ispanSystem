@@ -433,5 +433,19 @@ namespace MSITTeam1.Controllers
 
                 return View();
         }
+
+        public IActionResult CreatePoint()
+        {
+            TStudentPoint item = new TStudentPoint
+            {
+                MemberId = CDictionary.account,
+                PointType = "點數回饋",
+                PointDescription = "填寫履歷，回饋300點",
+                PointRecord = 300
+            };
+            hello.TStudentPoints.Add(item);
+            hello.SaveChanges();
+            return Content("得到點數");
+        }
     }
 }

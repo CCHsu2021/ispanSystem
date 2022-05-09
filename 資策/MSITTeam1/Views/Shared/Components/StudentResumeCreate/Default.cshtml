@@ -540,7 +540,7 @@
                             }).done(function (data) {
                             Swal.fire({
                                         icon: 'success',
-                                        title: '新增成功',
+                                        title: '新增成功，因填寫履歷回饋300點',
                                         showConfirmButton: false,
                                         timer: 1500
                                         })
@@ -548,6 +548,14 @@
 
                             });
                         });
+                    $.ajax({
+                        url: '@Url.Content("~/StudentResume/CreatePoint")',
+                        type: 'post',
+                        
+                        
+                        
+                            })
+                        
                     }
 
 
