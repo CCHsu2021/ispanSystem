@@ -24,8 +24,8 @@ namespace MSITTeam1.ViewComponent
             ViewBag.Name = CDictionary.username;
             ViewBag.Type = CDictionary.memtype;
             ViewBag.account = CDictionary.account;
-           var  Odatas = (hello.TProductOrders.Where(p => p.MemberId == CDictionary.account)).ToList();
-            var Cdatas = (hello.TClassOrders.Where(p => p.MemberId == CDictionary.account)).ToList();
+           var  Odatas = (hello.TProductOrders.Where(p => p.MemberId == CDictionary.account)).OrderByDescending(p=>p.Date).ToList();
+            var Cdatas = (hello.TClassOrders.Where(p => p.MemberId == CDictionary.account)).OrderByDescending(p => p.Date).ToList();
             var OdatasD =( from d in hello.TProductOrderDetails
                           join o in hello.TProductOrders on d.OrderId equals o.OrderId
                           select d).OrderBy(c => c.ProductId).ToList();

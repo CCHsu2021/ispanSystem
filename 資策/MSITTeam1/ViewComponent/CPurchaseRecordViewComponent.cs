@@ -27,12 +27,12 @@ namespace MSITTeam1.ViewComponent
             //IEnumerable<TProductOrder> Odatas = null;
             //IEnumerable<TClassOrder> Cdatas = null;
             //IEnumerable<TPointOrder> Pdatas = null;
-            var Odatas = (hello.TProductOrders.Where(p => p.MemberId == CDictionary.account)).ToList();
-            var Cdatas = (hello.TClassOrders.Where(p => p.MemberId == CDictionary.account)).ToList();
+            var Odatas = (hello.TProductOrders.Where(p => p.MemberId == CDictionary.account)).OrderByDescending(p=>p.Date).ToList();
+            var Cdatas = (hello.TClassOrders.Where(p => p.MemberId == CDictionary.account)).OrderByDescending(p => p.Date).ToList();
             //var Pdatas = (hello.TPointOrders.Where(p => p.CompanyTaxid == CDictionary.account)).ToList();
             var pdatas = (from p in hello.TPointOrders
                           where p.CompanyTaxid == CDictionary.account
-                          select p).ToList();
+                          select p).OrderByDescending(p => p.OrderDate).ToList();
             var OdatasD =( from d in hello.TProductOrderDetails
                           join o in hello.TProductOrders on d.OrderId equals o.OrderId
                           select d).ToList();

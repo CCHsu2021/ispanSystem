@@ -472,12 +472,15 @@
                 <div class="col-md-9 pl-0 mb-3">
                     <input type="text" id="productOrderAddress" class="form-control" name="ShipTo" />
                 </div>
-                <div class="col-md-3 pr-0 mb-3">
-                    統一編號：
-                </div>
-                <div class="col-md-9 pl-0 mb-3">
-                    <input type="text" id="productOrderTAXID" class="form-control" name="TAXID" />
-                </div>
+                @if (CDictionary.memtype == "1")
+                {
+                    <div class="col-md-3 pr-0 mb-3">
+                        統一編號：
+                    </div>
+                    <div class="col-md-9 pl-0 mb-3">
+                        <input type="text" id="productOrderTAXID" class="form-control" name="TAXID" />
+                    </div>
+                }
                 <div class="w-100 row align-items-center">
                     <h3 class="mt-4 mb-3 font-weight-bold h4">寄送及付款方式</h3>
                 </div>
