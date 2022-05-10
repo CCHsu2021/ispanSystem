@@ -298,19 +298,24 @@
 
         // DEMO填入資料
         $('#quickFill').click(function () {
-            $('#FpaperName').attr("value","資展國際後端工程師 入職測驗卷");
-            $('#FPaperNote').text("資展國際以傳承資策會的優良傳統，開創嶄新的人才創新加值服務，我們重視每一位員工，除了有良好工作環境、也提供學習及成長的空間。 1.需熟悉MVC5、Web API開發架構佳。 2.熟悉HTML、CSS、JavaScript、JQuery、AJAX、WebForm佳。");
+            $('#FpaperName').attr("value","瑞嘉軟體後端工程師 入職測驗卷");
+            $('#FPaperNote').text("身為後端工程師你將會參與公司的主力產品的後端開發,與前端工程師合作，開發與維護公司系統應用。 此測驗主題為C#及SQL 資料庫，測試時間為：25分鐘。");
             $('#FSubject').find("option[value='後端開發技術']").attr("selected", true);
         })
 
         //DEMO
         $('#demoCreQues').click(function () {
             $('#FSubjectIdSel').find("option[value='其他']").attr("selected", true);
-            $('#FQuestionTypeIdSelCre').find("option[value='1']").attr("selected", true);
-            $('#FQuestionCre').attr("value", "開創優質之科技與管理培訓服務，傳播多元之專業知識 是我們公司的經營理念");
-            $('#demoChoice').attr("value", "正確");
-            $('#demoChoice2').attr("value", "錯誤");
+            $('#FQuestionTypeIdSelCre').find("option[value='2']").attr("selected", true);
+            $('#FQuestionCre').attr("value", "請從下列選項中選擇我們公司的福利制度");
+            $('#demoChoice').attr("value", " 一年12天特休，爾後每滿一年加1天，上限30天");
+            $('#demoChoice2').attr("value", "員工生日當月可享有生日假");
+            $('#demoChoice3').attr("value", "規劃多樣休閒活動，讓員工在參與活動之餘，更能貼近及認知公司文化");
+            $('#demoChoice4').attr("value", "年度國外旅遊");
             $('#checkBox1').attr("checked", true);
+            $('#checkBox2').attr("checked", true);
+            $('#checkBox3').attr("checked", true);
+            $('#checkBox4').attr("checked", true);
         })
 
           // 載入全部課程名稱
