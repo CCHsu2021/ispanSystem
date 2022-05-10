@@ -53,17 +53,18 @@ namespace MSITTeam1.Controllers
                 }
             }
                 return "帳號密碼錯誤請重新輸入";
-            }else if (password == null)
-            {
-                TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
-                if (mem != null)
-                { 
-                    string act = mem.CompanyTaxid;
-                    HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
-                    string name = getUserName();
-                    return $"{name}";
-                }
             }
+            //else if (password == null)
+            //{
+            //    TCompanyBasic mem = hello.TCompanyBasics.FirstOrDefault(p => p.CompanyTaxid == account);
+            //    if (mem != null)
+            //    { 
+            //        string act = mem.CompanyTaxid;
+            //        HttpContext.Session.SetString(CDictionary.SK_LOGINED_USER_ACCOUNT, act);
+            //        string name = getUserName();
+            //        return $"{name}";
+            //    }
+            //}
             return "帳號密碼錯誤請重新輸入";
         }
 
