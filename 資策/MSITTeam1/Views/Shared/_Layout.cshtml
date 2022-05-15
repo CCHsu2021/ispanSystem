@@ -375,7 +375,7 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
+<script>
         //js會自動main-header的高度，使body的padding-top會等於此刻main-header的高度
         $(document).ready(function () {
         var onResize = function () {
@@ -525,7 +525,7 @@
                 setTimeout(function () {
                     location = '@Url.Content("~/Student_Login")'
                 }, 1300)
-            ); 
+            );
         }else {
             $("#ViewGrade").attr("href", "@Url.Content("~/ShowClassGrade/Index")");
         }
@@ -551,9 +551,9 @@
                 timer: 2000
             })
         }else if ("@ViewBag.Type" == "1") {
-            $(this).attr("href", "@Url.Content("~/ShowSkillGrade/Index")");
+            location = '@Url.Action("Index", "ShowSkillGrade")';
         }
     })
-    </script>
+</script>
 </body>
 </html>

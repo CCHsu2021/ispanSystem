@@ -37,6 +37,7 @@ namespace MSITTeam1.Controllers
                            fCorrectAnswer = d.FCorrectAnswer
                        };
                 ViewBag.account = account.FAccount;
+                ViewBag.Name = account.Name;
                 ViewBag.Identify = Grade.txtidentify;
                 ViewBag.Classname = hello.TClassInfos.FirstOrDefault(c => c.FClassExponent == Grade.txtidentify).FClassname;
                 return View(list.ToList());
